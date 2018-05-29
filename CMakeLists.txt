@@ -43,3 +43,7 @@ macro(TARGET_USE_BOOST)
         message(FATAL_ERROR "Boost ${BOOST_REQUIRED_VERSION} is not found!")
     endif()
 endmacro()
+
+
+# Add build directories
+add_subdirectory(libraries)
