@@ -22,7 +22,14 @@ endif( WIN32 )
 #Config boost environment
 set(BOOST_REQUIRED_VERSION "1.66")
 set(BOOST_REUIQRED_COMPONENTS)
-list(APPEND BOOST_REUIQRED_COMPONENTS filesystem)
+list(APPEND BOOST_REUIQRED_COMPONENTS 
+	program_options 
+	system
+	thread
+	date_time 
+	regex 
+	serialization 
+)
 
 
 IF( WIN32 )
@@ -43,3 +50,20 @@ macro(TARGET_USE_BOOST)
         message(FATAL_ERROR "Boost ${BOOST_REQUIRED_VERSION} is not found!")
     endif()
 endmacro()
+
+
+# disable  warning C4996: 'std::result_of': warning STL4014.
+add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
+add_definitions(-D_SILENCE_CXX17_RESULT_OF_DEPRECATION_WARNING)
+
+set(xmax_core_lib_name core)
+set(xmax_app_lib_name application)
+
+set(xmax_run_exe_name xmaxrun)
+
+set(xmax_bcp_lib_name blockchain_plugin)
+
+add_subdirectory( foundation )
+add_subdirectory( plugins )
+add_subdirectory( launch )
+
