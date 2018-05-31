@@ -52,18 +52,22 @@ macro(TARGET_USE_BOOST)
 endmacro()
 
 
-# disable  warning C4996: 'std::result_of': warning STL4014.
+
+# temp disable:  warning C4996: 'std::result_of': warning STL4014.
+# by zhongdaohuan
 add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
 add_definitions(-D_SILENCE_CXX17_RESULT_OF_DEPRECATION_WARNING)
 
 set(xmax_core_lib_name core)
+
 set(xmax_app_lib_name application)
 
 set(xmax_run_exe_name xmaxrun)
 
 set(xmax_bcp_lib_name blockchain_plugin)
 
-add_subdirectory( foundation )
-add_subdirectory( plugins )
-add_subdirectory( launch )
-
+# Add build directories
+add_subdirectory(libraries)
+add_subdirectory(foundation)
+add_subdirectory(plugins)
+add_subdirectory(launch)
