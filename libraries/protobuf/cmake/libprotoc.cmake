@@ -227,3 +227,6 @@ set_target_properties(libprotoc PROPERTIES
     COMPILE_DEFINITIONS LIBPROTOC_EXPORTS
     OUTPUT_NAME ${LIB_PREFIX}protoc
     DEBUG_POSTFIX "${protobuf_DEBUG_POSTFIX}")
+
+set_target_properties(js_embed PROPERTIES FOLDER ${PROTOBUF_TARGET_DIRECTORY})
+set_target_properties(libprotoc PROPERTIES FOLDER ${PROTOBUF_TARGET_DIRECTORY})

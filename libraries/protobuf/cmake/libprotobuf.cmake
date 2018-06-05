@@ -127,3 +127,5 @@ endif()
 set_target_properties(libprotobuf PROPERTIES
     OUTPUT_NAME ${LIB_PREFIX}protobuf
     DEBUG_POSTFIX "${protobuf_DEBUG_POSTFIX}")
+
+set_target_properties(libprotobuf PROPERTIES FOLDER ${PROTOBUF_TARGET_DIRECTORY})      

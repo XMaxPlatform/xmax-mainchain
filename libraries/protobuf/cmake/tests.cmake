@@ -17,9 +17,14 @@ add_library(gmock STATIC
   ${protobuf_source_dir}/gmock/src/gmock-all.cc
   ${protobuf_source_dir}/gmock/gtest/src/gtest-all.cc
 )
+set_target_properties(gmock PROPERTIES FOLDER ${PROTOBUF_TARGET_DIRECTORY})
+
+
 target_link_libraries(gmock ${CMAKE_THREAD_LIBS_INIT})
 add_library(gmock_main STATIC ${protobuf_source_dir}/gmock/src/gmock_main.cc)
 target_link_libraries(gmock_main gmock)
+set_target_properties(gmock_main PROPERTIES FOLDER ${PROTOBUF_TARGET_DIRECTORY})
+
 
 set(lite_test_protos
   google/protobuf/map_lite_unittest.proto
@@ -198,6 +203,7 @@ endif()
 
 add_executable(tests ${tests_files} ${common_test_files} ${tests_proto_files} ${lite_test_proto_files})
 target_link_libraries(tests libprotoc libprotobuf gmock_main)
+set_target_properties(tests PROPERTIES FOLDER ${PROTOBUF_TARGET_DIRECTORY})
 
 set(test_plugin_files
   ${protobuf_source_dir}/src/google/protobuf/compiler/mock_code_generator.cc
@@ -208,20 +214,24 @@ set(test_plugin_files
 
 add_executable(test_plugin ${test_plugin_files})
 target_link_libraries(test_plugin libprotoc libprotobuf gmock)
+set_target_properties(test_plugin PROPERTIES FOLDER ${PROTOBUF_TARGET_DIRECTORY})
 
 set(lite_test_files
   ${protobuf_source_dir}/src/google/protobuf/lite_unittest.cc
 )
 add_executable(lite-test ${lite_test_files} ${common_lite_test_files} ${lite_test_proto_files})
 target_link_libraries(lite-test libprotobuf-lite gmock_main)
+set_target_properties(lite-test PROPERTIES FOLDER ${PROTOBUF_TARGET_DIRECTORY})
 
 set(lite_arena_test_files
   ${protobuf_source_dir}/src/google/protobuf/lite_arena_unittest.cc
 )
 add_executable(lite-arena-test ${lite_arena_test_files} ${common_lite_test_files} ${lite_test_proto_files})
 target_link_libraries(lite-arena-test libprotobuf-lite gmock_main)
+set_target_properties(lite-arena-test PROPERTIES FOLDER ${PROTOBUF_TARGET_DIRECTORY})
 
 add_custom_target(check
   COMMAND tests
   DEPENDS tests test_plugin
   WORKING_DIRECTORY ${protobuf_source_dir})
+set_target_properties(check PROPERTIES FOLDER ${PROTOBUF_TARGET_DIRECTORY})
