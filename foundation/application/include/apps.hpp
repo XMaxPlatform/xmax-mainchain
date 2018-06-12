@@ -16,7 +16,6 @@ namespace Xmaxapp
 			unknown = 0,
 			initialized, 
 			startuped,
-			running, 
 			stopped 
 		};
 

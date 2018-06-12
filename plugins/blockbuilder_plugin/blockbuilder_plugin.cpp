@@ -7,4 +7,9 @@
 namespace Xmax
 {
 
+	void blockbuilder_plugin::startup()
+	{
+		super::startup();
+	}
+
 }

@@ -13,6 +13,7 @@ namespace Xmax
 		GENERATED_PLUGIN(blockbuilder_plugin, Xmaxapp::plugin_face)
 	public:
 
+		virtual void startup() override;
 
 	private:
 

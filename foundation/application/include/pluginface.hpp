@@ -58,10 +58,6 @@ namespace Xmaxapp
 		{
 			plugin_state = plugin::state::startuped;
 		}
-		virtual void run()
-		{
-			plugin_state = plugin::state::running;
-		}
 		virtual void shutdown()
 		{
 			plugin_state = plugin::state::stopped;
