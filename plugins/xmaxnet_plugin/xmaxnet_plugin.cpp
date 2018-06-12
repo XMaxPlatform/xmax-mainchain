@@ -2,6 +2,7 @@
 
 
 namespace Xmax {
+	using namespace Xmaxapp;
 
 	/**
 	*  Implementation details of the xmax net plugin
@@ -35,7 +36,7 @@ namespace Xmax {
 	}
 
 	//--------------------------------------------------
-	void Xmax::xmaxnet_plugin::initialize(const variables_map& options)
+	void Xmax::xmaxnet_plugin::initialize(const vars_map& options)
 	{
 		m_pImpl.reset(new xmaxnet_plugin_impl());
 	}
