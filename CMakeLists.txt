@@ -67,6 +67,7 @@ set(xmax_run_exe_name xmaxrun)
 
 set(xmax_bcp_lib_name blockchain_plugin)
 set(xmax_builder_lib_name blockbuilder_plugin)
+set(xmax_net_lib_name xmaxnet_plugin)
 
 # Add build directories
 add_subdirectory(libraries)
