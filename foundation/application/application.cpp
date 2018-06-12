@@ -7,7 +7,7 @@
 #include <log.hpp>
 #include "application.hpp"
 
-namespace Xmax
+namespace Xmaxapp
 {
 	using boost::program_options::variables_map;
 
@@ -35,9 +35,9 @@ namespace Xmax
 
 		for (auto item : initialized_plugins)
 		{
-			boost::program_options::options_description plugin_cli_opts("Command Line for " + item->get_name());
-			boost::program_options::options_description plugin_cfg_opts("Config for " + item->get_name());
-			item->set_program_options(plugin_cli_opts, plugin_cfg_opts);
+			options_desc plugin_cli_opts("Command Line for " + item->get_name());
+			options_desc plugin_cfg_opts("Config for " + item->get_name());
+			item->set_options(plugin_cli_opts, plugin_cfg_opts);
 			if (plugin_cfg_opts.options().size()) {
 				app_options.add(plugin_cfg_opts);
 				cfg_options.add(plugin_cfg_opts);
@@ -88,7 +88,7 @@ namespace Xmax
 		asio_service->stop();
 	}
 
-	void application::exec() 
+	void application::loop() 
 	{
 		std::shared_ptr<boost::asio::signal_set> sigint_set(new boost::asio::signal_set(*asio_service, SIGINT));
 		sigint_set->async_wait([sigint_set, this](const boost::system::error_code& err, int num) 

@@ -4,20 +4,22 @@
  */
 #include <application.hpp>
 #include <blockchain_plugin.hpp>
+#include <blockbuilder_plugin.hpp>
 #include <log.hpp>
 
 namespace Xmax
 {
-
+	using namespace Xmaxapp;
 	void run(int argc, char** argv)
 	{
 		application app;
 		app.regist_plugin<blockchain_plugin>();
+		app.regist_plugin<blockbuilder_plugin>();
 		app.initialize(argc, argv);
 		app.startup();
 
 		ilog("Xmax app start.");
-		app.exec();
+		app.loop();
 	}
 }
 

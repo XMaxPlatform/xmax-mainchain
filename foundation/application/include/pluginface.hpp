@@ -6,7 +6,7 @@
 
 #include <plugin.hpp>
 
-namespace Xmax
+namespace Xmaxapp
 {
 	using plugin_factory_function = iplugin* (void);
 
@@ -38,11 +38,11 @@ namespace Xmax
 			return plugin_state;
 		}		
 
-		virtual void set_program_options(options_description& cli, options_description& cfg) override
+		virtual void set_options(options_desc& cli, options_desc& cfg) override
 		{
 
 		}
-		virtual void initialize(const variables_map& options) override
+		virtual void initialize(const vars_map& options) override
 		{
 			plugin_state = iplugin::state::initialized;
 		}
@@ -79,9 +79,9 @@ namespace Xmax
 			static const Xmax::Generictypes::string _plugin_name(#plugin_self);\
 			return _plugin_name;\
 		}	\
-		static plugin_factory get_plugin_factory()\
+		static Xmaxapp::plugin_factory get_plugin_factory()\
 		{\
-			return plugin_factory(plugin_name(), create_plugin);\
+			return Xmaxapp::plugin_factory(plugin_name(), create_plugin);\
 		}\
 		virtual const Xmax::Generictypes::string& get_name() const override\
 		{\

@@ -18,9 +18,8 @@ namespace boost {
 	} // namespace asio
 } // namespace boost
 
-namespace Xmax
+namespace Xmaxapp
 {
-	using boost::program_options::options_description;
 
 	class application
 	{
@@ -39,7 +38,7 @@ namespace Xmax
 		void startup();
 		void shutdown();
 
-		void exec();
+		void loop();
 		void quit();
 	private:
 
@@ -53,8 +52,8 @@ namespace Xmax
 		std::vector<iplugin*>                  initialized_plugins;
 		std::vector<iplugin*>                  startup_plugins;
 
-		options_description     app_options;
-		options_description     cfg_options;
+		options_desc     app_options;
+		options_desc     cfg_options;
 
 		std::shared_ptr<boost::asio::io_service>  asio_service;
 	};

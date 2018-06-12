@@ -8,9 +8,9 @@
 
 namespace Xmax
 {
-	class blockchain_plugin : public plugin_face
+	class blockchain_plugin : public Xmaxapp::plugin_face
 	{
-		GENERATED_PLUGIN(blockchain_plugin, plugin_face)
+		GENERATED_PLUGIN(blockchain_plugin, Xmaxapp::plugin_face)
 	public:
 
 
