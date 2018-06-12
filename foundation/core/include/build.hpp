@@ -28,6 +28,15 @@
 #define __forceinline inline
 #endif
 
+
+
+
+#if _Xmax_Platform == _Xmax_Platform_Windows
+#ifndef _WIN32_WINNT
+#	define _WIN32_WINNT NTDDI_WIN7
+#endif
+#endif 
+
 namespace Xmax
 {
 }

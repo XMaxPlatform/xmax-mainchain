@@ -8,7 +8,7 @@
 
 namespace Xmaxapp
 {
-	class iplugin
+	class plugin
 	{
 	public:
 		enum class state
@@ -20,14 +20,18 @@ namespace Xmaxapp
 			stopped 
 		};
 
-		virtual ~iplugin() {}
+		virtual ~plugin() {}
 		virtual state get_state() const = 0;
 		virtual const string& get_name() const = 0;
-		virtual void set_options(options_desc& cli, options_desc& cfg) = 0;
 
-		virtual void initialize(const vars_map& options) = 0;
-		virtual void startup() = 0;
-		virtual void run() = 0;
-		virtual void shutdown() = 0;
+		virtual appbase* get_app() const = 0;
+	};
+
+	class appbase
+	{
+	public:
+		virtual ~appbase() {}
+
+		virtual app_service* get_service() const = 0;
 	};
 }

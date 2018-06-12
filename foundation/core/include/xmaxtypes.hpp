@@ -4,8 +4,8 @@
 */
 #pragma once
 
-#include <string>
 #include <build.hpp>
+#include <string>
 #include <generictypes.hpp>
 #include <debug.hpp>
 #include <log.hpp>

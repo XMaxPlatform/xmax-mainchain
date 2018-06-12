@@ -6,26 +6,29 @@
 #include <map>
 #include <pluginface.hpp>
 
-namespace boost {
-	namespace asio {
-
-#if !defined(BOOST_ASIO_NO_DEPRECATED)
-		/// Typedef for backwards compatibility.
-		class io_context;
-		typedef io_context io_service;
-#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
-
-	} // namespace asio
-} // namespace boost
+//namespace boost {
+//	namespace asio {
+//
+//#if !defined(BOOST_ASIO_NO_DEPRECATED)
+//		/// Typedef for backwards compatibility.
+//		class io_context;
+//		typedef io_context io_service;
+//#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+//
+//	} // namespace asio
+//} // namespace boost
 
 namespace Xmaxapp
 {
-
-	class application
+	class application : public appbase
 	{
 	public:
 		application();
 		virtual ~application();
+
+		// interface 
+		app_service* get_service() const override;
+		// ------------------
 		template<typename TPlugin>
 		void regist_plugin()
 		{
@@ -40,6 +43,7 @@ namespace Xmaxapp
 
 		void loop();
 		void quit();
+
 	private:
 
 
@@ -47,15 +51,15 @@ namespace Xmaxapp
 
 		bool check_regist(const string& name) const;
 
-		std::map<string, plugin_factory> plugin_factorys;
-		std::map<string, std::unique_ptr<iplugin>> pluginmap;
-		std::vector<iplugin*>                  initialized_plugins;
-		std::vector<iplugin*>                  startup_plugins;
+		std::map<string, plugin_factory>			plugin_factorys;
+		std::map<string, std::unique_ptr<plugin_face>>	pluginmap;
+		std::vector<plugin_face*>						initialized_plugins;
+		std::vector<plugin_face*>						startup_plugins;
 
 		options_desc     app_options;
 		options_desc     cfg_options;
 
-		std::shared_ptr<boost::asio::io_service>  asio_service;
+		std::unique_ptr<app_service>  service_face;
 	};
 
 

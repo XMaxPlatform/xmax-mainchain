@@ -4,11 +4,14 @@
 */
 #pragma once
 
-#include <plugin.hpp>
+#include <apps.hpp>
 
 namespace Xmaxapp
 {
-	using plugin_factory_function = iplugin* (void);
+	class plugin_face;
+	class plugin_factory;
+
+	using plugin_factory_function = plugin_face* (appbase*);
 
 	class plugin_factory
 	{
@@ -28,7 +31,7 @@ namespace Xmaxapp
 		}
 	};
 
-	class plugin_face : public iplugin
+	class plugin_face : public plugin
 	{
 		//GENERATED_PLUGIN(plugin_face, plugin);
 	public:
@@ -37,36 +40,54 @@ namespace Xmaxapp
 		{
 			return plugin_state;
 		}		
-
-		virtual void set_options(options_desc& cli, options_desc& cfg) override
+		virtual appbase* get_app() const override
 		{
-
-		}
-		virtual void initialize(const vars_map& options) override
-		{
-			plugin_state = iplugin::state::initialized;
+			return _plugin_owner;
 		}
 
-		virtual void startup() override
+		virtual void set_options(options_desc& cli, options_desc& cfg)
 		{
-			plugin_state = iplugin::state::startuped;
+
 		}
-		virtual void run() override
+		virtual void initialize(const vars_map& options)
 		{
-			plugin_state = iplugin::state::running;
+			plugin_state = plugin::state::initialized;
 		}
-		virtual void shutdown() override
+
+		virtual void startup()
 		{
-			plugin_state = iplugin::state::stopped;
+			plugin_state = plugin::state::startuped;
+		}
+		virtual void run()
+		{
+			plugin_state = plugin::state::running;
+		}
+		virtual void shutdown()
+		{
+			plugin_state = plugin::state::stopped;
 		}
 	protected:
 		plugin_face()
-			:plugin_state(iplugin::state::unknown)
+			: plugin_state(plugin::state::unknown)
+			, _plugin_owner(nullptr)
 		{
 
 		}
+		template<typename TPlugin>
+		static TPlugin* create_plugin_impl(appbase* _owner)
+		{
+			TPlugin* _self = new TPlugin();
+			_self->set_owner(_owner);
+			return _self;
+		}
+
 	private:
-		iplugin::state plugin_state;
+		void set_owner(appbase* _owner)
+		{
+			_plugin_owner = _owner;
+		}
+		plugin::state plugin_state;
+		appbase* _plugin_owner;
 	};
 
 
@@ -74,23 +95,23 @@ namespace Xmaxapp
 #define GENERATED_PLUGIN(plugin_self, super_class) \
 	public:\
 		typedef super_class super;\
-		static const Xmax::Generictypes::string& plugin_name()\
+		static const Xmaxapp::string& plugin_name()\
 		{	\
-			static const Xmax::Generictypes::string _plugin_name(#plugin_self);\
+			static const Xmaxapp::string _plugin_name(#plugin_self);\
 			return _plugin_name;\
 		}	\
 		static Xmaxapp::plugin_factory get_plugin_factory()\
 		{\
 			return Xmaxapp::plugin_factory(plugin_name(), create_plugin);\
 		}\
-		virtual const Xmax::Generictypes::string& get_name() const override\
+		virtual const Xmaxapp::string& get_name() const override\
 		{\
 			return plugin_name();\
 		}\
 	private:\
-		static plugin_self* create_plugin()\
+		static Xmaxapp::plugin_face* create_plugin(Xmaxapp::appbase* _owner)\
 		{\
-			return new plugin_self(); \
+			return create_plugin_impl<plugin_self>(_owner);\
 		}
 
 

@@ -2,8 +2,6 @@
 *  @file
 *  @copyright defined in xmax/LICENSE
 */
-#include <boost/asio.hpp>
-
 #include <log.hpp>
 #include "application.hpp"
 
@@ -13,7 +11,7 @@ namespace Xmaxapp
 
 	application::application()
 	{
-		asio_service = std::make_shared<boost::asio::io_service>();
+		service_face = std::make_unique<app_service>();
 	}
 
 	application::~application()
@@ -21,12 +19,17 @@ namespace Xmaxapp
 
 	}
 
+	app_service* application::get_service() const
+	{
+		return service_face.get();
+	}
+
 	void application::initialize(int argc, char** argv)
 	{
 		// create plugin objects.
 		for (auto item : plugin_factorys)
 		{
-			if (iplugin* plugin = item.second.factory_function())
+			if (plugin_face* plugin = item.second.factory_function(this))
 			{
 				pluginmap[item.first].reset(plugin);
 				initialized_plugins.push_back(plugin);
@@ -85,26 +88,26 @@ namespace Xmaxapp
 
 	void application::quit() 
 	{
-		asio_service->stop();
+		service_face->stop();
 	}
 
 	void application::loop() 
 	{
-		std::shared_ptr<boost::asio::signal_set> sigint_set(new boost::asio::signal_set(*asio_service, SIGINT));
+		std::shared_ptr<boost::asio::signal_set> sigint_set(new boost::asio::signal_set(*service_face, SIGINT));
 		sigint_set->async_wait([sigint_set, this](const boost::system::error_code& err, int num) 
 		{
 			quit();
 			sigint_set->cancel();
 		});
 
-		std::shared_ptr<boost::asio::signal_set> sigterm_set(new boost::asio::signal_set(*asio_service, SIGTERM));
+		std::shared_ptr<boost::asio::signal_set> sigterm_set(new boost::asio::signal_set(*service_face, SIGTERM));
 		sigterm_set->async_wait([sigterm_set, this](const boost::system::error_code& err, int num) 
 		{
 			quit();
 			sigterm_set->cancel();
 		});
 
-		asio_service->run();
+		service_face->run();
 
 		shutdown(); /// perform synchronous shutdown
 	}
