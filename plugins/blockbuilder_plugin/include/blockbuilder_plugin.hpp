@@ -11,7 +11,7 @@ namespace Xmax
 	using Xmaxapp::options_desc;
 	class blockbuilder_plugin : public Xmaxapp::plugin_face
 	{
-		GENERATED_PLUGIN(blockbuilder_plugin, Xmaxapp::plugin_face, nullptr)
+		GENERATED_PLUGIN(blockbuilder_plugin, Xmaxapp::plugin_face, &init_options)
 	public:
 
 		virtual void startup() override;
