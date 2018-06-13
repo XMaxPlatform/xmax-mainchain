@@ -1,4 +1,4 @@
-set(current_lib_name ${xmax_net_lib_name})
+set(current_lib_name ${xmax_mongo_lib_name})
 
 
 file(GLOB HEADERS "include/*.hpp")
