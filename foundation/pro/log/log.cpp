@@ -20,10 +20,7 @@ namespace pro
 
 	void _log_message(loglevel level, const string& msg)
 	{
-		std::cout << msg << std::endl;
 
-
-#if _Platform_Target == _Platform_Windows
 		string u8;
 		switch (level)
 		{
@@ -50,6 +47,8 @@ namespace pro
 
 		u8 += msg;
 		u8 += LineCode;
+		std::cout << u8 << std::endl;
+#if _Platform_Target == _Platform_Windows
 		debug_output(u8.c_str());
 #endif // WIN32
 	}
