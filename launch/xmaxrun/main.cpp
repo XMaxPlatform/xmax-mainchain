@@ -8,20 +8,20 @@
 #include <blockbuilder_plugin.hpp>
 #include <pro/log/log.hpp>
 
-namespace Xmax
+namespace xmax
 {
 
 	
 	using namespace xmaxapp;
 	void Run(int argc, char** argv)
 	{
-		blockchain_plugin::RegistSelf();
-		blockbuilder_plugin::RegistSelf();
+		BlockChainPlugin::RegistSelf();
+		BlockBuilderPlugin::RegistSelf();
 
 		Application app;
 
-		app.PluginToInit("blockchain_plugin");
-		app.PluginToInit("blockbuilder_plugin");
+		app.PluginToInit("BlockChainPlugin");
+		app.PluginToInit("BlockBuilderPlugin");
 
 		app.Initialize(argc, argv);
 		app.Startup();
@@ -34,6 +34,6 @@ namespace Xmax
 // entry function
 int main(int argc, char** argv)
 {
-	Xmax::Run(argc, argv);
+	xmax::Run(argc, argv);
 	return 0;
 }

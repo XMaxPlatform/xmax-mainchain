@@ -4,11 +4,11 @@
 */
 #include "blockchain_plugin.hpp"
 
-namespace Xmax
+namespace xmax
 {
 
 
-	void blockchain_plugin::init_options(OptionsDesc& cli, OptionsDesc& cfg)
+	void BlockChainPlugin::InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
 	{
 
 	}

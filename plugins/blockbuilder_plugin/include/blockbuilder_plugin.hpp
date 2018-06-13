@@ -6,12 +6,12 @@
 #include <pluginface.hpp>
 
 
-namespace Xmax
+namespace xmax
 {
 	using xmaxapp::OptionsDesc;
-	class blockbuilder_plugin : public xmaxapp::PluginFace
+	class BlockBuilderPlugin : public xmaxapp::PluginFace
 	{
-		GENERATED_PLUGIN(blockbuilder_plugin, xmaxapp::PluginFace, &InitOptions)
+		GENERATED_PLUGIN(BlockBuilderPlugin, xmaxapp::PluginFace, &InitOptions)
 	public:
 
 		virtual void Startup() override;

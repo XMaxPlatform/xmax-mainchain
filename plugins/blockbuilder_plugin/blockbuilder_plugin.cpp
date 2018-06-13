@@ -5,15 +5,15 @@
 #include <pro/log/log.hpp>
 #include "blockbuilder_plugin.hpp"
 
-namespace Xmax
+namespace xmax
 {
 
-	void blockbuilder_plugin::Startup()
+	void BlockBuilderPlugin::Startup()
 	{
 		Super::Startup();
 	}
 
-	void blockbuilder_plugin::InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
+	void BlockBuilderPlugin::InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
 	{
 		ilog("Blockbuilder plugin init options.");
 	}

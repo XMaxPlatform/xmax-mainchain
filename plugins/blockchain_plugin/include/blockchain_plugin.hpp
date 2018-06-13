@@ -6,16 +6,16 @@
 #include <pluginface.hpp>
 
 
-namespace Xmax
+namespace xmax
 {
 	using xmaxapp::OptionsDesc;
 
-	class blockchain_plugin : public xmaxapp::PluginFace
+	class BlockChainPlugin : public xmaxapp::PluginFace
 	{
-		GENERATED_PLUGIN(blockchain_plugin, xmaxapp::PluginFace, &init_options)
+		GENERATED_PLUGIN(BlockChainPlugin, xmaxapp::PluginFace, &InitOptions)
 	public:
 
 	protected:
-		static void init_options(OptionsDesc& cli, OptionsDesc& cfg);
+		static void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
 	};
 }
