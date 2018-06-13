@@ -9,12 +9,19 @@
 
 namespace Xmax
 {
+
+
 	using namespace Xmaxapp;
 	void run(int argc, char** argv)
 	{
+		blockchain_plugin::regist_self();
+		blockbuilder_plugin::regist_self();
+
 		application app;
-		app.regist_plugin<blockchain_plugin>();
-		app.regist_plugin<blockbuilder_plugin>();
+
+		app.plugin_to_init("blockchain_plugin");
+		app.plugin_to_init("blockbuilder_plugin");
+
 		app.initialize(argc, argv);
 		app.startup();
 

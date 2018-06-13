@@ -16,7 +16,7 @@ namespace Xmax
 	 */
 	class xmaxnet_plugin : public Xmaxapp::plugin_face
 	{
-		GENERATED_PLUGIN(xmaxnet_plugin, Xmaxapp::plugin_face)
+		GENERATED_PLUGIN(xmaxnet_plugin, Xmaxapp::plugin_face, nullptr)
 	public:
 		xmaxnet_plugin();
 		virtual ~xmaxnet_plugin();

@@ -29,15 +29,11 @@ namespace Xmaxapp
 		// interface 
 		app_service* get_service() const override;
 		// ------------------
-		template<typename TPlugin>
-		void regist_plugin()
-		{
-			if (!check_regist(TPlugin::plugin_name()) )
-			{
-				regist_plugin(TPlugin::get_plugin_factory());
-			}			
-		}
+
+		void plugin_to_init(const string& plugin_name);
+
 		void initialize(int argc, char** argv);
+
 		void startup();
 		void shutdown();
 
@@ -46,12 +42,6 @@ namespace Xmaxapp
 
 	private:
 
-
-		void regist_plugin(plugin_factory&& _factory);
-
-		bool check_regist(const string& name) const;
-
-		std::map<string, plugin_factory>			plugin_factorys;
 		std::map<string, std::unique_ptr<plugin_face>>	pluginmap;
 		std::vector<plugin_face*>						initialized_plugins;
 		std::vector<plugin_face*>						startup_plugins;

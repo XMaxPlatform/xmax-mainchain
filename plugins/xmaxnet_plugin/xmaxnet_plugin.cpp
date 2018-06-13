@@ -4,6 +4,8 @@
 namespace Xmax {
 	using namespace Xmaxapp;
 
+	ALWAYS_REGIST_PLUGIN(xmaxnet_plugin);
+
 	/**
 	*  Implementation details of the xmax net plugin
 	*
@@ -13,8 +15,6 @@ namespace Xmax {
 	public:
 		xmaxnet_plugin_impl() {}
 		~xmaxnet_plugin_impl() {}
-
-
 	};
 
 
