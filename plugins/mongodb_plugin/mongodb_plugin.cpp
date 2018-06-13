@@ -32,19 +32,25 @@ namespace Xmax {
 	}
 
 	//--------------------------------------------------
-	void Xmax::MongoDBPlugin::Initialize(const VarsMap& options) {	
+	void Xmax::MongoDBPlugin::Initialize(const xmaxapp::VarsMap& options) {
+		PluginFace::Initialize(options);
+
 		impl_.reset(new MongoDBPluginImpl());
 	}
 
 	//--------------------------------------------------
 	void Xmax::MongoDBPlugin::Startup() {	
-
+		PluginFace::Startup();
 	}
 
 
 	//--------------------------------------------------
 	void MongoDBPlugin::Shutdown() {	
 		impl_.reset();
+
+
+
+		PluginFace::Shutdown();
 	}
 
 }

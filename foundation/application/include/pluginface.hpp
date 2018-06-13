@@ -5,6 +5,7 @@
 #pragma once
 
 #include <apps.hpp>
+#include <app_types.hpp>
 
 namespace xmaxapp
 {

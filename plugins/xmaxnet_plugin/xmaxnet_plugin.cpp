@@ -1,7 +1,7 @@
 #include <xmaxnet_plugin.hpp>
 
 
-namespace Xmax {
+namespace xmax {
 	using namespace xmaxapp;
 
 	/**
@@ -21,29 +21,35 @@ namespace Xmax {
 	*
 	*/
 	//--------------------------------------------------
-	Xmax::XmaxNetPlugin::XmaxNetPlugin() {	
+	XmaxNetPlugin::XmaxNetPlugin() {	
 
 	}
 
 	//--------------------------------------------------
-	Xmax::XmaxNetPlugin::~XmaxNetPlugin() {	
+	XmaxNetPlugin::~XmaxNetPlugin() {	
 
 	}
 
 	//--------------------------------------------------
-	void Xmax::XmaxNetPlugin::initialize(const vars_map& options) {	
+	void XmaxNetPlugin::Initialize(const xmaxapp::VarsMap& options) {
+		
+		PluginFace::Initialize(options);
+
 		impl_.reset(new XmaxNetPluginImpl());
 	}
 
 	//--------------------------------------------------
-	void Xmax::XmaxNetPlugin::startup() {	
-
+	void XmaxNetPlugin::Startup() {	
+		PluginFace::Startup();
 	}
 
 
 	//--------------------------------------------------
-	void XmaxNetPlugin::shutdown() {	
+	void XmaxNetPlugin::Shutdown() {	
 		impl_.reset();
+
+
+		PluginFace::Shutdown();
 	}
 
 }
