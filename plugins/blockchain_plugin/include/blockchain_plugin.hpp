@@ -8,14 +8,14 @@
 
 namespace Xmax
 {
-	using Xmaxapp::options_desc;
+	using xmaxapp::OptionsDesc;
 
-	class blockchain_plugin : public Xmaxapp::plugin_face
+	class blockchain_plugin : public xmaxapp::PluginFace
 	{
-		GENERATED_PLUGIN(blockchain_plugin, Xmaxapp::plugin_face, &init_options)
+		GENERATED_PLUGIN(blockchain_plugin, xmaxapp::PluginFace, &init_options)
 	public:
 
 	protected:
-		static void init_options(options_desc& cli, options_desc& cfg);
+		static void init_options(OptionsDesc& cli, OptionsDesc& cfg);
 	};
 }

@@ -6,102 +6,99 @@
 
 #include <apps.hpp>
 
-namespace Xmaxapp
+namespace xmaxapp
 {
-	class plugin_face;
-	class plugin_factory;
+	class PluginFace;
+	class PluginFactory;
 
-	using plugin_factory_function = plugin_face* (appbase*);
-	using plugin_init_options = void (options_desc& cli, options_desc& cfg);
+	using PluginFactoryFunction = PluginFace* (ApplicationBase*);
+	using PluginInitOptions = void (OptionsDesc& cli, OptionsDesc& cfg);
 
-	class plugin_factory
+	class PluginFactory
 	{
 	public:
 
-		plugin_face* create_plugin(appbase* owner)
+		PluginFace* CreatePlugin(ApplicationBase* owner)
 		{
-			if (_create_function)
+			if (create_function_)
 			{
-				return _create_function(owner);
+				return create_function_(owner);
 			}
 			return nullptr;
 		}
 
-		const string& get_name() const
+		const string& GetName() const
 		{
 			return plugin_name;
 		}
 
-		void init_options(options_desc& cli, options_desc& cfg)
+		void InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
 		{
-			if (_init_options)
+			if (init_options_)
 			{
-				_init_options(cli, cfg);
+				init_options_(cli, cfg);
 			}
 		}
 
 	private:
-		plugin_factory(const string& _name, const std::function<plugin_factory_function>& _function, const std::function<plugin_init_options>& _function2)
+		PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2)
 			: plugin_name(_name)
-			, _create_function(_function)
-			, _init_options(_function2)
+			, create_function_(_function)
+			, init_options_(_function2)
 		{
 
 		}
 		string plugin_name;
-		std::function<plugin_factory_function> _create_function;
-		std::function<plugin_init_options> _init_options;
+		std::function<PluginFactoryFunction> create_function_;
+		std::function<PluginInitOptions> init_options_;
 
 	public:
 
-		static bool is_regist(const string& name);
-		static plugin_factory* get_plugin_factory(const string& name);
-		static plugin_face* new_plugin(const string& name, appbase* owner);
-		static bool regist_factory(const string& _name, const std::function<plugin_factory_function>& _function, const std::function<plugin_init_options>& _function2);
+		static bool IsRegist(const string& name);
+		static PluginFactory* GetPluginFactory(const string& name);
+		static PluginFace* NewPlugin(const string& name, ApplicationBase* owner);
+		static bool RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2);
 	protected:
-		static std::map<string, std::unique_ptr<plugin_factory>> plugin_factorys;
+		static std::map<string, std::unique_ptr<PluginFactory>> sPluginFactorys;
 	};
 
-	class plugin_face : public plugin
+	class PluginFace : public Plugin
 	{
 		//GENERATED_PLUGIN(plugin_face, plugin);
 	public:
+		virtual const string& GetName() const = 0;
 
-		virtual state get_state() const override
+		virtual State GetState() const override
 		{
 			return plugin_state;
 		}		
-		virtual appbase* get_app() const override
+		virtual ApplicationBase* GetApp() const override
 		{
 			return _plugin_owner;
 		}
 
-		virtual void set_options(options_desc& cli, options_desc& cfg)
+		virtual void Initialize(const VarsMap& options)
 		{
-
-		}
-		virtual void initialize(const vars_map& options)
-		{
-			plugin_state = plugin::state::initialized;
+			plugin_state = Plugin::State::initialized;
 		}
 
-		virtual void startup()
+		virtual void Startup()
 		{
-			plugin_state = plugin::state::startuped;
+			plugin_state = Plugin::State::startuped;
 		}
-		virtual void shutdown()
+		virtual void Shutdown()
 		{
-			plugin_state = plugin::state::stopped;
+			plugin_state = Plugin::State::stopped;
 		}
 	protected:
-		plugin_face()
-			: plugin_state(plugin::state::unknown)
+		PluginFace()
+			: plugin_state(Plugin::State::unknown)
 			, _plugin_owner(nullptr)
 		{
 
 		}
 		template<typename TPlugin>
-		static TPlugin* create_plugin_impl(appbase* _owner)
+		static TPlugin* create_plugin_impl(ApplicationBase* _owner)
 		{
 			TPlugin* _self = new TPlugin();
 			_self->set_owner(_owner);
@@ -109,37 +106,37 @@ namespace Xmaxapp
 		}
 
 	private:
-		void set_owner(appbase* _owner)
+		void set_owner(ApplicationBase* _owner)
 		{
 			_plugin_owner = _owner;
 		}
-		plugin::state plugin_state;
-		appbase* _plugin_owner;
+		Plugin::State plugin_state;
+		ApplicationBase* _plugin_owner;
 	};
 
 }
 
 #define GENERATED_PLUGIN(plugin_self, super_class, init_opt) \
 	public:\
-		typedef super_class super;\
-		static const Xmaxapp::string& plugin_name()\
+		typedef super_class Super;\
+		static const xmaxapp::string& PluginName()\
 		{	\
-			static const Xmaxapp::string _plugin_name(#plugin_self);\
+			static const xmaxapp::string _plugin_name(#plugin_self);\
 			return _plugin_name;\
 		}	\
-		static bool regist_self()\
+		static bool RegistSelf()\
 		{\
-			return Xmaxapp::plugin_factory::regist_factory(plugin_name(), create_plugin, init_opt);\
+			return xmaxapp::PluginFactory::RegistFactory(PluginName(), createPlugin, init_opt);\
 		}\
-		virtual const Xmaxapp::string& get_name() const override\
+		virtual const xmaxapp::string& GetName() const override\
 		{\
-			return plugin_name();\
+			return PluginName();\
 		}\
 	private:\
-		static Xmaxapp::plugin_face* create_plugin(Xmaxapp::appbase* _owner)\
+		static xmaxapp::PluginFace* createPlugin(xmaxapp::ApplicationBase* _owner)\
 		{\
 			return create_plugin_impl<plugin_self>(_owner);\
 		}
 
 //#define ALWAYS_REGIST_PLUGIN(plugin_self) \
-//static bool b##plugin_self##_xxx = plugin_self::regist_self();
+//static bool b##plugin_self##_xxx = plugin_self::RegistSelf();

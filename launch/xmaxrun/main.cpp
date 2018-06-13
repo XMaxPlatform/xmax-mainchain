@@ -12,28 +12,28 @@ namespace Xmax
 {
 
 	
-	using namespace Xmaxapp;
-	void run(int argc, char** argv)
+	using namespace xmaxapp;
+	void Run(int argc, char** argv)
 	{
-		blockchain_plugin::regist_self();
-		blockbuilder_plugin::regist_self();
+		blockchain_plugin::RegistSelf();
+		blockbuilder_plugin::RegistSelf();
 
-		application app;
+		Application app;
 
-		app.plugin_to_init("blockchain_plugin");
-		app.plugin_to_init("blockbuilder_plugin");
+		app.PluginToInit("blockchain_plugin");
+		app.PluginToInit("blockbuilder_plugin");
 
-		app.initialize(argc, argv);
-		app.startup();
+		app.Initialize(argc, argv);
+		app.Startup();
 
 		ilog("Xmax app start.");
-		app.loop();
+		app.Loop();
 	}
 }
 
 // entry function
 int main(int argc, char** argv)
 {
-	Xmax::run(argc, argv);
+	Xmax::Run(argc, argv);
 	return 0;
 }

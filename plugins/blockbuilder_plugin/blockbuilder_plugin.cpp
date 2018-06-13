@@ -8,12 +8,12 @@
 namespace Xmax
 {
 
-	void blockbuilder_plugin::startup()
+	void blockbuilder_plugin::Startup()
 	{
-		super::startup();
+		Super::Startup();
 	}
 
-	void blockbuilder_plugin::init_options(options_desc& cli, options_desc& cfg)
+	void blockbuilder_plugin::InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
 	{
 		ilog("Blockbuilder plugin init options.");
 	}

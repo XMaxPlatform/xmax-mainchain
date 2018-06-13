@@ -9,18 +9,20 @@
 #include <boost/program_options.hpp>
 #include <boost/asio.hpp>
 
-namespace Xmaxapp
+namespace xmaxapp
 {
 	namespace options = boost::program_options;
 
 	namespace asio = boost::asio;
 
-	using options_desc = options::options_description;
-	using vars_map = options::variables_map;
-	using app_service = asio::io_service;
 	using string = std::string;
 
+	using OptionsDesc = options::options_description;
+	using VarsMap = options::variables_map;
+	using AppService = asio::io_service;
 
-	class appbase;
-	class plugin;
+
+
+	class ApplicationBase;
+	class Plugin;
 }

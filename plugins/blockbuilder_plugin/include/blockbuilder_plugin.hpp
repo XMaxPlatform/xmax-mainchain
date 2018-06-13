@@ -8,16 +8,16 @@
 
 namespace Xmax
 {
-	using Xmaxapp::options_desc;
-	class blockbuilder_plugin : public Xmaxapp::plugin_face
+	using xmaxapp::OptionsDesc;
+	class blockbuilder_plugin : public xmaxapp::PluginFace
 	{
-		GENERATED_PLUGIN(blockbuilder_plugin, Xmaxapp::plugin_face, &init_options)
+		GENERATED_PLUGIN(blockbuilder_plugin, xmaxapp::PluginFace, &InitOptions)
 	public:
 
-		virtual void startup() override;
+		virtual void Startup() override;
 
 	protected:
-		static void init_options(options_desc& cli, options_desc& cfg);
+		static void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
 
 	};
 }

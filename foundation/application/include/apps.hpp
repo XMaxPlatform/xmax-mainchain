@@ -6,12 +6,12 @@
 
 #include <app_types.hpp>
 
-namespace Xmaxapp
+namespace xmaxapp
 {
-	class plugin
+	class Plugin
 	{
 	public:
-		enum class state
+		enum class State
 		{
 			unknown = 0,
 			initialized, 
@@ -19,18 +19,18 @@ namespace Xmaxapp
 			stopped 
 		};
 
-		virtual ~plugin() {}
-		virtual state get_state() const = 0;
-		virtual const string& get_name() const = 0;
+		virtual ~Plugin() {}
+		virtual State GetState() const = 0;
+		virtual const string& GetName() const = 0;
 
-		virtual appbase* get_app() const = 0;
+		virtual ApplicationBase* GetApp() const = 0;
 	};
 
-	class appbase
+	class ApplicationBase
 	{
 	public:
-		virtual ~appbase() {}
+		virtual ~ApplicationBase() {}
 
-		virtual app_service* get_service() const = 0;
+		virtual AppService* GetService() const = 0;
 	};
 }

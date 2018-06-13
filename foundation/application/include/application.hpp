@@ -18,38 +18,40 @@
 //	} // namespace asio
 //} // namespace boost
 
-namespace Xmaxapp
+namespace xmaxapp
 {
-	class application : public appbase
+	class Application : public ApplicationBase
 	{
 	public:
-		application();
-		virtual ~application();
+		Application();
+		virtual ~Application();
 
 		// interface 
-		app_service* get_service() const override;
+		AppService* GetService() const override;
 		// ------------------
 
-		void plugin_to_init(const string& plugin_name);
+		void PluginToInit(const string& plugin_name);
 
-		void initialize(int argc, char** argv);
+		void Initialize(int argc, char** argv);
 
-		void startup();
-		void shutdown();
+		void Startup();
 
-		void loop();
-		void quit();
+		void Shutdown();
+
+		void Loop();
+
+		void Quit();
 
 	private:
 
-		std::map<string, std::unique_ptr<plugin_face>>	pluginmap;
-		std::vector<plugin_face*>						initialized_plugins;
-		std::vector<plugin_face*>						startup_plugins;
+		std::map<string, std::unique_ptr<PluginFace>>	pluginmap;
+		std::vector<PluginFace*>						initialized_plugins;
+		std::vector<PluginFace*>						startup_plugins;
 
-		options_desc     app_options;
-		options_desc     cfg_options;
+		OptionsDesc     app_options;
+		OptionsDesc     cfg_options;
 
-		std::unique_ptr<app_service>  service_face;
+		std::unique_ptr<AppService>  service_face;
 	};
 
 

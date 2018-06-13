@@ -2,7 +2,7 @@
 
 
 namespace Xmax {
-	using namespace Xmaxapp;
+	using namespace xmaxapp;
 
 	/**
 	*  Implementation details of the xmax net plugin
