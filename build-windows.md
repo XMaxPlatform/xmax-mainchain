@@ -32,7 +32,7 @@ Source download link: https://dl.bintray.com/boostorg/release/1.67.0/source/
 ## Build boost from source
 
 ### 1.
-Download the boost source to the directory you want, such as **c:\boost_1_66_0**.
+Download the boost source to the directory you want, such as **c:\boost_1_67_0**.
 
 ### 2.
 Add a system **ENV variable** to this path **BOOST_ROOT=c:\boost_1_67_0**

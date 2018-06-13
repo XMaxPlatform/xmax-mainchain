@@ -1,5 +1,5 @@
-# xmax-mainchain
-Xmax main blockchain system
+# XMax - Next Generation Decentralized Application Platform
+Official XMax main blockchain source code repository.
 
 # Table of contents
 
