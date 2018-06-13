@@ -3,9 +3,10 @@
 #include <map>
 #include <v8.h>
 
-namespace Xmax {
+namespace xmax {
 
-	namespace ScriptV8{
+	namespace scriptv8{
+
 		using namespace v8;
 
 		typedef std::function<void(const HandleScope&, const Local<ObjectTemplate>&, const Local<Context>&, const Context::Scope&)> DoWorkInJsCtx;

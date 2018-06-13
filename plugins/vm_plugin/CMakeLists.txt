@@ -12,6 +12,7 @@ source_group( src FILES ${SOURCE_FILES} "CMakeLists.txt")
 add_library( ${current_lib_name} ${SOURCE_FILES} ${HEADERS} ${SCRIPT_INTERFACE})
 
 target_link_libraries( ${current_lib_name}
+					   ${xmax_core_lib_name}
 
 )
 

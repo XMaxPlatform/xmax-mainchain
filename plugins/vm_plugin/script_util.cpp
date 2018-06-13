@@ -2,8 +2,8 @@
 #include "script_util.h"
 #include <iostream>
 
-namespace Xmax {
-	namespace ScriptV8 {
+namespace xmax {
+	namespace scriptv8 {
 		void EnterJsContext(Isolate* pIsolate, DoWorkInJsCtx dowork)
 		{
 			HandleScope current_handle_scope(pIsolate);

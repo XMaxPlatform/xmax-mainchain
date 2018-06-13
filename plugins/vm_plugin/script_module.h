@@ -1,25 +1,17 @@
 #pragma once
-
+#include "pro/utils/singleton.hpp "
 #include <v8.h>
 #include <string>
 
-namespace Xmax {
+namespace xmax {
 
-	namespace ScriptV8 {
+	namespace scriptv8 {
 
 		using namespace v8;
 
-		class ScriptMoudle {
-
+		class ScriptMoudle:public pro::Singleton<ScriptMoudle> {
+			DECLARE_USE_SINGLETON(ScriptMoudle)
 		public:
-			static ScriptMoudle& Instance()
-			{
-				static ScriptMoudle _instance;
-				return _instance;
-			}
-			
-			virtual ~ScriptMoudle();
-
 			void Init();
 			
 			void Call(const std::string& code, const std::string& fooName);
@@ -27,13 +19,12 @@ namespace Xmax {
 			void Discard();
 
 		private:
-			ScriptMoudle();
 			void DoworkInContext(const HandleScope& scope, const Local<ObjectTemplate>& global, const Local<Context>& context, const Context::Scope& ctxScope);
 
-			std::string				 m_CurrentCode;
-			std::string				 m_MainFooName;
+			std::string				 current_code_;
+			std::string				 main_foo_;
 
-			Isolate*                 m_pIsolate;
+			Isolate*                 isolate_;
 
 		};
 	}

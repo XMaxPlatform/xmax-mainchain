@@ -8,11 +8,10 @@ namespace Xmax {
 	*  Implementation details of the xmax net plugin
 	*
 	*/
-	class xmaxnet_plugin_impl
-	{
+	class XmaxNetPluginImpl {	
 	public:
-		xmaxnet_plugin_impl() {}
-		~xmaxnet_plugin_impl() {}
+		XmaxNetPluginImpl() {}
+		~XmaxNetPluginImpl() {}
 	};
 
 
@@ -22,34 +21,29 @@ namespace Xmax {
 	*
 	*/
 	//--------------------------------------------------
-	Xmax::xmaxnet_plugin::xmaxnet_plugin()
-	{
+	Xmax::XmaxNetPlugin::XmaxNetPlugin() {	
 
 	}
 
 	//--------------------------------------------------
-	Xmax::xmaxnet_plugin::~xmaxnet_plugin()
-	{
+	Xmax::XmaxNetPlugin::~XmaxNetPlugin() {	
 
 	}
 
 	//--------------------------------------------------
-	void Xmax::xmaxnet_plugin::initialize(const vars_map& options)
-	{
-		m_pImpl.reset(new xmaxnet_plugin_impl());
+	void Xmax::XmaxNetPlugin::initialize(const vars_map& options) {	
+		impl_.reset(new XmaxNetPluginImpl());
 	}
 
 	//--------------------------------------------------
-	void Xmax::xmaxnet_plugin::startup()
-	{
+	void Xmax::XmaxNetPlugin::startup() {	
 
 	}
 
 
 	//--------------------------------------------------
-	void xmaxnet_plugin::shutdown()
-	{
-		m_pImpl.reset();
+	void XmaxNetPlugin::shutdown() {	
+		impl_.reset();
 	}
 
 }
