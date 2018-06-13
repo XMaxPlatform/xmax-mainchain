@@ -1,6 +1,7 @@
 /**
  *  @file
- *  @copyright defined in xmax/LICENSE
+ *  @Copyright (c) 2018 in xmax/LICENSE
+ *  @
  */
 #include <application.hpp>
 #include <blockchain_plugin.hpp>
@@ -10,7 +11,7 @@
 namespace Xmax
 {
 
-
+	
 	using namespace Xmaxapp;
 	void run(int argc, char** argv)
 	{
@@ -30,6 +31,7 @@ namespace Xmax
 	}
 }
 
+// entry function
 int main(int argc, char** argv)
 {
 	Xmax::run(argc, argv);
