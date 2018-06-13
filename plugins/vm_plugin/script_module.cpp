@@ -13,7 +13,10 @@ namespace Xmax {
 
 		ScriptMoudle::~ScriptMoudle()
 		{
-
+			if (m_pIsolate!=nullptr)
+			{
+				Discard();
+			}
 		}
 
 		void ScriptMoudle::Init()
@@ -29,13 +32,11 @@ namespace Xmax {
 			m_pIsolate = Isolate::New(create_params);
 		}
 
-
 		void ScriptMoudle::DoworkInContext(const v8::HandleScope& scope, const v8::Local<ObjectTemplate>& global, const v8::Local<Context>& context, const v8::Context::Scope& ctxScope)
 		{
 			CompileJsCode(m_pIsolate, context, m_CurrentCode.c_str() );
 			CallJsFoo(m_pIsolate, context, m_MainFooName.c_str() , 0, NULL);
 		}
-
 
 		void ScriptMoudle::Call(const std::string& code,const std::string& fooName)
 		{
@@ -48,6 +49,7 @@ namespace Xmax {
 		void ScriptMoudle::Discard()
 		{
 			m_pIsolate->Dispose();
+			m_pIsolate = nullptr;
 			v8::V8::Dispose();
 			v8::V8::ShutdownPlatform();
 		}

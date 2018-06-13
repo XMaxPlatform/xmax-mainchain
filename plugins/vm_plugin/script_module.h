@@ -12,18 +12,22 @@ namespace Xmax {
 		class ScriptMoudle {
 
 		public:
-
-			ScriptMoudle();
+			static ScriptMoudle& Instance()
+			{
+				static ScriptMoudle _instance;
+				return _instance;
+			}
+			
 			virtual ~ScriptMoudle();
 
 			void Init();
-			//void LoadCode(const std::string& code);
+			
 			void Call(const std::string& code, const std::string& fooName);
-			//void UnloadCode();
+
 			void Discard();
 
 		private:
-
+			ScriptMoudle();
 			void DoworkInContext(const HandleScope& scope, const Local<ObjectTemplate>& global, const Local<Context>& context, const Context::Scope& ctxScope);
 
 			std::string				 m_CurrentCode;
