@@ -5,8 +5,9 @@
 #include <v8.h>
 using namespace v8;
 
-namespace Xmaxplatform {
-	namespace Chain {
+namespace xmax {
+	namespace scriptv8 {
+
 		class V8i64
 		{
 		public:
