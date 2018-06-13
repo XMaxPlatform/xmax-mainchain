@@ -12,8 +12,7 @@ namespace Xmax
 	/**
 	* Serialize blockchain data using mongo db	
 	*/
-	class MongoDBPlugin : public Xmaxapp::plugin_face
-	{
+	class MongoDBPlugin : public Xmaxapp::plugin_face {	
 		GENERATED_PLUGIN(MongoDBPlugin, Xmaxapp::plugin_face, nullptr)
 	public:
 		MongoDBPlugin();

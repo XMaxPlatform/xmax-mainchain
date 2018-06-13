@@ -7,8 +7,7 @@ namespace Xmax {
 	*  Implementation details of the xmax mongodb plugin
 	*
 	*/
-	class MongoDBPluginImpl
-	{
+	class MongoDBPluginImpl {	
 	public:
 		MongoDBPluginImpl() {}
 		~MongoDBPluginImpl() {}
@@ -23,33 +22,28 @@ namespace Xmax {
 	*
 	*/
 	//--------------------------------------------------
-	Xmax::MongoDBPlugin::MongoDBPlugin()
-	{
+	Xmax::MongoDBPlugin::MongoDBPlugin() {	
 
 	}
 
 	//--------------------------------------------------
-	Xmax::MongoDBPlugin::~MongoDBPlugin()
-	{
+	Xmax::MongoDBPlugin::~MongoDBPlugin() {	
 
 	}
 
 	//--------------------------------------------------
-	void Xmax::MongoDBPlugin::initialize(const vars_map& options)
-	{
+	void Xmax::MongoDBPlugin::initialize(const vars_map& options) {	
 		impl_.reset(new MongoDBPluginImpl());
 	}
 
 	//--------------------------------------------------
-	void Xmax::MongoDBPlugin::startup()
-	{
+	void Xmax::MongoDBPlugin::startup() {	
 
 	}
 
 
 	//--------------------------------------------------
-	void MongoDBPlugin::shutdown()
-	{
+	void MongoDBPlugin::shutdown() {	
 		impl_.reset();
 	}
 
