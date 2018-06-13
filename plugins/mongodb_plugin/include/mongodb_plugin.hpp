@@ -14,7 +14,7 @@ namespace Xmax
 	*/
 	class mongodb_plugin : public Xmaxapp::plugin_face
 	{
-		GENERATED_PLUGIN(mongodb_plugin, Xmaxapp::plugin_face)
+		GENERATED_PLUGIN(mongodb_plugin, Xmaxapp::plugin_face, nullptr)
 	public:
 		mongodb_plugin();
 		virtual ~mongodb_plugin();
