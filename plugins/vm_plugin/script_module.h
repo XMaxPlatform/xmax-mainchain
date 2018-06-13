@@ -9,7 +9,7 @@ namespace xmax {
 
 		using namespace v8;
 
-		class ScriptMoudle:public pro::singleton<ScriptMoudle> {
+		class ScriptMoudle:public pro::Singleton<ScriptMoudle> {
 			DECLARE_USE_SINGLETON(ScriptMoudle)
 		public:
 			void Init();

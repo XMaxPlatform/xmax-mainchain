@@ -12,18 +12,18 @@ namespace Xmax
 	/**
 	* Serialize blockchain data using mongo db	
 	*/
-	class mongodb_plugin : public Xmaxapp::plugin_face
+	class MongoDBPlugin : public Xmaxapp::plugin_face
 	{
-		GENERATED_PLUGIN(mongodb_plugin, Xmaxapp::plugin_face, nullptr)
+		GENERATED_PLUGIN(MongoDBPlugin, Xmaxapp::plugin_face, nullptr)
 	public:
-		mongodb_plugin();
-		virtual ~mongodb_plugin();
+		MongoDBPlugin();
+		virtual ~MongoDBPlugin();
 
 		virtual void initialize(const Xmaxapp::vars_map& options) override;
 		virtual void startup() override;
 		virtual void shutdown() override;
 
 	private:
-		std::unique_ptr<class mongodb_plugin_impl> m_pImpl;
+		std::unique_ptr<class MongoDBPluginImpl> impl_;
 	};
 }

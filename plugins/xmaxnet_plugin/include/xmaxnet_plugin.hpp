@@ -14,18 +14,18 @@ namespace Xmax
 	 * This plugin is responsible for the peer to peer communications. Besides it
 	 *  also handle the blockchain's data compress and decompress using ProtoBuf.
 	 */
-	class xmaxnet_plugin : public Xmaxapp::plugin_face
+	class XmaxNetPlugin : public Xmaxapp::plugin_face
 	{
-		GENERATED_PLUGIN(xmaxnet_plugin, Xmaxapp::plugin_face, nullptr)
+		GENERATED_PLUGIN(XmaxNetPlugin, Xmaxapp::plugin_face, nullptr)
 	public:
-		xmaxnet_plugin();
-		virtual ~xmaxnet_plugin();
+		XmaxNetPlugin();
+		virtual ~XmaxNetPlugin();
 
 		virtual void initialize(const Xmaxapp::vars_map& options) override;
 		virtual void startup() override;
 		virtual void shutdown() override;
 
 	private:
-		std::unique_ptr<class xmaxnet_plugin_impl> m_pImpl;
+		std::unique_ptr<class XmaxNetPluginImpl> impl_;
 	};
 }

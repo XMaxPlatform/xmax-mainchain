@@ -1,18 +1,19 @@
+#pragma once
 
 namespace pro
 {
 	template <class T>
-	class singleton
+	class Singleton
 	{
-		singleton<T>(const singleton<T>&) = delete;
-		singleton<T>& operator=(const singleton<T>&) = delete;
+		Singleton<T>(const Singleton<T>&) = delete;
+		Singleton<T>& operator=(const Singleton<T>&) = delete;
 
 	protected:
-		singleton<T>() = default;
-		virtual ~singleton<T>() = default;
+		Singleton<T>() = default;
+		virtual ~Singleton<T>() = default;
 
 	public:
-		static inline T& getInstance() {
+		static inline T& GetInstance() {
 			static T inst;
 			return inst;
 		}			
@@ -22,5 +23,5 @@ namespace pro
 #define DECLARE_USE_SINGLETON(CLS) \
 		CLS();\
 		virtual ~CLS(); \
-		friend class pro::singleton<CLS>;
+		friend class pro::Singleton<CLS>;
 }
