@@ -2,10 +2,11 @@
 #include <functional>
 #include <map>
 #include <v8.h>
-using namespace v8;
+
 namespace Xmax {
 
 	namespace ScriptV8{
+		using namespace v8;
 
 		typedef std::function<void(const HandleScope&, const Local<ObjectTemplate>&, const Local<Context>&, const Context::Scope&)> DoWorkInJsCtx;
 
@@ -15,7 +16,7 @@ namespace Xmax {
 
 		void BindJsFoos(Isolate* pIsolate, const Local<ObjectTemplate>& fooGlobal, const JsFooBindMap& foosToBind);
 
-		void CompileJsCode(Isolate* pIsolate, const Local<Context>& context, char* jsCode);
+		void CompileJsCode(Isolate* pIsolate, const Local<Context>& context,const char* jsCode);
 
 		Handle<v8::Value> CallJsFoo(Isolate* pIsolate, const Local<Context>& context, const char* fooname, unsigned int argc, Handle<v8::Value>* params);
 

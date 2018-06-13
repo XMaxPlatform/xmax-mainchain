@@ -29,7 +29,7 @@ namespace Xmax {
 			}
 		}
 
-		void CompileJsCode(Isolate* pIsolate, const Local<Context>& context, char* jsCode)
+		void CompileJsCode(Isolate* pIsolate, const Local<Context>& context,const char* jsCode)
 		{
 			Local<String> source =
 				String::NewFromUtf8(pIsolate, jsCode,
@@ -54,7 +54,7 @@ namespace Xmax {
 			Handle<v8::Value>  js_func_val = context->Global()->Get(js_func_name);
 			if (!js_func_val->IsFunction())
 			{
-				std::cerr << "Can't find js funcion init()" << std::endl;
+				std::cerr << "Can't find js funcion" << std::endl;
 				return  Undefined(pIsolate);
 			}
 			else
