@@ -15,7 +15,6 @@ source_group(
 	src
 	FILES 
 	${SOURCE_FILES}
-	"CMakeLists.txt"
 )
 
 add_library( ${current_lib_name} ${SOURCE_FILES} ${HEADERS} )

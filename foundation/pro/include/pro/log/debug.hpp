@@ -3,9 +3,9 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <build.hpp>
+#include <pro/types/build.hpp>
 
-namespace Xmax
+namespace pro
 {
 
 

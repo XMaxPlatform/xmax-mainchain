@@ -4,11 +4,11 @@
 */
 #include <cstdarg>
 #include <iostream>
-#include "debug.hpp"
-#include "log.hpp"
+#include <pro/log/debug.hpp>
+#include <pro/log/log.hpp>
 
 
-namespace Xmax
+namespace pro
 {
 	static const string LineCode = "\r\n";
 
@@ -23,7 +23,7 @@ namespace Xmax
 		std::cout << msg << std::endl;
 
 
-#if _Xmax_Platform == _Xmax_Platform_Windows
+#if _Platform_Target == _Platform_Windows
 		string u8;
 		switch (level)
 		{

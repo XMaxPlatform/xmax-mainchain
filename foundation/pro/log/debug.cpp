@@ -3,28 +3,28 @@
 *  @copyright defined in xmax/LICENSE
 */
 
-#if _Xmax_Platform == _Xmax_Platform_Windows
+#if _Platform_Target == _Platform_Windows
 #include <Windows.h>
 #   pragma warning (disable : 4996)
 #   pragma warning (disable : 4717)
 #endif // _DEBUG
 
 
-#include "debug.hpp"
+#include <pro/log/debug.hpp>
 
 
 
-#if _Xmax_Platform == _Xmax_Platform_Windows
+#if _Platform_Target == _Platform_Windows
 #	define  _DEBUG_OUTPUTA(x) OutputDebugStringA(x)
 #else
 #	define	_DEBUG_OUTPUTA(x)
 #endif // WIN32
 
 
-namespace Xmax
+namespace pro
 {
 
-#if _Xmax_Platform == _Xmax_Platform_Windows
+#if _Platform_Target == _Platform_Windows
 	static const char line_code[] = "\n";
 #endif
 

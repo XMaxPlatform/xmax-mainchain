@@ -2,7 +2,7 @@
 *  @file
 *  @copyright defined in xmax/LICENSE
 */
-#include <log.hpp>
+#include <pro/log/log.hpp>
 #include "application.hpp"
 
 namespace Xmaxapp

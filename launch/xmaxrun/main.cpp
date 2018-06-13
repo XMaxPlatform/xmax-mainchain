@@ -5,7 +5,7 @@
 #include <application.hpp>
 #include <blockchain_plugin.hpp>
 #include <blockbuilder_plugin.hpp>
-#include <log.hpp>
+#include <pro/log/log.hpp>
 
 namespace Xmax
 {

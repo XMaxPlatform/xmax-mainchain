@@ -2,4 +2,4 @@
 *  @file
 *  @copyright defined in xmax/LICENSE
 */
-#include "xmaxtypes.hpp"
+#include "pro/types/protypes.hpp"

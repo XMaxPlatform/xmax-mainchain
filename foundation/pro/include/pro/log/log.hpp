@@ -4,11 +4,11 @@
 */
 
 #pragma once
-#include <generictypes.hpp>
+#include <pro/types/generictypes.hpp>
 
-namespace Xmax
+namespace pro
 {
-	using Xmax::Generictypes::string;
+	using pro::generictypes::string;
 
 	enum loglevel : int
 	{
@@ -29,9 +29,9 @@ namespace Xmax
 	void _set_logfilename(const string& name);
 
 
-#define iwarnning(fmt, ...) _log_message(Xmax::loglevel(Xmax::loglevel::Warnning), fmt, __VA_ARGS__)
+#define iwarnning(fmt, ...) pro::_log_message(pro::loglevel(pro::loglevel::Warnning), fmt, __VA_ARGS__)
 
-#define ilog(fmt, ...) _log_message(Xmax::loglevel(Xmax::loglevel::Info), fmt, __VA_ARGS__)
+#define ilog(fmt, ...) pro::_log_message(pro::loglevel(pro::loglevel::Info), fmt, __VA_ARGS__)
 
 //#define ierror(fmt, ...) _xmax_error(__FILE__, __LINE__, fmt, __VA_ARGS__)
 

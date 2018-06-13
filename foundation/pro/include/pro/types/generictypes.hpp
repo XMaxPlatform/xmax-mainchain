@@ -3,11 +3,11 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <build.hpp>
+#include <pro/types/build.hpp>
 #include <string>
-namespace Xmax
+namespace pro
 {
-	namespace Generictypes
+	namespace generictypes
 	{
 		using string = std::string;
 

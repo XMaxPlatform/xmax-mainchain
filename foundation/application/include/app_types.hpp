@@ -4,7 +4,7 @@
 */
 #pragma once
 
-#include <build.hpp>
+#include <pro/types/build.hpp>
 #include <string>
 #include <boost/program_options.hpp>
 #include <boost/asio.hpp>

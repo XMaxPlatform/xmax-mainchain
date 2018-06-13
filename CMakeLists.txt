@@ -30,11 +30,9 @@ list(APPEND BOOST_REUIQRED_COMPONENTS
 	serialization 
 )
 
-#if("${BOOST_ROOT}" STREQUAL "")
-#  set(BOOST_ROOT $ENV{BOOST_ROOT})
-#endif()
-
-message( STATUS "BOOST_ROOT111:${BOOST_ROOT}")
+if("${BOOST_ROOT}" STREQUAL "")
+  set(BOOST_ROOT $ENV{BOOST_ROOT})
+endif()
 
 
 if( WIN32 )
@@ -50,16 +48,12 @@ ${BOOST_REUIQRED_COMPONENTS}
 )
 
 
-message( STATUS "BOOST_ROOT:${BOOST_ROOT}")
-message( STATUS "Boost_INCLUDE_DIR:${Boost_INCLUDE_DIR}")
-
-
 # temp disable:  warning C4996: 'std::result_of': warning STL4014.
 # by zhongdaohuan
 add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
 add_definitions(-D_SILENCE_CXX17_RESULT_OF_DEPRECATION_WARNING)
 
-set(xmax_core_lib_name core)
+set(xmax_core_lib_name pro)
 
 set(xmax_app_lib_name application)
 

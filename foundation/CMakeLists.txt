@@ -1,2 +1,2 @@
-add_subdirectory( core )
+add_subdirectory( pro )
 add_subdirectory( application )
