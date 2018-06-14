@@ -12,10 +12,19 @@ namespace Xmax {
 		MongoDBPluginImpl() {}
 		~MongoDBPluginImpl() {}
 
-
+		void Initilize();
+		void Shutdown();
 	};
 
+	//--------------------------------------------------
+	void MongoDBPluginImpl::Initilize() {		
+	}
 
+
+	//--------------------------------------------------
+	void MongoDBPluginImpl::Shutdown() {
+
+	}
 
 	/**
 	*  Implementations of xmaxnet_plugin interfaces
@@ -36,6 +45,7 @@ namespace Xmax {
 		PluginFace::Initialize(options);
 
 		impl_.reset(new MongoDBPluginImpl());
+		impl_->Initilize();
 	}
 
 	//--------------------------------------------------
@@ -46,9 +56,9 @@ namespace Xmax {
 
 	//--------------------------------------------------
 	void MongoDBPlugin::Shutdown() {	
+		
+		impl_->Shutdown();
 		impl_.reset();
-
-
 
 		PluginFace::Shutdown();
 	}
