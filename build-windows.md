@@ -1,21 +1,23 @@
-# Build Xmax-mainchain on Windows
-Build Xmax main blockchain on Windows 10.
+# Building XMax Platform on Windows 10
 
-# Table of Contents
-1. [Prepare](#prepare)
-2. [Build Boost](#buildboost)
+# Prerequisites 
 
-
-
-<a name="parepare"></a>
-# Prepare
-
-* IDE: **Visual Studio 2017**
-* **CMake 3.11.0** or above
+* **Visual Studio 15 2017** Win64 with Visual C++ 2017 15 compiler and tools
+* **CMake 3.11.0** or newer
 * **Boost 1.67.0**
-* Git command tools
 
+# Quick Guild
 
+Open command prompt enters the fellowing command to generate Visual Studio Solution
+
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" "[source dir]"    
+e.g.
+
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" "../"
+
+Open "Xmax-mainchain.sln" with Visual Studio 2017 and build.
+
+# Detailed Guild
 <a name="buildboost"></a>
 # Build boost libraries
 
