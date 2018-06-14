@@ -60,7 +60,7 @@ namespace xmaxapp
 		static PluginFace* NewPlugin(const string& name, ApplicationBase* owner);
 		static bool RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2);
 	protected:
-		static std::map<string, std::unique_ptr<PluginFactory>> sPluginFactorys;
+		static std::unordered_map<string, std::unique_ptr<PluginFactory>> sPluginFactorys;
 	};
 
 	class PluginFace : public Plugin

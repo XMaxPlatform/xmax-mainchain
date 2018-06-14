@@ -7,7 +7,7 @@
 
 namespace xmaxapp
 {
-	std::map<string, std::unique_ptr<PluginFactory>> PluginFactory::sPluginFactorys;
+	std::unordered_map<string, std::unique_ptr<PluginFactory>> PluginFactory::sPluginFactorys;
 
 	bool PluginFactory::RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2)
 	{
