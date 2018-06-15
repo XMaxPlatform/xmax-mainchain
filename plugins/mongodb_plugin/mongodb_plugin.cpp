@@ -1,6 +1,6 @@
 #include <mongodb_plugin.hpp>
 
-namespace Xmax {
+namespace xmax {
 	using namespace xmaxapp;
 
 	/**
@@ -31,17 +31,17 @@ namespace Xmax {
 	*
 	*/
 	//--------------------------------------------------
-	Xmax::MongoDBPlugin::MongoDBPlugin() {	
+	MongoDBPlugin::MongoDBPlugin() {	
 
 	}
 
 	//--------------------------------------------------
-	Xmax::MongoDBPlugin::~MongoDBPlugin() {	
+	MongoDBPlugin::~MongoDBPlugin() {	
 
 	}
 
 	//--------------------------------------------------
-	void Xmax::MongoDBPlugin::Initialize(const xmaxapp::VarsMap& options) {
+	void MongoDBPlugin::Initialize(const xmaxapp::VarsMap& options) {
 		PluginFace::Initialize(options);
 
 		impl_.reset(new MongoDBPluginImpl());
@@ -49,7 +49,7 @@ namespace Xmax {
 	}
 
 	//--------------------------------------------------
-	void Xmax::MongoDBPlugin::Startup() {	
+	void MongoDBPlugin::Startup() {	
 		PluginFace::Startup();
 	}
 
