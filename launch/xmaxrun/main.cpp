@@ -6,7 +6,10 @@
 #include <application.hpp>
 #include <blockchain_plugin.hpp>
 #include <blockbuilder_plugin.hpp>
+#include <mongodb_plugin.hpp>
+#include <xmaxnet_plugin.hpp>
 #include <pro/log/log.hpp>
+
 
 namespace xmax
 {
@@ -17,6 +20,8 @@ namespace xmax
 	{
 		BlockChainPlugin::RegistSelf();
 		BlockBuilderPlugin::RegistSelf();
+		MongoDBPlugin::RegistSelf();
+		XmaxNetPlugin::RegistSelf();
 
 		Application app;
 
