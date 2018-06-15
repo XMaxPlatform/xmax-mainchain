@@ -30,6 +30,7 @@ list(APPEND BOOST_REUIQRED_COMPONENTS
 	date_time 
 	regex 
 	serialization 
+	unit_test_framework
 )
 
 if("${BOOST_ROOT}" STREQUAL "")
