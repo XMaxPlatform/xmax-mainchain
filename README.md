@@ -26,9 +26,9 @@ list(APPEND BOOST_REUIQRED_COMPONENTS filesystem)
 
 ## Call boost cmake macro
 
-In your target project CMakeLists.txt file, add the **TARGET_USE_BOOST()** macro call. For example:
+In your target project CMakeLists.txt file, add the **\${Boost_INCLUDE_DIR}** to the build target's include directory and add the **${Boost_LIBRARIES}** to the link properties. For example:
 ```bash
-TARGET_USE_BOOST()
+target_include_directories( ${current_lib_name} PUBLIC "include"  "${Boost_INCLUDE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" )
 
-add_executable( test_program main.cpp)
+target_link_libraries( ${current_lib_name} ${Boost_LIBRARIES})
 ```
