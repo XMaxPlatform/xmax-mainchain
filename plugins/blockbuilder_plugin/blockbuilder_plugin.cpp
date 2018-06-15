@@ -3,25 +3,42 @@
 *  @copyright defined in xmax/LICENSE
 */
 #include <pro/log/log.hpp>
+#include <pro/types/time.hpp>
 #include <boost/asio/io_service.hpp>
 #include "blockbuilder_plugin.hpp"
 
 namespace xmax
 {
+	using namespace pro;
 	class BlockBuilderImpl
 	{
 	public:
-		boost::asio::deadline_timer timer;
+		boost::asio::deadline_timer timer_;
 
 
 		BlockBuilderImpl(boost::asio::io_service& io)
-			: timer(io)
+			: timer_(io)
 		{
 
 		}
 
 		void StartLoop()
 		{
+			//timer_.expires_from_now(boost::posix_time::microseconds(time_to_next_block_time));
+			//timer_.async_wait(boost::bind(&BlockBuilderImpl::NextBlock, this));
+
+			//TimeMilliseconds time(2000ll);
+			//TimeMicroseconds micro = time.ToTime<TimeMicroseconds>();
+			//TimeMilliseconds time2 = micro.ToTime<TimeMilliseconds>();
+
+			assert(time.GetValue() == 2000ll);
+			assert(micro.GetValue() == 2000ll * 1000ll);
+
+		}
+
+		void BlockBuilderImpl::NextBlock() {
+
+
 
 		}
 

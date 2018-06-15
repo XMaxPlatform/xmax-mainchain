@@ -11,7 +11,7 @@ function(list_source ref_hpps ref_cpps hpps cpps code_scope)
 		set(sscope "${current_lib_name}\\${code_scope}")
 	else()
 		set(hscope "include/${code_scope}")
-		set(sscope "${current_lib_name}\\${code_scope}")
+		set(sscope "${current_lib_name}/${code_scope}")
 	endif()
 
 

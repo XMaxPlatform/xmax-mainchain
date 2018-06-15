@@ -8,7 +8,6 @@
 
 namespace pro
 {
-	using pro::generictypes::string;
 
 	enum loglevel : int
 	{
