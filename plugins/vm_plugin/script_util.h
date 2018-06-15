@@ -1,7 +1,11 @@
+//@file
+//@copyright defined in xmax/LICENSE
 #pragma once
 #include <functional>
 #include <map>
 #include <v8.h>
+
+
 
 namespace xmax {
 
