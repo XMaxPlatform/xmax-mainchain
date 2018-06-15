@@ -22,6 +22,9 @@ namespace xmax
 		virtual void Startup() override;
 
 	protected:
+
+		virtual void OnCreated() override;
+
 		static void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
 
 

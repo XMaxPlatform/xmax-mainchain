@@ -26,11 +26,15 @@ namespace xmax
 
 	}
 
+	void BlockBuilderPlugin::OnCreated()
+	{
+		Super::OnCreated();
+		impl_ = std::make_unique<BlockBuilderImpl>(*GetApp()->GetService());
+	}
+
 	void BlockBuilderPlugin::Initialize(const VarsMap& options)
 	{
 		Super::Initialize(options);
-
-		impl_ = std::make_unique<BlockBuilderImpl>(*GetApp()->GetService());
 	}
 
 	void BlockBuilderPlugin::Startup()

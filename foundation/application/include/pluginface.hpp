@@ -22,33 +22,17 @@ namespace xmaxapp
 		 *create a plugin
 		 * @param[in] ApplicationBase
 		 */
-		PluginFace* CreatePlugin(ApplicationBase* owner)
-		{
-			if (create_function_)
-			{
-				return create_function_(owner);
-			}
-			return nullptr;
-		}
+		PluginFace* CreatePlugin(ApplicationBase* owner);
 		/**
 		 *name of plugin
 		 */
-		const string& GetName() const
-		{
-			return plugin_name_;
-		}
+		const string& GetName() const;
 		/**
 		* initialize options
 		* @param[in] OptionsDesc option desc
 		* @param[in] OptionsDesc option cfg
 		*/
-		void InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
-		{
-			if (init_options_)
-			{
-				init_options_(cli, cfg);
-			}
-		}
+		void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
 
 	private:
 		/**
@@ -57,13 +41,8 @@ namespace xmaxapp
 		* @param[in] std::function factory method
 		* @param[in] std::function initoptions
 		*/
-		PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2)
-			: plugin_name_(_name)
-			, create_function_(_function)
-			, init_options_(_function2)
-		{
+		PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2);
 
-		}
 		string plugin_name_;
 		std::function<PluginFactoryFunction> create_function_;
 		std::function<PluginInitOptions> init_options_;
@@ -100,37 +79,26 @@ namespace xmaxapp
 	{
 		//GENERATED_PLUGIN(plugin_face, plugin);
 	public:
+
+		virtual State GetState() const override;
+
+		virtual ApplicationBase* GetApp() const override;
+
+		virtual void Initialize(const VarsMap& options);
+
+		virtual void Startup();
+
+		virtual void Shutdown();
+
 		virtual const string& GetName() const = 0;
 
-		virtual State GetState() const override
-		{
-			return plugin_state_;
-		}		
-		virtual ApplicationBase* GetApp() const override
-		{
-			return plugin_owner_;
-		}
+		friend class PluginFactory;
 
-		virtual void Initialize(const VarsMap& options)
-		{
-			plugin_state_ = Plugin::State::initialized;
-		}
-
-		virtual void Startup()
-		{
-			plugin_state_ = Plugin::State::startuped;
-		}
-		virtual void Shutdown()
-		{
-			plugin_state_ = Plugin::State::stopped;
-		}
 	protected:
-		PluginFace()
-			: plugin_state_(Plugin::State::unknown)
-			, plugin_owner_(nullptr)
-		{
+		PluginFace();
 
-		}
+		virtual void OnCreated();
+
 		template<typename TPlugin>
 		static TPlugin* CreatePluginImpl(ApplicationBase* _owner)
 		{
