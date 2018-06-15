@@ -27,10 +27,15 @@ Open "Xmax-mainchain.sln" with Visual Studio 2017 and build.
 # Download & install CMake
 <a name="cmake"></a>
 
-Get latest Windows win64-x64 at https://cmake.org/download/
+Get latest CMake Windows win64-x64 at https://cmake.org/download/ .
 
+Run the installer or unzip to intall.
 
+If you choose to download the installer(recommanded). Be sure to check "Add CMake to the system PATH" option while installing, if you wish to use CMake via command prompt. You can also add it to the system PATH manually later, same as while you choose to install via zip.
 
+Note that the directory needs to add to PATH is "bin" which is under the root directory. e.g.
+
+    C:\Program Files\CMake\bin
 
 # Download & build Boost
 <a name="boost"></a>
