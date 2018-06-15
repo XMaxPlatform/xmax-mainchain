@@ -19,6 +19,12 @@ namespace xmax
 		{
 
 		}
+
+		void StartLoop()
+		{
+
+		}
+
 	};
 
 	BlockBuilderPlugin::BlockBuilderPlugin()
@@ -40,6 +46,7 @@ namespace xmax
 	void BlockBuilderPlugin::Startup()
 	{
 		Super::Startup();
+		impl_->StartLoop();
 	}
 
 	void BlockBuilderPlugin::InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
