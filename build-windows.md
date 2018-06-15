@@ -18,8 +18,22 @@ e.g.
 Open "Xmax-mainchain.sln" with Visual Studio 2017 and build.
 
 # Detailed Guide
-<a name="buildboost"></a>
-# Build boost libraries
+
+1. [Download & install CMake](#cmake)
+1. [Download & build Boost](#boost)
+1. [Generate Visual Studio Solution with CMake](#gensln)
+1. [Building XMax Platform with Visual Studio 15 2017](#build)
+
+# Download & install CMake
+<a name="cmake"></a>
+
+Get latest Windows win64-x64 at https://cmake.org/download/
+
+
+
+
+# Download & build Boost
+<a name="boost"></a>
 
 ## Download the prerequisites.
 Boost version: **1.67.0**
@@ -47,5 +61,10 @@ Open the command line or Windows PowerShell and cd to boost root path, call buil
 ```
 If you used other source directory, you need to replace the path value in above steps.
 
+# Generate Visual Studio Solution with CMake
+<a name="gensln"></a>
+
+# Building XMax Platform with Visual Studio 15 2017
+<a name="build"></a>
 
 
