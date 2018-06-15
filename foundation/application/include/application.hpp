@@ -44,14 +44,14 @@ namespace xmaxapp
 
 	private:
 
-		std::map<string, std::unique_ptr<PluginFace>>	pluginmap;
-		std::vector<PluginFace*>						initialized_plugins;
-		std::vector<PluginFace*>						startup_plugins;
+		std::map<string, std::unique_ptr<PluginFace>>	pluginmap_;
+		std::vector<PluginFace*>						initialized_plugins_;
+		std::vector<PluginFace*>						startup_plugins_;
 
-		OptionsDesc     app_options;
-		OptionsDesc     cfg_options;
+		OptionsDesc     app_options_;
+		OptionsDesc     cfg_options_;
 
-		std::unique_ptr<AppService>  service_face;
+		std::unique_ptr<AppService>  service_face_;
 	};
 
 
