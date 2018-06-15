@@ -1,14 +1,13 @@
 # XMax - Next Generation Decentralized Application Platform
+
 Official XMax main blockchain source code repository.
 
-# Table of contents
+# Building XMax Platform
 
-1. [Build on Windows 10](build-windows.md)
-2. [Use boost in project](#useboostcmake)
+# Supported Platforms
 
-
-
-
+1. [Windows 10](build-windows.md)
+2. CentOS 7 (Coming Soon)
 
 <a name="useboostcmake"></a>
 # Use boost in CMake target
