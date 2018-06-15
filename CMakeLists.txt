@@ -72,3 +72,5 @@ add_subdirectory(foundation)
 add_subdirectory(plugins)
 add_subdirectory(launch)
 add_subdirectory(network)
+add_subdirectory(test)
+

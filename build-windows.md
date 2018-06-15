@@ -6,7 +6,7 @@
 * **CMake 3.11.0** or newer
 * **Boost 1.67.0**
 
-# Quick Guild
+# Quick Guide
 
 Open command prompt enters the fellowing command to generate Visual Studio Solution
 
@@ -17,7 +17,7 @@ e.g.
 
 Open "Xmax-mainchain.sln" with Visual Studio 2017 and build.
 
-# Detailed Guild
+# Detailed Guide
 <a name="buildboost"></a>
 # Build boost libraries
 

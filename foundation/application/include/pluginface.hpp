@@ -18,7 +18,10 @@ namespace xmaxapp
 	class PluginFactory
 	{
 	public:
-
+	    /**
+		 *create a plugin
+		 * @param[in] ApplicationBase
+		 */
 		PluginFace* CreatePlugin(ApplicationBase* owner)
 		{
 			if (create_function_)
@@ -27,12 +30,18 @@ namespace xmaxapp
 			}
 			return nullptr;
 		}
-
+		/**
+		 *name of plugin
+		 */
 		const string& GetName() const
 		{
 			return plugin_name_;
 		}
-
+		/**
+		* initialize options
+		* @param[in] OptionsDesc option desc
+		* @param[in] OptionsDesc option cfg
+		*/
 		void InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
 		{
 			if (init_options_)
@@ -42,6 +51,12 @@ namespace xmaxapp
 		}
 
 	private:
+		/**
+		* constructor 
+		* @param[in] string name of plugin
+		* @param[in] std::function factory method
+		* @param[in] std::function initoptions
+		*/
 		PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2)
 			: plugin_name_(_name)
 			, create_function_(_function)
@@ -54,10 +69,28 @@ namespace xmaxapp
 		std::function<PluginInitOptions> init_options_;
 
 	public:
-
+		/**
+		* return if this factory is created
+		* @param[in] string name of plugin
+		*/
 		static bool IsRegist(const string& name);
+		/**
+		* get factory
+		* @param[in] string name of plugin
+		*/
 		static PluginFactory* GetPluginFactory(const string& name);
+		/**
+		* create a plugin
+		* @param[in] string				name of plugin
+		* @param[in] ApplicationBase  
+		*/
 		static PluginFace* NewPlugin(const string& name, ApplicationBase* owner);
+		/**
+		* register a factory
+		* @param[in] string				name of plugin
+		* @param[in] std::function		factory method
+		* @param[in] std::function		init options
+		*/
 		static bool RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2);
 	protected:
 		static std::unordered_map<string, std::unique_ptr<PluginFactory>> sPluginFactorys;

@@ -1,3 +1,7 @@
+/**
+*  @file
+*  @copyright defined in xmax/LICENSE
+*/
 #pragma once
 #include "pro/utils/singleton.hpp "
 #include <v8.h>

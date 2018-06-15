@@ -6,7 +6,7 @@
 #include <pluginface.hpp>
 #include <memory>
 
-namespace Xmax
+namespace xmax
 {
 
 	/**
