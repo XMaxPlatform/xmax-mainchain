@@ -24,24 +24,24 @@ namespace xmax
 
 		void StartLoop()
 		{
-			//timer_.expires_from_now(boost::posix_time::microseconds(time_to_next_block_time));
-			//timer_.async_wait(boost::bind(&BlockBuilderImpl::NextBlock, this));
 
-			//TimeMilliseconds time(2000ll);
-			//TimeMicroseconds micro = time.ToTime<TimeMicroseconds>();
-			//TimeMilliseconds time2 = micro.ToTime<TimeMilliseconds>();
-
-			assert(time.GetValue() == 2000ll);
-			assert(micro.GetValue() == 2000ll * 1000ll);
-
+			NextBlock();
 		}
 
-		void BlockBuilderImpl::NextBlock() {
+		void BlockBuilderImpl::NextBlock() 
+		{
 
-
+			TimeMicroseconds time(1000000);
+			timer_.expires_from_now(boost::posix_time::microseconds(time.GetValue()));
+			timer_.async_wait(std::bind(&BlockBuilderImpl::BuildBlock, this));
 
 		}
+		void BlockBuilderImpl::BuildBlock()
+		{
 
+			ilog("building block.");
+			NextBlock();
+		}
 	};
 
 	BlockBuilderPlugin::BlockBuilderPlugin()
