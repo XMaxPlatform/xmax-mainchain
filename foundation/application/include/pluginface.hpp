@@ -79,17 +79,28 @@ namespace xmaxapp
 	{
 		//GENERATED_PLUGIN(plugin_face, plugin);
 	public:
-
+		/**
+		* return the state of plugin
+		*/
 		virtual State GetState() const override;
 
 		virtual ApplicationBase* GetApp() const override;
-
+		/**
+		* set state of the plugin
+		* @param[in] options::variables_map		param map
+		*/
 		virtual void Initialize(const VarsMap& options);
-
+		/**
+		* start a plugin
+		*/
 		virtual void Startup();
-
+		/**
+		* stutdown a plugin
+		*/
 		virtual void Shutdown();
-
+		/**
+		* return the name of plugin
+		*/
 		virtual const string& GetName() const = 0;
 
 		friend class PluginFactory;
@@ -118,6 +129,9 @@ namespace xmaxapp
 
 }
 
+/**
+* this macro help you generate code of a concrete plugin
+*/
 #define GENERATED_PLUGIN(plugin_self, super_class, init_opt) \
 	public:\
 		typedef super_class Super;\
