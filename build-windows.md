@@ -62,7 +62,7 @@ Add a system **ENV variable** to this path **BOOST_ROOT=c:\boost_1_67_0**
 Open the command line or Windows PowerShell and cd to boost root path, call build command:
 ```bash
 .\bootstrap.bat --prefix="c:\boost_1_67_0"
-.\b2 --build-type=complete toolset=msvc-14.1 address-model=64 --build-dir=.x64 --stagedir=stage_x64 --prefix="c:\Boost\boost_1_67_0"  install
+.\b2 --build-type=complete toolset=msvc-14.1 address-model=64 --build-dir=.x64 --stagedir=stage_x64 --prefix="c:\boost_1_67_0"  install
 ```
 If you used other source directory, you need to replace the path value in above steps.
 
