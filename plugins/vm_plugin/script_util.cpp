@@ -1,4 +1,5 @@
-
+//@file
+//@copyright defined in xmax/LICENSE
 #include "script_util.h"
 #include <iostream>
 
