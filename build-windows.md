@@ -69,6 +69,8 @@ If you used other source directory, you need to replace the path value in above 
 # Generate Visual Studio Solution with CMake
 <a name="gensln"></a>
 
+Open command prompt
+
 # Building XMax Platform with Visual Studio 15 2017
 <a name="build"></a>
 
