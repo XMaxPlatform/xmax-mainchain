@@ -8,7 +8,7 @@
 
 # Quick Guide
 
-Open command prompt enters the fellowing command to generate Visual Studio Solution
+Open command prompt enters the following command to generate Visual Studio Solution
 
     cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" "[source dir]"    
 e.g.
