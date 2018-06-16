@@ -16,11 +16,22 @@ BOOST_AUTO_TEST_SUITE(time_test)
 
 BOOST_AUTO_TEST_CASE(time_1)
 {
-	TimeMilliseconds time(2000ll);
-	TimeMicroseconds micro = time.ToTime<TimeMicroseconds>();
+	TimeMilliseconds milli(2500ll);
+	TimeMicroseconds micro = milli.ToTime<TimeMicroseconds>();
+	TimeMilliseconds milli2 = micro.ToTime<TimeMilliseconds>();
 
-	BOOST_CHECK(time.GetValue() == 2000ll);
-	BOOST_CHECK(micro.GetValue() == 2000ll * 1000ll);
+	TimeSeconds sec = micro.ToTime<TimeSeconds>();
+
+	TimeMicroseconds micro2 = sec.ToTime<TimeMicroseconds>();
+	TimeMilliseconds milli3 = sec.ToTime<TimeMilliseconds>();
+
+	BOOST_CHECK(milli.GetValue() == 2500ll);
+	BOOST_CHECK(micro.GetValue() == 2500ll * 1000ll);
+	BOOST_CHECK(milli2.GetValue() == 2500ll);
+
+	BOOST_CHECK(sec.GetValue() == 2ll);
+	BOOST_CHECK(micro2.GetValue() == 2ll * 1000ll * 1000ll);
+	BOOST_CHECK(milli3.GetValue() == 2ll * 1000ll);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

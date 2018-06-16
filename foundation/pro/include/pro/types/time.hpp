@@ -6,6 +6,12 @@
 #include <pro/types/build.hpp>
 namespace pro
 {
+#define TIME_GENERAL(_FracOfSecond) \
+	public:\
+		using TimeBase::TimeBase;\
+		static const int64_t FracOfSecond = _FracOfSecond;\
+	private:
+
 
 	template<typename _Time>
 	class TimeBase
@@ -43,23 +49,19 @@ namespace pro
 
 	class TimeSeconds : public TimeBase<TimeSeconds>
 	{
-	public:
-		using TimeBase::TimeBase;
-		static const int64_t FracOfSecond = 1;
+		TIME_GENERAL(1);
 
 	};
 	class TimeMilliseconds : public TimeBase<TimeMilliseconds>
 	{
 	public:
-		using TimeBase::TimeBase;
-		static const int64_t FracOfSecond = 1000;
+		TIME_GENERAL(1000);
 	};
 
 	class TimeMicroseconds : public TimeBase<TimeMicroseconds>
 	{
 	public:
-		using TimeBase::TimeBase;
-		static const int64_t FracOfSecond = 1000000;
+		TIME_GENERAL(1000000);
 	};
 }
 
