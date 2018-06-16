@@ -51,6 +51,8 @@ ${BOOST_REUIQRED_COMPONENTS}
 )
 
 
+set(protobuf_BUILD_SHARED_LIBS 1)
+
 # temp disable:  warning C4996: 'std::result_of': warning STL4014.
 # by zhongdaohuan
 add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
