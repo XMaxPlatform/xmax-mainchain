@@ -6,6 +6,7 @@
 
 #include <apps.hpp>
 #include <app_types.hpp>
+#include <unordered_map>
 
 namespace xmaxapp
 {
