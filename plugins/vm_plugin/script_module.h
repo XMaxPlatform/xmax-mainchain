@@ -25,6 +25,9 @@ namespace xmax {
 		private:
 			void DoworkInContext(const HandleScope& scope, const Local<ObjectTemplate>& global, const Local<Context>& context, const Context::Scope& ctxScope);
 
+			void AstBlockCallbackInsert();
+
+
 			std::string				 current_code_;
 			std::string				 main_foo_;
 

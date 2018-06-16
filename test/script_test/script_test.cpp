@@ -2,7 +2,7 @@
 
 #include <blockchain_plugin.hpp>
 #include <blockbuilder_plugin.hpp>
-
+#include "script_module.h"
 #include <pro/types/time.hpp>
 #include <boost/test/included/unit_test.hpp>
 
@@ -11,6 +11,7 @@ using namespace xmax;
 using namespace boost::unit_test;
 using namespace pro;
 
+//#define Test_Script
 
 BOOST_AUTO_TEST_SUITE(time_test)
 
@@ -48,3 +49,14 @@ BOOST_AUTO_TEST_CASE(bpt_1)
 
 BOOST_AUTO_TEST_SUITE_END()
 
+#ifdef Test_Script
+BOOST_AUTO_TEST_SUITE(vm_plugin_test)
+
+BOOST_AUTO_TEST_CASE(bpt_1)
+{
+	xmax::scriptv8::ScriptMoudle::GetInstance().Init();
+	xmax::scriptv8::ScriptMoudle::GetInstance().Discard();
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+#endif

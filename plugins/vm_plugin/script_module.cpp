@@ -43,7 +43,12 @@ namespace xmax {
 			CallJsFoo(isolate_, context, main_foo_.c_str() , 0, NULL);
 		}
 
-		void ScriptMoudle::Call(const std::string& code,const std::string& fooName)
+		void ScriptMoudle::AstBlockCallbackInsert()
+		{
+
+		}
+
+		void ScriptMoudle::Call(const std::string& code, const std::string& fooName)
 		{
 			current_code_ = code;
 			main_foo_ = fooName;
