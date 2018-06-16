@@ -1,3 +1,5 @@
+//@file
+//@copyright defined in xmax/LICENSE
 #include "script_module.h"
 #include "script_util.h"
 #include <libplatform/libplatform.h>
