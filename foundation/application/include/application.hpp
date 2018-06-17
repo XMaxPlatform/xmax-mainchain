@@ -20,26 +20,45 @@
 
 namespace xmaxapp
 {
+	/**
+	*  derive class of ApplicationBase
+	*  implement the concrete Initialization
+	*/
 	class Application : public ApplicationBase
 	{
 	public:
 		Application();
 		virtual ~Application();
-
-		// interface 
+		/**
+		* return AppService
+		*/
 		AppService* GetService() const override;
-		// ------------------
-
+		/**
+		* Init a concrete plugin
+		* @param[in]	name of a plugin
+		*/
 		void PluginToInit(const string& plugin_name);
-
+		/**
+		* entry point of whole app
+		* @param[in]	argc	number of args
+		* @param[in]	argv	the content of params
+		*/
 		void Initialize(int argc, char** argv);
-
+		/**
+		*	start the app
+		*/
 		void Startup();
-
+		/**
+		*	shutdown the app
+		*/
 		void Shutdown();
-
+		/**
+		*	Main loop of the logic
+		*/
 		void Loop();
-
+		/**
+		*	quit the app
+		*/
 		void Quit();
 
 	private:

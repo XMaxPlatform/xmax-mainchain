@@ -51,6 +51,9 @@ ${BOOST_REUIQRED_COMPONENTS}
 )
 
 
+set(BUILD_SHARED_LIBS OFF)
+set(protobuf_MSVC_STATIC_RUNTIME OFF)
+
 # temp disable:  warning C4996: 'std::result_of': warning STL4014.
 # by zhongdaohuan
 add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
