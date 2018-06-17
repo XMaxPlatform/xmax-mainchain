@@ -8,23 +8,31 @@
 
 namespace pro
 {
-
+	/**
+	* log level enum
+	*/
 	enum loglevel : int
 	{
 		Info = 0,
 		Warnning = 100,
 		Error = 200,
 	};
-
-
+	/**
+	* output a log to console
+	* @param[in]	loglevel	level of log
+	* @param[in]	string		content of log
+	*/
 	void _log_message(loglevel level, const string& msg);
-
-	//void _log_message(loglevel level, const std::stringstream& sstream);
-
+	/**
+	* output a log to console 
+	* @param[in]	loglevel	level of log
+	* @param[in]	const char*		content of log
+	*/
 	void _log_message(loglevel level, const char* format, ...);
-
-	//void _xmax_error(const char* file, long line, const char* format, ...);
-
+	/**
+	* save the log to a file
+	* @param[in]	stirng	 name of a file
+	*/
 	void _set_logfilename(const string& name);
 
 
