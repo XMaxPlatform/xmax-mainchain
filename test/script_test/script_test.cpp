@@ -5,6 +5,7 @@
 #include "script_module.h"
 #include <pro/types/time.hpp>
 #include <boost/test/included/unit_test.hpp>
+#include "pro/utils/singleton.hpp"
 
 using namespace xmaxapp;
 using namespace xmax;
@@ -12,6 +13,9 @@ using namespace boost::unit_test;
 using namespace pro;
 
 //#define Test_Script
+
+class SingletonImpl : public Singleton<SingletonImpl>
+{};
 
 BOOST_AUTO_TEST_SUITE(time_test)
 
@@ -45,6 +49,9 @@ BOOST_AUTO_TEST_CASE(bpt_1)
 	BlockChainPlugin::RegistSelf();
 	bool bret = BlockChainPlugin::RegistSelf();
 	BOOST_CHECK(bret == false);
+
+
+	//SingletonImpl* ps = new SingletonImpl();
 }
 
 BOOST_AUTO_TEST_SUITE_END()
