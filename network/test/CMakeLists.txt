@@ -24,9 +24,19 @@ source_group(
 )
 
 message(STATUS "PROTO_COMPILE_TARGETS_SOURCES:${PROTO_COMPILE_TARGETS_SOURCES}")
-add_executable( ${current_lib_name} ${SOURCE_FILES} ${HEADERS} ${PROTO_COMPILE_TARGETS_SOURCES} ${PROTO_COMPILE_TARGETS_HEADERS})
+add_executable( ${current_lib_name} 
+    ${SOURCE_FILES} 
+    ${HEADERS} 
+    ${PROTO_COMPILE_TARGETS_SOURCES} 
+    ${PROTO_COMPILE_TARGETS_HEADERS}
+    )
 
-target_include_directories(${current_lib_name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_include_directories(${current_lib_name} 
+    PUBLIC 
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${PROTO_BUILD_DIR}
+        )
 
 target_link_libraries( ${current_lib_name}
         PRIVATE ${xmax_net_lib_name} ${xmax_core_lib_name} libprotobuf libprotoc
