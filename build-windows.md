@@ -8,7 +8,7 @@
 
 # Quick Guide
 
-Open command prompt enters the following command to generate Visual Studio Solution
+Open command prompt enter the following command to generate Visual Studio Solution
 
     cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" "[source dir]"    
 e.g.
@@ -69,7 +69,12 @@ If you used other source directory, you need to replace the path value in above 
 # Generate Visual Studio Solution with CMake
 <a name="gensln"></a>
 
-Open command prompt from xmax-mainchain source code directory.
+Open command prompt from xmax-mainchain source code directory. Enter the following command:
+
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" "[source dir]"    
+e.g.
+
+    E:\XMaxPlatform\xmax-mainchain>cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" "../"
 
 # Building XMax Platform with Visual Studio 15 2017
 <a name="build"></a>
