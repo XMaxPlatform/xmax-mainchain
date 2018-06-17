@@ -39,7 +39,7 @@ target_include_directories(${current_lib_name}
         )
 
 target_link_libraries( ${current_lib_name}
-        PRIVATE ${xmax_net_lib_name} ${xmax_core_lib_name} libprotobuf libprotoc
+        PRIVATE ${xmax_net_lib_name} ${xmax_core_lib_name}
 		PRIVATE ${Boost_LIBRARIES}
  )
 
