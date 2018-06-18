@@ -1,8 +1,9 @@
 #include <xmaxnet_plugin.hpp>
-
+#include <google/protobuf/stubs/common.h>
 
 namespace xmax {
 	using namespace xmaxapp;
+	using namespace google::protobuf;
 
 	/**
 	*  Implementation details of the xmax net plugin
@@ -11,13 +12,21 @@ namespace xmax {
 	class XmaxNetPluginImpl {	
 	public:
 		XmaxNetPluginImpl() {}
-		~XmaxNetPluginImpl() {}
+		~XmaxNetPluginImpl();
 	};
 
+	/**
+	*  Implementations of XmaxNetPluginImpl interfaces
+	*
+	*/
+	XmaxNetPluginImpl::~XmaxNetPluginImpl()
+	{
+		ShutdownProtobufLibrary();
+	}
 
 
 	/**
-	*  Implementations of xmaxnet_plugin interfaces
+	*  Implementations of XmaxNetPlugin interfaces
 	*
 	*/
 	//--------------------------------------------------
