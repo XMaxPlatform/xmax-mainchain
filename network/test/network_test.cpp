@@ -7,6 +7,23 @@
 
 using namespace tutorial;
 
+
+namespace {
+	
+	static inline void FillTestDataSimple(Person& person) {
+		person.set_email("12345@gmail.com");
+		person.set_name("12345");
+		person.set_id(12345);
+	}
+
+	static inline bool CompareSimpleTestData(const Person& lhs, const Person& rhs) {
+		return (lhs.email() == rhs.email()) &&
+			(lhs.id() == rhs.id()) &&
+			(lhs.name() == rhs.name());
+	}
+}
+
+
 BOOST_AUTO_TEST_SUITE(network_protobuf)
 
 BOOST_AUTO_TEST_CASE(proto_set_int32_field)
@@ -29,18 +46,15 @@ BOOST_AUTO_TEST_CASE(proto_set_string_field)
 BOOST_AUTO_TEST_CASE(proto_simple_serialize)
 {
 	Person person_msg;
-	person_msg.set_email("12345@gmail.com");
-	person_msg.set_name("12345");
-	person_msg.set_id(12345);
+	FillTestDataSimple(person_msg);
+
 	std::string serialize_str;
 	person_msg.SerializeToString(&serialize_str);
 
 	Person ser_person_msg;
 	ser_person_msg.ParseFromString(serialize_str);
 
-	BOOST_CHECK(person_msg.email() == ser_person_msg.email());
-	BOOST_CHECK(person_msg.name() == ser_person_msg.name());
-	BOOST_CHECK(person_msg.id() == ser_person_msg.id());
+	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
 }
 
 
