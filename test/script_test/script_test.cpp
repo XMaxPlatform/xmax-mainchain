@@ -2,7 +2,7 @@
 
 #include <blockchain_plugin.hpp>
 #include <blockbuilder_plugin.hpp>
-#include "script_module.h"
+#include "script_module.hpp"
 #include <pro/types/time.hpp>
 #include <boost/test/included/unit_test.hpp>
 #include "pro/utils/singleton.hpp"
