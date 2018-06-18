@@ -12,7 +12,10 @@ namespace pro
 		static const int64_t FracOfSecond = _FracOfSecond;\
 	private:
 
-
+/*!
+ * \class TimeBase
+ * the base class of time.
+ */
 	template<typename _Time>
 	class TimeBase
 	{
@@ -26,7 +29,10 @@ namespace pro
 			: time_(val)
 		{
 		}
-
+		/**
+		* Convert to another type of time base on the FracOfSeconds.
+		* @return[out] time 'To'
+		*/
 		template<typename To>
 		To ToTime() const
 		{
@@ -37,6 +43,10 @@ namespace pro
 			return To(time_ / (_Time::FracOfSecond / To::FracOfSecond));
 		}
 
+		/**
+		* Get the time value.
+		* @return[out] time value.
+		*/
 		TimeType GetValue() const
 		{
 			return time_;
