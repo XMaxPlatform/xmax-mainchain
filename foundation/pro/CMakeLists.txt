@@ -42,8 +42,8 @@ list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" types)
 list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" log)
 list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" utils)
 
-message( STATUS "H_FILES:${H_FILES}")
-message( STATUS "S_FILES:${S_FILES}")
+#message( STATUS "H_FILES:${H_FILES}")
+#message( STATUS "S_FILES:${S_FILES}")
 
 add_library( ${current_lib_name} ${S_FILES} ${H_FILES} )
 target_link_libraries( ${current_lib_name})
