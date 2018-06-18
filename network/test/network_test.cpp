@@ -57,6 +57,19 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize)
 	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
 }
 
+BOOST_AUTO_TEST_CASE(proto_simple_serialize_stream) {
+	Person person_msg;
+	FillTestDataSimple(person_msg);
+
+	std::stringstream ss;
+	person_msg.SerializeToOstream(&ss);
+
+	Person ser_person_msg;
+	ser_person_msg.ParseFromIstream(&ss);
+
+	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
 
