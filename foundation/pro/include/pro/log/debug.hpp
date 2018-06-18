@@ -8,8 +8,15 @@
 namespace pro
 {
 
-
+	/**
+	* ouput a msg to console
+	* @param[in]	char*	content of msg
+	*/
 	void _debug_output(const char* ouput);
+	/**
+	* ouput a msg to console in a line
+	* @param[in]	char*	content of msg
+	*/
 	void _debug_output_line(const char* ouput);
 
 
