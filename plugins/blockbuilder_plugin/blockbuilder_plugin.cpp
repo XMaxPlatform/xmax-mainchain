@@ -21,7 +21,6 @@ namespace xmax
 		{
 
 		}
-
 		void StartLoop()
 		{
 
