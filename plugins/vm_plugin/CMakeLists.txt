@@ -2,9 +2,9 @@ set(current_lib_name vm_plugin)
 
 
 
-file (GLOB SOURCE_FILES "*.cpp"  "*.h")
+file (GLOB SOURCE_FILES "*.cpp"  "*.hpp")
 
-file (GLOB SCRIPT_INTERFACE "script_interface/*.cpp" "script_interface/*.h")
+file (GLOB SCRIPT_INTERFACE "script_interface/*.cpp" "script_interface/*.hpp")
 
 source_group(script_interface FILES ${SCRIPT_INTERFACE})
 source_group( src FILES ${SOURCE_FILES} "CMakeLists.txt")
