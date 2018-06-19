@@ -69,14 +69,14 @@ If you used other source directory, you need to replace the path value in above 
 # Generate Visual Studio Solution with CMake
 <a name="gensln"></a>
 
-Open command prompt from the directory you wish to store the generated solution files. Usually, you would want to store the solution files outside the repostory (i.e. the source code directory).
+Open command prompt from the directory you wish to store the generated solution files. Usually, you would want to store the solution files outside the repostory (i.e. the source directory).
 
 Enter the following command:
 
     cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" "[source dir]"    
 e.g.
 
-    E:\XMaxPlatform\xmax-mainchain>cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" "../"
+    E:\XMaxPlatform\sln>cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" "../xmax-mainchain"
 
 # Building XMax Platform with Visual Studio 15 2017
 <a name="build"></a>
