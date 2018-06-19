@@ -1,6 +1,6 @@
 //@file
 //@copyright defined in xmax/LICENSE
-#include "script_util.h"
+#include "script_util.hpp"
 #include <iostream>
 
 namespace xmax {

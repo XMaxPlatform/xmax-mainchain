@@ -1,7 +1,7 @@
 //@file
 //@copyright defined in xmax/LICENSE
-#include "script_module.h"
-#include "script_util.h"
+#include "script_module.hpp"
+#include "script_util.hpp"
 #include <libplatform/libplatform.h>
 
 namespace xmax {
