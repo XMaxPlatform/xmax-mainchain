@@ -86,6 +86,18 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize_array)
 	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
 }
 
+BOOST_AUTO_TEST_CASE(proto_simple_testclear)
+{
+	using namespace google::protobuf::io;
+
+	Person person_msg;
+	std::string init_email = person_msg.email();
+	person_msg.set_email("12345@gmail.com");
+	person_msg.clear_email();
+
+	BOOST_CHECK(init_email == person_msg.email());
+}
+
 BOOST_AUTO_TEST_CASE(proto_simple_serialize_stream) {
 	Person person_msg;
 	FillTestDataSimple(person_msg);
