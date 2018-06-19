@@ -70,6 +70,22 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize_string2)
 	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
 }
 
+BOOST_AUTO_TEST_CASE(proto_simple_serialize_array)
+{
+	Person person_msg;
+	FillTestDataSimple(person_msg);
+
+	size_t data_size = person_msg.ByteSize();
+	std::vector<char> data;
+	data.resize(data_size);
+	person_msg.SerializeToArray(static_cast<void*>(data.data()), data_size);
+
+	Person ser_person_msg;
+	ser_person_msg.ParseFromArray(static_cast<const void*>(data.data()), data_size);
+
+	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
+}
+
 BOOST_AUTO_TEST_CASE(proto_simple_serialize_stream) {
 	Person person_msg;
 	FillTestDataSimple(person_msg);
