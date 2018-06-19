@@ -43,13 +43,26 @@ BOOST_AUTO_TEST_CASE(proto_set_string_field)
 }
 
 
-BOOST_AUTO_TEST_CASE(proto_simple_serialize)
+BOOST_AUTO_TEST_CASE(proto_simple_serialize_string1)
 {
 	Person person_msg;
 	FillTestDataSimple(person_msg);
 
 	std::string serialize_str;
 	person_msg.SerializeToString(&serialize_str);
+
+	Person ser_person_msg;
+	ser_person_msg.ParseFromString(serialize_str);
+
+	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
+}
+
+BOOST_AUTO_TEST_CASE(proto_simple_serialize_string2)
+{
+	Person person_msg;
+	FillTestDataSimple(person_msg);
+
+	std::string serialize_str = person_msg.SerializeAsString();
 
 	Person ser_person_msg;
 	ser_person_msg.ParseFromString(serialize_str);
@@ -69,7 +82,6 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize_stream) {
 
 	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
 }
-
 
 BOOST_AUTO_TEST_SUITE_END()
 
