@@ -78,6 +78,8 @@ e.g.
 
     E:\XMaxPlatform\sln>cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" "../xmax-mainchain"
 
+In the example above, "sln" is the directory where you store the generated solution files;  "xmax-mainchain" is the source directory; "D:\boost_1_67_0" is the boost library directory.
+
 # Building XMax Platform with Visual Studio 15 2017
 <a name="build"></a>
 
