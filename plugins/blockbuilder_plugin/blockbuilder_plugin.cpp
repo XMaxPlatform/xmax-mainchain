@@ -10,6 +10,9 @@
 namespace xmax
 {
 	using namespace pro;
+	/**
+	* implementation of generating a block, using boost asio
+	*/
 	class BlockBuilderImpl
 	{
 	public:
@@ -26,7 +29,9 @@ namespace xmax
 
 			NextBlock();
 		}
-
+		/**
+		* next time interval of build a new block
+		*/
 		void BlockBuilderImpl::NextBlock() 
 		{
 
@@ -35,6 +40,9 @@ namespace xmax
 			timer_.async_wait(std::bind(&BlockBuilderImpl::BuildBlock, this));
 
 		}
+		/**
+		* generate a new block data
+		*/
 		void BlockBuilderImpl::BuildBlock()
 		{
 
