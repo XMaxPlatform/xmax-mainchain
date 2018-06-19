@@ -27,6 +27,7 @@ namespace xmax
 
 		app.PluginToInit("BlockChainPlugin");
 		app.PluginToInit("BlockBuilderPlugin");
+		app.PluginToInit("MongoDBPlugin");
 
 		app.Initialize(argc, argv);
 		app.Startup();
