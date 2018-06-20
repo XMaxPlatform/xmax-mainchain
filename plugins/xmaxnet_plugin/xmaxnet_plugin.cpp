@@ -1,9 +1,14 @@
 #include <xmaxnet_plugin.hpp>
 #include <google/protobuf/stubs/common.h>
+#include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/ip/host_name.hpp>
 
 namespace xmax {
 	using namespace xmaxapp;
 	using namespace google::protobuf;
+	using boost::asio::ip::tcp;
+	using boost::asio::ip::address_v4;
+	using boost::asio::ip::host_name;
 
 	/**
 	*  Implementation details of the xmax net plugin
