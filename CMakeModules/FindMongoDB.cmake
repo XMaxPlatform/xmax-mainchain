@@ -38,6 +38,7 @@ if(libmongoc-1.0_FOUND)
         set(MongoDB_MONGOCXX_LIBRARIES ${LIBMONGOCXX_LIBRARIES})
     endif()   
     
+    
 else()
     message(WARNING "Can NOT find libmongoc-1.0.")
 endif()
@@ -57,6 +58,16 @@ find_package_handle_standard_args(MongoDB
 
 if(MongoDB_FOUND)
     set(MongoDB_INCLUDE_DIR ${LIBMONGOCXX_INCLUDE_DIRS} ${LIBBSONCXX_INCLUDE_DIRS})
-    set(MongoDB_LIBRARIES ${MongoDB_BSON_LIBRARIES} ${MongoDB_MONGOCXX_LIBRARIESX})
+    set(MongoDB_LIBRARIES ${MongoDB_BSON_LIBRARIES} ${MongoDB_MONGOCXX_LIBRARIES})
+
+    message(STATUS "LIBMONGOCXX_INCLUDE_DIRS: ${LIBMONGOCXX_INCLUDE_DIRS}")
+    message(STATUS "LIBBSONCXX_INCLUDE_DIRS: ${LIBBSONCXX_INCLUDE_DIRS}")
+
+    message(STATUS "MongoDB_BSON_LIBRARIES: ${MongoDB_BSON_LIBRARIES}")
+    message(STATUS "MongoDB_MONGOCXX_LIBRARIES: ${MongoDB_MONGOCXX_LIBRARIES}")
+
+    message(STATUS "MongoDB_INCLUDE_DIR: ${MongoDB_INCLUDE_DIR}")
+    message(STATUS "MongoDB_LIBRARIES: ${MongoDB_LIBRARIES}")
+    
 endif()
 
