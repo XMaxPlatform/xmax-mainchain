@@ -21,7 +21,7 @@ namespace xmax {
 
 	public:
 
-		void Init();
+		void Init(boost::asio::io_service& io);
 
 	private:
 
@@ -37,6 +37,12 @@ namespace xmax {
 	XmaxNetPluginImpl::~XmaxNetPluginImpl()
 	{
 		ShutdownProtobufLibrary();
+	}
+
+	void XmaxNetPluginImpl::Init(boost::asio::io_service& io)
+	{
+		resolver_ = std::make_unique<tcp::resolver>( io );
+		acceptor_.reset( new tcp::acceptor(io) );
 	}
 
 
@@ -60,6 +66,7 @@ namespace xmax {
 		PluginFace::Initialize(options);
 
 		impl_.reset(new XmaxNetPluginImpl());
+		impl_->Init(*GetApp()->GetService());
 	}
 
 	//--------------------------------------------------
