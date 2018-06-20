@@ -40,25 +40,24 @@ Note that the directory needs to add to PATH is "bin" which is under the root di
 # Download & build Boost
 <a name="boost"></a>
 
-## Download the prerequisites.
-Boost version: **1.67.0**
+## Install boost from binarie.
 
-Use the binaries of boost for msvc-14.1(x64), or build from source.
+Get boost binaries at https://dl.bintray.com/boostorg/release/1.67.0/binaries/ .
 
-Binaries download link: https://dl.bintray.com/boostorg/release/1.67.0/binaries/
+Run the installer to install.
 
-Source download link: https://dl.bintray.com/boostorg/release/1.67.0/source/
+Add "BOOST_ROOT" to the system PATH. e.g.
 
+    D:\boost_1_67_0
 
 ## Build boost from source
 
-### 1.
+Source download link: https://dl.bintray.com/boostorg/release/1.67.0/source/
+
 Download the boost source to the directory you want, such as **c:\boost_1_67_0**.
 
-### 2.
 Add a system **ENV variable** to this path **BOOST_ROOT=c:\boost_1_67_0**
 
-### 3.
 Open the command line or Windows PowerShell and cd to boost root path, call build command:
 ```bash
 .\bootstrap.bat --prefix="c:\boost_1_67_0"
