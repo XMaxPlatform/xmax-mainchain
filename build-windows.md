@@ -93,4 +93,4 @@ You need add CMake to the system PATH.
 # Building XMax Platform with Visual Studio 15 2017
 <a name="build"></a>
 
-
+Simply open generated solution file "Xmax-mainchain.sln" with Visual Studio 15 2017, and select Build->Build Solution(F6) from menu.
