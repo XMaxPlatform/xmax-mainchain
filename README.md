@@ -45,3 +45,11 @@ target_include_directories( ${current_lib_name}
     )
 
 ```
+
+## Add link MongoDB libraries
+```bash
+target_link_libraries( ${current_lib_name}
+	${MongoDB_LIBRARIES}
+    # Other link libraries
+)
+```
