@@ -4,7 +4,7 @@
 */
 #pragma once
 #include <pro/types/build.hpp>
-
+#include <pro/types/generictypes.hpp>
 #include <pro/types/any_value.hpp>
 
 namespace pro
@@ -17,12 +17,12 @@ namespace pro
 		AnyObject& operator = (const AnyObject &) = delete;
 		~AnyObject();
 		typedef string EntityKey;
-		struct EntityPair
+		struct Entity
 		{
 			EntityKey key;
 			AnyVaule entity;
 		};
-		typedef std::vector<EntityPair> EntityContainer;
+		typedef std::vector<Entity> EntityContainer;
 		typedef EntityContainer::iterator Iterator;
 		typedef EntityContainer::const_iterator ConstIterator;
 
