@@ -8,6 +8,8 @@ Official XMax main blockchain source code repository.
 
 1. [Windows 10](build-windows.md)
 2. CentOS 7 (Coming Soon)
+3. [Use boost in CMake target](#useboostcmake)
+4. [Use MongoDB in CMake target](#usemongodb)
 
 <a name="useboostcmake"></a>
 # Use boost in CMake target
@@ -30,4 +32,16 @@ In your target project CMakeLists.txt file, add the **\${Boost_INCLUDE_DIR}** to
 target_include_directories( ${current_lib_name} PUBLIC "include"  "${Boost_INCLUDE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" )
 
 target_link_libraries( ${current_lib_name} ${Boost_LIBRARIES})
+```
+
+<a name="usemongodb"></a>
+# Use MongoDB in CMake target
+
+## Add include directories to the target
+```bash
+target_include_directories( ${current_lib_name} 
+	PUBLIC  "${MongoDB_INCLUDE_DIR}"
+    # Other include dirs...
+    )
+
 ```
