@@ -22,6 +22,8 @@ namespace xmax
 		BlockBuilderPlugin::RegistSelf();
 		MongoDBPlugin::RegistSelf();
 		XmaxNetPlugin::RegistSelf();
+		// TODO : Add ContractUtilPlugin
+		//ContractUtilPlugin::RegistSelf();
 
 		Application app;
 
