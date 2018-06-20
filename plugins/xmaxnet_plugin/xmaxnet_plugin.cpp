@@ -18,6 +18,16 @@ namespace xmax {
 	public:
 		XmaxNetPluginImpl() {}
 		~XmaxNetPluginImpl();
+
+	public:
+
+		void Init();
+
+	private:
+
+		std::unique_ptr<tcp::acceptor>		acceptor_;
+		std::unique_ptr<tcp::resolver>		resolver_;
+		tcp::endpoint						endpoint_;
 	};
 
 	/**
