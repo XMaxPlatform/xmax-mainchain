@@ -12,47 +12,26 @@
 namespace pro
 {
 
-	class AnyEntity
+	class AnyVaule
 	{
 	public:
 		enum TypeCode
 		{
 			UI64,
 			I64,
-			String,
+			Void,
 		};
-		AnyEntity() = default;
-		AnyEntity(const AnyEntity&) = delete;
-		AnyEntity& operator = (const AnyEntity &) = delete;
-
 		union Entity
 		{
-
+			uint64_t	u64;
+			int64_t		i64;
+			void*		point;
 		};
-	};
-
-	class AnyValue
-	{
-	public:
-		AnyValue() = default;
-		AnyValue(const AnyValue&) = delete;
-		AnyValue& operator = (const AnyValue &) = delete;
-		~AnyValue();
-		typedef string EntityKey;
-		struct EntityPair
-		{
-			EntityKey key;
-			AnyEntity entity;
-		};
-		typedef std::vector<EntityPair> EntityContainer;
-		typedef EntityContainer::iterator Iterator;
-		typedef EntityContainer::const_iterator ConstIterator;
-
-		void Clear();
-	private:
+		AnyVaule() = default;
+		AnyVaule(const AnyVaule&) = delete;
+		AnyVaule& operator = (const AnyVaule &) = delete;
 
 
-		EntityContainer entities_;
 	};
 
 }

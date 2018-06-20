@@ -6,14 +6,4 @@
 
 namespace pro
 {
-	AnyValue::~AnyValue()
-	{
-
-	}
-
-	void AnyValue::Clear()
-	{
-
-	}
-
 }
