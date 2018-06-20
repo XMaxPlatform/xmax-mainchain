@@ -80,6 +80,16 @@ e.g.
 
 In the example above, "sln" is the directory where you store the generated solution files;  "xmax-mainchain" is the source directory; "D:\boost_1_67_0" is the boost library directory.
 
+Wait for CMake to execute, when it's done you will receive the following message:
+
+    -- Build files have been written to: [solution directory]
+
+If you receive the following message instead:
+
+    cmake is not recognized as an internal or external command, operable program or batch file.
+
+You need add CMake to the system PATH.
+
 # Building XMax Platform with Visual Studio 15 2017
 <a name="build"></a>
 
