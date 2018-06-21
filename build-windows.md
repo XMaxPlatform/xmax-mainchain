@@ -29,7 +29,7 @@ Open "Xmax-mainchain.sln" with Visual Studio 2017 and build.
 
 Get latest CMake Windows win64-x64 at https://cmake.org/download/ .
 
-Run the installer or unzip to intall.
+Run the installer or unzip to install.
 
 If you choose to download the installer(recommanded). Be sure to check "Add CMake to the system PATH" option while installing so you can use CMake via command prompt. You can also add it to the system PATH manually later, same as while you choose to install via zip.
 
