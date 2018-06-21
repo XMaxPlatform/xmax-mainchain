@@ -52,11 +52,11 @@ Add "BOOST_ROOT" to the system PATH. e.g.
 
 ## Build boost from source
 
-Source download link: https://dl.bintray.com/boostorg/release/1.67.0/source/
+Get boost source at https://dl.bintray.com/boostorg/release/1.67.0/source/ .
 
-Download the boost source to the directory you want, such as **c:\boost_1_67_0**.
+Unzip.
 
-Add a system **ENV variable** to this path **BOOST_ROOT=c:\boost_1_67_0**
+Add "BOOST_ROOT" to the system PATH.
 
 Open the command line or Windows PowerShell and cd to boost root path, call build command:
 ```bash
