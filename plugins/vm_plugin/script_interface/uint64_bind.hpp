@@ -1,1 +1,1 @@
-#program once
+#pragma  once
