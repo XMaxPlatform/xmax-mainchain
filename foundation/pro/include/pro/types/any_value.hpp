@@ -10,7 +10,9 @@
 
 namespace pro
 {
-
+	/**
+	* This class encapsulates some basic types 
+	*/
 	class AnyVaule
 	{
 	public:
@@ -37,10 +39,30 @@ namespace pro
 		AnyVaule(const AnyVaule&) = delete;
 		AnyVaule& operator = (const AnyVaule &) = delete;
 
+		/**
+		* Set value type as int32
+		* @param[in] int32_t
+		*/
 		void Set(int32_t v);
+		/**
+		* Set value type as uint32
+		* @param[in] uint32_t
+		*/
 		void Set(uint32_t v);
+		/**
+		* Set value type as int64
+		* @param[in] int64_t
+		*/
 		void Set(int64_t v);
+		/**
+		* Set value type as uint64
+		* @param[in] uint64_t
+		*/
 		void Set(uint64_t v);
+		/**
+		* Set value type as double
+		* @param[in] double
+		*/
 		void Set(double v);
 
 
