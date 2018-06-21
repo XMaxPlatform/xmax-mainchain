@@ -1,5 +1,4 @@
 #include <contractutil_plugin.hpp>
-#include <google/protobuf/stubs/common.h>
 
 namespace xmax {
 	using namespace xmaxapp;
@@ -10,8 +9,8 @@ namespace xmax {
 	*/
 	class ContractUtilPluginImpl {	
 	public:
-		XmaxNetPluginImpl() {}
-		~XmaxNetPluginImpl();
+		ContractUtilPluginImpl() {}
+		~ContractUtilPluginImpl();
 	};
 
 	/**
@@ -20,7 +19,6 @@ namespace xmax {
 	*/
 	ContractUtilPluginImpl::~ContractUtilPluginImpl()
 	{
-		ShutdownProtobufLibrary();
 	}
 
 
@@ -37,5 +35,6 @@ namespace xmax {
 	ContractUtilPlugin::~ContractUtilPlugin() {	
 
 	}
+
 
 }

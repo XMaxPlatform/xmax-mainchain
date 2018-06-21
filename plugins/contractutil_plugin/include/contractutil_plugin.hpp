@@ -19,6 +19,4 @@ namespace xmax
 		ContractUtilPlugin();
 		virtual ~ContractUtilPlugin();
 
-
-	};
 }
