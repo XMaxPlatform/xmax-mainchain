@@ -1,0 +1,10 @@
+# Directories that are generated
+/tags
+
+# Filetypes
+*~
+*.pyc
+*.swp
+
+# OSX
+.DS_Store

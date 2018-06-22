@@ -1,4 +1,4 @@
-# Building XMax Platform on Windows 10
+sssssssssssss# Building XMax Platform on Windows 10
 
 # Prerequisites 
 
@@ -23,6 +23,7 @@ Open "Xmax-mainchain.sln" with Visual Studio 2017 and build.
 1. [Download & build Boost](#boost)
 1. [Generate Visual Studio Solution with CMake](#gensln)
 1. [Building XMax Platform with Visual Studio 15 2017](#build)
+1. [Build MongoDB](#buildmongodb)
 
 # Download & install CMake
 <a name="cmake"></a>
@@ -93,3 +94,21 @@ You need add CMake to the system PATH.
 <a name="build"></a>
 
 Simply open generated solution file "Xmax-mainchain.sln" with Visual Studio 15 2017, and select Build->Build Solution(F6) from menu.
+
+
+<a name="buildmongodb"></a>
+# Build MongoDB 
+
+## 1. Build mongo-c-driver
+### 1.1 Build libbson in mongo-c-driver
+Copy `mongo-c-driver` from `libraries` directory to anywhere you want to compile mongo-c-driver. Then execute:
+```bash
+cd mongo-c-driver/src/libbson
+cmake -G "Visual Studio 15 2017 Win64" "-DCMAKE_INSTALL_PREFIX=C:\mongo-c-driver" "-DCMAKE_BUILD_TYPE=Release"
+```
+`C:\mongo-c-driver` is default build location and you can change to whatever you want.
+Open `Developer Command Prompt for 2017` and goto `mongo-c-driver/src/libbson` then execute:
+```bash
+msbuild.exe /p:Configuration=Release ALL_BUILD.vcxproj
+msbuild.exe /p:Configuration=Release INSTALL.vcxproj
+```

@@ -28,6 +28,8 @@
 // We reserve the V8_* prefix for macros defined in V8 public API and
 // assume there are no name conflicts with the embedder's code.
 
+
+
 #ifdef V8_OS_WIN
 
 // Setup for Windows DLL export/import. When building the V8 DLL the
@@ -57,6 +59,12 @@
 #endif
 
 #endif  // V8_OS_WIN
+
+
+
+V8_EXPORT void V8_ParseWithPlugin();
+
+V8_EXPORT void V8_AddIntrinsicFoo(const char* name, void* fooaddr, int paramsize, int resultsize);
 
 /**
  * The v8 JavaScript engine.

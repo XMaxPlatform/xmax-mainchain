@@ -1,0 +1,524 @@
+#######################################
+#      CXX Driver Config for MCI      #
+#######################################
+
+#######################################
+#            Variables                #
+#######################################
+variables:
+
+    mongodb_version:
+        version_latest: &version_latest latest
+        version_32: &version_32 3.2
+
+    ## cmake path variables
+    extra_path:
+        linux_extra_path: &linux_extra_path /opt/cmake/bin
+        macos_extra_path: &macos_extra_path /Applications/Cmake.app/Contents/bin
+        windows_extra_path: &windows_extra_path "/cygdrive/c/cmake/bin:/cygdrive/c/Program Files (x86)/MSBuild/14.0/Bin"
+
+    ## tar options variables
+    tar_options:
+        linux_tar_options: &linux_tar_options --wildcards --no-anchored
+
+    ## cdriver configure flags
+    cdriver_configure_flags:
+        linux_cdriver_configure_flags: &linux_cdriver_configure_flags --enable-ssl --enable-sasl --with-gnu-ld CFLAGS=-fno-omit-frame-pointer
+        macos_cdriver_configure_flags: &macos_cdriver_configure_flags --enable-ssl --enable-sasl
+
+    ## cmake flag variables
+    cmake_flags:
+        linux_cmake_flags: &linux_cmake_flags -DCMAKE_C_FLAGS="-Wall -Wextra -Wno-attributes -Werror -Wno-missing-field-initializers" -DCMAKE_CXX_FLAGS="-Wall -Wextra -Wconversion -Wnarrowing -Wno-expansion-to-defined -pedantic -Werror -Wno-missing-field-initializers"
+        macos_cmake_flags: &macos_cmake_flags -DCMAKE_C_FLAGS="-Wall -Wextra -Wno-attributes -Werror -Wno-missing-field-initializers" -DCMAKE_CXX_FLAGS="-stdlib=libc++ -Wall -Wextra -Wconversion -Wnarrowing -pedantic -Werror"
+        asan_cmake_flags: &asan_cmake_flags -DCMAKE_C_FLAGS="-Wall -Wextra -Wno-attributes -Werror -Wno-missing-field-initializers" -DCMAKE_CXX_COMPILER="/usr/bin/clang++" -DCMAKE_CXX_FLAGS="-D_GLIBCXX_USE_CXX11_ABI=0 -fsanitize=address -O1 -g -fno-omit-frame-pointer -Wall -Wextra -Wconversion -Wnarrowing -pedantic -Werror"
+        ubsan_cmake_flags: &ubsan_cmake_flags -DCMAKE_C_FLAGS="-Wall -Wextra -Wno-attributes -Werror -Wno-missing-field-initializers" -DCMAKE_CXX_COMPILER="/usr/bin/clang++" -DCMAKE_CXX_FLAGS="-D_GLIBCXX_USE_CXX11_ABI=0 -fsanitize=undefined -fsanitize-blacklist=$(pwd)/etc/ubsan.blacklist -fno-sanitize-recover=undefined -O1 -g -fno-omit-frame-pointer -Wall -Wextra -Wconversion -Wnarrowing -pedantic -Werror"
+        windows_cmake_flags: &windows_cmake_flags -G "Visual Studio 14 2015 Win64" -DBOOST_ROOT=c:/local/boost_1_60_0
+
+    example_projects_cc:
+        asan_cc_path: &asan_cc_path /usr/bin/clang
+        ubsan_cc_path: &ubsan_cc_path /usr/bin/clang
+
+    example_projects_cxx:
+        asan_cxx_path: &asan_cxx_path /usr/bin/clang++
+        ubsan_cxx_path: &ubsan_cxx_path /usr/bin/clang++
+
+    example_projects_cxxflags:
+        asan_cxxflags: &asan_cxxflags -D_GLIBCXX_USE_CXX11_ABI=0 -fsanitize=address -fno-omit-frame-pointer
+        ubsan_cxxflags: &ubsan_cxxflags -D_GLIBCXX_USE_CXX11_ABI=0 -fsanitize=undefined -fno-sanitize-recover=undefined -fno-omit-frame-pointer
+
+    example_projects_ldflags:
+        asan_ldflags: &asan_ldflags -fsanitize=address
+        ubsan_ldflags: &ubsan_ldflags -fsanitize=undefined -fno-sanitize-recover=undefined
+
+    example_projects_cxx_standard:
+        std_experimental_cxx_standard: &std_experimental_cxx_standard 14
+
+    poly_flags:
+        poly_boost_flags: &poly_boost_flags -DBSONCXX_POLY_USE_BOOST=ON
+        poly_std_experimental_flags: &poly_std_experimental_flags -DBSONCXX_POLY_USE_STD_EXPERIMENTAL=ON -DCMAKE_CXX_STANDARD=14
+        poly_mnmlstc: &poly_mnmlstc -DBSONCXX_POLY_USE_MNMLSTC=ON
+
+    ## test parameters
+    test_params:
+        asan_test_params: &asan_test_params PATH="/usr/lib/llvm-3.8/bin" ASAN_OPTIONS="detect_leaks=1"
+        ubsan_test_params: &ubsan_test_params PATH="/usr/lib/llvm-3.8/bin" UBSAN_OPTIONS="print_stacktrace=1"
+        valgrind_test_params: &valgrind_test_params valgrind --leak-check=full --track-origins=yes --num-callers=50 --error-exitcode=1 --error-limit=no --read-var-info=yes --suppressions=../etc/memcheck.suppressions
+
+
+#######################################
+#            Functions                #
+#######################################
+
+functions:
+    "setup":
+        - command: shell.exec
+          params:
+              shell: bash
+              script: |
+                 set -o errexit
+                 set -o xtrace
+                 set -o pipefail
+                 rm -rf "mongo-cxx-driver"
+                 rm -fr "mongo-c-driver"
+                 rm -fr mongod
+        - command: git.get_project
+          params:
+              directory: "mongo-cxx-driver"
+        - command: shell.exec
+          params:
+              shell: bash
+              working_dir: "."
+              script: |
+                 set -o errexit
+                 set -o xtrace
+                 set -o pipefail
+                 cc --version || true
+                 c++ --version || true
+                 gcc --version || true
+                 g++ --version || true
+                 clang --version || true
+                 cmake --version || true
+
+    "start_mongod":
+        command: shell.exec
+        params:
+            shell: bash
+            working_dir: "."
+            script: |
+                set -o errexit
+                set -o xtrace
+                set -o pipefail
+                git clone git@github.com:mongodb-labs/drivers-evergreen-tools.git
+                cd drivers-evergreen-tools
+                # Convert shell script line endings.  TODO: Remove this when
+                # <https://github.com/mongodb-labs/drivers-evergreen-tools/pull/6> is merged.
+                for i in .evergreen/*.sh; do dos2unix "$i" || true; done
+                export DRIVERS_TOOLS=$(pwd)
+                if [ "Windows_NT" == "$OS" ]; then
+                    export DRIVERS_TOOLS=$(cygpath -m $DRIVERS_TOOLS)
+                fi
+                export MONGODB_BINARIES=$DRIVERS_TOOLS/mongodb/bin
+                export MONGO_ORCHESTRATION_HOME=$DRIVERS_TOOLS/.evergreen/orchestration
+                export MONGODB_VERSION=${mongodb_version}
+                echo "{ \"releases\": { \"default\": \"$MONGODB_BINARIES\" }}" > $MONGO_ORCHESTRATION_HOME/orchestration.config
+                ./.evergreen/run-orchestration.sh
+
+    "stop_mongod":
+        command: shell.exec
+        params:
+            shell: bash
+            working_dir: "."
+            script: |
+                set -o errexit
+                set -o xtrace
+                set -o pipefail
+                cd drivers-evergreen-tools/.evergreen/orchestration
+                if [ -f venv/bin/activate ]; then
+                    . venv/bin/activate
+                elif [ -f venv/Scripts/activate ]; then
+                    . venv/Scripts/activate
+                fi
+                mongo-orchestration stop
+
+    "install_c_driver":
+        command: shell.exec
+        params:
+            shell: bash
+            working_dir: "mongo-cxx-driver"
+            script: |
+                    set -o errexit
+                    set -o xtrace
+                    set -o pipefail
+                    export PREFIX=$(pwd)/../mongoc/
+                    if [ "Windows_NT" == "$OS" ]; then
+                        PREFIX=$(cygpath -m "$PREFIX")
+                    fi
+                    ./.evergreen/install.sh ${MONGOC_VERSION|master}
+
+    "lint":
+        - command: shell.exec
+          params:
+              shell: bash
+              working_dir: "mongo-cxx-driver"
+              script: |
+                  set -o errexit
+                  set -o xtrace
+                  set -o pipefail
+                  python etc/clang_format.py lint
+
+    "compile":
+        - command: shell.exec
+          params:
+              shell: bash
+              working_dir: "mongo-cxx-driver"
+              script: |
+                  set -o errexit
+                  set -o xtrace
+                  set -o pipefail
+                  export BUILD_TYPE=${build_type}
+                  export PATH="${extra_path}:$PATH"
+
+                  ADDL_OPTS=
+                  if [ "${USE_STATIC_LIBS}" ]; then
+                      ADDL_OPTS="-DBUILD_SHARED_LIBS=OFF"
+                  fi
+
+                  MONGOC_PREFIX="$(pwd)/../mongoc"
+                  echo "MONGOC_PREFIX=$MONGOC_PREFIX"
+                  ls -l ..
+                  ls -l $MONGOC_PREFIX
+                  find $MONGOC_PREFIX
+
+                  if [ "Windows_NT" == "$OS" ]; then
+                      MONGOC_PREFIX=$(cygpath -m "$MONGOC_PREFIX")
+                  fi
+                  .evergreen/compile.sh -DCMAKE_PREFIX_PATH="$MONGOC_PREFIX" ${cmake_flags} ${poly_flags} $ADDL_OPTS -DCMAKE_INSTALL_PREFIX=install
+
+    "test":
+        - command: shell.exec
+          params:
+              shell: bash
+              working_dir: "mongo-cxx-driver"
+              script: |
+                  set -o errexit
+                  set -o xtrace
+                  set -o pipefail
+                  export PATH="${extra_path}:$PATH"
+                  cd build
+                  export PREFIX=$(pwd)/../../mongoc
+
+                  # Use PATH / LD_LIBRARY_PATH / DYLD_LIBRARY_PATH to inform the tests where to find
+                  # mongoc library dependencies on Windows / Linux / Mac OS, respectively.
+                  # Additionally, on Windows, we also need to inform the tests where to find
+                  # mongocxx library dependencies.
+                  export LD_LIBRARY_PATH=.:$PREFIX/lib/
+                  export DYLD_LIBRARY_PATH=.:$PREFIX/lib/
+                  export PATH=$(pwd)/src/bsoncxx/${build_type}:$(pwd)/src/mongocxx/${build_type}:$PREFIX/bin:$(pwd)/install/bin:$PATH
+
+                  # CRUD_TESTS_PATH and GRIDFS_TESTS_PATH are required to be set by the
+                  # `test_crud_specs` and `test_gridfs_specs` test binaries, respectively.
+                  export CRUD_TESTS_PATH="$(pwd)/../data/crud"
+                  export GRIDFS_TESTS_PATH="$(pwd)/../data/gridfs"
+                  if [ "Windows_NT" == "$OS" ]; then
+                      CRUD_TESTS_PATH=$(cygpath -m $CRUD_TESTS_PATH)
+                      CTEST_OUTPUT_ON_FAILURE=1 MSBuild.exe /p:Configuration=${build_type} RUN_TESTS.vcxproj
+                      CTEST_OUTPUT_ON_FAILURE=1 MSBuild.exe /p:Configuration=${build_type} examples/run-examples.vcxproj
+                  else
+                      # ENABLE_SLOW_TESTS is required to run the slow tests that are disabled by default. The slow tests should not be run if explicitly disabled.
+                      if [ -z "${disable_slow_tests}" ]; then
+                          export MONGOCXX_ENABLE_SLOW_TESTS=1
+                      fi
+                      
+                      # Run tests and examples 1-by-1 with "test_params" so we can run them with valgrind.
+                      ${test_params} ./src/bsoncxx/test/test_bson
+                      ${test_params} ./src/mongocxx/test/test_driver
+                      ${test_params} ./src/mongocxx/test/test_crud_specs
+                      ${test_params} ./src/mongocxx/test/test_gridfs_specs
+                      ${test_params} ./src/mongocxx/test/test_instance
+
+                      # Some platforms like OS X don't support the /mode syntax to the -perm option
+                      # of find(1), and some platforms like Ubuntu 16.04 don't support the +mode
+                      # syntax, so we use Perl to help us find executable files.
+                      EXAMPLES=$(find examples -type f | sort | perl -nlwe 'print if -x')
+                      for test in $EXAMPLES; do
+                        case "$test" in
+                          *change_stream*)
+                            echo "TODO CXX-1201, enable for servers that support change streams"
+                            ;;
+                          *client_session*)
+                            echo "TODO CXX-1201, enable for servers that support change streams"
+                            ;;
+                          *)
+                            ${test_params} $test
+                            ;;
+                        esac
+                      done
+                  fi
+
+                  cd ..
+                  export CMAKE_PREFIX_PATH=$PREFIX:$(pwd)/build/install
+                  export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$(pwd)/build/install/lib/pkgconfig
+                  export USE_STATIC_LIBS="${USE_STATIC_LIBS}"
+                  export BUILD_TYPE="${build_type}"
+
+                  export CXXFLAGS="${example_projects_cxxflags}"
+                  export LDFLAGS="${example_projects_ldflags}"
+                  export CC="${example_projects_cc}"
+                  export CXX="${example_projects_cxx}"
+                  export CXX_STANDARD="${example_projects_cxx_standard}"
+                  if [ "Windows_NT" == "$OS" ]; then
+                      export MSVC=1
+                  elif [ "$(uname -s | tr '[:upper:]' '[:lower:]')" == "darwin" ]; then
+                      export DYLD_LIBRARY_PATH="$(pwd)/build/install/lib:$DYLD_LIBRARY_PATH"
+                  else
+                      export LD_LIBRARY_PATH="$(pwd)/build/install/lib:$LD_LIBRARY_PATH"
+                  fi
+                  # The example projects never run under valgrind, since we haven't added execution
+                  # logic to handle ${test_params}.
+                  .evergreen/build_example_projects.sh
+
+#######################################
+#              Pre Task               #
+#######################################
+
+post:
+  - func: "stop_mongod"
+#######################################
+#               Tasks                 #
+#######################################
+
+tasks:
+    - name: lint
+      commands:
+        - func: "setup"
+        - func: "lint"
+
+    - name: compile_and_test_with_shared_libs
+      commands:
+        - func: "setup"
+        - func: "start_mongod"
+        - func: "install_c_driver"
+          vars:
+              MONGOC_VERSION: master
+        - func: "compile"
+        - func: "test"
+
+    - name: compile_and_test_with_static_libs
+      commands:
+        - func: "setup"
+        - func: "start_mongod"
+        - func: "install_c_driver"
+          vars:
+              MONGOC_VERSION: master
+        - func: "compile"
+          vars:
+              USE_STATIC_LIBS: 1
+        - func: "test"
+          vars:
+              USE_STATIC_LIBS: 1
+
+#######################################
+#           Buildvariants             #
+#######################################
+
+buildvariants:
+
+    #######################################
+    #         Linux Buildvariants         #
+    #######################################
+    - name: ubuntu1404-release
+      display_name: "Ubuntu 14.04 Release"
+      expansions:
+          build_type: "Release"
+          tar_options: *linux_tar_options
+          cdriver_configure_flags: *linux_cdriver_configure_flags
+          extra_path: *linux_extra_path
+          cmake_flags: *linux_cmake_flags
+          mongodb_version: *version_latest
+      run_on:
+          - ubuntu1404-test
+      tasks:
+          - name: lint
+          - name: compile_and_test_with_shared_libs
+          - name: compile_and_test_with_static_libs
+
+    - name: ubuntu1404-debug
+      display_name: "Ubuntu 14.04 Debug"
+      expansions:
+          build_type: "Debug"
+          tar_options: *linux_tar_options
+          cdriver_configure_flags: *linux_cdriver_configure_flags
+          extra_path: *linux_extra_path
+          cmake_flags: *linux_cmake_flags
+          mongodb_version: *version_latest
+      run_on:
+          - ubuntu1404-test
+      tasks:
+          - name: compile_and_test_with_shared_libs
+          - name: compile_and_test_with_static_libs
+
+    - name: macos-1012
+      display_name: "MacOS 10.12 Release (Boost)"
+      expansions:
+          build_type: "Release"
+          cdriver_configure_flags: *macos_cdriver_configure_flags
+          extra_path: *macos_extra_path
+          cmake_flags: *macos_cmake_flags
+          poly_flags: *poly_boost_flags
+          mongodb_version: *version_latest
+      run_on:
+          - macos-1012
+      tasks:
+          - name: compile_and_test_with_shared_libs
+          - name: compile_and_test_with_static_libs
+
+    - name: ubuntu1604-debug-std-experimental
+      display_name: "Ubuntu 16.04 Debug (std::experimental)"
+      expansions:
+          build_type: "Debug"
+          tar_options: *linux_tar_options
+          cdriver_configure_flags: *linux_cdriver_configure_flags
+          extra_path: *linux_extra_path
+          cmake_flags: *linux_cmake_flags
+          poly_flags: *poly_std_experimental_flags
+          mongodb_version: *version_latest
+          example_projects_cxx_standard: *std_experimental_cxx_standard
+      run_on:
+          - ubuntu1604-build
+      tasks:
+          - name: compile_and_test_with_shared_libs
+          - name: compile_and_test_with_static_libs
+
+    - name: ubuntu1604-debug-valgrind
+      display_name: "Valgrind Ubuntu 16.04 Debug"
+      expansions:
+          build_type: "Debug"
+          tar_options: *linux_tar_options
+          cdriver_configure_flags: *linux_cdriver_configure_flags
+          extra_path: *linux_extra_path
+          cmake_flags: *linux_cmake_flags
+          test_params: *valgrind_test_params
+          mongodb_version: *version_latest
+          disable_slow_tests: 1
+      run_on:
+          - ubuntu1604-build
+      tasks:
+          - name: compile_and_test_with_shared_libs
+          - name: compile_and_test_with_static_libs
+
+    - name: ubuntu1604-debug-asan
+      display_name: "ASAN Ubuntu 16.04 Debug"
+      expansions:
+          build_type: "Debug"
+          tar_options: *linux_tar_options
+          cdriver_configure_flags: *linux_cdriver_configure_flags
+          extra_path: *linux_extra_path
+          cmake_flags: *asan_cmake_flags
+          test_params: *asan_test_params
+          mongodb_version: *version_latest
+          example_projects_cc: *asan_cc_path
+          example_projects_cxx: *asan_cxx_path
+          example_projects_cxxflags: *asan_cxxflags
+          example_projects_ldflags: *asan_ldflags
+      run_on:
+          - ubuntu1604-build
+      tasks:
+          - name: compile_and_test_with_shared_libs
+          - name: compile_and_test_with_static_libs
+
+    - name: ubuntu1604-debug-ubsan
+      display_name: "UBSAN Ubuntu 16.04 Debug"
+      expansions:
+          build_type: "Debug"
+          tar_options: *linux_tar_options
+          cdriver_configure_flags: *linux_cdriver_configure_flags
+          extra_path: *linux_extra_path
+          cmake_flags: *ubsan_cmake_flags
+          test_params: *ubsan_test_params
+          mongodb_version: *version_latest
+          example_projects_cc: *ubsan_cc_path
+          example_projects_cxx: *ubsan_cxx_path
+          example_projects_cxxflags: *ubsan_cxxflags
+          example_projects_ldflags: *ubsan_ldflags
+      run_on:
+          - ubuntu1604-build
+      tasks:
+          # We currently don't run UBSAN on the shared library due to issues with UBSAN reporting
+          # numerous false positive instances of undefined behavior in the mock tests, when the
+          # driver invokes mock callback functions that have libmongoc types in the callback
+          # signature.
+          - name: compile_and_test_with_static_libs
+
+    # Reenable when the server is updated here, CXX-1576.
+    #- name: ubuntu1604-zseries
+    #  display_name: "s390x Ubuntu 16.04"
+    #  batchtime: 1440 # 1 day
+    #  expansions:
+    #      build_type: "Release"
+    #      tar_options: *linux_tar_options
+    #      cdriver_configure_flags: *linux_cdriver_configure_flags
+    #      cmake_flags: *linux_cmake_flags
+    #      mongodb_version: *version_latest
+    #  run_on:
+    #      - ubuntu1604-zseries-small
+    #  tasks:
+    #      - name: compile_and_test_with_shared_libs
+    #      - name: compile_and_test_with_static_libs
+
+    - name: power8-ubuntu1604
+      display_name: "ppc64le Ubuntu 16.04"
+      batchtime: 1440 # 1 day
+      expansions:
+          build_type: "Release"
+          tar_options: *linux_tar_options
+          cdriver_configure_flags: *linux_cdriver_configure_flags
+          cmake_flags: *linux_cmake_flags
+          mongodb_version: *version_latest
+      run_on:
+          - ubuntu1604-power8-build
+      tasks:
+          - name: compile_and_test_with_shared_libs
+          - name: compile_and_test_with_static_libs
+
+    - name: arm-ubuntu1604
+      display_name: "arm64 Ubuntu 16.04"
+      batchtime: 1440 # 1 day
+      expansions:
+          build_type: "Release"
+          tar_options: *linux_tar_options
+          cdriver_configure_flags: *linux_cdriver_configure_flags
+          cmake_flags: *linux_cmake_flags
+          mongodb_version: *version_latest
+      run_on:
+          - ubuntu1604-arm64-small
+      tasks:
+          - name: compile_and_test_with_shared_libs
+          - name: compile_and_test_with_static_libs
+
+    - name: windows-2k8-release
+      display_name: "Windows 2008R2 Release"
+      expansions:
+          build_type: "Release"
+          tar_options: *linux_tar_options
+          extra_path: *windows_extra_path
+          cmake_flags: *windows_cmake_flags
+          mongodb_version: *version_latest
+      run_on:
+          - windows-64-vs2015-compile
+      tasks:
+          - name: compile_and_test_with_shared_libs
+          - name: compile_and_test_with_static_libs
+
+    - name: windows-2k8-debug
+      display_name: "Windows 2008R2 Debug"
+      expansions:
+          build_type: "Debug"
+          tar_options: *linux_tar_options
+          extra_path: *windows_extra_path
+          cmake_flags: *windows_cmake_flags
+          mongodb_version: *version_latest
+      run_on:
+          - windows-64-vs2015-compile
+      tasks:
+          - name: compile_and_test_with_shared_libs
+          - name: compile_and_test_with_static_libs
