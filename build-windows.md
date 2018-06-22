@@ -126,3 +126,21 @@ Open `Developer Command Prompt for 2017` and goto the `mongo-c-drive` directory 
 msbuild.exe /p:Configuration=Release ALL_BUILD.vcxproj
 msbuild.exe /p:Configuration=Release INSTALL.vcxproj
 ```
+
+### 1.3 Build mongo-cxx-driver
+Copy `mongo-cxx-driver` from `libraries` directory to anywhere you want to compile mongo-c-driver. Then execute:
+```bash
+cd mongo-cxx-driver/build
+cmake -G "Visual Studio 15 2017 Win64"  -DCMAKE_INSTALL_PREFIX=C:\mongo-cxx-driver -DCMAKE_PREFIX_PATH=c:\mongo-c-driver -DBOOST_ROOT=d:\boost_1_67_0 ..
+```
+You should fill the above directories paths according your situation.
+The `C:\mongo-cxx-driver` directory is where you want to install the mongo-cxx-driver. 
+The `c:\mongo-c-driver` directory is the building directory for the `mongo-c-driver`. 
+The `d:\boost_1_67_0` directory is the boost 1.67 root directory.
+
+Open `Developer Command Prompt for 2017` and goto `mongo-cxx-driver/build` then execute:
+
+```bash
+msbuild.exe ALL_BUILD.vcxproj
+msbuild.exe INSTALL.vcxproj
+```
