@@ -112,3 +112,17 @@ Open `Developer Command Prompt for 2017` and goto `mongo-c-driver/src/libbson` t
 msbuild.exe /p:Configuration=Release ALL_BUILD.vcxproj
 msbuild.exe /p:Configuration=Release INSTALL.vcxproj
 ```
+
+### 1.2 Build mongo-c-driver
+```bash
+cd mongo-c-driver
+cmake -G "Visual Studio 15 2017 Win64" "-DENABLE_SSL=WINDOWS" "-DENABLE_SASL=SSPI" "-DCMAKE_INSTALL_PREFIX=C:\mongo-c-driver" "-DCMAKE_PREFIX_PATH=C:\mongo-c-driver" "-DCMAKE_BUILD_TYPE=Release"
+```
+Make sure the build directory `C:\mongo-c-driver` is same as previous libbson build directory.
+
+Open `Developer Command Prompt for 2017` and goto the `mongo-c-drive` directory then execute:
+
+```bash
+msbuild.exe /p:Configuration=Release ALL_BUILD.vcxproj
+msbuild.exe /p:Configuration=Release INSTALL.vcxproj
+```
