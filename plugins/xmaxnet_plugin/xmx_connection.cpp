@@ -8,6 +8,7 @@ XMX_Connection::XMX_Connection(const std::string& endpoint)
 }
 
 XMX_Connection::XMX_Connection(const std::shared_ptr<tcp::socket>& s)
+	: socket_(s)
 {
 
 }

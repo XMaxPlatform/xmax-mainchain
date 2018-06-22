@@ -22,6 +22,8 @@ public:
 
 protected:
 private:
+
+	std::shared_ptr<tcp::socket>		socket_;
 };
 
 }
