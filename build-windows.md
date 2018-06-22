@@ -59,12 +59,13 @@ Unzip.
 
 Add "BOOST_ROOT" to the system PATH.
 
-Open the command line or Windows PowerShell and cd to boost root path, call build command:
-```bash
-.\bootstrap.bat --prefix="c:\boost_1_67_0"
-.\b2 --build-type=complete toolset=msvc-14.1 address-model=64 --build-dir=.x64 --stagedir=stage_x64 --prefix="c:\boost_1_67_0"  install
-```
-If you used other source directory, you need to replace the path value in above steps.
+Open command prompt from unziped directory enter the following command:
+
+    .\bootstrap.bat --prefix="D:\boost_1_67_0"
+
+Wait a second for it to finish, the enter the following command to build:
+
+    .\b2 --build-type=complete toolset=msvc-14.1 address-model=64 --build-dir=.x64 --stagedir=stage_x64 --prefix="D:\boost_1_67_0" install
 
 # Generate Visual Studio Solution with CMake
 <a name="gensln"></a>
