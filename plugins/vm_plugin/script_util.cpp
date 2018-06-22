@@ -32,6 +32,8 @@ namespace xmax {
 
 		void CompileJsCode(Isolate* pIsolate, const Local<Context>& context,const char* jsCode)
 		{
+			V8_ParseWithPlugin();
+
 			Local<String> source =
 				String::NewFromUtf8(pIsolate, jsCode,
 					NewStringType::kNormal).ToLocalChecked();
