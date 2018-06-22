@@ -57,13 +57,9 @@ namespace pro
 
 		void SetValue(const char* v);
 
+		void Clear();
+
 	protected:
-		template<typename T>
-		inline T* rcast()
-		{
-			static_assert(sizeof(T) <= 8);
-			return reinterpret_cast<T*>(this);
-		}
 
 		template<typename T>
 		inline void setValue(T v)
