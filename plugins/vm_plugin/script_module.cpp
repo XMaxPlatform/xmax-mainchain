@@ -23,9 +23,14 @@ namespace xmax {
 				Discard();
 			}
 		}
-
+		v8::Object* test(v8::internal::Arguments& args,v8::Isolate* iso)
+		{
+			return nullptr;
+		}
 		void ScriptMoudle::Init()
 		{
+			V8_AddIntrinsicFoo("CallBackTest", (void*)test, 0, 1);
+
 			V8::InitializeICUDefaultLocation("");
 			V8::InitializeExternalStartupData("");
 			Platform* platform = platform::CreateDefaultPlatform();
