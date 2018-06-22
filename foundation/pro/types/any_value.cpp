@@ -11,59 +11,82 @@ namespace pro
 	{
 
 	}
+
+	AnyVaule::AnyVaule(int32_t v)
+	{
+		assign(v);
+	}
+	AnyVaule::AnyVaule(uint32_t v)
+	{
+		assign(v);
+	}
+	AnyVaule::AnyVaule(int64_t v)
+	{
+		assign(v);
+	}
+	AnyVaule::AnyVaule(uint64_t v)
+	{
+		assign(v);
+	}
+	AnyVaule::AnyVaule(double v)
+	{
+		assign(v);
+	}
+	AnyVaule::AnyVaule(const string& v)
+	{
+		assign(v);
+	}
+	AnyVaule::AnyVaule(const char* v)
+	{
+		assign(v);
+	}
+
+
 	AnyVaule::~AnyVaule()
 	{
-		Clear();
+		clearImpl();
 	}
 
-	void AnyVaule::SetValue(int32_t v)
+	void AnyVaule::assign(int32_t v)
 	{
-		Clear();
-		setValue(v);
-		setCode(Type_I32);
+		setValue(v, Type_I32);
 	}
-	void AnyVaule::SetValue(uint32_t v)
+	void AnyVaule::assign(uint32_t v)
 	{
-		Clear();
-		setValue(v);
-		setCode(Type_UI32);
+		setValue(v, Type_UI32);
 	}
-	void AnyVaule::SetValue(int64_t v)
+	void AnyVaule::assign(int64_t v)
 	{
-		Clear();
-		setValue(v);
-		setCode(Type_I64);
+		setValue(v, Type_I64);
 	}
-	void AnyVaule::SetValue(uint64_t v)
+	void AnyVaule::assign(uint64_t v)
 	{
-		Clear();
-		setValue(v);
-		setCode(Type_UI64);
+		setValue(v, Type_UI64);
 	}
-	void AnyVaule::SetValue(double v)
+	void AnyVaule::assign(double v)
 	{
-		Clear();
-		setValue(v);
-		setCode(Type_F64);
+		setValue(v, Type_F64);
 	}
-	void AnyVaule::SetValue(const string& v)
+	void AnyVaule::assign(const string& v)
 	{
-		Clear();
 		val_.str = new string;
 
 		*val_.str = v;
 		setCode(Type_String);
 	}
-	void AnyVaule::SetValue(const char* v)
+	void AnyVaule::assign(const char* v)
 	{
-		Clear();
 		val_.str = new string;
 
 		*val_.str = v;
 		setCode(Type_String);
 	}
-
 	void AnyVaule::Clear()
+	{
+		clearImpl();
+		code_ = Type_Void;
+	}
+	void AnyVaule::clearImpl()
 	{
 		switch (code_)
 		{

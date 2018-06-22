@@ -24,48 +24,50 @@ namespace pro
 			Type_String
 			
 		};
-
-		AnyVaule();
 		~AnyVaule();
-		/**
-		* Set value type as int32
-		* @param[in] int32_t
-		*/
-		void SetValue(int32_t v);
-		/**
-		* Set value type as uint32
-		* @param[in] uint32_t
-		*/
-		void SetValue(uint32_t v);
-		/**
-		* Set value type as int64
-		* @param[in] int64_t
-		*/
-		void SetValue(int64_t v);
-		/**
-		* Set value type as uint64
-		* @param[in] uint64_t
-		*/
-		void SetValue(uint64_t v);
-		/**
-		* Set value type as double
-		* @param[in] double
-		*/
-		void SetValue(double v);
+		AnyVaule();
+		AnyVaule(int32_t v);
+		AnyVaule(uint32_t v);
+		AnyVaule(int64_t v);
+		AnyVaule(uint64_t v);
+		AnyVaule(double v);
+		AnyVaule(const string& v);
+		AnyVaule(const char* v);
 
-		void SetValue(const string& v);
 
-		void SetValue(const char* v);
+		template<typename T>
+		void SetValue(const T& v)
+		{
+			Clear();
+			assign(v);
+		}
 
 		void Clear();
 
 	protected:
 
+		void assign(int32_t v);
+
+		void assign(uint32_t v);
+
+		void assign(int64_t v);
+
+		void assign(uint64_t v);
+
+		void assign(double v);
+
+		void assign(const string& v);
+
+		void assign(const char* v);
+
+		void clearImpl();
+
 		template<typename T>
-		inline void setValue(T v)
+		inline void setValue(T v, TypeCode c)
 		{
 			static_assert(sizeof(T) <= 8);
 			*reinterpret_cast<T*>(this) = v;
+			code_ = c;
 		}
 
 		inline void setCode(TypeCode c)
