@@ -36,5 +36,13 @@ namespace xmax {
 
 	}
 
+	//--------------------------------------------------
+	void ContractUtilPlugin::Initialize(const xmaxapp::VarsMap& options) {
+		
+		PluginFace::Initialize(options);
+
+		impl_.reset(new ContractUtilPluginImpl());
+	}
+	
 
 }

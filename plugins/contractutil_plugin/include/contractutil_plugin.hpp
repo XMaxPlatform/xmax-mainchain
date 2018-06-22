@@ -19,5 +19,10 @@ namespace xmax
 		ContractUtilPlugin();
 		virtual ~ContractUtilPlugin();
 
+		virtual void Initialize(const xmaxapp::VarsMap& options) override;
+
+
+	private:
+		std::unique_ptr<class ContractUtilPluginImpl> impl_;
 	};
 }
