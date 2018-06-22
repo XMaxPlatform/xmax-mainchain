@@ -4,8 +4,9 @@
 */
 #pragma once
 #include <pro/types/build.hpp>
-#include <pro/types/generictypes.hpp>
 #include <pro/types/any_value.hpp>
+#include <vector>
+#include <memory>
 
 namespace pro
 {
@@ -22,7 +23,7 @@ namespace pro
 			EntityKey key;
 			AnyVaule entity;
 		};
-		typedef std::vector<Entity> EntityContainer;
+		typedef std::vector<AnyObject::Entity> EntityContainer;
 		typedef EntityContainer::iterator Iterator;
 		typedef EntityContainer::const_iterator ConstIterator;
 

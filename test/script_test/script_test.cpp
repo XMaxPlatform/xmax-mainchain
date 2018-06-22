@@ -4,6 +4,7 @@
 #include <blockbuilder_plugin.hpp>
 #include "script_module.hpp"
 #include <pro/types/time.hpp>
+#include <pro/types/any_value.hpp>
 #include <boost/test/included/unit_test.hpp>
 #include "pro/utils/singleton.hpp"
 
@@ -37,6 +38,24 @@ BOOST_AUTO_TEST_CASE(time_1)
 	BOOST_CHECK(sec.GetValue() == 2ll);
 	BOOST_CHECK(micro2.GetValue() == 2ll * 1000ll * 1000ll);
 	BOOST_CHECK(milli3.GetValue() == 2ll * 1000ll);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_AUTO_TEST_SUITE(any_value)
+
+BOOST_AUTO_TEST_CASE(any_value)
+{
+	pro::AnyVaule anyi32;
+	pro::AnyVaule anyi64;
+	pro::AnyVaule anystr;
+
+	anyi32.SetValue((int32_t)53);
+	anyi64.SetValue((int64_t)64);
+
+	anystr.SetValue("xxxxxf");
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()

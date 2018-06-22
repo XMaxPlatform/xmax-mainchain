@@ -3,10 +3,8 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <pro/types/build.hpp>
-
-#include <memory>
-#include <vector>
+#include <pro/types/generictypes.hpp>
+#include <variant>
 
 namespace pro
 {
@@ -24,47 +22,41 @@ namespace pro
 			Type_UI64,
 			Type_I64,
 			Type_F64,
+			Type_String
 			
 		};
-		union Vaule
-		{
-			int32_t		i32;
-			uint32_t	ui32;
-			uint64_t	u64;
-			int64_t		i64;
-			double		f64;
-			char*		pointer;
-		};
+
 		AnyVaule();
-		AnyVaule(const AnyVaule&) = delete;
-		AnyVaule& operator = (const AnyVaule &) = delete;
 
 		/**
 		* Set value type as int32
 		* @param[in] int32_t
 		*/
-		void Set(int32_t v);
+		void SetValue(int32_t v);
 		/**
 		* Set value type as uint32
 		* @param[in] uint32_t
 		*/
-		void Set(uint32_t v);
+		void SetValue(uint32_t v);
 		/**
 		* Set value type as int64
 		* @param[in] int64_t
 		*/
-		void Set(int64_t v);
+		void SetValue(int64_t v);
 		/**
 		* Set value type as uint64
 		* @param[in] uint64_t
 		*/
-		void Set(uint64_t v);
+		void SetValue(uint64_t v);
 		/**
 		* Set value type as double
 		* @param[in] double
 		*/
-		void Set(double v);
+		void SetValue(double v);
 
+		void SetValue(const string& v);
+
+		void SetValue(const char* v);
 
 	protected:
 		template<typename T>
@@ -80,7 +72,7 @@ namespace pro
 		}
 
 	private:
-		Vaule val;
+		std::variant<int32_t, uint32_t, int64_t, uint64_t, string, double> val;
 		uint16_t subcode;
 		TypeCode code;
 	};
