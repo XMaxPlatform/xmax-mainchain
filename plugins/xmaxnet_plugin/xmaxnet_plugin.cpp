@@ -83,4 +83,8 @@ namespace xmax {
 		PluginFace::Shutdown();
 	}
 
+	void XmaxNetPlugin::Connect(const std::string& endPoint)
+	{
+
+	}
 }

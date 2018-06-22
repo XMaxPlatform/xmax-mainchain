@@ -24,6 +24,10 @@ namespace xmax
 		virtual void Startup() override;
 		virtual void Shutdown() override;
 
+	public:
+
+		void Connect(const std::string& endPoint);
+
 	private:
 		std::unique_ptr<class XmaxNetPluginImpl> impl_;
 	};
