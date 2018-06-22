@@ -4,7 +4,7 @@ set(current_lib_name ${xmax_mongo_lib_name})
 file(GLOB HEADERS "include/*.hpp")
 file (GLOB SOURCE_FILES "*.cpp")
 
-find_package(MongoDB)
+
 
 source_group( 
 	include

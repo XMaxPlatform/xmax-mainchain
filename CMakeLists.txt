@@ -51,6 +51,9 @@ ${BOOST_REUIQRED_COMPONENTS}
 )
 
 
+find_package(MongoDB)
+
+
 set(BUILD_SHARED_LIBS OFF)
 set(protobuf_MSVC_STATIC_RUNTIME OFF)
 
