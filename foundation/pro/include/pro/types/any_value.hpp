@@ -4,7 +4,6 @@
 */
 #pragma once
 #include <pro/types/generictypes.hpp>
-#include <variant>
 
 namespace pro
 {
@@ -27,7 +26,7 @@ namespace pro
 		};
 
 		AnyVaule();
-
+		~AnyVaule();
 		/**
 		* Set value type as int32
 		* @param[in] int32_t
@@ -60,6 +59,13 @@ namespace pro
 
 	protected:
 		template<typename T>
+		inline T* rcast()
+		{
+			static_assert(sizeof(T) <= 8);
+			return reinterpret_cast<T*>(this);
+		}
+
+		template<typename T>
 		inline void setValue(T v)
 		{
 			static_assert(sizeof(T) <= 8);
@@ -68,13 +74,23 @@ namespace pro
 
 		inline void setCode(TypeCode c)
 		{
-			code = c;
+			code_ = c;
 		}
 
 	private:
-		std::variant<int32_t, uint32_t, int64_t, uint64_t, string, double> val;
-		uint16_t subcode;
-		TypeCode code;
+		union Data
+		{
+			int32_t		i32;
+			uint32_t	ui32;
+			uint64_t	u64;
+			int64_t		i64;
+			double		f64;
+			string*		str;
+		};
+		//std::variant<int32_t, uint32_t, int64_t, uint64_t, string, double> val;
+		Data val_;
+		uint16_t subcode_;
+		TypeCode code_;
 	};
 
 }

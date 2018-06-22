@@ -7,9 +7,23 @@
 namespace pro
 {
 	AnyVaule::AnyVaule()
-		: code(TypeCode::Type_Void)
+		: code_(TypeCode::Type_Void)
 	{
 
+	}
+	AnyVaule::~AnyVaule()
+	{
+		switch (code_)
+		{
+		case pro::AnyVaule::Type_String:
+		{
+			delete val_.str;
+			val_.str = nullptr;
+		}
+			break;
+		default:
+			break;
+		}
 	}
 
 	void AnyVaule::SetValue(int32_t v)
@@ -39,12 +53,16 @@ namespace pro
 	}
 	void AnyVaule::SetValue(const string& v)
 	{
-		val = v;
+		val_.str = new string;
+
+		*val_.str = v;
 		setCode(Type_String);
 	}
 	void AnyVaule::SetValue(const char* v)
 	{
-		val = v;
+		val_.str = new string;
+
+		*val_.str = v;
 		setCode(Type_String);
 	}
 }

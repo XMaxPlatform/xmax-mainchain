@@ -56,6 +56,7 @@ BOOST_AUTO_TEST_CASE(any_value)
 
 	anystr.SetValue("xxxxxf");
 
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()
