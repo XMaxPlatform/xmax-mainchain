@@ -17,14 +17,12 @@
 #  MongoDB_LIBRARIES             Libraries of the mongo db
 #  MongoDB_INCLUDE_DIR           Include directories of the mongo db
 
-find_package(libbson-1.0
-HINTS "${MONGO_DB_C_ROOT}")
+find_package(libbson-1.0)
 
-find_package(libmongoc-1.0 1.8
-HINTS "${MONGO_DB_C_ROOT}")
+find_package(libmongoc-1.0 1.8)
 
 if(libmongoc-1.0_FOUND)
-    find_package(libmongocxx-static REQUIRED HINTS "${MONGO_DB_CXX_ROOT}")
+    find_package(libmongocxx-static REQUIRED)
     
     if((LIBMONGOCXX_VERSION_MAJOR LESS 3) OR ((LIBMONGOCXX_VERSION_MAJOR EQUAL 3) AND (LIBMONGOCXX_VERSION_MINOR LESS 2)))
          find_library(LIBMONGOCXX_STATIC_LIBRARIES
