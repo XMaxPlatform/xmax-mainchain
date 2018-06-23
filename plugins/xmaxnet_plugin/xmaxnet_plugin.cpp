@@ -3,6 +3,8 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/host_name.hpp>
 
+#include "xmx_connection.hpp"
+
 namespace xmax {
 	using namespace xmaxapp;
 	using namespace google::protobuf;
@@ -28,6 +30,7 @@ namespace xmax {
 		std::unique_ptr<tcp::acceptor>		acceptor_;
 		std::unique_ptr<tcp::resolver>		resolver_;
 		tcp::endpoint						endpoint_;
+		std::vector<XMX_Connection>			connections_;
 	};
 
 	/**
