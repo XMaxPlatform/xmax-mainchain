@@ -25,7 +25,9 @@ namespace xmax
 		virtual void Shutdown() override;
 
 	public:
-
+		/**
+		*  Connect to the endpoint
+		*/
 		void Connect(const std::string& endPoint);
 
 	private:
