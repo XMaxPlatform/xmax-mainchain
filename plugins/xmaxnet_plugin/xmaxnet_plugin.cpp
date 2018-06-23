@@ -38,7 +38,10 @@ namespace xmax {
 	{
 		ShutdownProtobufLibrary();
 	}
-
+	/**
+	*  Initialize network
+	*
+	*/
 	void XmaxNetPluginImpl::Init(boost::asio::io_service& io)
 	{
 		resolver_ = std::make_unique<tcp::resolver>( io );
