@@ -6,10 +6,7 @@
 #
 # In order to find the libraries, you need to pass these variables:
 #
-#   MONGO_DB_C_ROOT: Set this variable to the ROOT dir of the mongo-c-driver
-#
-#   MONGO_DB_CXX_ROOT: Set this variable to the ROOT dir of the mongo-cxx-driver
-#
+# -DCMAKE_PREFIX_PATH="%mongo_cxx_root%;%mongo_c_root%"
 #
 # Variables output:
 #
