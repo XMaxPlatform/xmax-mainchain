@@ -25,6 +25,12 @@ namespace xmax {
 
 		void Init(boost::asio::io_service& io);
 
+		void SetEndpoint(const std::string& endpoint);
+
+
+	protected:
+
+
 	private:
 
 		std::unique_ptr<tcp::acceptor>		acceptor_;
@@ -49,6 +55,11 @@ namespace xmax {
 	{
 		resolver_ = std::make_unique<tcp::resolver>( io );
 		acceptor_.reset( new tcp::acceptor(io) );
+	}
+
+	void XmaxNetPluginImpl::SetEndpoint(const std::string& endpoint)
+	{
+		
 	}
 
 
@@ -93,4 +104,6 @@ namespace xmax {
 	{
 
 	}
+
+
 }
