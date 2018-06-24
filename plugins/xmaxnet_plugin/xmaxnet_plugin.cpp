@@ -30,6 +30,11 @@ namespace xmax {
 
 	protected:
 
+		void OnAccept();
+
+		void OnConnect();
+
+		void OnResolve();
 
 	private:
 
@@ -62,6 +67,20 @@ namespace xmax {
 		
 	}
 
+	void XmaxNetPluginImpl::OnAccept()
+	{
+
+	}
+
+	void XmaxNetPluginImpl::OnConnect()
+	{
+
+	}
+
+	void XmaxNetPluginImpl::OnResolve()
+	{
+
+	}
 
 	/**
 	*  Implementations of XmaxNetPlugin interfaces
