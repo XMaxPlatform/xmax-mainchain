@@ -1,4 +1,4 @@
-sssssssssssss# Building XMax Platform on Windows 10
+# Building XMax Platform on Windows 10
 
 # Prerequisites 
 
