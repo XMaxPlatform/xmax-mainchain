@@ -22,9 +22,14 @@ namespace xmax {
 		~XmaxNetPluginImpl();
 
 	public:
-
+		/**
+		* Init p2p newwork params
+		*/
 		void Init(boost::asio::io_service& io);
-
+		/**
+		* set endpoint (using boost params)
+		* @param[in]	std::string		endpoint of network
+		*/
 		void SetEndpoint(const std::string& endpoint);
 
 
