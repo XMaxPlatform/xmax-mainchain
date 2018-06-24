@@ -44,6 +44,22 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_connect_fail) {
 	
 }
 
+BOOST_AUTO_TEST_CASE(test_mongo_db_connect) {
+
+	BOOST_CHECK_NO_THROW({
+		mongocxx::uri uri = mongocxx::uri{ mongo_uri };
+	mongocxx::client mongo_cli = mongocxx::client{ uri };
+	mongocxx::database db = mongo_cli["testdb"];
+	mongocxx::collection col = db["testcol"];
+	bsoncxx::builder::stream::document doc{};
+	doc << "name" << "abc";
+	col.insert_one(doc.view());
+	col.create_index(bsoncxx::from_json(R"foo({ "name" : 1 })foo"));
+		}
+	);
+
+}
+
 
 
 BOOST_AUTO_TEST_SUITE_END()
