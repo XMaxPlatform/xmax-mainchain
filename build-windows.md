@@ -166,3 +166,13 @@ target_include_directories( target_name
 target_link_libraries( target_name   
 	${MongoDB_LIBRARIES})
 ```
+
+### 1.5 Run MongoDB in Windows
+Download and install MongoDB server for Windows which could be found at it's offcial website: `https://www.mongodb.com/download-center`.
+
+Then find a custom data directory and start the service, for example:
+```bash
+"D:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --dbpath d:\mongo_db\data
+```
+
+Finally, you can access Mongo DB from your program or compatible tools.
