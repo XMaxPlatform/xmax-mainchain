@@ -20,8 +20,10 @@ using namespace std;
 BOOST_AUTO_TEST_SUITE(mongo_db_suite)
 
 const static std::string mongo_uri = "mongodb://localhost:27017";
-
 const static std::string mongo_uri_nonexist = "mongodb://localhost:27018";
+const static std::string db_name = "testdb";
+const static std::string collection_name = "testcol";
+
 
 static inline bool IsConnectionEx(const mongocxx::exception& ex) {
 	std::string ex_msg = ex.what();
@@ -33,8 +35,8 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_connect_fail) {
 	BOOST_CHECK_EXCEPTION({
 		mongocxx::uri uri = mongocxx::uri{ mongo_uri_nonexist };
 		mongocxx::client mongo_cli = mongocxx::client{ uri };
-		mongocxx::database db = mongo_cli["nonexist"];
-		mongocxx::collection col = db["nocol"];
+		mongocxx::database db = mongo_cli[db_name];
+		mongocxx::collection col = db[collection_name];
 		bsoncxx::builder::stream::document doc{};
 		doc << "name" << "abc";
 		col.insert_one(doc.view());
@@ -49,8 +51,8 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_connect) {
 	BOOST_CHECK_NO_THROW({
 		mongocxx::uri uri = mongocxx::uri{ mongo_uri };
 	mongocxx::client mongo_cli = mongocxx::client{ uri };
-	mongocxx::database db = mongo_cli["testdb"];
-	mongocxx::collection col = db["testcol"];
+	mongocxx::database db = mongo_cli[db_name];
+	mongocxx::collection col = db[collection_name];
 	bsoncxx::builder::stream::document doc{};
 	doc << "name" << "abc";
 	col.insert_one(doc.view());
