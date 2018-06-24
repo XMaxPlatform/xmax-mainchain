@@ -128,7 +128,7 @@ msbuild.exe /p:Configuration=Release ALL_BUILD.vcxproj
 msbuild.exe /p:Configuration=Release INSTALL.vcxproj
 ```
 
-### 1.3 Build mongo-cxx-driver
+## 2. Build mongo-cxx-driver
 Copy `mongo-cxx-driver` from `libraries` directory to anywhere you want to compile mongo-c-driver. Then execute:
 ```bash
 cd mongo-cxx-driver/build
@@ -146,7 +146,7 @@ msbuild.exe ALL_BUILD.vcxproj
 msbuild.exe INSTALL.vcxproj
 ```
 
-### 1.4 Use MongoDB in the xmax-mainchain project
+## 3. Use MongoDB in the xmax-mainchain project
 In order to use the MongoDB libraries, you need pass or set two CMake variables.
 ```bash
 -DMONGO_DB_C_ROOT=c:/mongo-c-driver
@@ -167,7 +167,7 @@ target_link_libraries( target_name
 	${MongoDB_LIBRARIES})
 ```
 
-### 1.5 Run MongoDB in Windows
+## 4. Run MongoDB in Windows
 Download and install MongoDB server for Windows which could be found at it's offcial website: `https://www.mongodb.com/download-center`.
 
 Then find a custom data directory and start the service, for example:
