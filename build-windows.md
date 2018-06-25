@@ -65,7 +65,7 @@ Open command prompt from unziped directory enter the following command:
 
     .\bootstrap.bat --prefix="D:\boost_1_67_0"
 
-Wait a second for it to finish, the enter the following command to build:
+Wait a second for it to finish, then enter the following command to build:
 
     .\b2 --build-type=complete toolset=msvc-14.1 address-model=64 --build-dir=.x64 --stagedir=stage_x64 --prefix="D:\boost_1_67_0" install
 
