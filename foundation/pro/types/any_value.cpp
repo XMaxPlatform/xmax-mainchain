@@ -146,10 +146,16 @@ namespace pro
 	{
 		switch (code_)
 		{
-		case pro::AnyVaule::Type_String:
+		case AnyVaule::Type_String:
 		{
 			delete val_.str;
 			val_.str = nullptr;
+		}
+		break;
+		case AnyVaule::Type_Stream:
+		{
+			delete val_.stream;
+			val_.stream = nullptr;
 		}
 		break;
 		default:
