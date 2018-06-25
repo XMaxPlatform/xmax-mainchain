@@ -16,6 +16,7 @@ namespace pro
 		std::vector<char> data;
 	};
 
+
 	/**
 	* This class encapsulates some basic types 
 	*/
@@ -47,16 +48,22 @@ namespace pro
 		AnyVaule(const string& v);
 		AnyVaule(DataStream&& v);
 		AnyVaule(const DataStream& v);
+		AnyVaule(const void* data, size_t len);
 		AnyVaule(const char* v);
 		AnyVaule(const AnyVaule& v);
 
-		AnyVaule & operator=(const AnyVaule&) = delete;
+		AnyVaule & operator=(const AnyVaule&);
 
 		template<typename T>
 		void SetValue(const T& v)
 		{
 			Clear();
 			assign(v);
+		}
+		void SetValue(const void* data, size_t len)
+		{
+			Clear();
+			assign(data, len);
 		}
 
 		void Clear();
@@ -87,6 +94,7 @@ namespace pro
 		void assign(string&& v);
 		void assign(const DataStream& v);
 		void assign(DataStream&& v);
+		void assign(const void* data, size_t len);
 
 		void assign(AnyVaule& v);
 		void assign(const AnyVaule& v);

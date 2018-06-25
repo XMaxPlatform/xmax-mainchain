@@ -51,6 +51,10 @@ namespace pro
 	{
 		assign(std::forward<DataStream>(v));
 	}
+	AnyVaule::AnyVaule(const void* data, size_t len)
+	{
+		assign(data, len);
+	}
 	AnyVaule::AnyVaule(const DataStream& v)
 	{
 		assign(v);
@@ -59,13 +63,26 @@ namespace pro
 
 	AnyVaule::AnyVaule(const AnyVaule& v)
 	{
-
+		assign(v);
 	}
 
 	AnyVaule::~AnyVaule()
 	{
 		clearImpl();
 	}
+
+	AnyVaule & AnyVaule::operator = (const AnyVaule& v)
+	{
+		assign(v);
+		return *this;
+	}
+
+	void AnyVaule::Clear()
+	{
+		clearImpl();
+		code_ = Type_Void;
+	}
+
 	void AnyVaule::assign(bool v)
 	{
 		setValue(v, Type_Bool);
@@ -92,7 +109,6 @@ namespace pro
 	}
 	void AnyVaule::assign(const string& v)
 	{
-
 		newType<string>(Type_String) = v;
 	}
 	void AnyVaule::assign(string&& v)
@@ -112,6 +128,13 @@ namespace pro
 	void AnyVaule::assign(DataStream&& v)
 	{
 		newType<DataStream>(Type_Stream) = v;
+	}
+
+	void AnyVaule::assign(const void* data, size_t len)
+	{
+		auto& stream = newType<DataStream>(Type_Stream);
+		stream.data.resize(len);
+		memcpy(&stream.data[0], data, len);
 	}
 
 	void AnyVaule::assign(const AnyVaule& v)
@@ -134,12 +157,6 @@ namespace pro
 		}
 			break;
 		}
-	}
-
-	void AnyVaule::Clear()
-	{
-		clearImpl();
-		code_ = Type_Void;
 	}
 
 	void AnyVaule::clearImpl()
