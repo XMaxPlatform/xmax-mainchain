@@ -7,9 +7,7 @@ using namespace v8;
 
 namespace xmax {
 	namespace scriptv8 {
-		/**
-		* implementation of int64
-		*/
+
 		class V8i64
 		{
 		public:
