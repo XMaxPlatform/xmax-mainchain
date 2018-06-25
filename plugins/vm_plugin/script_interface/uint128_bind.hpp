@@ -1,4 +1,4 @@
-//uint i28 decl
+//uint ui28 decl
 #pragma  once
 #include <functional>
 #include <map>
