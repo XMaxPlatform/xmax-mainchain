@@ -29,8 +29,6 @@ namespace pro
 
 		void Clear();
 	private:
-
-
 		EntityContainer entities_;
 	};
 

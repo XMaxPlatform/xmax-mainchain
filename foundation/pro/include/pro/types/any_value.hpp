@@ -51,8 +51,10 @@ namespace pro
 		AnyVaule(const void* data, size_t len);
 		AnyVaule(const char* v);
 		AnyVaule(const AnyVaule& v);
+		AnyVaule(AnyVaule&& v);
 
 		AnyVaule & operator=(const AnyVaule&);
+		AnyVaule & operator=(AnyVaule&&);
 
 		template<typename T>
 		void SetValue(const T& v)
@@ -96,7 +98,7 @@ namespace pro
 		void assign(DataStream&& v);
 		void assign(const void* data, size_t len);
 
-		void assign(AnyVaule& v);
+		void assign(AnyVaule&& v);
 		void assign(const AnyVaule& v);
 
 		void clearImpl();

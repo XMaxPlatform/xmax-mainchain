@@ -65,6 +65,10 @@ namespace pro
 	{
 		assign(v);
 	}
+	AnyVaule::AnyVaule(AnyVaule&& v)
+	{
+		assign(std::move(v));
+	}
 
 	AnyVaule::~AnyVaule()
 	{
@@ -76,6 +80,13 @@ namespace pro
 		assign(v);
 		return *this;
 	}
+
+	AnyVaule & AnyVaule::operator = (AnyVaule&& v)
+	{
+		assign(std::move(v));
+		return *this;
+	}
+
 
 	void AnyVaule::Clear()
 	{
@@ -113,7 +124,7 @@ namespace pro
 	}
 	void AnyVaule::assign(string&& v)
 	{
-		newType<string>(Type_String) = v;
+		newType<string>(Type_String) = std::move(v);
 	}
 	void AnyVaule::assign(const char* v)
 	{
@@ -127,7 +138,7 @@ namespace pro
 
 	void AnyVaule::assign(DataStream&& v)
 	{
-		newType<DataStream>(Type_Stream) = v;
+		newType<DataStream>(Type_Stream) = std::move(v);
 	}
 
 	void AnyVaule::assign(const void* data, size_t len)
@@ -156,6 +167,28 @@ namespace pro
 			memcpy(this, &v, sizeof(v));
 		}
 			break;
+		}
+	}
+
+	void AnyVaule::assign(AnyVaule&& v)
+	{
+		switch (v.GetType())
+		{
+		case AnyVaule::Type_String:
+		{
+			assign(std::move(*v.val_.str));
+			break;
+		}
+		case AnyVaule::Type_Stream:
+		{
+			assign(std::move(*v.val_.stream));
+			break;
+		}
+		default:
+		{
+			memcpy(this, &v, sizeof(v));
+		}
+		break;
 		}
 	}
 
