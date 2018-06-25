@@ -124,7 +124,7 @@ namespace pro
 	}
 	void AnyVaule::assign(string&& v)
 	{
-		newType<string>(Type_String) = std::move(v);
+		newType<string>(Type_String) = std::forward<string>(v);
 	}
 	void AnyVaule::assign(const char* v)
 	{
@@ -138,7 +138,7 @@ namespace pro
 
 	void AnyVaule::assign(DataStream&& v)
 	{
-		newType<DataStream>(Type_Stream) = std::move(v);
+		newType<DataStream>(Type_Stream) = std::forward<DataStream>(v);
 	}
 
 	void AnyVaule::assign(const void* data, size_t len)
@@ -176,12 +176,12 @@ namespace pro
 		{
 		case AnyVaule::Type_String:
 		{
-			assign(std::move(*v.val_.str));
+			assign(std::forward<std::string>(*v.val_.str));
 			break;
 		}
 		case AnyVaule::Type_Stream:
 		{
-			assign(std::move(*v.val_.stream));
+			assign(std::forward<DataStream>(*v.val_.stream));
 			break;
 		}
 		default:
