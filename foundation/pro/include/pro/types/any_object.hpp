@@ -21,7 +21,7 @@ namespace pro
 		struct Entity
 		{
 			EntityKey key;
-			AnyVaule entity;
+			AnyValue entity;
 		};
 		typedef std::vector<AnyObject::Entity> EntityContainer;
 		typedef EntityContainer::iterator Iterator;

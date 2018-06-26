@@ -6,158 +6,158 @@
 
 namespace pro
 {
-	AnyVaule::AnyVaule()
+	AnyValue::AnyValue()
 		: code_(TypeCode::Type_Void)
 	{
 
 	}
-	AnyVaule::AnyVaule(bool v)
+	AnyValue::AnyValue(bool v)
 	{
 		assign(v);
 	}
-	AnyVaule::AnyVaule(int32_t v)
+	AnyValue::AnyValue(int32_t v)
 	{
 		assign(v);
 	}
-	AnyVaule::AnyVaule(uint32_t v)
+	AnyValue::AnyValue(uint32_t v)
 	{
 		assign(v);
 	}
-	AnyVaule::AnyVaule(int64_t v)
+	AnyValue::AnyValue(int64_t v)
 	{
 		assign(v);
 	}
-	AnyVaule::AnyVaule(uint64_t v)
+	AnyValue::AnyValue(uint64_t v)
 	{
 		assign(v);
 	}
-	AnyVaule::AnyVaule(double v)
+	AnyValue::AnyValue(double v)
 	{
 		assign(v);
 	}
-	AnyVaule::AnyVaule(const char* v)
+	AnyValue::AnyValue(const char* v)
 	{
 		assign(v);
 	}
-	AnyVaule::AnyVaule(string&& v)
+	AnyValue::AnyValue(string&& v)
 	{
 		assign(std::forward<string>(v));
 	}
-	AnyVaule::AnyVaule(const string& v)
+	AnyValue::AnyValue(const string& v)
 	{
 		assign(v);
 	}
-	AnyVaule::AnyVaule(DataStream&& v)
+	AnyValue::AnyValue(DataStream&& v)
 	{
 		assign(std::forward<DataStream>(v));
 	}
-	AnyVaule::AnyVaule(const void* data, size_t len)
+	AnyValue::AnyValue(const void* data, size_t len)
 	{
 		assign(data, len);
 	}
-	AnyVaule::AnyVaule(const DataStream& v)
+	AnyValue::AnyValue(const DataStream& v)
 	{
 		assign(v);
 	}
 
 
-	AnyVaule::AnyVaule(const AnyVaule& v)
+	AnyValue::AnyValue(const AnyValue& v)
 	{
 		assign(v);
 	}
-	AnyVaule::AnyVaule(AnyVaule&& v)
+	AnyValue::AnyValue(AnyValue&& v)
 	{
 		assign(std::move(v));
 	}
 
-	AnyVaule::~AnyVaule()
+	AnyValue::~AnyValue()
 	{
 		clearImpl();
 	}
 
-	AnyVaule & AnyVaule::operator = (const AnyVaule& v)
+	AnyValue & AnyValue::operator = (const AnyValue& v)
 	{
 		assign(v);
 		return *this;
 	}
 
-	AnyVaule & AnyVaule::operator = (AnyVaule&& v)
+	AnyValue & AnyValue::operator = (AnyValue&& v)
 	{
 		assign(std::move(v));
 		return *this;
 	}
 
 
-	void AnyVaule::Clear()
+	void AnyValue::Clear()
 	{
 		clearImpl();
 		code_ = Type_Void;
 	}
 
-	void AnyVaule::assign(bool v)
+	void AnyValue::assign(bool v)
 	{
 		setValue(v, Type_Bool);
 	}
-	void AnyVaule::assign(int32_t v)
+	void AnyValue::assign(int32_t v)
 	{
 		setValue(v, Type_I32);
 	}
-	void AnyVaule::assign(uint32_t v)
+	void AnyValue::assign(uint32_t v)
 	{
 		setValue(v, Type_UI32);
 	}
-	void AnyVaule::assign(int64_t v)
+	void AnyValue::assign(int64_t v)
 	{
 		setValue(v, Type_I64);
 	}
-	void AnyVaule::assign(uint64_t v)
+	void AnyValue::assign(uint64_t v)
 	{
 		setValue(v, Type_UI64);
 	}
-	void AnyVaule::assign(double v)
+	void AnyValue::assign(double v)
 	{
 		setValue(v, Type_F64);
 	}
-	void AnyVaule::assign(const string& v)
+	void AnyValue::assign(const string& v)
 	{
 		newType<string>(Type_String) = v;
 	}
-	void AnyVaule::assign(string&& v)
+	void AnyValue::assign(string&& v)
 	{
 		newType<string>(Type_String) = std::forward<string>(v);
 	}
-	void AnyVaule::assign(const char* v)
+	void AnyValue::assign(const char* v)
 	{
 		newType<string>(Type_String) = v;
 	}
 
-	void AnyVaule::assign(const DataStream& v)
+	void AnyValue::assign(const DataStream& v)
 	{
 		newType<DataStream>(Type_Stream) = v;
 	}
 
-	void AnyVaule::assign(DataStream&& v)
+	void AnyValue::assign(DataStream&& v)
 	{
 		newType<DataStream>(Type_Stream) = std::forward<DataStream>(v);
 	}
 
-	void AnyVaule::assign(const void* data, size_t len)
+	void AnyValue::assign(const void* data, size_t len)
 	{
 		auto& stream = newType<DataStream>(Type_Stream);
 		stream.data.resize(len);
 		memcpy(&stream.data[0], data, len);
 	}
 
-	void AnyVaule::assign(const AnyVaule& v)
+	void AnyValue::assign(const AnyValue& v)
 	{
 		switch (v.GetType())
 		{
-		case AnyVaule::Type_String:
+		case AnyValue::Type_String:
 		{
 			assign(*v.val_.str);
 			break;
 		}
-		case AnyVaule::Type_Stream:
+		case AnyValue::Type_Stream:
 		{
 			assign(*v.val_.stream);
 			break;
@@ -170,16 +170,16 @@ namespace pro
 		}
 	}
 
-	void AnyVaule::assign(AnyVaule&& v)
+	void AnyValue::assign(AnyValue&& v)
 	{
 		switch (v.GetType())
 		{
-		case AnyVaule::Type_String:
+		case AnyValue::Type_String:
 		{
 			assign(std::forward<std::string>(*v.val_.str));
 			break;
 		}
-		case AnyVaule::Type_Stream:
+		case AnyValue::Type_Stream:
 		{
 			assign(std::forward<DataStream>(*v.val_.stream));
 			break;
@@ -192,17 +192,17 @@ namespace pro
 		}
 	}
 
-	void AnyVaule::clearImpl()
+	void AnyValue::clearImpl()
 	{
 		switch (code_)
 		{
-		case AnyVaule::Type_String:
+		case AnyValue::Type_String:
 		{
 			delete val_.str;
 			val_.str = nullptr;
 		}
 		break;
-		case AnyVaule::Type_Stream:
+		case AnyValue::Type_Stream:
 		{
 			delete val_.stream;
 			val_.stream = nullptr;

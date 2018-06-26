@@ -20,7 +20,7 @@ namespace pro
 	/**
 	* This class encapsulates some basic types 
 	*/
-	class AnyVaule
+	class AnyValue
 	{
 	public:
 		enum TypeCode
@@ -36,25 +36,25 @@ namespace pro
 			Type_Stream,
 			
 		};
-		~AnyVaule();
-		AnyVaule();
-		AnyVaule(bool v);
-		AnyVaule(int32_t v);
-		AnyVaule(uint32_t v);
-		AnyVaule(int64_t v);
-		AnyVaule(uint64_t v);
-		AnyVaule(double v);
-		AnyVaule(string&& v);
-		AnyVaule(const string& v);
-		AnyVaule(DataStream&& v);
-		AnyVaule(const DataStream& v);
-		AnyVaule(const void* data, size_t len);
-		AnyVaule(const char* v);
-		AnyVaule(const AnyVaule& v);
-		AnyVaule(AnyVaule&& v);
+		~AnyValue();
+		AnyValue();
+		AnyValue(bool v);
+		AnyValue(int32_t v);
+		AnyValue(uint32_t v);
+		AnyValue(int64_t v);
+		AnyValue(uint64_t v);
+		AnyValue(double v);
+		AnyValue(string&& v);
+		AnyValue(const string& v);
+		AnyValue(DataStream&& v);
+		AnyValue(const DataStream& v);
+		AnyValue(const void* data, size_t len);
+		AnyValue(const char* v);
+		AnyValue(const AnyValue& v);
+		AnyValue(AnyValue&& v);
 
-		AnyVaule & operator=(const AnyVaule&);
-		AnyVaule & operator=(AnyVaule&&);
+		AnyValue & operator=(const AnyValue&);
+		AnyValue & operator=(AnyValue&&);
 
 		template<typename T>
 		void SetValue(const T& v)
@@ -98,8 +98,8 @@ namespace pro
 		void assign(DataStream&& v);
 		void assign(const void* data, size_t len);
 
-		void assign(AnyVaule&& v);
-		void assign(const AnyVaule& v);
+		void assign(AnyValue&& v);
+		void assign(const AnyValue& v);
 
 		void clearImpl();
 
