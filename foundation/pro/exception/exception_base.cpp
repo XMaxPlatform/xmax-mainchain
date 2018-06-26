@@ -9,102 +9,102 @@ namespace pro
 
 	}
 
-	Exception::Exception(const string& description_, const string& source_)
-	:line(0)
-	,type(EXT_UNDEF_TYPE)
-	,title("Exception")
-	,description(description_)
-	,source(source_)
+	Exception::Exception(const string& _description, const string& _source)
+	:line_(0)
+	,type_(EXT_UNDEF_TYPE)
+	,title_("Exception")
+	,description_(_description)
+	,source_(_source)
 	{
 		// Log this error - not any more, allow catchers to do it
 		//LogManager::getSingleton().logMessage(this->getFullDescription());
 	}
 
-	Exception::Exception(const string& description_, const string& source_, const char* file_, long line_)
-		:type(EXT_UNDEF_TYPE)
-		,title("Exception")
-		,description(description_)
-		,source(source_)
-		,file(file_)
-		,line(line_)
+	Exception::Exception(const string& _description, const string& _source, const char* _file, long _line)
+		:type_(EXT_UNDEF_TYPE)
+		,title_("Exception")
+		,description_(_description)
+		,source_(_source)
+		,file_(_file)
+		,line_(_line)
 		
 	{
 		// Log this error - not any more, allow catchers to do it
 		//LogManager::getSingleton().logMessage(this->getFullDescription());
 	}
 
-	Exception::Exception(int type_, const string& description_, const string& source_, const char* tile_, const char* file_, long line_)
-		:line(line_)
-		,type(type_)
-		,title(tile_)
-		,description(description_)
-		,source(source_)
-		,file(file_)
+	Exception::Exception(int type_, const string& _description, const string& _source, const char* tile_, const char* _file, long _line)
+		:line_(_line)
+		,type_(type_)
+		,title_(tile_)
+		,description_(_description)
+		,source_(_source)
+		,file_(_file)
 	{
 
 	}
 
 	Exception::Exception(const Exception& rhs)
-		: line(rhs.line), 
-		type(rhs.type), 
-		title(rhs.title), 
-		description(rhs.description), 
-		source(rhs.source), 
-		file(rhs.file)
+		: line_(rhs.line_), 
+		type_(rhs.type_), 
+		title_(rhs.title_), 
+		description_(rhs.description_), 
+		source_(rhs.source_), 
+		file_(rhs.file_)
 	{
 	}
 
 	void Exception::operator = (const Exception& rhs)
 	{
-		description = rhs.description;
-		type = rhs.type;
-		source = rhs.source;
-		file = rhs.file;
-		line = rhs.line;
-		title = rhs.title;
+		description_ = rhs.description_;
+		type_ = rhs.type_;
+		source_ = rhs.source_;
+		file_ = rhs.file_;
+		line_ = rhs.line_;
+		title_ = rhs.title_;
 	}
 
     const string& Exception::GetFullDescription() const
 	{
-		if (0 == fullDesc.size())
+		if (0 == full_desc_.size())
 		{	
-			if( line > 0 )
+			if( line_ > 0 )
 			{
-				utils::Format(fullDesc, "PRO EXCEPTION(%d:%s): \"%s\" in %s at %s(line, %d)", 
-					type, title.c_str(), description.c_str(), source.c_str(), file.c_str(), line);
+				utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" in %s at %s(line, %d)", 
+					type_, title_.c_str(), description_.c_str(), source_.c_str(), file_.c_str(), line_);
 			}
 			else
 			{
-				utils::Format(fullDesc, "PRO EXCEPTION(%d:%s): \"%s\" in %s", type, title.c_str(), description.c_str(), source.c_str());
+				utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" in %s", type_, title_.c_str(), description_.c_str(), source_.c_str());
 			}
 		}
 
-		return fullDesc;
+		return full_desc_;
 	}
 
     int Exception::GetType(void) const throw()
 	{
-		return type;
+		return type_;
 	}
 
     const string &Exception::GetSource() const 
 	{ 
-		return source;
+		return source_;
 	}
 
     const string &Exception::GetFile() const 
 	{ 
-		return file; 
+		return file_; 
 	}
 
     long Exception::GetLine() const 
 	{ 
-		return line; 
+		return line_; 
 	}
 
 	const string &Exception::GetDescription(void) const 
 	{ 
-		return description; 
+		return description_; 
 	}
 
 	const char* Exception::what() const throw() 

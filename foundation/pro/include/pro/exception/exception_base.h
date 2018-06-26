@@ -30,8 +30,8 @@ namespace pro
 		/** Default constructor.
         */
 
-        Exception(const string& description_, const string& source_);
-		Exception(const string& description_, const string& source_, const char* file_, long line_);
+        Exception(const string& _description, const string& _source);
+		Exception(const string& _description, const string& _source, const char* _file, long _line);
 
         /** Copy constructor.
         */
@@ -75,14 +75,14 @@ namespace pro
 
 		/** Advanced constructor.
         */
-        Exception(int type_, const string& description_, const string& source_, const char* tile_, const char* file_, long line_);
+        Exception(int _type, const string& _description, const string& _source, const char* _tile, const char* _file, long _line);
 
-		long line;
-		int type;
-		string title;
-		string description;
-		string source;
-		string file;
-		mutable string fullDesc;
+		long line_;
+		int type_;
+		string title_;
+		string description_;
+		string source_;
+		string file_;
+		mutable string full_desc_;
 	};
 }
