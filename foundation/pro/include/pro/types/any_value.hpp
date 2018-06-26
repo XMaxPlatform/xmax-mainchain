@@ -122,6 +122,7 @@ namespace pro
 			static_assert(sizeof(T) <= sizeof(Data));
 			return reinterpret_cast<T&>(val_);
 		}
+
 		template<typename T>
 		inline T* asPtr() const
 		{

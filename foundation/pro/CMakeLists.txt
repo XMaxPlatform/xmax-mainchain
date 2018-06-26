@@ -41,6 +41,7 @@ endfunction(list_source)
 list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" types)
 list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" log)
 list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" utils)
+list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" exception)
 
 #message( STATUS "H_FILES:${H_FILES}")
 #message( STATUS "S_FILES:${S_FILES}")
