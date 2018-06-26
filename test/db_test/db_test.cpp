@@ -65,11 +65,7 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_connect) {
 		mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
 		mongocxx::client mongo_cli = mongocxx::client{ uri };
 		mongocxx::database db = mongo_cli[db_name];
-		mongocxx::collection col = db[collection_name];
-		bsoncxx::builder::stream::document doc{};
-		doc << "name" << std::string("abc");
-		col.insert_one(doc.view());
-		col.create_index(bsoncxx::from_json(R"foo({ "name" : 1 })foo"));
+		db.create_collection(collection_name);		
 	}
 	catch (const mongocxx::exception& e)
 	{
@@ -78,6 +74,14 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_connect) {
 	}
 	
 	BOOST_CHECK(true);
+}
+
+
+BOOST_AUTO_TEST_CASE(test_mongo_db_drop_col) {
+	mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
+	mongocxx::client mongo_cli = mongocxx::client{ uri };
+	mongocxx::collection col = mongo_cli[db_name][collection_name];
+	col.drop();
 }
 
 
