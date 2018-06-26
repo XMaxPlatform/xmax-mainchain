@@ -8,7 +8,7 @@
 namespace pro
 {
 
-#define PRO_EXCEPT(Type, desc) throw Type(desc, __FILE__, __LINE__)
+
 
 #define PRO_EXCEPTION_TYPE(_ClassName, _Type)\
 	class _ClassName : public pro::Exception\
@@ -28,5 +28,10 @@ namespace pro
 	PRO_EXCEPTION_TYPE(FormatException, Exception::EXT_FORMAT_ERROR);
 
 	PRO_EXCEPTION_TYPE(MemoryException, Exception::EXT_MEMORY_ERROR);
+
+
+#define PRO_EXCEPT_WITH_DESC(_type, desc) throw _type(desc, __FILE__, __LINE__)
+
+#define PRO_ASSERT_WITH_DESC(condition, _type, desc) if(!condition) PRO_EXCEPT_WITH_DESC(_type, desc)
 
 }

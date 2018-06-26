@@ -4,10 +4,17 @@
 */
 #pragma once
 #include <pro/types/generictypes.hpp>
+#include <pro/exception/exceptions.h>
 #include <vector>
 
 namespace pro
 {
+
+#define ANY_VALUE_CAST_TMPLT(_type, _code) \
+		template<>\
+		const _type& CastTo<_type>()const {\
+			return castTo<_type, _code>();\
+		}\
 
 
 	class DataStream
@@ -34,7 +41,6 @@ namespace pro
 			Type_F64,
 			Type_String,
 			Type_Stream,
-			
 		};
 		~AnyValue();
 		AnyValue();
@@ -68,6 +74,14 @@ namespace pro
 			assign(data, len);
 		}
 
+		template<typename T>
+		const T& CastTo() const
+		{
+			PRO_EXCEPT_WITH_DESC(FormatException, "nonsupport format.");
+			return asValue<T>();
+		}
+		ANY_VALUE_CAST_TMPLT(int32_t, Type_I32)
+
 		void Clear();
 
 		inline TypeCode GetType() const
@@ -88,6 +102,20 @@ namespace pro
 		{
 			return code == code_;
 		}
+
+		template<TypeCode code>
+		static constexpr bool IsSimpleType()
+		{
+			if constexpr (code == Type_Stream || code == Type_String)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
 	protected:
 		void assign(bool v);
 		void assign(int32_t v);
@@ -112,19 +140,25 @@ namespace pro
 		inline void setValue(T v, TypeCode c)
 		{
 			static_assert(sizeof(T) <= sizeof(Data));
-			reinterpret_cast<T&>(val_) = v;
+			*reinterpret_cast<T*>(this) = v;
 			code_ = c;
 		}
 
 		template<typename T>
-		inline T& asValue() const
+		inline const T& asValue() const
 		{
 			static_assert(sizeof(T) <= sizeof(Data));
-			return reinterpret_cast<T&>(val_);
+			return *reinterpret_cast<const T*>(this);
 		}
 
 		template<typename T>
-		inline T* asPtr() const
+		inline const T* asPtr() const
+		{
+			return reinterpret_cast<const T*>(val_.anyptr);
+		}
+
+		template<typename T>
+		inline T* asPtr()
 		{
 			return reinterpret_cast<T*>(val_.anyptr);
 		}
@@ -135,6 +169,21 @@ namespace pro
 			val_.anyptr = new T;
 			code_ = c;
 			return *asPtr<T>();
+		}
+
+
+		template<typename T, TypeCode c>
+		inline const T& castTo() const
+		{
+			PRO_ASSERT_WITH_DESC(c == code_, FormatException, "type error, cast false.");
+			if constexpr (IsSimpleType<c>())
+			{
+				return asValue<T>();
+			}
+			else
+			{
+				return *asPtr<T>();
+			}
 		}
 
 		inline void setCode(TypeCode c)
