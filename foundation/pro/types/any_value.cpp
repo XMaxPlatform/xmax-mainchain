@@ -198,14 +198,14 @@ namespace pro
 		{
 		case AnyValue::Type_String:
 		{
-			delete val_.str;
-			val_.str = nullptr;
+			delete asPtr<string>();
+			val_.anyptr = nullptr;
 		}
 		break;
 		case AnyValue::Type_Stream:
 		{
-			delete val_.stream;
-			val_.stream = nullptr;
+			delete asPtr<DataStream>();
+			val_.anyptr = nullptr;
 		}
 		break;
 		default:

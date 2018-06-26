@@ -63,9 +63,9 @@ BOOST_AUTO_TEST_SUITE(any_value)
 
 BOOST_AUTO_TEST_CASE(any_value)
 {
-	pro::AnyVaule anyi32 = (int32_t)53;
-	pro::AnyVaule anyi64 = (int64_t)64;
-	pro::AnyVaule anystr = "test string";
+	pro::AnyValue anyi32 = (int32_t)53;
+	pro::AnyValue anyi64 = (int64_t)64;
+	pro::AnyValue anystr = "test string";
 
 
 }

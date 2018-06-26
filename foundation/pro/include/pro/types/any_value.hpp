@@ -83,6 +83,11 @@ namespace pro
 		{
 			return Type_Void != code_;
 		}
+
+		inline bool IsType(TypeCode code) const
+		{
+			return code == code_;
+		}
 	protected:
 		void assign(bool v);
 		void assign(int32_t v);
@@ -106,9 +111,21 @@ namespace pro
 		template<typename T>
 		inline void setValue(T v, TypeCode c)
 		{
-			static_assert(sizeof(T) <= 8);
-			*reinterpret_cast<T*>(this) = v;
+			static_assert(sizeof(T) <= sizeof(Data));
+			reinterpret_cast<T&>(val_) = v;
 			code_ = c;
+		}
+
+		template<typename T>
+		inline T& asValue() const
+		{
+			static_assert(sizeof(T) <= sizeof(Data));
+			return reinterpret_cast<T&>(val_);
+		}
+		template<typename T>
+		inline T* asPtr() const
+		{
+			return reinterpret_cast<T*>(val_.anyptr);
 		}
 
 		template<typename T>
@@ -116,7 +133,7 @@ namespace pro
 		{
 			val_.anyptr = new T;
 			code_ = c;
-			return *reinterpret_cast<T*>(val_.anyptr);
+			return *asPtr<T>();
 		}
 
 		inline void setCode(TypeCode c)
