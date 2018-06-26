@@ -39,7 +39,7 @@ namespace xmax {
 
 		void SetupV8i128ObjectToJs(Isolate* isolate, Handle<ObjectTemplate> global);
 
-		void GetBit(int i,const FunctionCallbackInfo<v8::Value>& args);
+		void V8i128GetBit(int i,const FunctionCallbackInfo<v8::Value>& args);
 
 		
 

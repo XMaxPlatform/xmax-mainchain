@@ -10,10 +10,10 @@
 
 Open command prompt enter the following command to generate Visual Studio Solution
 
-    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" "[source dir]"    
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" -DMONGO_DB_C_ROOT="[mongo_c_root]" -DMONGO_DB_CXX_ROOT="[mongo_cxx_root]" "[source dir]"    
 e.g.
 
-    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" "../"
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" -DMONGO_DB_C_ROOT="c:\mongo-c-driver" -DMONGO_DB_CXX_ROOT="c:\mongo-cxx-driver" "../"
 
 Open "Xmax-mainchain.sln" with Visual Studio 2017 and build.
 
@@ -103,38 +103,27 @@ Simply open generated solution file "Xmax-mainchain.sln" with Visual Studio 15 2
 # Build MongoDB 
 
 ## 1. Build mongo-c-driver
-### 1.1 Build libbson in mongo-c-driver
+
 Copy `mongo-c-driver` from `libraries` directory to anywhere you want to compile mongo-c-driver. Then execute:
 ```bash
-cd mongo-c-driver/src/libbson
-cmake -G "Visual Studio 15 2017 Win64" "-DCMAKE_INSTALL_PREFIX=C:\mongo-c-driver" "-DCMAKE_BUILD_TYPE=Release"
+cd mongo-c-driver
+mkdir build
+cd build
+cmake -G "Visual Studio 15 2017 Win64" "-DCMAKE_INSTALL_PREFIX=c:\mongo-c-driver" "-DCMAKE_PREFIX_PATH=c:\mongo-c-driver" "-DCMAKE_BUILD_TYPE=Release" "-DENABLE_STATIC=ON" ../
 ```
 `C:\mongo-c-driver` is default build location and you can change to wherever you want.
-Open `Developer Command Prompt for 2017` and goto `mongo-c-driver/src/libbson` then execute:
+Open `Developer Command Prompt for 2017` and goto `mongo-c-driver/build` then execute:
 ```bash
 msbuild.exe /p:Configuration=Release ALL_BUILD.vcxproj
 msbuild.exe /p:Configuration=Release INSTALL.vcxproj
 ```
 
-### 1.2 Build mongo-c-driver
-```bash
-cd mongo-c-driver
-cmake -G "Visual Studio 15 2017 Win64" "-DENABLE_SSL=WINDOWS" "-DENABLE_SASL=SSPI" "-DCMAKE_INSTALL_PREFIX=C:\mongo-c-driver" "-DCMAKE_PREFIX_PATH=C:\mongo-c-driver" "-DCMAKE_BUILD_TYPE=Release"
-```
-Make sure the build directory `C:\mongo-c-driver` is same as previous libbson build directory.
-
-Open `Developer Command Prompt for 2017` and goto the `mongo-c-drive` directory then execute:
-
-```bash
-msbuild.exe /p:Configuration=Release ALL_BUILD.vcxproj
-msbuild.exe /p:Configuration=Release INSTALL.vcxproj
-```
 
 ## 2. Build mongo-cxx-driver
-Copy `mongo-cxx-driver` from `libraries` directory to anywhere you want to compile mongo-c-driver. Then execute:
+Copy `mongo-cxx-driver` from `libraries` directory to anywhere you want. Then execute:
 ```bash
 cd mongo-cxx-driver/build
-cmake -G "Visual Studio 15 2017 Win64"  -DCMAKE_INSTALL_PREFIX=C:\mongo-cxx-driver -DCMAKE_PREFIX_PATH=c:\mongo-c-driver -DBOOST_ROOT=d:\boost_1_67_0 ..
+cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=C:\mongo-cxx-driver -DCMAKE_PREFIX_PATH=c:\mongo-c-driver -DBOOST_ROOT=d:\boost_1_67_0 -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ../
 ```
 You should fill the above directories paths according your situation.
 The `C:\mongo-cxx-driver` directory is where you want to install the mongo-cxx-driver. 

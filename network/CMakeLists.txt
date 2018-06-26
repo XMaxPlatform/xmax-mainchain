@@ -26,7 +26,7 @@ macro(add_protobuf_compile_target proto_file_name)
     )
 
 
-    add_custom_command(OUTPUT  ${PROTO_SOURCE_DIR}/${proto_file_name}.pb.cc       
+    add_custom_command(OUTPUT  ${PROTO_BUILD_DIR}/${proto_file_name}.pb.cc       
         COMMAND $<TARGET_FILE:protoc> -I=${PROTO_SOURCE_DIR} --proto_path=${PROTO_LIB_SRC_DIR} --cpp_out=${PROTO_BUILD_DIR} ${PROTO_SOURCE_DIR}/${proto_file_name}.proto
     )
 endmacro()
@@ -42,6 +42,7 @@ endmacro()
 
 #Add compile proto manually
 add_protobuf_compile_target(test)
+add_protobuf_compile_target(any)
 #add_protobuf_compile_target(timestamp)
 
 add_custom_target(compile_protos
