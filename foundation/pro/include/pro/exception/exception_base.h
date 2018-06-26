@@ -8,7 +8,7 @@
 
 namespace pro
 {
-	#define BASE_EXCEPT(desc, src) throw Exception(desc, src, __FILE__, __LINE__)
+	#define BASE_EXCEPT(desc, src) throw Exception(desc, __FILE__, __LINE__)
 
 	class Exception : public std::exception
 	{
@@ -32,7 +32,7 @@ namespace pro
 
         Exception(const string& _description, const string& _source);
 		Exception(const string& _description, const string& _source, const char* _file, long _line);
-
+		Exception(const string& _description, const char* _file, long _line);
         /** Copy constructor.
         */
         Exception(const Exception& rhs);
@@ -76,7 +76,7 @@ namespace pro
 		/** Advanced constructor.
         */
         Exception(int _type, const string& _description, const string& _source, const char* _tile, const char* _file, long _line);
-
+		Exception(int _type, const string& _description, const char* _tile, const char* _file, long _line);
 		long line_;
 		int type_;
 		string title_;

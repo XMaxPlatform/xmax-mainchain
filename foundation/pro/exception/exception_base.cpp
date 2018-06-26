@@ -16,8 +16,15 @@ namespace pro
 	,description_(_description)
 	,source_(_source)
 	{
-		// Log this error - not any more, allow catchers to do it
-		//LogManager::getSingleton().logMessage(this->getFullDescription());
+	}
+	Exception::Exception(const string& _description, const char* _file, long _line)
+		:type_(EXT_UNDEF_TYPE)
+		, title_("Exception")
+		, description_(_description)
+		, file_(_file)
+		, line_(_line)
+
+	{
 	}
 
 	Exception::Exception(const string& _description, const string& _source, const char* _file, long _line)
@@ -29,8 +36,6 @@ namespace pro
 		,line_(_line)
 		
 	{
-		// Log this error - not any more, allow catchers to do it
-		//LogManager::getSingleton().logMessage(this->getFullDescription());
 	}
 
 	Exception::Exception(int type_, const string& _description, const string& _source, const char* tile_, const char* _file, long _line)
@@ -40,6 +45,16 @@ namespace pro
 		,description_(_description)
 		,source_(_source)
 		,file_(_file)
+	{
+
+	}
+
+	Exception::Exception(int type_, const string& _description, const char* tile_, const char* _file, long _line)
+		:line_(_line)
+		, type_(type_)
+		, title_(tile_)
+		, description_(_description)
+		, file_(_file)
 	{
 
 	}
@@ -70,12 +85,29 @@ namespace pro
 		{	
 			if( line_ > 0 )
 			{
-				utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" in %s at %s(line, %d)", 
-					type_, title_.c_str(), description_.c_str(), source_.c_str(), file_.c_str(), line_);
+				if (source_.size())
+				{
+					utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" in %s at '%s(line, %d)'",
+						type_, title_.c_str(), description_.c_str(), source_.c_str(), file_.c_str(), line_);
+				}
+				else
+				{
+					utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" at '%s(line, %d)'",
+						type_, title_.c_str(), description_.c_str(), file_.c_str(), line_);
+				}
+			
 			}
 			else
 			{
-				utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" in %s", type_, title_.c_str(), description_.c_str(), source_.c_str());
+				if (source_.size())
+				{
+					utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" in %s", type_, title_.c_str(), description_.c_str(), source_.c_str());
+				}
+				else
+				{
+					utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\".", type_, title_.c_str(), description_.c_str());
+				}
+
 			}
 		}
 

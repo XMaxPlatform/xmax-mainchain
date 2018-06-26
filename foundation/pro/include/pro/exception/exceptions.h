@@ -8,7 +8,7 @@
 namespace pro
 {
 
-#define PRO_EXCEPT(Type, desc, src) throw Type(desc, src, __FILE__, __LINE__)
+#define PRO_EXCEPT(Type, desc) throw Type(desc, __FILE__, __LINE__)
 
 #define PRO_EXCEPTION_TYPE(_ClassName, _Type)\
 	class _ClassName : public pro::Exception\
@@ -16,6 +16,9 @@ namespace pro
 	public:\
 		_ClassName(const pro::string& desc_, const pro::string& src_, const char* file_, long line_) \
 		: pro::Exception(_Type, desc_, src_, #_ClassName, file_, line_) {\
+		}\
+		_ClassName(const pro::string& desc_, const char* file_, long line_) \
+		: pro::Exception(_Type, desc_, #_ClassName, file_, line_) {\
 		}\
 	}
 
