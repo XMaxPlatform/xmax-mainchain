@@ -76,7 +76,13 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_connect) {
 	BOOST_CHECK(true);
 }
 
+BOOST_AUTO_TEST_CASE(test_mongo_db_write_col) {
+	mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
+	mongocxx::client mongo_cli = mongocxx::client{ uri };
+	mongocxx::collection col = mongo_cli[db_name][collection_name];
+	col.create_index(bsoncxx::from_json(R"foo({ "name" : 1 })foo"));
 
+}
 BOOST_AUTO_TEST_CASE(test_mongo_db_drop_col) {
 	mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
 	mongocxx::client mongo_cli = mongocxx::client{ uri };
