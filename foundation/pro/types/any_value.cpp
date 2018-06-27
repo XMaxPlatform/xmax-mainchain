@@ -11,42 +11,12 @@ namespace pro
 	{
 		val_.anyval = 0;
 	}
-	AnyValue::AnyValue(bool v)
-	{ 
-		assign(v);
-	}
-	AnyValue::AnyValue(int32_t v)
-	{
-		assign(v);
-	}
-	AnyValue::AnyValue(uint32_t v)
-	{
-		assign(v);
-	}
-	AnyValue::AnyValue(int64_t v)
-	{
-		assign(v);
-	}
-	AnyValue::AnyValue(uint64_t v)
-	{
-		assign(v);
-	}
-	AnyValue::AnyValue(double v)
-	{
-		assign(v);
-	}
-	AnyValue::AnyValue(const char* v)
-	{
-		assign(v);
-	}
+
 	AnyValue::AnyValue(string&& v)
 	{
 		assign(std::forward<string>(v));
 	}
-	AnyValue::AnyValue(const string& v)
-	{
-		assign(v);
-	}
+
 	AnyValue::AnyValue(DataStream&& v)
 	{
 		assign(std::forward<DataStream>(v));
@@ -55,19 +25,10 @@ namespace pro
 	{
 		assign(data, len);
 	}
-	AnyValue::AnyValue(const DataStream& v)
-	{
-		assign(v);
-	}
 
-
-	AnyValue::AnyValue(const AnyValue& v)
-	{
-		assign(v);
-	}
 	AnyValue::AnyValue(AnyValue&& v)
 	{
-		assign(std::move(v));
+		assign(std::forward<AnyValue>(v));
 	}
 
 	AnyValue::~AnyValue()
@@ -75,15 +36,10 @@ namespace pro
 		clearImpl();
 	}
 
-	AnyValue & AnyValue::operator = (const AnyValue& v)
-	{
-		assign(v);
-		return *this;
-	}
-
 	AnyValue & AnyValue::operator = (AnyValue&& v)
 	{
-		assign(std::move(v));
+		clearImpl();
+		assign(std::forward<AnyValue>(v));
 		return *this;
 	}
 

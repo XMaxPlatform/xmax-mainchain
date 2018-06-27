@@ -16,25 +16,30 @@ namespace pro
 	{
 	public:
 
-		~AnyValue();
-		AnyValue();
-		AnyValue(bool v);
-		AnyValue(int32_t v);
-		AnyValue(uint32_t v);
-		AnyValue(int64_t v);
-		AnyValue(uint64_t v);
-		AnyValue(double v);
+
+		ANY_TYPE_BIND_TMPLT(bool)
+			ANY_TYPE_BIND_TMPLT(int32_t)
+			ANY_TYPE_BIND_TMPLT(uint32_t)
+			ANY_TYPE_BIND_TMPLT(int64_t)
+			ANY_TYPE_BIND_TMPLT(uint64_t)
+			ANY_TYPE_BIND_TMPLT(double)
+			ANY_TYPE_BIND_TMPLT(const string&)
+			ANY_TYPE_BIND_TMPLT(const DataStream&)
+			ANY_TYPE_BIND_TMPLT(const AnyValue&)
+			ANY_TYPE_BIND_TMPLT(const char*)
+
 		AnyValue(string&& v);
-		AnyValue(const string& v);
+
 		AnyValue(DataStream&& v);
-		AnyValue(const DataStream& v);
+
 		AnyValue(const void* data, size_t len);
-		AnyValue(const char* v);
-		AnyValue(const AnyValue& v);
+
 		AnyValue(AnyValue&& v);
 
-		AnyValue & operator=(const AnyValue&);
 		AnyValue & operator=(AnyValue&&);
+
+		~AnyValue();
+		AnyValue();
 
 		template<typename T>
 		void SetValue(const T& v)

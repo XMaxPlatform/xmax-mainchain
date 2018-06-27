@@ -16,6 +16,17 @@ namespace pro
 	//	return AnyType::Cast<int32_t, AnyType::Type_I32>(v, ccheck);
 	//}
 
+#define ANY_TYPE_BIND_TMPLT(_type) \
+	AnyValue(_type v) {\
+		assign(v); \
+	}\
+	AnyValue& operator=(_type v) {\
+		clearImpl();\
+		assign(v); \
+		return *this;\
+	}
+
+
 #define ANY_TYPE_CAST_TMPLT(_type, _code) \
 		template<>\
 		static _type& CastTo(void* v, AnyType::Code ccheck) {\
