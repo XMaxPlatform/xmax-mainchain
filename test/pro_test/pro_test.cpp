@@ -63,14 +63,16 @@ BOOST_AUTO_TEST_SUITE(any_value)
 
 BOOST_AUTO_TEST_CASE(any_value)
 {
+	const char tstring[] = "test string";
 	pro::AnyValue anyi32 = (int32_t)53;
 	pro::AnyValue anyi64 = (int64_t)64;
-	pro::AnyValue anystr = "test string";
-
-	int32_t c = anyi32.CastTo<int32_t>();
+	pro::AnyValue anystr = tstring;
+	pro::AnyValue anystr2 = anystr;
+	int32_t c = anyi32.CastTo<int32_t>(); 
 	BOOST_CHECK(c == 53);
-	//std::string ss = anystr.CastTo
-	//BOOST_CHECK(c == 53);
+	std::string ss = anystr2.CastTo<string>();
+
+	BOOST_CHECK(ss == tstring);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

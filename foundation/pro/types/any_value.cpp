@@ -7,12 +7,12 @@
 namespace pro
 {
 	AnyValue::AnyValue()
-		: code_(TypeCode::Type_Void)
+		: code_(AnyType::Type_Void)
 	{
-
+		val_.anyval = 0;
 	}
 	AnyValue::AnyValue(bool v)
-	{
+	{ 
 		assign(v);
 	}
 	AnyValue::AnyValue(int32_t v)
@@ -91,125 +91,68 @@ namespace pro
 	void AnyValue::Clear()
 	{
 		clearImpl();
-		code_ = Type_Void;
-	}
-
-	void AnyValue::assign(bool v)
-	{
-		setValue(v, Type_Bool);
-	}
-	void AnyValue::assign(int32_t v)
-	{
-		setValue(v, Type_I32);
-	}
-	void AnyValue::assign(uint32_t v)
-	{
-		setValue(v, Type_UI32);
-	}
-	void AnyValue::assign(int64_t v)
-	{
-		setValue(v, Type_I64);
-	}
-	void AnyValue::assign(uint64_t v)
-	{
-		setValue(v, Type_UI64);
-	}
-	void AnyValue::assign(double v)
-	{
-		setValue(v, Type_F64);
+		code_ = AnyType::Type_Void;
 	}
 	void AnyValue::assign(const string& v)
 	{
-		newType<string>(Type_String) = v;
+		newContainer<AnyType::FString, AnyType::Type_String>() = v;
 	}
 	void AnyValue::assign(string&& v)
 	{
-		newType<string>(Type_String) = std::forward<string>(v);
+		newContainer<AnyType::FString, AnyType::Type_String>() = std::forward<string>(v);
 	}
 	void AnyValue::assign(const char* v)
 	{
-		newType<string>(Type_String) = v;
+		newContainer<AnyType::FString, AnyType::Type_String>() = v;
 	}
 
 	void AnyValue::assign(const DataStream& v)
 	{
-		newType<DataStream>(Type_Stream) = v;
+		newContainer<AnyType::FStream, AnyType::Type_Stream>() = v;
 	}
 
 	void AnyValue::assign(DataStream&& v)
 	{
-		newType<DataStream>(Type_Stream) = std::forward<DataStream>(v);
+		newContainer<AnyType::FStream, AnyType::Type_Stream>() = std::forward<DataStream>(v);
 	}
 
 	void AnyValue::assign(const void* data, size_t len)
 	{
-		auto& stream = newType<DataStream>(Type_Stream);
+		auto& stream = newContainer<AnyType::FStream, AnyType::Type_Stream>();
 		stream.data.resize(len);
 		memcpy(&stream.data[0], data, len);
 	}
 
 	void AnyValue::assign(const AnyValue& v)
 	{
-		switch (v.GetType())
-		{
-		case AnyValue::Type_String:
-		{
-			assign(*v.val_.str);
-			break;
-		}
-		case AnyValue::Type_Stream:
-		{
-			assign(*v.val_.stream);
-			break;
-		}
-		default:
+		if (AnyType::IsSimpleType(v.code_))
 		{
 			memcpy(this, &v, sizeof(v));
 		}
-			break;
+		else
+		{
+			setContainerImpl(v.code_, v.val_.anyptr->CopySelf());
 		}
 	}
 
 	void AnyValue::assign(AnyValue&& v)
 	{
-		switch (v.GetType())
-		{
-		case AnyValue::Type_String:
-		{
-			assign(std::forward<std::string>(*v.val_.str));
-			break;
-		}
-		case AnyValue::Type_Stream:
-		{
-			assign(std::forward<DataStream>(*v.val_.stream));
-			break;
-		}
-		default:
+		if (AnyType::IsSimpleType(v.code_))
 		{
 			memcpy(this, &v, sizeof(v));
 		}
-		break;
+		else
+		{
+			setContainerImpl(code_, v.val_.anyptr);
 		}
 	}
 
 	void AnyValue::clearImpl()
 	{
-		switch (code_)
+		if (!AnyType::IsSimpleType(code_))
 		{
-		case AnyValue::Type_String:
-		{
-			delete asPtr<string>();
+			IAnyContainer::Delete(val_.anyptr);
 			val_.anyptr = nullptr;
-		}
-		break;
-		case AnyValue::Type_Stream:
-		{
-			delete asPtr<DataStream>();
-			val_.anyptr = nullptr;
-		}
-		break;
-		default:
-			break;
 		}
 	}
 }
