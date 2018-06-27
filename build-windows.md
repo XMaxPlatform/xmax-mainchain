@@ -138,10 +138,9 @@ msbuild.exe INSTALL.vcxproj
 ```
 
 ## 3. Use MongoDB in the xmax-mainchain project
-In order to use the MongoDB libraries, you need pass or set two CMake variables.
+In order to use the MongoDB libraries, you need to set `mongo-c-driver` and `mongo-cxx-driver` directories in the `CMAKE_PREFIX_PATH` varaible. For example:
 ```bash
--DMONGO_DB_C_ROOT=c:/mongo-c-driver
--DMONGO_DB_CXX_ROOT=c:/mongo-cxx-driver
+-DCMAKE_PREFIX_PATH="c:/mongo-c-driver;c:/mongo-cxx-driver"
 ```
 The above two path values are same as building location for `mongo-c-driver` and `mongo-cxx-driver`.
 Then you can add `find_package` command to find the necessary MongoDB environment.
