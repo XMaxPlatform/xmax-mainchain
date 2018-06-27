@@ -4,9 +4,10 @@
 #include <boost/test/included/unit_test.hpp>
 #include <google/protobuf/stubs/common.h>
 #include <test.pb.h>
+#include <any_test.pb.h>
 
 using namespace tutorial;
-
+using namespace google::protobuf;
 
 namespace {
 	
@@ -109,6 +110,24 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize_stream) {
 	ser_person_msg.ParseFromIstream(&ss);
 
 	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
+}
+
+
+
+BOOST_AUTO_TEST_CASE(test_any_pack_unpack)
+{	
+	protobuf_unittest::TestAny submessage;
+	submessage.set_int32_value(12345);
+	protobuf_unittest::TestAny message;
+	message.mutable_any_value()->PackFrom(submessage);
+
+	string data = message.SerializeAsString();
+
+	BOOST_ASSERT(message.ParseFromString(data));
+	BOOST_CHECK(message.has_any_value());
+	BOOST_ASSERT(message.any_value().UnpackTo(&submessage));
+	BOOST_CHECK_EQUAL(12345, submessage.int32_value());
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()
