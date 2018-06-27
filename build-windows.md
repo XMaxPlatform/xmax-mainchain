@@ -76,10 +76,10 @@ Open command prompt from the directory you wish to store the generated solution 
 
 Enter the following command:
 
-    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" "[source dir]"    
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" -DCMAKE_PREFIX_PATH="[mongo_cxx_root];[mongo_c_root]" "[source dir]"     
 e.g.
 
-    E:\XMaxPlatform\sln>cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" "../xmax-mainchain"
+    E:\XMaxPlatform\sln>cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" -DCMAKE_PREFIX_PATH="c:\mongo-cxx-driver;c:\mongo-c-driver" "../xmax-mainchain"
 
 In the example above, "sln" is the directory where you store the generated solution files;  "xmax-mainchain" is the source directory; "D:\boost_1_67_0" is the boost library directory.
 
