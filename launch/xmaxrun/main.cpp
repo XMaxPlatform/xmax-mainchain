@@ -12,16 +12,21 @@
 
 
 namespace xmax
-{
-
-	
+{	
 	using namespace xmaxapp;
-	void Run(int argc, char** argv)
-	{
+
+
+	void RegisterPlugins() {
 		BlockChainPlugin::RegistSelf();
 		BlockBuilderPlugin::RegistSelf();
 		MongoDBPlugin::RegistSelf();
 		XmaxNetPlugin::RegistSelf();
+	}
+
+
+	void Run(int argc, char** argv)
+	{
+		
 		// TODO : Add ContractUtilPlugin
 		//ContractUtilPlugin::RegistSelf();
 
