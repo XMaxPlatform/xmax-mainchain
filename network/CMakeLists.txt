@@ -42,8 +42,7 @@ endmacro()
 
 #Add compile proto manually
 add_protobuf_compile_target(test)
-add_protobuf_compile_target(any)
-#add_protobuf_compile_target(timestamp)
+add_protobuf_compile_target(any_test)
 
 add_custom_target(compile_protos
     DEPENDS protoc ${PROTO_COMPILE_TARGETS_SOURCES}
