@@ -10,10 +10,10 @@
 
 Open command prompt enter the following command to generate Visual Studio Solution
 
-    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" -DMONGO_DB_C_ROOT="[mongo_c_root]" -DMONGO_DB_CXX_ROOT="[mongo_cxx_root]" "[source dir]"    
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" -DCMAKE_PREFIX_PATH="[mongo_cxx_root];[mongo_c_root]" "[source dir]"    
 e.g.
 
-    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" -DMONGO_DB_C_ROOT="c:\mongo-c-driver" -DMONGO_DB_CXX_ROOT="c:\mongo-cxx-driver" "../"
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" -DCMAKE_PREFIX_PATH="c:\mongo-cxx-driver;c:\mongo-c-driver" "../"
 
 Open "Xmax-mainchain.sln" with Visual Studio 2017 and build.
 
