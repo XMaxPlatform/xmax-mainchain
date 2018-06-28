@@ -8,4 +8,12 @@
 namespace pro
 {
 
+	struct ShortName
+	{
+	public:
+		typedef uint64_t NameCode;
+
+	public:
+		NameCode code_;
+	};
 }

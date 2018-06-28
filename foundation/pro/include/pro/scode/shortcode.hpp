@@ -28,9 +28,11 @@ namespace pro
 		}
 	};
 
-	static constexpr scode BASE_SCODE_SHEET[] =
+	static constexpr scode SCODE_NONE = (scode)0;
+
+	static constexpr scode BASE_SCODES[] =
 	{ 
-		{(scode)0}//0
+		{ SCODE_NONE }//0
 		,{ 'a' },{ 'b' },{ 'c' },{ 'd' },{ 'e' },{ 'f' },{ 'g' }	//0x01-0x07
 		,{ 'h' },{ 'i' },{ 'j' },{ 'k' },{ 'l' },{ 'm' },{ 'n' }	//0x08-0x0E
 		,{ 'o' },{ 'p' },{ 'q' },{ 'r' },{ 's' },{ 't' }			//0x0F-0x14
@@ -39,7 +41,7 @@ namespace pro
 		,{ '0' },{ '1' },{ '2' },{ '3' },{ '4' }					//0x20-0x24
 		,{ '5' },{ '6' },{ '7' },{ '8' },{ '9' }					//0x25-0x29
 	};
-	static constexpr sencode BASE_SCODE_NUM = 41;// 0x29;
+	static constexpr sencode BASE_SCODE_NUM = sizeof(BASE_SCODES);// 0x29;
 
 	static constexpr scode GetSCode(sencode code)
 	{		
@@ -47,12 +49,11 @@ namespace pro
 		{
 			return (scode)0;
 		}
-		return BASE_SCODE_SHEET[code];
+		return BASE_SCODES[code];
 	}
 
 	static constexpr SCodeDesc GetSCodeDesc(sencode code)
 	{
-
 		return SCodeDesc(GetSCode(code), code);
 	}
 }
