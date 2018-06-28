@@ -33,4 +33,19 @@ void XMX_Connection::Close()
 
 }
 
+void XMX_Connection::SendHandShake()
+{
+
+}
+
+void XMX_Connection::SendSignedBlock()
+{
+
+}
+
+void XMX_Connection::SendSignedBlockList()
+{
+
+}
+
 }

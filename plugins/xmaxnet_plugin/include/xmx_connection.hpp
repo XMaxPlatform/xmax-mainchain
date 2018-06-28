@@ -36,6 +36,10 @@ public:
 	 */
 	 void Close();
 
+	 void SendHandShake();
+	 void SendSignedBlock();
+	 void SendSignedBlockList();
+
 protected:
 private:
 
