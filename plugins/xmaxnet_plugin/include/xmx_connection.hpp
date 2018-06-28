@@ -31,6 +31,9 @@ public:
 	 * reset state
 	 */
 	 void Reset();
+	 /**
+	 * close connection
+	 */
 	 void Close();
 
 protected:
