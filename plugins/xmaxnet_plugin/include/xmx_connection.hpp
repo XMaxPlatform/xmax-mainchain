@@ -35,9 +35,17 @@ public:
 	 * close connection
 	 */
 	 void Close();
-
+	 /**
+	 * send handshake msg to sync states between peers
+	 */
 	 void SendHandShake();
+	 /**
+	 * send a block to sync the peer
+	 */
 	 void SendSignedBlock();
+	 /**
+	 * send blocks to sync the peer
+	 */
 	 void SendSignedBlockList();
 
 protected:
