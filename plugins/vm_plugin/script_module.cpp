@@ -23,13 +23,18 @@ namespace xmax {
 				Discard();
 			}
 		}
-		v8::Object* test(v8::internal::Arguments& args,v8::Isolate* iso)
-		{
-			return nullptr;
+		v8::Object* CallBackCheck(int args_length, v8::Object** args_object, v8::Isolate* isolate) {
+		
+			void* arg1 = *(reinterpret_cast<v8::Object**>(reinterpret_cast<intptr_t>(args_object) - 1 * sizeof(int)));
+
+
+			int value = (int)arg1;
+			return args_object[0];
 		}
+
 		void ScriptMoudle::Init()
 		{
-			V8_AddIntrinsicFoo("CallBackTest", (void*)test, 0, 1);
+			V8_AddIntrinsicFoo("CallBackCheck", (void*)CallBackCheck, 2, 1);
 
 			V8::InitializeICUDefaultLocation("");
 			V8::InitializeExternalStartupData("");
@@ -44,6 +49,7 @@ namespace xmax {
 
 		void ScriptMoudle::DoworkInContext(const v8::HandleScope& scope, const v8::Local<ObjectTemplate>& global, const v8::Local<Context>& context, const v8::Context::Scope& ctxScope)
 		{
+			V8_ParseWithPlugin();
 			CompileJsCode(isolate_, context, current_code_.c_str() );
 			CallJsFoo(isolate_, context, main_foo_.c_str() , 0, NULL);
 		}
