@@ -24,6 +24,10 @@ Open "Xmax-mainchain.sln" with Visual Studio 2017 and build.
 1. [Generate Visual Studio Solution with CMake](#gensln)
 1. [Building XMax Platform with Visual Studio 15 2017](#build)
 1. [Build MongoDB](#buildmongodb)
+    1. [Build mongo-c-driver](#buildmongodbcdriver)
+    2. [Build mongo-cxx-driver](#buildmongodbcxxdriver)
+    3. [Use MongoDB in the xmax-mainchain project](#buildmongodbproject)
+    4. [Install and run MongoDB service in Windows](#buildmongodbserver)
 
 # Download & install CMake
 <a name="cmake"></a>
@@ -102,6 +106,7 @@ Simply open generated solution file "Xmax-mainchain.sln" with Visual Studio 15 2
 <a name="buildmongodb"></a>
 # Build MongoDB 
 
+<a name="buildmongodbcdriver"></a>
 ## 1. Build mongo-c-driver
 
 Copy `mongo-c-driver` from `libraries` directory to anywhere you want to compile mongo-c-driver. Then execute:
@@ -118,7 +123,7 @@ msbuild.exe /p:Configuration=Release ALL_BUILD.vcxproj
 msbuild.exe /p:Configuration=Release INSTALL.vcxproj
 ```
 
-
+<a name="buildmongodbcxxdriver"></a>
 ## 2. Build mongo-cxx-driver
 Copy `mongo-cxx-driver` from `libraries` directory to anywhere you want. Then execute:
 ```bash
@@ -136,7 +141,7 @@ Open `Developer Command Prompt for 2017` and goto `mongo-cxx-driver/build` then 
 msbuild.exe ALL_BUILD.vcxproj
 msbuild.exe INSTALL.vcxproj
 ```
-
+<a name="buildmongodbproject"></a>
 ## 3. Use MongoDB in the xmax-mainchain project
 In order to use the MongoDB libraries, you need to set `mongo-c-driver` and `mongo-cxx-driver` directories in the `CMAKE_PREFIX_PATH` varaible. For example:
 ```bash
@@ -157,6 +162,7 @@ target_link_libraries( target_name
 	${MongoDB_LIBRARIES})
 ```
 
+<a name="buildmongodbserver"></a>
 ## 4. Install and run MongoDB service in Windows
 
 ### 4.1 Install the MongoDB server
