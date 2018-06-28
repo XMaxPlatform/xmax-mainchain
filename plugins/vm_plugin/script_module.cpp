@@ -13,6 +13,7 @@ namespace xmax {
 			,current_code_()
 			,main_foo_()
 			,instruction_count_(0)
+			,last_intruction_()
 		{
 
 		}
@@ -30,7 +31,7 @@ namespace xmax {
 
 
 			int value = (int)arg1;
-			ScriptMoudle::GetInstance().InstrunctionIncrease();
+			ScriptMoudle::GetInstance().StoreInstrunction(value);
 			return args_object[0];
 		}
 
@@ -53,7 +54,7 @@ namespace xmax {
 		{
 			V8_ParseWithPlugin();
 			CompileJsCode(isolate_, context, current_code_.c_str() );
-			instruction_count_ = 0;
+			CleanInstrunction();
 			CallJsFoo(isolate_, context, main_foo_.c_str() , 0, NULL);
 		}
 
@@ -78,9 +79,16 @@ namespace xmax {
 			v8::V8::ShutdownPlatform();
 		}
 
-		void ScriptMoudle::InstrunctionIncrease()
+		void ScriptMoudle::StoreInstrunction(int ins)
 		{
 			instruction_count_++;
+			last_intruction_.push_back(ins);
+		}
+
+		void ScriptMoudle::CleanInstrunction()
+		{
+			instruction_count_ = 0;
+			last_intruction_.clear();
 		}
 
 	}

@@ -6,6 +6,7 @@
 #include "pro/utils/singleton.hpp "
 #include <v8.h>
 #include <string>
+#include <list>
 
 namespace xmax {
 
@@ -22,15 +23,17 @@ namespace xmax {
 
 			void Discard();
 
-			void InstrunctionIncrease();
+			void StoreInstrunction(int ins);
 
+			void CleanInstrunction();
 		private:
 			void DoworkInContext(const HandleScope& scope, const Local<ObjectTemplate>& global, const Local<Context>& context, const Context::Scope& ctxScope);
 
 			void AstBlockCallbackInsert();
 
 			int instruction_count_;
-
+			std::list<int> last_intruction_;
+ 
 			std::string				 current_code_;
 			std::string				 main_foo_;
 
