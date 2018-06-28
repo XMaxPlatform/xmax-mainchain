@@ -4,6 +4,7 @@
 #include <pro/utils/singleton.hpp>
 #include <pro/types/time.hpp>
 #include <pro/types/any_value.hpp>
+#include <pro/scode/shortname.hpp>
 
 using namespace pro;
 
@@ -77,5 +78,14 @@ BOOST_AUTO_TEST_CASE(any_value)
 
 BOOST_AUTO_TEST_SUITE_END()
 
+
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE(scode)
+
+BOOST_AUTO_TEST_CASE(scode)
+{
+	SCodeDesc de = GetSCodeDesc(41);
+}
 
 BOOST_AUTO_TEST_SUITE_END()
