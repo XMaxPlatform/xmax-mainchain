@@ -19,7 +19,9 @@ public:
 	 XMX_Connection(const std::string& endpoint);
 
 	 XMX_Connection(const std::shared_ptr<tcp::socket>& s);
-
+	 /**
+	 * is network connectd and not connecting
+	 */
 	 bool Connected();
 	 bool Current();
 	 void Reset();
