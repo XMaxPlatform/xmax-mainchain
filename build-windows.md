@@ -123,7 +123,7 @@ msbuild.exe /p:Configuration=Release INSTALL.vcxproj
 Copy `mongo-cxx-driver` from `libraries` directory to anywhere you want. Then execute:
 ```bash
 cd mongo-cxx-driver/build
-cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=C:\mongo-cxx-driver -DCMAKE_PREFIX_PATH=c:\mongo-c-driver -DBOOST_ROOT=d:\boost_1_67_0 -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ../
+cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=C:\mongo-cxx-driver -DCMAKE_PREFIX_PATH=c:\mongo-c-driver -DBOOST_ROOT=d:\boost_1_67_0 -DBUILD_SHARED_LIBS=OFF -DBSONCXX_POLY_USE_BOOST=1 -DCMAKE_BUILD_TYPE=Release ../
 ```
 You should fill the above directories paths according your situation.
 The `C:\mongo-cxx-driver` directory is where you want to install the mongo-cxx-driver. 
