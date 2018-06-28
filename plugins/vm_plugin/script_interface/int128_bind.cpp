@@ -2,7 +2,7 @@
 //imp
 xmax::scriptv8::V8i128* xmax::scriptv8::NewV8i128Function(const FunctionCallbackInfo<v8::Value>& args)
 {
-
+	return nullptr;
 }
 
 void xmax::scriptv8::V8i128WeakExternalReferenceCallback(Persistent<v8::Value>, void* parameter)

@@ -6,7 +6,7 @@ namespace xmax {
 
 		xmax::scriptv8::V8ui128* NewV8ui128Function(const FunctionCallbackInfo<v8::Value>& args)
 		{
-
+			return nullptr;
 		}
 
 		void V8ui128WeakExternalReferenceCallback(Persistent<v8::Value>, void* parameter)

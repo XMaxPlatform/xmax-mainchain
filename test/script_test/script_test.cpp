@@ -14,8 +14,6 @@ using namespace boost::unit_test;
 
 //#define Test_Script
 
-class SingletonImpl : public Singleton<SingletonImpl>
-{};
 
 
 BOOST_AUTO_TEST_SUITE (blockchain_plugin_test)
