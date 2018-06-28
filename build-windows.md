@@ -157,10 +157,17 @@ target_link_libraries( target_name
 	${MongoDB_LIBRARIES})
 ```
 
-## 4. Run MongoDB in Windows
+## 4. Install and run MongoDB service in Windows
+
+### 4.1 Install the MongoDB server
 Download and install MongoDB server for Windows which could be found at it's offcial website: `https://www.mongodb.com/download-center`.
 
-Then find a custom data directory and start the service, for example:
+If the installation fails using the `msi` installation package, you could try it again without checking the `Install Compass` option.
+
+### 4.2 Run the MongoDB server
+After successfual installation, you will find the MongoDb program directory.
+
+Then find a custom data directory(such as `d:\mongo_db\data`) and start the service, for example:
 ```bash
 "D:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --dbpath d:\mongo_db\data
 ```
