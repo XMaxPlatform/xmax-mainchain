@@ -12,6 +12,7 @@ namespace xmax {
 			:isolate_(nullptr)
 			,current_code_()
 			,main_foo_()
+			,instruction_count_(0)
 		{
 
 		}
@@ -29,6 +30,7 @@ namespace xmax {
 
 
 			int value = (int)arg1;
+			ScriptMoudle::GetInstance().InstrunctionIncrease();
 			return args_object[0];
 		}
 
@@ -51,6 +53,7 @@ namespace xmax {
 		{
 			V8_ParseWithPlugin();
 			CompileJsCode(isolate_, context, current_code_.c_str() );
+			instruction_count_ = 0;
 			CallJsFoo(isolate_, context, main_foo_.c_str() , 0, NULL);
 		}
 
@@ -73,6 +76,11 @@ namespace xmax {
 			isolate_ = nullptr;
 			v8::V8::Dispose();
 			v8::V8::ShutdownPlatform();
+		}
+
+		void ScriptMoudle::InstrunctionIncrease()
+		{
+			instruction_count_++;
 		}
 
 	}
