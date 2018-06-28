@@ -20,6 +20,11 @@ public:
 
 	 XMX_Connection(const std::shared_ptr<tcp::socket>& s);
 
+	 bool Connected();
+	 bool Current();
+	 void Reset();
+	 void Close();
+
 protected:
 private:
 

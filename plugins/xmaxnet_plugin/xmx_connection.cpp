@@ -13,4 +13,24 @@ XMX_Connection::XMX_Connection(const std::shared_ptr<tcp::socket>& s)
 
 }
 
+bool XMX_Connection::Connected()
+{
+	return false;
+}
+
+bool XMX_Connection::Current()
+{
+	return false;
+}
+
+void XMX_Connection::Reset()
+{
+
+}
+
+void XMX_Connection::Close()
+{
+
+}
+
 }
