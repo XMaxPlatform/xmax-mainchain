@@ -130,6 +130,25 @@ BOOST_AUTO_TEST_CASE(test_any_pack_unpack)
 
 }
 
+BOOST_AUTO_TEST_CASE(test_any_pack_unpack2)
+{
+	// We can pack a Any message inside another Any message.
+	protobuf_unittest::TestAny submessage;
+	submessage.set_int32_value(12345);
+	google::protobuf::Any any;
+	any.PackFrom(submessage);
+	protobuf_unittest::TestAny message;
+	message.mutable_any_value()->PackFrom(any);
+	 
+	string data = message.SerializeAsString();
+
+	BOOST_ASSERT(message.ParseFromString(data));
+	BOOST_CHECK(message.has_any_value());
+	BOOST_ASSERT(message.any_value().UnpackTo(&any));
+	BOOST_ASSERT(any.UnpackTo(&submessage));
+	BOOST_CHECK_EQUAL(12345, submessage.int32_value());
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 
