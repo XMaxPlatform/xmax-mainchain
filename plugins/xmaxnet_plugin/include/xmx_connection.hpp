@@ -27,6 +27,9 @@ public:
 	 * is network connectd and not syncing
 	 */
 	 bool Current();
+	 /**
+	 * reset state
+	 */
 	 void Reset();
 	 void Close();
 
