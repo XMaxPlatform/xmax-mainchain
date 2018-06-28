@@ -23,6 +23,12 @@ namespace xmax
 		XmaxNetPlugin::RegistSelf();
 	}
 
+	void InitPlugins(Application& app) {
+		app.PluginToInit("BlockChainPlugin");
+		app.PluginToInit("BlockBuilderPlugin");
+		app.PluginToInit("MongoDBPlugin");
+		app.PluginToInit("XmaxNetPlugin");
+	}
 
 	void Run(int argc, char** argv)
 	{
@@ -32,11 +38,9 @@ namespace xmax
 
 		Application app;
 
-		app.PluginToInit("BlockChainPlugin");
-		app.PluginToInit("BlockBuilderPlugin");
-		app.PluginToInit("MongoDBPlugin");
-		app.PluginToInit("XmaxNetPlugin");
-
+		RegisterPlugins();
+		InitPlugins(app);
+		
 		app.Initialize(argc, argv);
 		app.Startup();
 
