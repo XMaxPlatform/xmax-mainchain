@@ -149,6 +149,22 @@ BOOST_AUTO_TEST_CASE(test_any_pack_unpack2)
 	BOOST_CHECK_EQUAL(12345, submessage.int32_value());
 }
 
+BOOST_AUTO_TEST_CASE(test_any_testis) {
+	protobuf_unittest::TestAny submessage;
+	submessage.set_int32_value(12345);
+	google::protobuf::Any any;
+	any.PackFrom(submessage);
+	BOOST_ASSERT(any.ParseFromString(any.SerializeAsString()));
+	BOOST_CHECK(any.Is<protobuf_unittest::TestAny>());
+	BOOST_CHECK(!any.Is<google::protobuf::Any>());
+
+	protobuf_unittest::TestAny message;
+	message.mutable_any_value()->PackFrom(any);
+	BOOST_ASSERT(message.ParseFromString(message.SerializeAsString()));
+	BOOST_CHECK(!message.any_value().Is<protobuf_unittest::TestAny>());
+	BOOST_CHECK(message.any_value().Is<google::protobuf::Any>());
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 
