@@ -40,6 +40,7 @@ namespace pro
 
 	static constexpr sregion SR0_NUM = 0;
 	static constexpr sregion SR1_NUM = 1;
+	static constexpr sregion SRERROR_NUM = -1;
 
 	static constexpr uint16_t SCODE_REGION_0_SIZE = sizeof(SCODE_REGION_0) - 1;
 	static constexpr uint16_t SCODE_REGION_1_SIZE = sizeof(SCODE_REGION_1) - 1;
@@ -100,6 +101,6 @@ namespace pro
 			return SCodeRS(SR1_NUM, SR1_SYMBOL_0);
 		}
 
-		return SCodeRS((sregion)0xff, 0);
+		return SCodeRS((sregion)SRERROR_NUM, 0);
 	}
 }

@@ -83,28 +83,27 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(scode)
 
-void checkname(string real, pro::ShortName name)
+bool checkname(string real, pro::ShortName name)
 {
-	string sname = pro::ShortNameToString(name);
+	string sname = name.ToString();
 
-	BOOST_CHECK(sname == real);
-}
-
-void checknameover(string real, pro::ShortName name)
-{
-	string sname = pro::ShortNameToString(name);
-
-	BOOST_CHECK(sname == real);
+	return sname == real;
 }
 
 BOOST_AUTO_TEST_CASE(scode)
 {
-	checkname("xmax", SN(xmax));
-	checkname("567890@", SN(567890@));
-	checkname("m190@xm.c", SN(m190@xm.c));
+	BOOST_CHECK(checkname("xmax", SN(xmax)));
+	BOOST_CHECK(checkname("567890@", SN(567890@)));
+	BOOST_CHECK(checkname("m190@xm.c", SN(m190@xm.c)));
 
 	// check over name.
-	checkname("m19adfgge15", SN(m19adfgge15640@xm1345678275.c));
+	BOOST_CHECK(checkname("m19adfgge15", SN(m19adfgge15640@xm1345678275.c)));
+
+
+	BOOST_CHECK(ShortName::LegalName("xmax") == true);
+	BOOST_CHECK(ShortName::LegalName("xmax$%") == false);
+
+	BOOST_CHECK(ShortName::LegalName("m19adfgge15640@xm1345678275.c") == false);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

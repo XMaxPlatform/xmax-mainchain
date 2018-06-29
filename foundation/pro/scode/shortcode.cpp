@@ -3,7 +3,7 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <pro/types/build.hpp>
+#include <pro/scode/shortcode.hpp>
 
 namespace pro
 {

@@ -19,133 +19,97 @@ namespace pro
 	struct ShortName
 	{
 	public:
-		ShortName()
-			: code_(0)
-		{
+		ShortName();
 
-		}
-		ShortName(NameCode c)
-			: code_(c)
-		{
-
-		}
 		inline NameCode Code() const
 		{
-			return code_;
+			return namecode_;
 		}
 
-		bool operator == (const ShortName& rf)
+		inline bool operator == (const ShortName& rf)
 		{
-			return code_ == rf.code_;
+			return namecode_ == rf.namecode_;
 		}
-		bool operator != (const ShortName& rf)
+		inline bool operator != (const ShortName& rf)
 		{
-			return code_ != rf.code_;
+			return namecode_ != rf.namecode_;
 		}
-		bool operator > (const ShortName& rf)
+		inline bool operator > (const ShortName& rf)
 		{
-			return code_ > rf.code_;
+			return namecode_ > rf.namecode_;
 		}
-		bool operator < (const ShortName& rf)
+		inline bool operator < (const ShortName& rf)
 		{
-			return code_ < rf.code_;
+			return namecode_ < rf.namecode_;
 		}
-		bool operator >= (const ShortName& rf)
+		inline bool operator >= (const ShortName& rf)
 		{
-			return code_ >= rf.code_;
+			return namecode_ >= rf.namecode_;
 		}
-		bool operator <= (const ShortName& rf)
+		inline bool operator <= (const ShortName& rf)
 		{
-			return code_ <= rf.code_;
+			return namecode_ <= rf.namecode_;
+		}
+
+		string ToString() const;
+
+		static ShortName Create(NameCode c);
+
+		static string ToString(NameCode code);
+
+		static string ToString(ShortName name);
+
+		static uint32_t GlyphBitLength(sglyph gl);
+
+		static uint32_t NameLengthWithBit(const char* str);
+
+		static bool LegalName(const char* str);
+
+		static constexpr NameCode ToShortName(const char* str)
+		{
+			NameCode namecode = 0;
+			const char* ptr = str;
+			int32_t remains = NAME_CODE_BITS;
+			while (*ptr != 0)
+			{
+				char ch = *ptr;
+				SCodeRS rs = GetSCodeRS(ch);
+				if (SR0_NUM == rs.region)
+				{
+					if (remains < SCODE_R_0_BITS)
+					{
+						break;
+					}
+					remains -= SCODE_R_0_BITS;
+					NameCode mark = ((NameCode)rs.symbol) << remains;
+					namecode = (namecode | mark);
+				}
+				else if (SR1_NUM == rs.region)
+				{
+					if (remains < SCODE_R_1_BITS)
+					{
+						break;
+					}
+					remains -= SCODE_R_1_BITS;
+					NameCode mark = ((NameCode)rs.symbol) << remains;
+					namecode = (namecode | mark);
+				}
+				else
+				{
+					// illegal char.
+				}
+				++ptr;
+			}
+			return namecode;
 		}
 	private:
-		NameCode code_;
+		ShortName(NameCode c);
+
+		NameCode namecode_;
 	};
 
-	static constexpr NameCode StringToShortName(const char* str)
-	{
-		NameCode namecode = 0;
-		const char* ptr = str;
-		int32_t remains = NAME_CODE_BITS;
-		while (*ptr != 0)
-		{
-			char ch = *ptr;
-			SCodeRS rs = GetSCodeRS(ch);
-			if (SR0_NUM == rs.region)
-			{
-				if (remains < SCODE_R_0_BITS)
-				{
-					break;
-				}
-				remains -= SCODE_R_0_BITS;
-				NameCode mark = ((NameCode)rs.symbol) << remains;
-				namecode = (namecode | mark);
-			}
-			else if (SR1_NUM == rs.region)
-			{
-				if (remains < SCODE_R_1_BITS)
-				{
-					break;
-				}
-				remains -= SCODE_R_1_BITS;
-				NameCode mark = ((NameCode)rs.symbol) << remains;
-				namecode = (namecode | mark);
-			}
-			else
-			{
-				// illegal char.
-			}
-			++ptr;
-		}
-		return namecode;
-	}
 
-	static string ShortCodeToString(NameCode code)
-	{
-		int32_t remains = NAME_CODE_BITS;
-		string name;
 
-		NameCode namecode = code;
-		NameCode tmpcode = 0;
-		while (remains >= SCODE_R_0_BITS)
-		{
-			tmpcode = ((NameCode)namecode) & HEAD_MARK_R_0;
-
-			if (tmpcode != 0) 
-			{
-				// region 0
-				remains -= SCODE_R_0_BITS;
-				sglyph ch = GetSGlyph(SR0_NUM, tmpcode >> (NAME_CODE_BITS - SCODE_R_0_BITS));
-				name.push_back(ch);
-				namecode = namecode << SCODE_R_0_BITS;
-				continue;
-			}
-
-			if (remains <  SCODE_R_1_BITS)
-			{
-				break;
-			}
-			tmpcode = ((NameCode)namecode) & HEAD_MARK_R_1;
-			if (tmpcode != 0) 
-			{
-				// region 1
-				remains -= SCODE_R_1_BITS;
-				sglyph ch = GetSGlyph(SR1_NUM, tmpcode >> (NAME_CODE_BITS - SCODE_R_1_BITS));
-				name.push_back(ch);
-				namecode = namecode << SCODE_R_1_BITS;
-				continue;
-			}
-			// name end.
-			break;
-		}
-		return name;
-	}
-
-	static string ShortNameToString(ShortName name)
-	{
-		return ShortCodeToString(name.Code());
-	}
-
-#define SN(X) ShortName(pro::StringToShortName(#X))
+#define SN(X) pro::ShortName::Create(pro::ShortName::ToShortName(#X))
 
 }
