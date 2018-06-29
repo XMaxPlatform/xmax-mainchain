@@ -1,16 +1,18 @@
 # Building XMax Platform on Windows 10
 
 # Table of contents
-1. [Download & install CMake](#cmake)
-1. [Download & build Boost](#boost)
-1. [Generate Visual Studio Solution with CMake](#gensln)
-1. [Building XMax Platform with Visual Studio 15 2017](#build)
-1. [Build MongoDB](#buildmongodb)
+1. [Prerequisites](#prerequisites)
+2. [Download & install CMake](#cmake)
+3. [Download & build Boost](#boost)
+4. [Generate Visual Studio Solution with CMake](#gensln)
+5. [Building XMax Platform with Visual Studio 15 2017](#build)
+6. [Build MongoDB](#buildmongodb)
     1. [Build mongo-c-driver](#buildmongodbcdriver)
     2. [Build mongo-cxx-driver](#buildmongodbcxxdriver)
     3. [Use MongoDB in the xmax-mainchain project](#buildmongodbproject)
     4. [Install and run MongoDB service in Windows](#buildmongodbserver)
 
+<a name="prerequisites"></name>
 # Prerequisites 
 
 * **Visual Studio 15 2017** Win64 with Visual C++ 2017 15 compiler and tools
