@@ -24,7 +24,7 @@ namespace pro
 		{
 
 		}
-		constexpr ShortName(NameCode c)
+		ShortName(NameCode c)
 			: code_(c)
 		{
 
