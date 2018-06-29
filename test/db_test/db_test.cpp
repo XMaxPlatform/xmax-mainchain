@@ -13,7 +13,12 @@
 #include <boost/test/included/unit_test.hpp>
 
 
-
+using bsoncxx::builder::stream::close_array;
+using bsoncxx::builder::stream::close_document;
+using bsoncxx::builder::stream::document;
+using bsoncxx::builder::stream::finalize;
+using bsoncxx::builder::stream::open_array;
+using bsoncxx::builder::stream::open_document;
 using namespace std;
 
 
@@ -80,6 +85,17 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_write_col) {
 	mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
 	mongocxx::client mongo_cli = mongocxx::client{ uri };
 	mongocxx::collection col = mongo_cli[db_name][collection_name];
+
+	auto builder = bsoncxx::builder::stream::document{};
+	bsoncxx::document::value doc_value = builder
+		<< "name" << "doc01"
+		<< "desc" << "doc01 desc details"
+		<< "tokens:" << 123456		
+		<< bsoncxx::builder::stream::finalize;
+
+	bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+		col.insert_one(doc_value.view());
+
 	col.create_index(bsoncxx::from_json(R"foo({ "name" : 1 })foo"));
 
 }
