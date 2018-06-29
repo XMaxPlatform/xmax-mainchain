@@ -2,11 +2,12 @@
 
 # Table of contents
 1. [Prerequisites](#prerequisites)
-2. [Download & install CMake](#cmake)
-3. [Download & build Boost](#boost)
-4. [Generate Visual Studio Solution with CMake](#gensln)
-5. [Building XMax Platform with Visual Studio 15 2017](#build)
-6. [Build MongoDB](#buildmongodb)
+2. [Quick Guide](#quickguide)
+3. [Download & install CMake](#cmake)
+4. [Download & build Boost](#boost)
+5. [Generate Visual Studio Solution with CMake](#gensln)
+6. [Building XMax Platform with Visual Studio 15 2017](#build)
+7. [Build MongoDB](#buildmongodb)
     1. [Build mongo-c-driver](#buildmongodbcdriver)
     2. [Build mongo-cxx-driver](#buildmongodbcxxdriver)
     3. [Use MongoDB in the xmax-mainchain project](#buildmongodbproject)
@@ -19,6 +20,7 @@
 * **CMake 3.11.0** or newer
 * **Boost 1.67.0**
 
+<a name="quickguide"></name>
 # Quick Guide
 
 Open command prompt enter the following command to generate Visual Studio Solution
