@@ -100,10 +100,30 @@ BOOST_AUTO_TEST_CASE(scode)
 	BOOST_CHECK(checkname("m19adfgge15", SN(m19adfgge15640@xm1345678275.c)));
 
 
+	// check LegalName
 	BOOST_CHECK(ShortName::LegalName("xmax") == true);
+	BOOST_CHECK(ShortName::LegalName("567890@") == true);
 	BOOST_CHECK(ShortName::LegalName("xmax$%") == false);
 
 	BOOST_CHECK(ShortName::LegalName("m19adfgge15640@xm1345678275.c") == false);
+
+	// check GlyphBitLength
+	for (int i = 1; i < SCODE_REGION_0_SIZE; ++i)
+	{
+		BOOST_CHECK(ShortName::GlyphBitLength(SCODE_REGION_0[i]) == SCODE_R_0_BITS);
+	}
+	for (int i = 1; i < SCODE_REGION_1_SIZE; ++i)
+	{
+		BOOST_CHECK(ShortName::GlyphBitLength(SCODE_REGION_1[i]) == SCODE_R_1_BITS);
+	}
+	BOOST_CHECK(ShortName::GlyphBitLength('#') == 0);
+	BOOST_CHECK(ShortName::GlyphBitLength('(') == 0);
+
+	BOOST_CHECK(ShortName::NameLengthWithBit("xmax") == (SCODE_R_0_BITS * 4));
+	BOOST_CHECK(ShortName::NameLengthWithBit("124.@") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
+	BOOST_CHECK(ShortName::NameLengthWithBit("1.@mx") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
+	BOOST_CHECK(ShortName::NameLengthWithBit("1.###@mx") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()
