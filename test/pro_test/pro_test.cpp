@@ -83,9 +83,28 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(scode)
 
+void checkname(string real, pro::ShortName name)
+{
+	string sname = pro::ShortNameToString(name);
+
+	BOOST_CHECK(sname == real);
+}
+
+void checknameover(string real, pro::ShortName name)
+{
+	string sname = pro::ShortNameToString(name);
+
+	BOOST_CHECK(sname == real);
+}
+
 BOOST_AUTO_TEST_CASE(scode)
 {
-	SCodeDesc de = GetSCodeDesc(41);
+	checkname("xmax", SN(xmax));
+	checkname("567890@", SN(567890@));
+	checkname("m190@xm.c", SN(m190@xm.c));
+
+	// check over name.
+	checkname("m19adfgge15", SN(m19adfgge15640@xm1345678275.c));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
