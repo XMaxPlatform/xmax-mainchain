@@ -87,12 +87,12 @@ namespace pro
 			{
 				if (source_.size())
 				{
-					utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" in %s at '%s(line, %d)'",
+					utils::PrintFormat(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" in %s at '%s(line, %d)'",
 						type_, title_.c_str(), description_.c_str(), source_.c_str(), file_.c_str(), line_);
 				}
 				else
 				{
-					utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" at '%s(line, %d)'",
+					utils::PrintFormat(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" at '%s(line, %d)'",
 						type_, title_.c_str(), description_.c_str(), file_.c_str(), line_);
 				}
 			
@@ -101,11 +101,11 @@ namespace pro
 			{
 				if (source_.size())
 				{
-					utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" in %s", type_, title_.c_str(), description_.c_str(), source_.c_str());
+					utils::PrintFormat(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\" in %s", type_, title_.c_str(), description_.c_str(), source_.c_str());
 				}
 				else
 				{
-					utils::Format(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\".", type_, title_.c_str(), description_.c_str());
+					utils::PrintFormat(full_desc_, "PRO EXCEPTION(%d:%s): \"%s\".", type_, title_.c_str(), description_.c_str());
 				}
 
 			}

@@ -7,7 +7,7 @@ namespace pro
 {
 	namespace utils
 	{
-		void Format(string& buff, const char* format, ...)
+		void PrintFormat(string& buff, const char* format, ...)
 		{
 			char msg[__char_cache_size] = { 0 };
 			va_list arg_ptr;

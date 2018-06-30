@@ -10,7 +10,7 @@ namespace pro
 {
 	namespace utils
 	{
-		void Format(string& buff, const char* format, ...);
+		void PrintFormat(string& buff, const char* format, ...);
 	}
 }
 
