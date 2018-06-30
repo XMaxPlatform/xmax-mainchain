@@ -31,7 +31,6 @@ list(APPEND BOOST_REUIQRED_COMPONENTS
 	regex 
 	serialization 
 	unit_test_framework
-	filesystem
 )
 
 if("${BOOST_ROOT}" STREQUAL "")
