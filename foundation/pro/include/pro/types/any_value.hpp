@@ -62,6 +62,8 @@ namespace pro
 
 		void Clear();
 
+		//string ToString() const;
+
 		inline AnyType::Code GetType() const
 		{
 			return code_;

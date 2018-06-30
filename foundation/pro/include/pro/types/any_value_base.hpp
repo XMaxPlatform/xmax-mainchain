@@ -4,11 +4,12 @@
 */
 #pragma once
 #include <pro/types/build.hpp>
-#include <pro/types/generictypes.hpp>
-#include <pro/exception/exceptions.hpp>
 #include <vector>
+#include <functional>
 #include <cassert>
 
+#include <pro/types/generictypes.hpp>
+#include <pro/exception/exceptions.hpp>
 namespace pro
 {
 	//template< >
@@ -16,6 +17,20 @@ namespace pro
 	//{
 	//	return AnyType::Cast<int32_t, AnyType::Type_I32>(v, ccheck);
 	//}
+
+
+
+#define IMPLEMENT_ANY_TYPE_BIND(_MACRO)\
+		_MACRO(bool, pro::AnyType::Type_Bool)\
+		_MACRO(int32_t, pro::AnyType::Type_I32)\
+		_MACRO(uint32_t, pro::AnyType::Type_UI32)\
+		_MACRO(int64_t, pro::AnyType::Type_I64)\
+		_MACRO(uint64_t, pro::AnyType::Type_UI64)\
+		_MACRO(double, pro::AnyType::Type_F64)\
+		_MACRO(string, pro::AnyType::Type_String)\
+		_MACRO(DataStream, pro::AnyType::Type_Stream)
+
+
 
 #define ANY_TYPE_BIND_TMPLT(_type) \
 	AnyValue(_type v) {\
@@ -33,6 +48,7 @@ namespace pro
 		static _type& CastTo(void* v, AnyType::Code ccheck) {\
 			return AnyType::Cast<_type, _code>(v, ccheck);\
 		}\
+
 
 #define SIMPLE_ASSIGN_TMPLT(_type, _code)\
 	void AnyValue::assign(_type v) {\
@@ -57,6 +73,10 @@ namespace pro
 		virtual ValueBasePtr GetValuePtr() const = 0;
 		virtual void CopyFrom(const IAnyContainer* container) = 0;
 		virtual IAnyContainer* CopySelf() const = 0;
+
+		virtual void ToString(string& str) const
+		{
+		}
 
 		template<typename T>
 		T& CastValue()
@@ -113,6 +133,8 @@ namespace pro
 
 
 
+	using AnyTypeToString = void(string&, void*);
+
 	class AnyType
 	{	
 	public:
@@ -146,6 +168,10 @@ namespace pro
 		};
 		friend class AnyValue;
 	private:
+
+		static std::vector< std::function<AnyTypeToString> > tostringfunctions[AnyType::Type_Count];
+
+
 		template<AnyType::Code code>
 		static constexpr bool IsSimpleType()
 		{
@@ -209,21 +235,21 @@ namespace pro
 			PRO_EXCEPT_WITH_DESC(FormatException, "nonsupport format.");
 			return *((T*)0);
 		}
-		//template< >
-		//static int32_t& CastTo(void* v, AnyType::Code ccheck)
-		//{
-		//	return AnyType::Cast<int32_t, AnyType::Type_I32>(v, ccheck);
-		//}
 
-		ANY_TYPE_CAST_TMPLT(bool, AnyType::Type_Bool)
-			ANY_TYPE_CAST_TMPLT(int32_t, AnyType::Type_I32)
-			ANY_TYPE_CAST_TMPLT(uint32_t, AnyType::Type_UI32)
-			ANY_TYPE_CAST_TMPLT(int64_t, AnyType::Type_I64)
-			ANY_TYPE_CAST_TMPLT(uint64_t, AnyType::Type_UI64)
-			ANY_TYPE_CAST_TMPLT(double, AnyType::Type_F64)
-			ANY_TYPE_CAST_TMPLT(string, AnyType::Type_String)
-			ANY_TYPE_CAST_TMPLT(DataStream, AnyType::Type_Stream)
+		static void ToString(string& str, void* v, AnyType::Code code);
 
+
+		//ANY_TYPE_CAST_TMPLT(bool, AnyType::Type_Bool)
+		//	ANY_TYPE_CAST_TMPLT(int32_t, AnyType::Type_I32)
+		//	ANY_TYPE_CAST_TMPLT(uint32_t, AnyType::Type_UI32)
+		//	ANY_TYPE_CAST_TMPLT(int64_t, AnyType::Type_I64)
+		//	ANY_TYPE_CAST_TMPLT(uint64_t, AnyType::Type_UI64)
+		//	ANY_TYPE_CAST_TMPLT(double, AnyType::Type_F64)
+		//	ANY_TYPE_CAST_TMPLT(string, AnyType::Type_String)
+		//	ANY_TYPE_CAST_TMPLT(DataStream, AnyType::Type_Stream)
+
+
+		IMPLEMENT_ANY_TYPE_BIND(ANY_TYPE_CAST_TMPLT)
 	};
 
 }

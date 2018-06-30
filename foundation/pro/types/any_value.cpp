@@ -49,6 +49,16 @@ namespace pro
 		clearImpl();
 		code_ = AnyType::Type_Void;
 	}
+
+
+	//string AnyValue::ToString() const
+	//{
+	//	if (AnyType::IsSimpleType(code_))
+	//	{
+	//	}
+	//}
+
+
 	void AnyValue::assign(const string& v)
 	{
 		newContainer<AnyType::FString, AnyType::Type_String>() = v;

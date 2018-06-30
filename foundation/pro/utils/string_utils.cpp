@@ -16,5 +16,8 @@ namespace pro
 			va_end(arg_ptr);
 			buff = msg;
 		}
+
+
+
 	}
 }
