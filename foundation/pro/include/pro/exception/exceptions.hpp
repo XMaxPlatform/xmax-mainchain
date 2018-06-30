@@ -3,7 +3,7 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <pro/exception/exception_base.h>
+#include <pro/exception/exception_base.hpp>
 
 namespace pro
 {

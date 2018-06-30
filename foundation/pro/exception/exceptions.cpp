@@ -1,5 +1,5 @@
 ﻿
-#include <pro/exception/exceptions.h>
+#include <pro/exception/exceptions.hpp>
 
 namespace pro
 {

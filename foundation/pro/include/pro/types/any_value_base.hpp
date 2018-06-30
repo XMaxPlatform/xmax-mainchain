@@ -5,7 +5,7 @@
 #pragma once
 #include <pro/types/build.hpp>
 #include <pro/types/generictypes.hpp>
-#include <pro/exception/exceptions.h>
+#include <pro/exception/exceptions.hpp>
 #include <vector>
 #include <cassert>
 
