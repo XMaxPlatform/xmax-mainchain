@@ -3,7 +3,10 @@
 *  @copyright defined in xmax/LICENSE
 */
 #include <pro/log/log.hpp>
+#include <boost/program_options.hpp>
 #include "application.hpp"
+
+namespace bpo = boost::program_options;
 
 namespace xmaxapp
 {
@@ -46,6 +49,7 @@ namespace xmaxapp
 
 	void Application::Initialize(int argc, char** argv)
 	{
+		LoadCfgOptions();
 
 		for (auto& item : pluginmap_)
 		{
@@ -134,6 +138,16 @@ namespace xmaxapp
 	void Application::Quit()
 	{
 		service_face_->stop();
+	}
+
+	//--------------------------------------------------
+	void Application::LoadCfgOptions()
+	{		
+		if (fs::exists(cfg_file_path_))
+		{
+			bpo::variables_map var_map;
+			bpo::store(bpo::parse_config_file<char>(cfg_file_path_.make_preferred().string().c_str(), cfg_options_, true), var_map);
+		}
 	}
 
 	void Application::Loop()

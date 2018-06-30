@@ -70,6 +70,9 @@ namespace xmaxapp
 	
 
 	private:
+		void LoadCfgOptions();
+
+	private:
 
 		std::map<string, std::unique_ptr<PluginFace>>	pluginmap_;
 		std::vector<PluginFace*>						initialized_plugins_;
