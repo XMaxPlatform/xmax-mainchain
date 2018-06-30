@@ -5,7 +5,7 @@
 #pragma once
 #include <map>
 #include <pluginface.hpp>
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
 //namespace boost {
 //	namespace asio {
@@ -19,7 +19,7 @@
 //	} // namespace asio
 //} // namespace boost
 
-namespace bfs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace xmaxapp
 {
@@ -66,7 +66,7 @@ namespace xmaxapp
 
 
 		//==============Utility methods ============
-		void SetDefaultConfigFilePath(const bfs::path& path) { cfg_file_path_ = path; }
+		void SetDefaultConfigFilePath(const fs::path& path) { cfg_file_path_ = path; }
 	
 
 	private:
@@ -78,7 +78,7 @@ namespace xmaxapp
 		OptionsDesc     app_options_;
 		OptionsDesc     cfg_options_;
 
-		bfs::path cfg_file_path_;		
+		fs::path cfg_file_path_;		
 
 		std::unique_ptr<AppService>  service_face_;
 	};
