@@ -6,7 +6,7 @@
 
 namespace pro
 {
-
+	const AnyValue AnyObject::EmptyValue;
 
 	AnyObject::~AnyObject()
 	{
@@ -18,38 +18,171 @@ namespace pro
 		entities_.clear();
 	}
 
-	const AnyValue& AnyObject::At(const string& key) const
+	bool AnyObject::IsValid(const EntityKey& key) const
 	{
 		auto it = find(key);
-		if (it != entities_.end())
+		if (it == end())
 		{
-			return it->entity;
+			return false;
 		}
-		return emplaceback(key);
+		return it->value.IsValid();
 	}
 
-	AnyValue& AnyObject::At(const string& key)
+	size_t AnyObject::Count() const
 	{
-		auto it = find(key);
-		if (it != entities_.end())
-		{
-			return it->entity;
-		}
-		return emplaceback(key);
+		return entities_.size();
 	}
 
-	void AnyObject::Set(string&& key, AnyValue&& val)
+	const AnyValue& AnyObject::At(const EntityKey& key) const
 	{
 		auto it = find(key);
-		if (it != entities_.end())
+		if (it != end())
 		{
-			it->entity = val;
+			return it->value;
+		}
+		return pushback(key);
+	}
+
+	AnyValue& AnyObject::At(const EntityKey& key)
+	{
+		auto it = find(key);
+		if (it != end())
+		{
+			return it->value;
+		}
+		return pushback(key);
+	}
+
+
+	const AnyObject::Entity& AnyObject::GetEntity(size_t index) const
+	{
+		return entities_[index];	
+	}
+
+
+	void AnyObject::Set(const EntityKey& key, const AnyValue& val)
+	{
+		auto it = find(key);
+		if (it != end())
+		{
+			it->value = val;
 		}
 		else
 		{
-			emplaceback(std::forward<string>(key)) = std::forward<AnyValue>(val);
+			pushback(key) = val;
+		}
+	}
+
+	void AnyObject::Emplace(EntityKey&& key, AnyValue&& val)
+	{
+		auto it = find(key);
+		if (it != end())
+		{
+			it->value = val;
+		}
+		else
+		{
+			emplaceback(std::forward<EntityKey>(key)) = std::forward<AnyValue>(val);
 		}
 		
+	}
+	AnyObject::Iterator AnyObject::Erase(ConstIterator it)
+	{
+		return entities_.erase(it);
+	}
+
+	bool AnyObject::Remove(const EntityKey& key)
+	{
+		auto it = find(key);
+		if (it != end())
+		{
+			Erase(it);
+			return true;
+		}
+		return false;
+	}
+
+	const AnyValue& AnyObject::operator [] (const EntityKey& key) const
+	{
+		return At(key);
+	}
+	AnyValue& AnyObject::operator [] (const EntityKey& key)
+	{
+		return At(key);
+	}
+	const AnyValue& AnyObject::operator [] (size_t index) const
+	{
+		return entities_[index].value;
+	}
+	AnyValue& AnyObject::operator [] (size_t index)
+	{
+		return entities_[index].value;
+	}
+
+	AnyObject::ConstIterator AnyObject::Begin() const
+	{
+		return begin();
+	}
+	AnyObject::Iterator AnyObject::Begin()
+	{
+		return begin();
+	}
+	AnyObject::ConstIterator AnyObject::End() const
+	{
+		return end();
+	}
+	AnyObject::Iterator AnyObject::End()
+	{
+		return end();
+	}
+
+	AnyObject::ConstIterator AnyObject::begin() const
+	{
+		return entities_.begin();
+	}
+	AnyObject::Iterator AnyObject::begin()
+	{
+		return entities_.begin();
+	}
+	AnyObject::ConstIterator AnyObject::end() const
+	{
+		return entities_.end();
+	}
+	AnyObject::Iterator AnyObject::end()
+	{
+		return entities_.end();
+	}
+
+	AnyObject::Iterator AnyObject::find(const EntityKey& key)
+	{
+		for (auto it = entities_.begin(); it != entities_.end(); ++it)
+		{
+			if (it->key == key)
+			{
+				return it;
+			}
+		}
+		return end();
+	}
+	AnyObject::ConstIterator AnyObject::find(const EntityKey& key) const
+	{
+		for (auto it = entities_.begin(); it != entities_.end(); ++it)
+		{
+			if (it->key == key)
+			{
+				return it;
+			}
+		}
+		return end();
+	}
+
+	AnyValue& AnyObject::emplaceback(EntityKey&& key) const
+	{
+		return entities_.emplace_back(Entity(key)).value;
+	}
+	AnyValue& AnyObject::pushback(const EntityKey& key) const
+	{
+		return entities_.emplace_back(Entity(key)).value;
 	}
 
 }

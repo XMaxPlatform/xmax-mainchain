@@ -20,7 +20,7 @@ namespace pro
 		struct Entity
 		{
 			EntityKey key;
-			AnyValue entity;
+			AnyValue value;
 			Entity() = default;
 			Entity(const EntityKey& k)
 				: key(k)
@@ -35,62 +35,55 @@ namespace pro
 		typedef std::vector<AnyObject::Entity> EntityContainer;
 		typedef EntityContainer::iterator Iterator;
 		typedef EntityContainer::const_iterator ConstIterator;
-
 		
-		const AnyValue& At(const string& key) const;
+		// get value by key, if not found, push a  default Entity of key.
+		const AnyValue& At(const EntityKey& key) const;
+		AnyValue& At(const EntityKey& key);
 
-		AnyValue& At(const string& key);
+		void Set(const EntityKey& key, const AnyValue& val);
+		void Emplace(EntityKey&& key, AnyValue&& val);
+		Iterator Erase(ConstIterator it);
 
-		void Set(string&& key, AnyValue&& val);
+		bool Remove(const EntityKey& key);
 
 		void Clear();
 
+		// if key found and the value of key is valid, return true, otherwise return false.
+		bool IsValid(const EntityKey& key) const;
 
-		const AnyValue& operator [] (const string& key) const
-		{
-			return At(key);
-		}
-		AnyValue& operator [] (const string& key)
-		{
-			return At(key);
-		}
+		// the some as fuction At()
+		const AnyValue& operator [] (const EntityKey& key) const;
+		AnyValue& operator [] (const EntityKey& key);
 
+		const AnyValue& operator [] (size_t index) const;
+		AnyValue& operator [] (size_t index);
+
+		ConstIterator Begin() const;
+
+		ConstIterator End() const;
+
+		// get Entity by index. if not found, throw
+		const Entity& GetEntity(size_t index) const;
+		size_t Count() const;
+	public: // for std.
+		ConstIterator begin() const;
+
+		ConstIterator end() const;
 
 	private:
+		Iterator Begin();	
+		Iterator End();
+		Iterator begin();
+		Iterator end();
+		Iterator find(const EntityKey& key);
+		ConstIterator find(const EntityKey& key) const;
 
-		Iterator find(const string& key)
-		{
-			for (auto it = entities_.begin(); it != entities_.end(); ++it)
-			{
-				if (it->key == key)
-				{
-					return it;
-				}
-			}
-			return entities_.end();
-		}
-		ConstIterator find(const string& key) const
-		{
-			for (auto it = entities_.begin(); it != entities_.end(); ++it)
-			{
-				if (it->key == key)
-				{
-					return it;
-				}
-			}
-			return entities_.end();
-		}
-
-		AnyValue& emplaceback(string&& key) const
-		{
-			return entities_.emplace_back(Entity(key)).entity;
-		}
-		AnyValue& emplaceback(const string& key) const
-		{
-			return entities_.emplace_back(Entity(key)).entity;
-		}
+		AnyValue& emplaceback(EntityKey&& key) const;
+		AnyValue& pushback(const EntityKey& key) const;
 
 		mutable EntityContainer entities_;
+
+		static const AnyValue EmptyValue;
 	};
 
 }
