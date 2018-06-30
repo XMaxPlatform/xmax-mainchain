@@ -23,6 +23,11 @@ namespace pro
 			str = std::to_string(v);
 		}
 
+		static void ToString(string& str, const string& v)
+		{
+			str = v;
+		}
+
 		template <typename T>
 		static string ToString(const T& v)
 		{
