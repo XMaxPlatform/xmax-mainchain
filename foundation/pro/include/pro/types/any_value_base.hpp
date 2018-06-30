@@ -74,9 +74,7 @@ namespace pro
 		virtual void CopyFrom(const IAnyContainer* container) = 0;
 		virtual IAnyContainer* CopySelf() const = 0;
 
-		virtual void ToString(string& str) const
-		{
-		}
+		virtual void ToString(string& str) const;
 
 		template<typename T>
 		T& CastValue()
@@ -131,7 +129,14 @@ namespace pro
 		}
 	};
 
-
+	class FAnyContainerString : public FAnyContainer<string>
+	{
+	public:
+		virtual void ToString(string& str)
+		{
+			str = val_;
+		}
+	};
 
 	using AnyTypeToString = void(string&, void*);
 
@@ -209,6 +214,25 @@ namespace pro
 			return reinterpret_cast<T*>(d);
 		}
 
+		static IAnyContainer* AsContainer(void* v)
+		{
+			return *reinterpret_cast<IAnyContainer**>(v);
+		}
+
+		template<typename T, AnyType::Code c>
+		static T& CastImpl(void* v)
+		{
+			if constexpr (IsSimpleType<c>())
+			{
+				return *AsPtr<T>(v);
+			}
+			else
+			{
+				IAnyContainer* _any = AsContainer(v);
+				return _any->CastValue<T>();
+			}
+		}
+
 		template<typename T, AnyType::Code c>
 		static T& Cast(void* v, AnyType::Code ccheck)
 		{
@@ -216,16 +240,7 @@ namespace pro
 			{
 				PRO_EXCEPT_WITH_DESC(FormatException, "nonsupport format.");
 			}
-
-			if constexpr (IsSimpleType<c>())
-			{
-				return *reinterpret_cast<T*>(v);
-			}
-			else
-			{
-				IAnyContainer** _any = reinterpret_cast<IAnyContainer**>(v);
-				return (*_any)->CastValue<T>();
-			}
+			return CastImpl<T, c>(v);
 		}
 
 		template<typename T>

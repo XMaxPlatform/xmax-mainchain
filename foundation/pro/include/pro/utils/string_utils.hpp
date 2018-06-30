@@ -20,7 +20,15 @@ namespace pro
 		template <typename T>
 		static void ToString(string& str, const T& v)
 		{
-			str = std::to_string<T>(v);
+			str = std::to_string(v);
+		}
+
+		template <typename T>
+		static string ToString(const T& v)
+		{
+			string str;
+			ToString(str, v);
+			return str;
 		}
 	}
 }
