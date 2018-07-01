@@ -40,7 +40,7 @@ namespace pro
 		{
 			return it->value;
 		}
-		return pushback(key);
+		return EmptyValue;
 	}
 
 	AnyValue& AnyObject::At(const EntityKey& key)
@@ -176,11 +176,11 @@ namespace pro
 		return end();
 	}
 
-	AnyValue& AnyObject::emplaceback(EntityKey&& key) const
+	AnyValue& AnyObject::emplaceback(EntityKey&& key)
 	{
 		return entities_.emplace_back(Entity(key)).value;
 	}
-	AnyValue& AnyObject::pushback(const EntityKey& key) const
+	AnyValue& AnyObject::pushback(const EntityKey& key)
 	{
 		return entities_.emplace_back(Entity(key)).value;
 	}

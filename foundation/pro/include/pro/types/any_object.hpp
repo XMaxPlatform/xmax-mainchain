@@ -78,10 +78,10 @@ namespace pro
 		Iterator find(const EntityKey& key);
 		ConstIterator find(const EntityKey& key) const;
 
-		AnyValue& emplaceback(EntityKey&& key) const;
-		AnyValue& pushback(const EntityKey& key) const;
+		AnyValue& emplaceback(EntityKey&& key);
+		AnyValue& pushback(const EntityKey& key);
 
-		mutable EntityContainer entities_;
+		EntityContainer entities_;
 
 		static const AnyValue EmptyValue;
 	};
