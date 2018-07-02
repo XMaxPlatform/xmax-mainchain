@@ -147,6 +147,7 @@ namespace xmaxapp
 		{
 			bpo::variables_map var_map;
 			bpo::store(bpo::parse_config_file<char>(cfg_file_path_.make_preferred().string().c_str(), cfg_options_, true), var_map);
+			bpo::notify(var_map);
 		}
 	}
 
