@@ -77,6 +77,15 @@ static void TestDbConnect() {
 	col.create_index(bsoncxx::from_json(R"foo({ "name" : 1 })foo"));
 }
 
+
+BOOST_AUTO_TEST_CASE(test_mongo_db_drop) {
+	mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
+	mongocxx::client mongo_cli = mongocxx::client{ uri };
+	mongocxx::database db = mongo_cli[db_name];
+	db.drop();
+}
+
+
 BOOST_AUTO_TEST_CASE(test_mongo_db_connect) {
 
 	try
@@ -96,26 +105,51 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_connect) {
 }
 
 BOOST_AUTO_TEST_CASE(test_mongo_db_write_col) {	
-	mongocxx::collection col = ConnectToTestCollection();
 
-	auto builder = bsoncxx::builder::stream::document{};
-	bsoncxx::document::value doc_value = builder
-		<< "name" << "doc01"
-		<< "desc" << "doc01 desc details"
-		<< "tokens:" << 123456		
-		<< bsoncxx::builder::stream::finalize;
+	try
+	{
+		mongocxx::collection col = ConnectToTestCollection();
 
-	bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
-		col.insert_one(doc_value.view());
+		auto builder = bsoncxx::builder::stream::document{};
+		bsoncxx::document::value doc_value = builder
+			<< "name" << "doc01"
+			<< "desc" << "doc01 desc details"
+			<< "tokens:" << 123456
+			<< bsoncxx::builder::stream::finalize;
 
-	col.create_index(bsoncxx::from_json(R"foo({ "name" : 1 })foo"));
+		bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+			col.insert_one(doc_value.view());
+
+		col.create_index(bsoncxx::from_json(R"foo({ "name" : 1 })foo"));
+	}
+	catch (const mongocxx::exception& e)
+	{
+
+		BOOST_CHECK(false);
+	}
+
+	BOOST_CHECK(true);
+
+	
 
 }
 BOOST_AUTO_TEST_CASE(test_mongo_db_drop_col) {
-	mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
-	mongocxx::client mongo_cli = mongocxx::client{ uri };
-	mongocxx::collection col = mongo_cli[db_name][collection_name];
-	col.drop();
+	try
+	{
+		mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
+		mongocxx::client mongo_cli = mongocxx::client{ uri };
+		mongocxx::collection col = mongo_cli[db_name][collection_name];
+		col.drop();
+	}
+	catch (const mongocxx::exception& e)
+	{
+
+		BOOST_CHECK(false);
+	}
+
+	BOOST_CHECK(true);
+
+	
 }
 
 
