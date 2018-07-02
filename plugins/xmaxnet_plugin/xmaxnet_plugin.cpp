@@ -35,16 +35,23 @@ namespace xmax {
 
 	protected:
 
+		
 		void OnAccept();
 
 		void OnConnect();
 
 		void OnResolve();
-
+		/**
+		*  start a session
+		*/
 		void StartSession(std::shared_ptr<XMX_Connection> pConnect);
-
+		/**
+		*  start listening loop
+		*/
 		void StartListen();
-
+		/**
+		*  async read a message
+		*/
 		void StartReadMsg(std::shared_ptr<XMX_Connection> pConnect);
 
 	private:
