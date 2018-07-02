@@ -207,16 +207,45 @@ namespace pro
 			static_assert(sizeof(T) <= sizeof(AnyType::Data));
 			return reinterpret_cast<T&>(d);
 		}
+		template<typename T, typename D>
+		static inline const T& AsValue(const D& d)
+		{
+			static_assert(sizeof(T) <= sizeof(AnyType::Data));
+			return reinterpret_cast<const T&>(d);
+		}
 
 		template<typename T, typename D>
 		static inline T* AsPtr(D* d)
 		{
 			return reinterpret_cast<T*>(d);
 		}
+		template<typename T, typename D>
+		static inline const T* AsPtr(const D* d)
+		{
+			return reinterpret_cast<const T*>(d);
+		}
 
 		static IAnyContainer* AsContainer(void* v)
 		{
 			return *reinterpret_cast<IAnyContainer**>(v);
+		}
+		static const IAnyContainer* AsContainer(const void* v)
+		{
+			return *reinterpret_cast<IAnyContainer* const *>(v);
+		}
+
+		template<typename T, AnyType::Code c>
+		static const T& CastImpl(const void* v)
+		{
+			if constexpr (IsSimpleType<c>())
+			{
+				return *AsPtr<const T>(v);
+			}
+			else
+			{
+				IAnyContainer* _any = AsContainer(v);
+				return _any->CastValue<const T>();
+			}
 		}
 
 		template<typename T, AnyType::Code c>
@@ -251,7 +280,7 @@ namespace pro
 			return *((T*)0);
 		}
 
-		static void ToString(string& str, void* v, AnyType::Code code);
+		static void ToString(string& str, const void* v, AnyType::Code code);
 
 
 		//ANY_TYPE_CAST_TMPLT(bool, AnyType::Type_Bool)

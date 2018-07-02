@@ -62,7 +62,8 @@ namespace pro
 
 		void Clear();
 
-		//string ToString() const;
+		string ToString() const;
+		void ToString(string& str) const;
 
 		inline AnyType::Code GetType() const
 		{

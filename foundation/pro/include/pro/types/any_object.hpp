@@ -36,8 +36,9 @@ namespace pro
 		typedef EntityContainer::iterator Iterator;
 		typedef EntityContainer::const_iterator ConstIterator;
 		
-		// get value by key, if not found, push a  default Entity of key.
+		// get value by key, if not found, return empty value.
 		const AnyValue& At(const EntityKey& key) const;
+		// get value by key, if not found, create new value named key.
 		AnyValue& At(const EntityKey& key);
 
 		void Set(const EntityKey& key, const AnyValue& val);

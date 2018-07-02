@@ -51,12 +51,17 @@ namespace pro
 	}
 
 
-	//string AnyValue::ToString() const
-	//{
-	//	if (AnyType::IsSimpleType(code_))
-	//	{
-	//	}
-	//}
+	string AnyValue::ToString() const
+	{
+		string str;
+		ToString(str);
+		return str;
+	}
+
+	void AnyValue::ToString(string& str) const
+	{
+		AnyType::ToString(str, &val_.anyval, code_);
+	}
 
 
 	void AnyValue::assign(const string& v)

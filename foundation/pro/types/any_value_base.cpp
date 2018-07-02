@@ -26,10 +26,8 @@ namespace pro
 		str = "addr=" + addrs;
 	}
 
-	void AnyType::ToString(string& str, void* v, AnyType::Code code)
+	void AnyType::ToString(string& str, const void* v, AnyType::Code code)
 	{
-
-
 		switch (code)
 		{
 			IMPLEMENT_ANY_TYPE_BIND(CONVERT_CASE)
