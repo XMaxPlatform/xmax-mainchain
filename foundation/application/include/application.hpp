@@ -70,6 +70,7 @@ namespace xmaxapp
 	
 
 	private:
+		void SetupApplicationOptions();
 		void LoadCfgOptions();
 
 	private:

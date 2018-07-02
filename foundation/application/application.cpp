@@ -47,10 +47,9 @@ namespace xmaxapp
 
 	}
 
-	void Application::Initialize(int argc, char** argv)
+	//--------------------------------------------------
+	void Application::SetupApplicationOptions()
 	{
-		LoadCfgOptions();
-
 		for (auto& item : pluginmap_)
 		{
 			if (PluginFactory* factory = PluginFactory::GetPluginFactory(item.first))
@@ -77,12 +76,14 @@ namespace xmaxapp
 		app_options_.add(app_cfg_opts);
 		app_options_.add(app_cmd_opts);
 
-
 		app_cfg_opts.add_options()
 			("plugin", options::value< std::vector<string> >()->composing(), "Plugin(s) to startup.");
+	}
 
+
+	void Application::Initialize(int argc, char** argv)
+	{
 		// create plugin objects.
-
 		for (auto& item : pluginmap_)
 		{
 			if (PluginFace* plugin = PluginFactory::NewPlugin(item.first, this))
@@ -91,6 +92,12 @@ namespace xmaxapp
 				initialized_plugins_.push_back(plugin);
 			}
 		}
+
+		SetupApplicationOptions();
+
+
+		LoadCfgOptions();
+						
 
 		// parse options.
 		variables_map option_vars;
@@ -140,6 +147,8 @@ namespace xmaxapp
 		service_face_->stop();
 	}
 
+
+	
 	//--------------------------------------------------
 	void Application::LoadCfgOptions()
 	{		
