@@ -10,11 +10,11 @@ namespace xmax {
 
 		using namespace v8;
 
-		typedef std::function<void(const HandleScope&, const Local<ObjectTemplate>&, const Local<Context>&, const Context::Scope&)> DoWorkInJsCtx;
+		typedef std::function<v8::Handle<v8::Value>(const HandleScope&, const Local<ObjectTemplate>&, const Local<Context>&, const Context::Scope&)> DoWorkInJsCtx;
 
 		typedef std::map<std::string, Local<FunctionTemplate>> JsFooBindMap;
 
-		void EnterJsContext(Isolate* pIsolate, DoWorkInJsCtx dowork);
+		v8::Handle<v8::Value> EnterJsContext(Isolate* pIsolate, DoWorkInJsCtx dowork);
 
 		void BindJsFoos(Isolate* pIsolate, const Local<ObjectTemplate>& fooGlobal, const JsFooBindMap& foosToBind);
 

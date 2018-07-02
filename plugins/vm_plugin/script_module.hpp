@@ -19,15 +19,17 @@ namespace xmax {
 		public:
 			void Init();
 			
-			void Call(const std::string& code, const std::string& fooName);
+			v8::Handle<v8::Value> Call(const std::string& code, const std::string& fooName);
 
 			void Discard();
 
 			void StoreInstrunction(int ins);
 
 			void CleanInstrunction();
+
+			Isolate* GetIsolate();
 		private:
-			void DoworkInContext(const HandleScope& scope, const Local<ObjectTemplate>& global, const Local<Context>& context, const Context::Scope& ctxScope);
+			v8::Handle<v8::Value> DoworkInContext(const HandleScope& scope, const Local<ObjectTemplate>& global, const Local<Context>& context, const Context::Scope& ctxScope);
 
 			void AstBlockCallbackInsert();
 
@@ -40,5 +42,9 @@ namespace xmax {
 			Isolate*                 isolate_;
 
 		};
+		inline v8::Isolate* ScriptMoudle::GetIsolate()
+		{
+			return isolate_;
+		}
 	}
 }

@@ -50,12 +50,15 @@ namespace xmax {
 			isolate_ = Isolate::New(create_params);
 		}
 
-		void ScriptMoudle::DoworkInContext(const v8::HandleScope& scope, const v8::Local<ObjectTemplate>& global, const v8::Local<Context>& context, const v8::Context::Scope& ctxScope)
+		v8::Handle<v8::Value> ScriptMoudle::DoworkInContext(const v8::HandleScope& scope, const v8::Local<ObjectTemplate>& global, const v8::Local<Context>& context, const v8::Context::Scope& ctxScope)
 		{
 			V8_ParseWithPlugin();
 			CompileJsCode(isolate_, context, current_code_.c_str() );
 			CleanInstrunction();
-			CallJsFoo(isolate_, context, main_foo_.c_str() , 0, NULL);
+			v8::Handle<v8::Value> result =  CallJsFoo(isolate_, context, main_foo_.c_str() , 0, NULL);
+
+			//int test = result->Int32Value();
+			return result;
 		}
 
 		void ScriptMoudle::AstBlockCallbackInsert()
@@ -63,12 +66,12 @@ namespace xmax {
 
 		}
 
-		void ScriptMoudle::Call(const std::string& code, const std::string& fooName)
+		v8::Handle<v8::Value> ScriptMoudle::Call(const std::string& code, const std::string& fooName)
 		{
 			current_code_ = code;
 			main_foo_ = fooName;
 			namespace  ph = std::placeholders;
-			EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
+			return EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
 		}
 
 		void ScriptMoudle::Discard()
@@ -90,6 +93,8 @@ namespace xmax {
 			instruction_count_ = 0;
 			last_intruction_.clear();
 		}
+
+
 
 	}
 }
