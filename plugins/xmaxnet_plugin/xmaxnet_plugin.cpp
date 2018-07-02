@@ -41,6 +41,12 @@ namespace xmax {
 
 		void OnResolve();
 
+		void StartSession(std::shared_ptr<XMX_Connection> pConnect);
+
+		void StartListen();
+
+		void StartReadMsg(std::shared_ptr<XMX_Connection> pConnect);
+
 	private:
 
 		std::unique_ptr<tcp::acceptor>		acceptor_;
@@ -86,6 +92,22 @@ namespace xmax {
 	{
 
 	}
+
+	void XmaxNetPluginImpl::StartSession(std::shared_ptr<XMX_Connection> pConnect)
+	{
+
+	}
+
+	void XmaxNetPluginImpl::StartListen()
+	{
+
+	}
+
+	void XmaxNetPluginImpl::StartReadMsg(std::shared_ptr<XMX_Connection> pConnect)
+	{
+
+	}
+
 
 	/**
 	*  Implementations of XmaxNetPlugin interfaces
