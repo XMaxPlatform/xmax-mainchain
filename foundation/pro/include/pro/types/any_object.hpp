@@ -41,7 +41,7 @@ namespace pro
 		// get value by key, if not found, create new value named key.
 		AnyValue& At(const EntityKey& key);
 
-		void Set(const EntityKey& key, const AnyValue& val);
+		AnyObject& Set(const EntityKey& key, const AnyValue& val);
 		void Emplace(EntityKey&& key, AnyValue&& val);
 		Iterator Erase(ConstIterator it);
 
@@ -50,7 +50,7 @@ namespace pro
 		void Clear();
 
 		// if key found and the value of key is valid, return true, otherwise return false.
-		bool IsValid(const EntityKey& key) const;
+		bool KeyValid(const EntityKey& key) const;
 
 		// the some as fuction At()
 		const AnyValue& operator [] (const EntityKey& key) const;

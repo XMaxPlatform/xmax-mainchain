@@ -4,6 +4,8 @@
 #include <pro/utils/singleton.hpp>
 #include <pro/types/time.hpp>
 #include <pro/types/any_value.hpp>
+#include <pro/types/any_object.hpp>
+#include <pro/utils/string_utils.hpp>
 #include <pro/scode/shortname.hpp>
 
 using namespace pro;
@@ -35,8 +37,6 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 	BOOST_CHECK(s1.GetA() == 12345);
 }
 
-BOOST_AUTO_TEST_SUITE(pro_time_test)
-
 BOOST_AUTO_TEST_CASE(pro_time_1)
 {
 	TimeMilliseconds milli(2500ll);
@@ -57,11 +57,6 @@ BOOST_AUTO_TEST_CASE(pro_time_1)
 	BOOST_CHECK(milli3.GetValue() == 2ll * 1000ll);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-
-
-BOOST_AUTO_TEST_SUITE(any_value)
-
 BOOST_AUTO_TEST_CASE(any_value)
 {
 	const char tstring[] = "test string";
@@ -74,14 +69,24 @@ BOOST_AUTO_TEST_CASE(any_value)
 	std::string ss = anystr2.CastTo<string>();
 
 	BOOST_CHECK(ss == tstring);
+
+
+
 }
 
-BOOST_AUTO_TEST_SUITE_END()
+bool checkformat(const string& checkstring, const string& fmt, const AnyObject& args)
+{
+	string fstring = utils::StringFormat(fmt, args);
+
+	return (fstring == checkstring);
+}
 
 
-BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_CASE(string_format)
+{
+	BOOST_CHECK(checkformat("hello", "hello", AnyObject()));
 
-BOOST_AUTO_TEST_SUITE(scode)
+}
 
 bool checkname(string real, pro::ShortName name)
 {
@@ -123,7 +128,6 @@ BOOST_AUTO_TEST_CASE(scode)
 	BOOST_CHECK(ShortName::NameLengthWithBit("124.@") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
 	BOOST_CHECK(ShortName::NameLengthWithBit("1.@mx") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
 	BOOST_CHECK(ShortName::NameLengthWithBit("1.###@mx") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
-
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -55,6 +55,12 @@ namespace pro
 			{
 				auto seek = format.find('$', cpyend); // sk
 
+				if (seek == string::npos)// search end.
+				{
+					cpyend = length;
+					break;
+				}
+
 				if ((length - seek) < key_format_len_min)// search end.
 				{
 					cpyend = length;

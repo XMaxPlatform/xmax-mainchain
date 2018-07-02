@@ -18,7 +18,7 @@ namespace pro
 		entities_.clear();
 	}
 
-	bool AnyObject::IsValid(const EntityKey& key) const
+	bool AnyObject::KeyValid(const EntityKey& key) const
 	{
 		auto it = find(key);
 		if (it == end())
@@ -60,7 +60,7 @@ namespace pro
 	}
 
 
-	void AnyObject::Set(const EntityKey& key, const AnyValue& val)
+	AnyObject& AnyObject::Set(const EntityKey& key, const AnyValue& val)
 	{
 		auto it = find(key);
 		if (it != end())
@@ -71,6 +71,7 @@ namespace pro
 		{
 			pushback(key) = val;
 		}
+		return *this;
 	}
 
 	void AnyObject::Emplace(EntityKey&& key, AnyValue&& val)

@@ -15,7 +15,7 @@ namespace pro
 		void PrintFormat(string& buff, const char* format, ...);
 
 		void StringFormat(string& buff, const string& format, const AnyObject& args);
-
+		string StringFormat(const string& format, const AnyObject& args);
 
 		template <typename T>
 		static void ToString(string& str, const T& v)
