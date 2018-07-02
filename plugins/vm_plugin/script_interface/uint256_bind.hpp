@@ -6,6 +6,7 @@ namespace xmax {
 	namespace scriptv8 {
 		class V8ui256
 		{
+			int data[8];
 		};
 	}
 }
