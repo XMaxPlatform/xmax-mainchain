@@ -36,6 +36,20 @@ static inline bool IsConnectionEx(const mongocxx::exception& ex) {
 	return ex_msg.find("No suitable servers found") != std::string::npos;
 }
 
+
+//** Utility functions
+
+namespace {
+	mongocxx::collection ConnectToTestCollection() {
+		mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
+		mongocxx::client mongo_cli = mongocxx::client{ uri };
+		mongocxx::collection col = mongo_cli[db_name][collection_name];
+		return col;
+	}
+}
+
+
+
 BOOST_AUTO_TEST_CASE(test_mongo_db_connect_fail) {
 	
 	BOOST_CHECK_EXCEPTION({
@@ -81,10 +95,8 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_connect) {
 	BOOST_CHECK(true);
 }
 
-BOOST_AUTO_TEST_CASE(test_mongo_db_write_col) {
-	mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
-	mongocxx::client mongo_cli = mongocxx::client{ uri };
-	mongocxx::collection col = mongo_cli[db_name][collection_name];
+BOOST_AUTO_TEST_CASE(test_mongo_db_write_col) {	
+	mongocxx::collection col = ConnectToTestCollection();
 
 	auto builder = bsoncxx::builder::stream::document{};
 	bsoncxx::document::value doc_value = builder
