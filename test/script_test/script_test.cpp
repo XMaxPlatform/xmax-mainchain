@@ -12,23 +12,9 @@ using namespace xmax;
 using namespace boost::unit_test;
 
 
-//#define Test_Script
+#define Test_Script
 
 
-
-BOOST_AUTO_TEST_SUITE (blockchain_plugin_test)
-
-BOOST_AUTO_TEST_CASE(bpt_1)
-{
-	BlockChainPlugin::RegistSelf();
-	bool bret = BlockChainPlugin::RegistSelf();
-	BOOST_CHECK(bret == false);
-
-
-	//SingletonImpl* ps = new SingletonImpl();
-}
-
-BOOST_AUTO_TEST_SUITE_END()
 
 #ifdef Test_Script
 BOOST_AUTO_TEST_SUITE(vm_plugin_test)
