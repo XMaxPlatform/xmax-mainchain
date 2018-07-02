@@ -114,8 +114,15 @@ namespace pro
 		}
 		else
 		{
-			setContainerImpl(code_, v.val_.anyptr);
+			setContainerImpl(v.code_, v.val_.anyptr);
+			v.forceNone();
 		}
+	}
+
+	void AnyValue::forceNone()
+	{
+		val_.anyptr = nullptr;
+		code_ = AnyType::Type_Void;
 	}
 
 	void AnyValue::clearImpl()

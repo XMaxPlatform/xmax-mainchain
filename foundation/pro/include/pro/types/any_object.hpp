@@ -13,8 +13,9 @@ namespace pro
 	class AnyObject
 	{
 	public:
-		AnyObject() = default;
-
+		AnyObject();
+		AnyObject(const AnyObject& anys);
+		AnyObject(AnyObject&& anys);
 		~AnyObject();
 		typedef string EntityKey;
 		struct Entity
@@ -33,6 +34,8 @@ namespace pro
 
 		};
 		typedef std::vector<AnyObject::Entity> EntityContainer;
+		typedef EntityContainer* EntityContainerPtr;
+		typedef std::shared_ptr<EntityContainer> SharedEntitys;
 		typedef EntityContainer::iterator Iterator;
 		typedef EntityContainer::const_iterator ConstIterator;
 		
@@ -42,6 +45,7 @@ namespace pro
 		AnyValue& At(const EntityKey& key);
 
 		AnyObject& Set(const EntityKey& key, const AnyValue& val);
+		AnyObject& Set(EntityKey&& key, AnyValue&& val);
 		void Emplace(EntityKey&& key, AnyValue&& val);
 		Iterator Erase(ConstIterator it);
 
@@ -59,6 +63,9 @@ namespace pro
 		const AnyValue& operator [] (size_t index) const;
 		AnyValue& operator [] (size_t index);
 
+		AnyObject& operator =(const AnyObject& anys);
+		AnyObject& operator =(AnyObject&& anys);
+
 		ConstIterator Begin() const;
 
 		ConstIterator End() const;
@@ -71,7 +78,11 @@ namespace pro
 
 		ConstIterator end() const;
 
-	private:
+	protected:
+
+		void assign(const AnyObject& anys);
+		void assign(AnyObject&& anys);
+
 		Iterator Begin();	
 		Iterator End();
 		Iterator begin();
@@ -81,8 +92,9 @@ namespace pro
 
 		AnyValue& emplaceback(EntityKey&& key);
 		AnyValue& pushback(const EntityKey& key);
+		AnyValue& pushback(EntityKey&& key);
 
-		EntityContainer entities_;
+		SharedEntitys entities_;
 
 		static const AnyValue EmptyValue;
 	};

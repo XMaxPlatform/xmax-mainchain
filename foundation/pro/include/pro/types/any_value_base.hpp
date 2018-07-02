@@ -97,8 +97,6 @@ namespace pro
 		{
 			delete c;
 		}
-
-
 	};
 
 
@@ -132,7 +130,7 @@ namespace pro
 	class FAnyContainerString : public FAnyContainer<string>
 	{
 	public:
-		virtual void ToString(string& str)
+		virtual void ToString(string& str) const override
 		{
 			str = val_;
 		}
@@ -143,7 +141,7 @@ namespace pro
 	class AnyType
 	{	
 	public:
-		typedef FAnyContainer<string> FString;
+		typedef FAnyContainerString FString;
 		typedef FAnyContainer<DataStream> FStream;
 		typedef IAnyContainer*	Container;
 		typedef double			Simple;

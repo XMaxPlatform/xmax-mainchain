@@ -86,6 +86,7 @@ BOOST_AUTO_TEST_CASE(string_format)
 {
 	BOOST_CHECK(checkformat("hello", "hello", AnyObject()));
 
+	BOOST_CHECK(checkformat("hello lily", "hello ${name}", PACK_ARGS( ("name", "lily") )));
 }
 
 bool checkname(string real, pro::ShortName name)

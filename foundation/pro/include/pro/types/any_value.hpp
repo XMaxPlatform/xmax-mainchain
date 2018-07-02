@@ -110,7 +110,7 @@ namespace pro
 		void assign(const AnyValue& v);
 
 		void clearImpl();
-	
+		void forceNone();
 		template<typename T, AnyType::Code c>
 		inline T& newSimpleType()
 		{
