@@ -39,15 +39,13 @@ static inline bool IsConnectionEx(const mongocxx::exception& ex) {
 
 //** Utility functions
 
-namespace {
-	mongocxx::collection ConnectToTestCollection() {
-		mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() };
-		mongocxx::client mongo_cli = mongocxx::client{ uri };
-		mongocxx::collection col = mongo_cli[db_name][collection_name];
-		return col;
-	}
-}
 
+
+
+#define  CONNECT_TO_TEST_COLLECTION(col) \
+		mongocxx::uri uri = mongocxx::uri{ mongo_uri.c_str() }; \
+		mongocxx::client mongo_cli = mongocxx::client{ uri }; \
+		mongocxx::collection col = mongo_cli[db_name][collection_name]; 
 
 
 BOOST_AUTO_TEST_CASE(test_mongo_db_connect_fail) {
@@ -108,7 +106,7 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_write_col) {
 
 	try
 	{
-		mongocxx::collection col = ConnectToTestCollection();
+		CONNECT_TO_TEST_COLLECTION(col)
 
 		auto builder = bsoncxx::builder::stream::document{};
 		bsoncxx::document::value doc_value = builder
