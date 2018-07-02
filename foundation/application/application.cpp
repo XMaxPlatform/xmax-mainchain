@@ -95,22 +95,21 @@ namespace xmaxapp
 
 		SetupApplicationOptions();
 
-
-		LoadCfgOptions();
-						
-
 		// parse options.
 		variables_map option_vars;
 
+		LoadCfgOptions(option_vars);
+								
 		//options::store(options::parse_config_file<char>(config_file_name.make_preferred().string().c_str(),
 		//	cfg_options, true), option_vars);
 
 		options::store(options::parse_command_line(argc, argv, app_options_), option_vars);
 
+		bpo::notify(option_vars);
+
 		// 
 		for (auto item : initialized_plugins_)
 		{
-
 			item->Initialize(option_vars);
 			ilog("Plugin '%s' initialize. ", item->GetName().c_str());
 		}
@@ -150,13 +149,11 @@ namespace xmaxapp
 
 	
 	//--------------------------------------------------
-	void Application::LoadCfgOptions()
+	void Application::LoadCfgOptions(bpo::variables_map& var_map)
 	{		
 		if (fs::exists(cfg_file_path_))
-		{
-			bpo::variables_map var_map;
-			bpo::store(bpo::parse_config_file<char>(cfg_file_path_.make_preferred().string().c_str(), cfg_options_, true), var_map);
-			bpo::notify(var_map);
+		{		
+			bpo::store(bpo::parse_config_file<char>(cfg_file_path_.make_preferred().string().c_str(), cfg_options_, true), var_map);		
 		}
 	}
 

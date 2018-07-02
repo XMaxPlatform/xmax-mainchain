@@ -20,6 +20,7 @@
 //} // namespace boost
 
 namespace fs = std::filesystem;
+namespace bpo = boost::program_options;
 
 namespace xmaxapp
 {
@@ -71,7 +72,7 @@ namespace xmaxapp
 
 	private:
 		void SetupApplicationOptions();
-		void LoadCfgOptions();
+		void LoadCfgOptions(bpo::variables_map& var_map);
 
 	private:
 
