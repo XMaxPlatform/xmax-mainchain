@@ -4,5 +4,9 @@
 using namespace v8;
 namespace xmax {
 	namespace scriptv8 {
+		class V8i256
+		{
+		
+		};
 	}
 }
