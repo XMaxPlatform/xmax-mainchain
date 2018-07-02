@@ -22,6 +22,7 @@ BOOST_AUTO_TEST_SUITE(vm_plugin_test)
 BOOST_AUTO_TEST_CASE(bpt_1)
 {
 	xmax::scriptv8::ScriptMoudle::GetInstance().Init();
+	xmax::scriptv8::ScriptMoudle::GetInstance().Call("function test(){return 3;}", "test");
 	xmax::scriptv8::ScriptMoudle::GetInstance().Discard();
 }
 
