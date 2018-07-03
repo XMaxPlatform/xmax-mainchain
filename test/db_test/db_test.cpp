@@ -170,6 +170,30 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_read_col) {
 	}
 }
 
+BOOST_AUTO_TEST_CASE(test_mongo_db_write2_col) {
+	try
+	{
+		CONNECT_TO_TEST_COLLECTION(col)
+
+			auto builder = bsoncxx::builder::stream::document{};
+		bsoncxx::document::value doc_value = builder
+			<< "name" << "doc02"
+			<< "desc" << "doc02 desc details"
+			<< "tokens" << 13579
+			<< bsoncxx::builder::stream::finalize;
+
+		bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+			col.insert_one(doc_value.view());		
+	}
+	catch (const mongocxx::exception& e)
+	{
+
+		BOOST_CHECK(false);
+	}
+
+	BOOST_CHECK(true);
+
+}
 
 
 BOOST_AUTO_TEST_CASE(test_mongo_db_drop_col) {
