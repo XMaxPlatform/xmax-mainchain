@@ -130,6 +130,29 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_write_col) {
 
 }
 
+BOOST_AUTO_TEST_CASE(test_mongo_db_update_col) {
+	try
+	{
+		CONNECT_TO_TEST_COLLECTION(col)
+
+			boost::optional<bsoncxx::document::value> op_result = col.find_one({});
+		BOOST_ASSERT(op_result);
+
+		document update_doc{};
+		update_doc << "$set" << open_document << "tokens" << 654321 << close_document;
+
+		col.update_one(document{} << "_id" << op_result->view()["_id"].get_oid() << finalize, update_doc.view());
+
+		BOOST_CHECK(true);
+	}
+	catch (const mongocxx::exception& e)
+	{
+
+		BOOST_CHECK(false);
+	}
+}
+
+
 BOOST_AUTO_TEST_CASE(test_mongo_db_read_col) {
 	try
 	{
@@ -138,7 +161,7 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_read_col) {
 		boost::optional<bsoncxx::document::value> op_result = col.find_one({});
 		BOOST_ASSERT(op_result);
 		int amount = op_result->view()["tokens"].get_int32();;
-		BOOST_CHECK(amount == 123456);
+		BOOST_CHECK(amount == 654321);
 	}
 	catch (const mongocxx::exception& e)
 	{
@@ -146,6 +169,7 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_read_col) {
 		BOOST_CHECK(false);
 	}
 }
+
 
 
 BOOST_AUTO_TEST_CASE(test_mongo_db_drop_col) {
