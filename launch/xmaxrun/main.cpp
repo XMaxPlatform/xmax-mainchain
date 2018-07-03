@@ -45,7 +45,7 @@ namespace xmax
 		app.Initialize(argc, argv);
 		app.Startup();
 
-		ilog("Xmax app start.");
+		LogSprintf("Xmax app start.");
 		app.Loop();
 	}
 }

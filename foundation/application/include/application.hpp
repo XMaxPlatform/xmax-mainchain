@@ -4,8 +4,9 @@
 */
 #pragma once
 #include <map>
-#include <pluginface.hpp>
 #include <filesystem>
+#include <pluginface.hpp>
+
 
 //namespace boost {
 //	namespace asio {
@@ -19,11 +20,21 @@
 //	} // namespace asio
 //} // namespace boost
 
-namespace fs = std::filesystem;
-namespace bpo = boost::program_options;
+
 
 namespace xmaxapp
 {
+#if _Project_Compiler == _Compiler_MSVC
+#	if _MSC_VER < 1914
+	namespace fs = std::experimental::filesystem;
+#	else
+	namespace fs = std::filesystem;
+#	endif
+#else
+	namespace fs = std::filesystem;
+#endif
+
+	namespace bpo = boost::program_options;
 	/**
 	*  derive class of ApplicationBase
 	*  implement the concrete Initialization
@@ -84,7 +95,7 @@ namespace xmaxapp
 		OptionsDesc     app_options_;
 		OptionsDesc     cfg_options_;
 
-		fs::path cfg_file_path_;		
+		fs::path cfg_file_path_;
 
 		std::unique_ptr<AppService>  service_face_;
 	};

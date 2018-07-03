@@ -4,7 +4,7 @@
 #include <pro/types/any_object.hpp>
 #include <pro/utils/string_utils.hpp>
 
-#define __char_cache_size 1024
+constexpr size_t sprintf_buff_size = 1024;
 
 
 static constexpr size_t key_format_len_min = 4;
@@ -13,14 +13,25 @@ namespace pro
 {
 	namespace utils
 	{
-		void PrintFormat(string& buff, const char* format, ...)
+		void Sprintf(string& buff, const char* format, ...)
 		{
-			char msg[__char_cache_size] = { 0 };
+			char msg[sprintf_buff_size] = { 0 };
 			va_list arg_ptr;
 			va_start(arg_ptr, format);
-			int nWrittenBytes = vsprintf_s(msg, __char_cache_size - 1, format, arg_ptr);
+			int nWrittenBytes = vsprintf_s(msg, sprintf_buff_size - 1, format, arg_ptr);
 			va_end(arg_ptr);
 			buff = msg;
+		}
+
+		string Sprintf(const char* format, ...)
+		{
+			char msg[sprintf_buff_size] = { 0 };
+			va_list arg_ptr;
+			va_start(arg_ptr, format);
+			int nWrittenBytes = vsprintf_s(msg, sprintf_buff_size - 1, format, arg_ptr);
+			va_end(arg_ptr);
+
+			return msg;
 		}
 
 		string StringFormat(const string& format, const AnyObject& args)

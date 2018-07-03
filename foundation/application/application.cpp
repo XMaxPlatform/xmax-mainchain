@@ -37,12 +37,12 @@ namespace xmaxapp
 			}
 			else
 			{
-				iwarnning("Unknown plugin:'%s'.", plugin_name.c_str());
+				WarnSprintf("Unknown plugin:'%s'.", plugin_name.c_str());
 			}
 		}
 		else
 		{
-			iwarnning("Plugin:'%s' had in the init list.", plugin_name.c_str());
+			WarnSprintf("Plugin:'%s' had in the init list.", plugin_name.c_str());
 		}
 
 	}
@@ -98,7 +98,7 @@ namespace xmaxapp
 		// parse options.
 		variables_map option_vars;
 
-		LoadCfgOptions(option_vars);
+		//LoadCfgOptions(option_vars);
 								
 		//options::store(options::parse_config_file<char>(config_file_name.make_preferred().string().c_str(),
 		//	cfg_options, true), option_vars);
@@ -111,7 +111,7 @@ namespace xmaxapp
 		for (auto item : initialized_plugins_)
 		{
 			item->Initialize(option_vars);
-			ilog("Plugin '%s' initialize. ", item->GetName().c_str());
+			LogSprintf("Plugin '%s' initialize. ", item->GetName().c_str());
 		}
 	}
 
@@ -124,7 +124,7 @@ namespace xmaxapp
 
 				item->Startup();
 				startup_plugins_.push_back(item);
-				ilog("Plugin '%s' startup. ", item->GetName().c_str());
+				LogSprintf("Plugin '%s' startup. ", item->GetName().c_str());
 			}
 		}
 	}
@@ -135,7 +135,7 @@ namespace xmaxapp
 		{
 			if (item)
 			{
-				ilog("Plugin '%s' shutdown. ", item->GetName().c_str());
+				LogSprintf("Plugin '%s' shutdown. ", item->GetName().c_str());
 				item->Shutdown();
 			}
 		}

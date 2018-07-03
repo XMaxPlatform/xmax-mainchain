@@ -13,7 +13,10 @@ namespace pro
 
 	namespace utils
 	{
-		void PrintFormat(string& buff, const char* format, ...);
+
+		void Sprintf(string& buff, const char* format, ...);
+
+		string Sprintf(const char* format, ...);
 
 		void StringFormat(string& buff, const string& format, const AnyObject& args);
 

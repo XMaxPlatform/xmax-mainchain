@@ -46,7 +46,7 @@ namespace xmax
 		void BlockBuilderImpl::BuildBlock()
 		{
 
-			ilog("building block.");
+			LogSprintf("building block.");
 			NextBlock();
 		}
 	};
@@ -75,7 +75,7 @@ namespace xmax
 
 	void BlockBuilderPlugin::InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
 	{
-		ilog("Blockbuilder plugin init options.");
+		LogSprintf("Blockbuilder plugin init options.");
 	}
 
 }
