@@ -19,7 +19,10 @@ namespace pro
 	//}
 
 
-
+	/**
+	* This macro declares various cast functions
+	*  
+	*/
 #define IMPLEMENT_ANY_TYPE_BIND(_MACRO)\
 		_MACRO(bool, pro::AnyType::Type_Bool)\
 		_MACRO(int32_t, pro::AnyType::Type_I32)\
