@@ -147,17 +147,26 @@ namespace xmaxapp
 	}
 
 
-	
+
+	//--------------------------------------------------
+	void Application::CreateDefaultCfgFile()
+	{
+		assert(cfg_file_path_.has_filename());
+	}
+
+
 	//--------------------------------------------------
 	void Application::LoadCfgOptions(bpo::variables_map& var_map)
 	{		
-		if (fs::exists(cfg_file_path_))
+		if (!fs::exists(cfg_file_path_))
 		{		
-			bpo::store(bpo::parse_config_file<char>(cfg_file_path_.make_preferred().string().c_str(), cfg_options_, true), var_map);		
+			CreateDefaultCfgFile();
 		}
+
+		bpo::store(bpo::parse_config_file<char>(cfg_file_path_.make_preferred().string().c_str(), cfg_options_, true), var_map);
 	}
 
-	void Application::Loop()
+void Application::Loop()
 	{
 		std::shared_ptr<boost::asio::signal_set> sigint_set(new boost::asio::signal_set(*service_face_, SIGINT));
 		sigint_set->async_wait([sigint_set, this](const boost::system::error_code& err, int num)

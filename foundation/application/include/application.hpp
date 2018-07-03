@@ -73,6 +73,7 @@ namespace xmaxapp
 	private:
 		void SetupApplicationOptions();
 		void LoadCfgOptions(bpo::variables_map& var_map);
+		void CreateDefaultCfgFile();
 
 	private:
 
