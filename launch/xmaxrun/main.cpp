@@ -37,6 +37,7 @@ namespace xmax
 		//ContractUtilPlugin::RegistSelf();
 
 		Application app;
+		app.SetDefaultConfigFilePath(fs::current_path() / "config" / "config.ini");
 
 		RegisterPlugins();
 		InitPlugins(app);
