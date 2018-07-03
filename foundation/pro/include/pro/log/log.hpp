@@ -40,6 +40,7 @@ namespace pro
 
 #define ilog(fmt, ...) pro::_log_message(pro::loglevel(pro::loglevel::Info), fmt, __VA_ARGS__)
 
+#define ierror(fmt, ...) pro::_log_message(pro::loglevel(pro::loglevel::Error), fmt, __VA_ARGS__)
 //#define ierror(fmt, ...) _xmax_error(__FILE__, __LINE__, fmt, __VA_ARGS__)
 
 
