@@ -111,7 +111,7 @@ namespace xmaxapp
 		for (auto item : initialized_plugins_)
 		{
 			item->Initialize(option_vars);
-			LogSprintf("Plugin '%s' initialize. ", item->GetName().c_str());
+			Logf("Plugin '${name}' initialize. ", ("name", item->GetName()));
 		}
 	}
 
@@ -124,7 +124,7 @@ namespace xmaxapp
 
 				item->Startup();
 				startup_plugins_.push_back(item);
-				LogSprintf("Plugin '%s' startup. ", item->GetName().c_str());
+				Logf("Plugin '${name}' startup. ", ("name", item->GetName()) );
 			}
 		}
 	}
@@ -135,7 +135,8 @@ namespace xmaxapp
 		{
 			if (item)
 			{
-				LogSprintf("Plugin '%s' shutdown. ", item->GetName().c_str());
+				Logf("Plugin '${name}' shutdown. ", ("name", item->GetName()) );
+
 				item->Shutdown();
 			}
 		}
