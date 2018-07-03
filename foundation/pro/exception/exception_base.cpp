@@ -10,11 +10,19 @@ namespace pro
 	}
 
 	Exception::Exception(const string& _description, const string& _source)
-	:line_(0)
-	,type_(EXT_UNDEF_TYPE)
-	,title_("Exception")
-	,description_(_description)
-	,source_(_source)
+		: line_(0)
+		, type_(EXT_UNDEF_TYPE)
+		, title_("Exception")
+		, description_(_description)
+		, source_(_source)
+	{
+	}
+	Exception::Exception(string&& _description, string&& _source)
+		: line_(0)
+		, type_(EXT_UNDEF_TYPE)
+		, title_("Exception")
+		, description_(std::forward<string>(_description))
+		, source_(std::forward<string>(_source))
 	{
 	}
 	Exception::Exception(const string& _description, const char* _file, long _line)
@@ -26,7 +34,15 @@ namespace pro
 
 	{
 	}
+	Exception::Exception(string&& _description, const char* _file, long _line)
+		:type_(EXT_UNDEF_TYPE)
+		, title_("Exception")
+		, description_(std::forward<string>(_description))
+		, file_(_file)
+		, line_(_line)
 
+	{
+	}
 	Exception::Exception(const string& _description, const string& _source, const char* _file, long _line)
 		:type_(EXT_UNDEF_TYPE)
 		,title_("Exception")
@@ -37,7 +53,16 @@ namespace pro
 		
 	{
 	}
+	Exception::Exception(string&& _description, string&& _source, const char* _file, long _line)
+		:type_(EXT_UNDEF_TYPE)
+		, title_("Exception")
+		, description_(std::forward<string>(_description))
+		, source_(std::forward<string>(_source))
+		, file_(_file)
+		, line_(_line)
 
+	{
+	}
 	Exception::Exception(int type_, const string& _description, const string& _source, const char* tile_, const char* _file, long _line)
 		:line_(_line)
 		,type_(type_)
@@ -48,7 +73,16 @@ namespace pro
 	{
 
 	}
+	Exception::Exception(int type_, string&& _description, string&& _source, const char* tile_, const char* _file, long _line)
+		:line_(_line)
+		, type_(type_)
+		, title_(std::forward<string>(tile_))
+		, description_(std::forward<string>(_description))
+		, source_(_source)
+		, file_(_file)
+	{
 
+	}
 	Exception::Exception(int type_, const string& _description, const char* tile_, const char* _file, long _line)
 		:line_(_line)
 		, type_(type_)
@@ -58,6 +92,16 @@ namespace pro
 	{
 
 	}
+	Exception::Exception(int type_, string&& _description, const char* tile_, const char* _file, long _line)
+		:line_(_line)
+		, type_(type_)
+		, title_(tile_)
+		, description_(std::forward<string>(_description))
+		, file_(_file)
+	{
+
+	}
+
 
 	Exception::Exception(const Exception& rhs)
 		: line_(rhs.line_), 
@@ -68,15 +112,40 @@ namespace pro
 		file_(rhs.file_)
 	{
 	}
-
-	void Exception::operator = (const Exception& rhs)
+	Exception::Exception(Exception&& rhs)
+		: line_(rhs.line_),
+		type_(rhs.type_),
+		title_(std::forward<string>(rhs.title_)),
+		description_(std::forward<string>(rhs.description_)),
+		source_(std::forward<string>(rhs.source_)),
+		file_(std::forward<string>(rhs.file_))
 	{
-		description_ = rhs.description_;
+	}
+
+	Exception& Exception::operator = (const Exception& rhs)
+	{
+		line_ = rhs.line_;
 		type_ = rhs.type_;
+
+		title_ = rhs.title_;
+		description_ = rhs.description_;
 		source_ = rhs.source_;
 		file_ = rhs.file_;
+
+		return *this;
+	}
+
+	Exception& Exception::operator = (Exception&& rhs)
+	{
 		line_ = rhs.line_;
-		title_ = rhs.title_;
+		type_ = rhs.type_;
+
+		title_ = std::forward<string>(rhs.title_);
+		description_ = std::forward<string>(rhs.description_);
+		source_ = std::forward<string>(rhs.source_);
+		file_ = std::forward<string>(rhs.file_);
+
+		return *this;
 	}
 
     const string& Exception::GetFullDescription() const

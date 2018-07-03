@@ -8,8 +8,6 @@
 namespace pro
 {
 
-
-
 #define PRO_EXCEPTION_TYPE(_ClassName, _Type)\
 	class _ClassName : public pro::Exception\
 	{\
@@ -22,6 +20,7 @@ namespace pro
 		}\
 	}
 
+	PRO_EXCEPTION_TYPE(AssertException, Exception::EXT_ASSERT_ERROR);
 
 	PRO_EXCEPTION_TYPE(SerializeException, Exception::EXT_SERIALIZE_ERROR);
 

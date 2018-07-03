@@ -16,9 +16,11 @@ namespace pro
 		enum ExceptionType
 		{
 			EXT_UNDEF_TYPE = 0,
-			EXT_SERIALIZE_ERROR = 1,
-			EXT_FORMAT_ERROR = 2,
-			EXT_MEMORY_ERROR = 3,
+			EXT_ASSERT_ERROR = 1,
+			EXT_SERIALIZE_ERROR = 100,
+			EXT_FORMAT_ERROR = 200,
+			EXT_MEMORY_ERROR = 300,
+			
 			//EXT_FILE_READ_FALSE,
 			//EXT_FILE_WRITE_FALSE,
 			//EXT_FILE_NOT_FOUND,
@@ -33,16 +35,24 @@ namespace pro
         Exception(const string& _description, const string& _source);
 		Exception(const string& _description, const string& _source, const char* _file, long _line);
 		Exception(const string& _description, const char* _file, long _line);
+
+
+		Exception(string&& _description, string&& _source);
+		Exception(string&& _description, string&& _source, const char* _file, long _line);
+		Exception(string&& _description, const char* _file, long _line);
+
         /** Copy constructor.
         */
         Exception(const Exception& rhs);
+		Exception(Exception&& rhs);
 
 		/// Needed for  compatibility with std::exception
 		virtual ~Exception() throw();
 
         /** Assignment operator.
         */
-        void operator = (const Exception& rhs);
+		Exception& operator = (const Exception& rhs);
+		Exception& operator = (Exception&& rhs);
 
         virtual const string& GetFullDescription() const;
 
@@ -75,8 +85,12 @@ namespace pro
 
 		/** Advanced constructor.
         */
-        Exception(int _type, const string& _description, const string& _source, const char* _tile, const char* _file, long _line);
+        Exception(int _type, string&& _description, string&& _source, const char* _tile, const char* _file, long _line);
+		Exception(int _type, string&&_description, const char* _tile, const char* _file, long _line);
+
+		Exception(int _type, const string& _description, const string& _source, const char* _tile, const char* _file, long _line);
 		Exception(int _type, const string& _description, const char* _tile, const char* _file, long _line);
+
 		long line_;
 		int type_;
 		string title_;
