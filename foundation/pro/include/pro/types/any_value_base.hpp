@@ -34,7 +34,10 @@ namespace pro
 		_MACRO(DataStream, pro::AnyType::Type_Stream)
 
 
-
+	/**
+	* This macro decalres various types constructor
+	*
+	*/
 #define ANY_TYPE_BIND_TMPLT(_type) \
 	AnyValue(_type v) {\
 		assign(v); \
