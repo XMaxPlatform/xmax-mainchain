@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_write_col) {
 		bsoncxx::document::value doc_value = builder
 			<< "name" << "doc01"
 			<< "desc" << "doc01 desc details"
-			<< "tokens:" << 123456
+			<< "tokens" << 123456
 			<< bsoncxx::builder::stream::finalize;
 
 		bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
@@ -126,11 +126,28 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_write_col) {
 		BOOST_CHECK(false);
 	}
 
-	BOOST_CHECK(true);
-
-	
+	BOOST_CHECK(true);	
 
 }
+
+BOOST_AUTO_TEST_CASE(test_mongo_db_read_col) {
+	try
+	{
+		CONNECT_TO_TEST_COLLECTION(col)
+		
+		boost::optional<bsoncxx::document::value> op_result = col.find_one({});
+		BOOST_ASSERT(op_result);
+		int amount = op_result->view()["tokens"].get_int32();;
+		BOOST_CHECK(amount == 123456);
+	}
+	catch (const mongocxx::exception& e)
+	{
+
+		BOOST_CHECK(false);
+	}
+}
+
+
 BOOST_AUTO_TEST_CASE(test_mongo_db_drop_col) {
 	try
 	{
