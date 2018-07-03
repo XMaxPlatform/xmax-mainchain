@@ -15,7 +15,7 @@ namespace pro
 	static string LogFileName;// = "home:game.log";
 	static const string string_log = "log: ";
 	static const string string_warning = "warning: ";
-	static const string string_error = "error:";
+	static const string string_error = "error: ";
 
 
 	void LogMessage(loglevel level, const string& msg)

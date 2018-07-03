@@ -36,7 +36,7 @@ namespace pro
 
 }
 
-#define EXCEPT_LOG_ERROR(desc) PRO_EXCEPT_WITH_DESC(AssertException, desc);
+#define EXCEPT_LOG_ERROR(desc) PRO_EXCEPT_WITH_DESC(pro::AssertException, desc);
 
 
 #define WarnSprintf(fmt, ...) pro::LogMessage(pro::loglevel(pro::loglevel::Warnning), pro::utils::Sprintf(fmt, __VA_ARGS__))
