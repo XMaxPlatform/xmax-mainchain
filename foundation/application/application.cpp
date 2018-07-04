@@ -100,6 +100,7 @@ namespace xmaxapp
 
 		//LoadCfgOptions(option_vars);
 								
+
 		//options::store(options::parse_config_file<char>(config_file_name.make_preferred().string().c_str(),
 		//	cfg_options, true), option_vars);
 
@@ -153,6 +154,11 @@ namespace xmaxapp
 	void Application::CreateDefaultCfgFile()
 	{
 		assert(cfg_file_path_.has_filename());
+
+		fs::path parent_path = cfg_file_path_.parent_path();
+		if (!fs::exists(parent_path)) {
+			fs::create_directories(parent_path);
+		}	
 	}
 
 
