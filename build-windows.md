@@ -16,7 +16,7 @@
 <a name="prerequisites"></name>
 # Prerequisites 
 
-* **Visual Studio 15 2017** Win64 with Visual C++ 2017 15 compiler and tools
+* **Visual Studio 15 2017**(Minimal detail version:**15.7.4**) Win64 with Visual C++ 2017 15 compiler and tools
 * **CMake 3.11.0** or newer
 * **Boost 1.67.0**
 
