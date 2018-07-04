@@ -51,10 +51,10 @@ namespace xmax
 			app.Loop();
 		}
 		catch (bpo::error& e) {
-			ErrorSprintf("Found boost program_option error:%s", e.what());
+			WarnSprintf("Found boost program_option error:%s", e.what());
 		}
 		catch (std::exception& e) {
-			ErrorSprintf("Catch exception:%s", e.what());
+			WarnSprintf("Catch exception:%s", e.what());
 		}		
 		
 	}

@@ -37,12 +37,12 @@ namespace xmaxapp
 			}
 			else
 			{
-				WarnSprintf("Unknown plugin:'%s'.", plugin_name.c_str());
+				Warnf("Unknown plugin:'${name}'.", ("name", plugin_name));
 			}
 		}
 		else
 		{
-			WarnSprintf("Plugin:'%s' had in the init list.", plugin_name.c_str());
+			Warnf("Plugin:'${name}' had in the init list.", ("name", plugin_name));
 		}
 
 	}

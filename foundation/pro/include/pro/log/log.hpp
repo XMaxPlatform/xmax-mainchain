@@ -26,8 +26,6 @@ namespace pro
 	*/
 	void LogMessage(loglevel level, const string& msg);
 
-
-	void _log_message(loglevel level, const string& format, const AnyObject& args);
 	/**
 	* save the log to a file
 	* @param[in]	stirng	 name of a file

@@ -52,7 +52,7 @@ namespace xmaxapp
 		}
 		else
 		{
-			WarnSprintf("plugin '%s' had already regist.", _name);
+			Warnf( "plugin '${name}' had already regist.", ("name", _name) );
 			return false;
 		}
 	}
