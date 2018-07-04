@@ -36,16 +36,27 @@ namespace xmax
 		// TODO : Add ContractUtilPlugin
 		//ContractUtilPlugin::RegistSelf();
 
-		Application app;
-		app.SetDefaultConfigFilePath(fs::current_path() / "config" / "config.ini");
+		try {
 
-		RegisterPlugins();
-		InitPlugins(app);
+			Application app;
+			app.SetDefaultConfigFilePath(fs::current_path() / "config" / "config.ini");
+
+			RegisterPlugins();
+			InitPlugins(app);
+
+			app.Initialize(argc, argv);
+			app.Startup();
+
+			ilog("Xmax app start.");
+			app.Loop();
+		}
+		catch (bpo::error& e) {
+			ierror("Found boost program_option error:%s", e.what());
+		}
+		catch (std::exception& e) {
+			ierror("Catch exception:%s", e.what());
+		}		
 		
-		app.Initialize(argc, argv);
-		app.Startup();
-		Logf("Xmax app start.");
-		app.Loop();
 	}
 }
 
@@ -53,5 +64,6 @@ namespace xmax
 int main(int argc, char** argv)
 {
 	xmax::Run(argc, argv);
+
 	return 0;
 }
