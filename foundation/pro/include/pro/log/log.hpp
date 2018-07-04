@@ -4,21 +4,12 @@
 */
 
 #pragma once
-#include <pro/types/generictypes.hpp>
+#include <pro/log/log_base.hpp>
 #include <pro/utils/string_utils.hpp>
 #include <pro/exception/exceptions.hpp>
 
 namespace pro
 {
-	/**
-	* log level enum
-	*/
-	enum loglevel : int
-	{
-		Info = 0,
-		Warnning = 100,
-		Error = 200,
-	};
 	/**
 	* output a log to console
 	* @param[in]	loglevel	level of log
