@@ -47,7 +47,7 @@ namespace pro
 {\
 	const pro::string desc = pro::utils::Sprintf(fmt, __VA_ARGS__);\
 	pro::LogMessage(pro::loglevel(pro::loglevel::Error), desc);\
-	EXCEPT_LOG_ERROR(desc); \\
+	EXCEPT_LOG_ERROR(desc); \
 }
 
 
