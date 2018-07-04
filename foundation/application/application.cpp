@@ -3,7 +3,10 @@
 *  @copyright defined in xmax/LICENSE
 */
 #include <pro/log/log.hpp>
+#include <boost/program_options.hpp>
 #include "application.hpp"
+
+namespace bpo = boost::program_options;
 
 namespace xmaxapp
 {
@@ -34,19 +37,19 @@ namespace xmaxapp
 			}
 			else
 			{
-				iwarnning("Unknown plugin:'%s'.", plugin_name.c_str());
+				WarnSprintf("Unknown plugin:'%s'.", plugin_name.c_str());
 			}
 		}
 		else
 		{
-			iwarnning("Plugin:'%s' had in the init list.", plugin_name.c_str());
+			WarnSprintf("Plugin:'%s' had in the init list.", plugin_name.c_str());
 		}
 
 	}
 
-	void Application::Initialize(int argc, char** argv)
+	//--------------------------------------------------
+	void Application::SetupApplicationOptions()
 	{
-
 		for (auto& item : pluginmap_)
 		{
 			if (PluginFactory* factory = PluginFactory::GetPluginFactory(item.first))
@@ -73,12 +76,14 @@ namespace xmaxapp
 		app_options_.add(app_cfg_opts);
 		app_options_.add(app_cmd_opts);
 
-
 		app_cfg_opts.add_options()
 			("plugin", options::value< std::vector<string> >()->composing(), "Plugin(s) to startup.");
+	}
 
+
+	void Application::Initialize(int argc, char** argv)
+	{
 		// create plugin objects.
-
 		for (auto& item : pluginmap_)
 		{
 			if (PluginFace* plugin = PluginFactory::NewPlugin(item.first, this))
@@ -88,20 +93,26 @@ namespace xmaxapp
 			}
 		}
 
+		SetupApplicationOptions();
+
 		// parse options.
 		variables_map option_vars;
+
+		//LoadCfgOptions(option_vars);
+								
 
 		//options::store(options::parse_config_file<char>(config_file_name.make_preferred().string().c_str(),
 		//	cfg_options, true), option_vars);
 
 		options::store(options::parse_command_line(argc, argv, app_options_), option_vars);
 
+		bpo::notify(option_vars);
+
 		// 
 		for (auto item : initialized_plugins_)
 		{
-
 			item->Initialize(option_vars);
-			ilog("Plugin '%s' initialize. ", item->GetName().c_str());
+			Logf("Plugin '${name}' initialize. ", ("name", item->GetName()));
 		}
 	}
 
@@ -114,7 +125,7 @@ namespace xmaxapp
 
 				item->Startup();
 				startup_plugins_.push_back(item);
-				ilog("Plugin '%s' startup. ", item->GetName().c_str());
+				Logf("Plugin '${name}' startup. ", ("name", item->GetName()) );
 			}
 		}
 	}
@@ -125,7 +136,8 @@ namespace xmaxapp
 		{
 			if (item)
 			{
-				ilog("Plugin '%s' shutdown. ", item->GetName().c_str());
+				Logf("Plugin '${name}' shutdown. ", ("name", item->GetName()) );
+
 				item->Shutdown();
 			}
 		}
@@ -136,7 +148,32 @@ namespace xmaxapp
 		service_face_->stop();
 	}
 
-	void Application::Loop()
+
+
+	//--------------------------------------------------
+	void Application::CreateDefaultCfgFile()
+	{
+		assert(cfg_file_path_.has_filename());
+
+		fs::path parent_path = cfg_file_path_.parent_path();
+		if (!fs::exists(parent_path)) {
+			fs::create_directories(parent_path);
+		}	
+	}
+
+
+	//--------------------------------------------------
+	void Application::LoadCfgOptions(bpo::variables_map& var_map)
+	{		
+		if (!fs::exists(cfg_file_path_))
+		{		
+			CreateDefaultCfgFile();
+		}
+
+		bpo::store(bpo::parse_config_file<char>(cfg_file_path_.make_preferred().string().c_str(), cfg_options_, true), var_map);
+	}
+
+void Application::Loop()
 	{
 		std::shared_ptr<boost::asio::signal_set> sigint_set(new boost::asio::signal_set(*service_face_, SIGINT));
 		sigint_set->async_wait([sigint_set, this](const boost::system::error_code& err, int num)

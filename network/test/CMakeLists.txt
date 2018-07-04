@@ -2,6 +2,8 @@ set(current_lib_name network_test)
 
 file (GLOB SOURCE_FILES "*.cpp")
 file (GLOB HEADERS "include/*.hpp")
+file (GLOB PROTO_SOURCE_FILES "${PROTO_BUILD_DIR}/*.cc")
+file (GLOB PROTO_HEADERS_FILES "${PROTO_BUILD_DIR}/*.h")
 
 source_group( 
 	src
@@ -19,16 +21,18 @@ source_group(
 source_group(
     protos
     FILES
-    ${PROTO_COMPILE_TARGETS_SOURCES}
-    ${PROTO_COMPILE_TARGETS_HEADERS}
+    #${PROTO_COMPILE_TARGETS_SOURCES}
+    #${PROTO_COMPILE_TARGETS_HEADERS}
+    ${PROTO_SOURCE_FILES}
+    ${PROTO_HEADERS_FILES}
 )
 
 message(STATUS "PROTO_COMPILE_TARGETS_SOURCES:${PROTO_COMPILE_TARGETS_SOURCES}")
 add_executable( ${current_lib_name} 
     ${SOURCE_FILES} 
     ${HEADERS} 
-    ${PROTO_COMPILE_TARGETS_SOURCES} 
-    ${PROTO_COMPILE_TARGETS_HEADERS}
+    ${PROTO_SOURCE_FILES} 
+    ${PROTO_HEADERS_FILES}
     )
 
 

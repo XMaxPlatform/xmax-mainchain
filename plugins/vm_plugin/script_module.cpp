@@ -12,6 +12,8 @@ namespace xmax {
 			:isolate_(nullptr)
 			,current_code_()
 			,main_foo_()
+			,instruction_count_(0)
+			,last_intruction_()
 		{
 
 		}
@@ -23,13 +25,19 @@ namespace xmax {
 				Discard();
 			}
 		}
-		v8::Object* test(v8::internal::Arguments& args,v8::Isolate* iso)
-		{
-			return nullptr;
+		v8::Object* CallBackCheck(int args_length, v8::Object** args_object, v8::Isolate* isolate) {
+		
+			void* arg1 = *(reinterpret_cast<v8::Object**>(reinterpret_cast<intptr_t>(args_object) - 1 * sizeof(int)));
+
+
+			int value = (int)arg1;
+			ScriptMoudle::GetInstance().StoreInstrunction(value);
+			return args_object[0];
 		}
+
 		void ScriptMoudle::Init()
 		{
-			V8_AddIntrinsicFoo("CallBackTest", (void*)test, 0, 1);
+			V8_AddIntrinsicFoo("CallBackCheck", (void*)CallBackCheck, 2, 1);
 
 			V8::InitializeICUDefaultLocation("");
 			V8::InitializeExternalStartupData("");
@@ -42,10 +50,15 @@ namespace xmax {
 			isolate_ = Isolate::New(create_params);
 		}
 
-		void ScriptMoudle::DoworkInContext(const v8::HandleScope& scope, const v8::Local<ObjectTemplate>& global, const v8::Local<Context>& context, const v8::Context::Scope& ctxScope)
+		v8::Handle<v8::Value> ScriptMoudle::DoworkInContext(const v8::HandleScope& scope, const v8::Local<ObjectTemplate>& global, const v8::Local<Context>& context, const v8::Context::Scope& ctxScope)
 		{
+			V8_ParseWithPlugin();
 			CompileJsCode(isolate_, context, current_code_.c_str() );
-			CallJsFoo(isolate_, context, main_foo_.c_str() , 0, NULL);
+			CleanInstrunction();
+			v8::Handle<v8::Value> result =  CallJsFoo(isolate_, context, main_foo_.c_str() , 0, NULL);
+
+			//int test = result->Int32Value();
+			return result;
 		}
 
 		void ScriptMoudle::AstBlockCallbackInsert()
@@ -53,12 +66,12 @@ namespace xmax {
 
 		}
 
-		void ScriptMoudle::Call(const std::string& code, const std::string& fooName)
+		v8::Handle<v8::Value> ScriptMoudle::Call(const std::string& code, const std::string& fooName)
 		{
 			current_code_ = code;
 			main_foo_ = fooName;
 			namespace  ph = std::placeholders;
-			EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
+			return EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
 		}
 
 		void ScriptMoudle::Discard()
@@ -68,6 +81,20 @@ namespace xmax {
 			v8::V8::Dispose();
 			v8::V8::ShutdownPlatform();
 		}
+
+		void ScriptMoudle::StoreInstrunction(int ins)
+		{
+			instruction_count_++;
+			last_intruction_.push_back(ins);
+		}
+
+		void ScriptMoudle::CleanInstrunction()
+		{
+			instruction_count_ = 0;
+			last_intruction_.clear();
+		}
+
+
 
 	}
 }

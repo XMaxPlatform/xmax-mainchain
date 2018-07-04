@@ -19,6 +19,34 @@ public:
 	 XMX_Connection(const std::string& endpoint);
 
 	 XMX_Connection(const std::shared_ptr<tcp::socket>& s);
+	 /**
+	 * is network connectd and not connecting
+	 */
+	 bool Connected();
+	 /**
+	 * is network connectd and not syncing
+	 */
+	 bool Current();
+	 /**
+	 * reset state
+	 */
+	 void Reset();
+	 /**
+	 * close connection
+	 */
+	 void Close();
+	 /**
+	 * send handshake msg to sync states between peers
+	 */
+	 void SendHandShake();
+	 /**
+	 * send a block to sync the peer
+	 */
+	 void SendSignedBlock();
+	 /**
+	 * send blocks to sync the peer
+	 */
+	 void SendSignedBlockList();
 
 protected:
 private:

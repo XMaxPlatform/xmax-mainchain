@@ -4,7 +4,9 @@
 */
 #pragma once
 #include <map>
+#include <filesystem>
 #include <pluginface.hpp>
+
 
 //namespace boost {
 //	namespace asio {
@@ -18,8 +20,21 @@
 //	} // namespace asio
 //} // namespace boost
 
+
+
 namespace xmaxapp
 {
+#if _Project_Compiler == _Compiler_MSVC
+#	if _MSC_VER < 1914
+	namespace fs = std::experimental::filesystem;
+#	else
+	namespace fs = std::filesystem;
+#	endif
+#else
+	namespace fs = std::filesystem;
+#endif
+
+	namespace bpo = boost::program_options;
 	/**
 	*  derive class of ApplicationBase
 	*  implement the concrete Initialization
@@ -61,6 +76,16 @@ namespace xmaxapp
 		*/
 		void Quit();
 
+
+		//==============Utility methods ============
+		void SetDefaultConfigFilePath(const fs::path& path) { cfg_file_path_ = path; }
+	
+
+	private:
+		void SetupApplicationOptions();
+		void LoadCfgOptions(bpo::variables_map& var_map);
+		void CreateDefaultCfgFile();
+
 	private:
 
 		std::map<string, std::unique_ptr<PluginFace>>	pluginmap_;
@@ -69,6 +94,8 @@ namespace xmaxapp
 
 		OptionsDesc     app_options_;
 		OptionsDesc     cfg_options_;
+
+		fs::path cfg_file_path_;
 
 		std::unique_ptr<AppService>  service_face_;
 	};

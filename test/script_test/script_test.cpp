@@ -12,25 +12,9 @@ using namespace xmax;
 using namespace boost::unit_test;
 
 
-//#define Test_Script
-
-class SingletonImpl : public Singleton<SingletonImpl>
-{};
+#define Test_Script
 
 
-BOOST_AUTO_TEST_SUITE (blockchain_plugin_test)
-
-BOOST_AUTO_TEST_CASE(bpt_1)
-{
-	BlockChainPlugin::RegistSelf();
-	bool bret = BlockChainPlugin::RegistSelf();
-	BOOST_CHECK(bret == false);
-
-
-	//SingletonImpl* ps = new SingletonImpl();
-}
-
-BOOST_AUTO_TEST_SUITE_END()
 
 #ifdef Test_Script
 BOOST_AUTO_TEST_SUITE(vm_plugin_test)
@@ -38,6 +22,11 @@ BOOST_AUTO_TEST_SUITE(vm_plugin_test)
 BOOST_AUTO_TEST_CASE(bpt_1)
 {
 	xmax::scriptv8::ScriptMoudle::GetInstance().Init();
+	v8::Local<v8::Value> result = xmax::scriptv8::ScriptMoudle::GetInstance().Call("function test(){return 3;}", "test");
+	
+	//v8::String::Utf8Value utf8(xmax::scriptv8::ScriptMoudle::GetInstance().GetIsolate(), result);
+
+	//printf("%s\n", *utf8);
 	xmax::scriptv8::ScriptMoudle::GetInstance().Discard();
 }
 

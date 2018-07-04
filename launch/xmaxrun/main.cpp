@@ -12,31 +12,51 @@
 
 
 namespace xmax
-{
-
-	
+{	
 	using namespace xmaxapp;
-	void Run(int argc, char** argv)
-	{
+
+
+	void RegisterPlugins() {
 		BlockChainPlugin::RegistSelf();
 		BlockBuilderPlugin::RegistSelf();
 		MongoDBPlugin::RegistSelf();
 		XmaxNetPlugin::RegistSelf();
-		// TODO : Add ContractUtilPlugin
-		//ContractUtilPlugin::RegistSelf();
+	}
 
-		Application app;
-
+	void InitPlugins(Application& app) {
 		app.PluginToInit("BlockChainPlugin");
 		app.PluginToInit("BlockBuilderPlugin");
 		app.PluginToInit("MongoDBPlugin");
 		app.PluginToInit("XmaxNetPlugin");
+	}
 
-		app.Initialize(argc, argv);
-		app.Startup();
+	void Run(int argc, char** argv)
+	{
+		
+		// TODO : Add ContractUtilPlugin
+		//ContractUtilPlugin::RegistSelf();
 
-		ilog("Xmax app start.");
-		app.Loop();
+		try {
+
+			Application app;
+			app.SetDefaultConfigFilePath(fs::current_path() / "config" / "config.ini");
+
+			RegisterPlugins();
+			InitPlugins(app);
+
+			app.Initialize(argc, argv);
+			app.Startup();
+
+			ilog("Xmax app start.");
+			app.Loop();
+		}
+		catch (bpo::error& e) {
+			ierror("Found boost program_option error:%s", e.what());
+		}
+		catch (std::exception& e) {
+			ierror("Catch exception:%s", e.what());
+		}		
+		
 	}
 }
 
@@ -44,5 +64,6 @@ namespace xmax
 int main(int argc, char** argv)
 {
 	xmax::Run(argc, argv);
+
 	return 0;
 }

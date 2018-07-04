@@ -61,10 +61,11 @@
 #endif  // V8_OS_WIN
 
 
-
+V8_EXPORT void V8_ParseWithOutPlugin();
 V8_EXPORT void V8_ParseWithPlugin();
 
 V8_EXPORT void V8_AddIntrinsicFoo(const char* name, void* fooaddr, int paramsize, int resultsize);
+V8_EXPORT int  GetCount();
 
 /**
  * The v8 JavaScript engine.

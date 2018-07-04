@@ -1,29 +1,37 @@
 # Building XMax Platform on Windows 10
 
+# Table of contents
+1. [Prerequisites](#prerequisites)
+2. [Quick Guide](#quickguide)
+3. [Download & install CMake](#cmake)
+4. [Download & build Boost](#boost)
+5. [Generate Visual Studio Solution with CMake](#gensln)
+6. [Building XMax Platform with Visual Studio 15 2017](#build)
+7. [Build MongoDB](#buildmongodb)
+    1. [Build mongo-c-driver](#buildmongodbcdriver)
+    2. [Build mongo-cxx-driver](#buildmongodbcxxdriver)
+    3. [Use MongoDB in the xmax-mainchain project](#buildmongodbproject)
+    4. [Install and run MongoDB service in Windows](#buildmongodbserver)
+
+<a name="prerequisites"></name>
 # Prerequisites 
 
-* **Visual Studio 15 2017** Win64 with Visual C++ 2017 15 compiler and tools
+* **Visual Studio 15 2017**(Minimal detail version:**15.7.4**) Win64 with Visual C++ 2017 15 compiler and tools
 * **CMake 3.11.0** or newer
 * **Boost 1.67.0**
 
+<a name="quickguide"></name>
 # Quick Guide
 
 Open command prompt enter the following command to generate Visual Studio Solution
 
-    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" "[source dir]"    
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" -DCMAKE_PREFIX_PATH="[mongo_cxx_root];[mongo_c_root]" "[source dir]"    
 e.g.
 
-    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" "../"
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" -DCMAKE_PREFIX_PATH="c:\mongo-cxx-driver;c:\mongo-c-driver" "../"
 
 Open "Xmax-mainchain.sln" with Visual Studio 2017 and build.
 
-# Detailed Guide
-
-1. [Download & install CMake](#cmake)
-1. [Download & build Boost](#boost)
-1. [Generate Visual Studio Solution with CMake](#gensln)
-1. [Building XMax Platform with Visual Studio 15 2017](#build)
-1. [Build MongoDB](#buildmongodb)
 
 # Download & install CMake
 <a name="cmake"></a>
@@ -32,7 +40,9 @@ Get latest CMake Windows win64-x64 at https://cmake.org/download/ .
 
 Run the installer or unzip to install.
 
-If you choose to download the installer(recommanded). Be sure to check "Add CMake to the system PATH" option while installing so you can use CMake via command prompt. You can also add it to the system PATH manually later, same as while you choose to install via zip.
+If you choose to download the installer(recommanded). 
+Be sure to check "Add CMake to the system PATH" option while installing so you can use CMake via command prompt. 
+You can also add it to the system PATH manually later, same as while you choose to install via zip.
 
 Note that the directory needs to add to PATH is "bin" which is under the root directory. e.g.
 
@@ -63,7 +73,7 @@ Open command prompt from unziped directory enter the following command:
 
     .\bootstrap.bat --prefix="D:\boost_1_67_0"
 
-Wait a second for it to finish, the enter the following command to build:
+Wait a second for it to finish, then enter the following command to build:
 
     .\b2 --build-type=complete toolset=msvc-14.1 address-model=64 --build-dir=.x64 --stagedir=stage_x64 --prefix="D:\boost_1_67_0" install
 
@@ -74,10 +84,10 @@ Open command prompt from the directory you wish to store the generated solution 
 
 Enter the following command:
 
-    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" "[source dir]"    
+    cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="[boost dir]" -DCMAKE_PREFIX_PATH="[mongo_cxx_root];[mongo_c_root]" "[source dir]"     
 e.g.
 
-    E:\XMaxPlatform\sln>cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" "../xmax-mainchain"
+    E:\XMaxPlatform\sln>cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT="D:\boost_1_67_0" -DCMAKE_PREFIX_PATH="c:\mongo-cxx-driver;c:\mongo-c-driver" "../xmax-mainchain"
 
 In the example above, "sln" is the directory where you store the generated solution files;  "xmax-mainchain" is the source directory; "D:\boost_1_67_0" is the boost library directory.
 
@@ -100,39 +110,29 @@ Simply open generated solution file "Xmax-mainchain.sln" with Visual Studio 15 2
 <a name="buildmongodb"></a>
 # Build MongoDB 
 
+<a name="buildmongodbcdriver"></a>
 ## 1. Build mongo-c-driver
-### 1.1 Build libbson in mongo-c-driver
+
 Copy `mongo-c-driver` from `libraries` directory to anywhere you want to compile mongo-c-driver. Then execute:
 ```bash
-cd mongo-c-driver/src/libbson
-cmake -G "Visual Studio 15 2017 Win64" "-DCMAKE_INSTALL_PREFIX=C:\mongo-c-driver" "-DCMAKE_BUILD_TYPE=Release"
-```
-`C:\mongo-c-driver` is default build location and you can change to whatever you want.
-Open `Developer Command Prompt for 2017` and goto `mongo-c-driver/src/libbson` then execute:
-```bash
-msbuild.exe /p:Configuration=Release ALL_BUILD.vcxproj
-msbuild.exe /p:Configuration=Release INSTALL.vcxproj
-```
-
-### 1.2 Build mongo-c-driver
-```bash
 cd mongo-c-driver
-cmake -G "Visual Studio 15 2017 Win64" "-DENABLE_SSL=WINDOWS" "-DENABLE_SASL=SSPI" "-DCMAKE_INSTALL_PREFIX=C:\mongo-c-driver" "-DCMAKE_PREFIX_PATH=C:\mongo-c-driver" "-DCMAKE_BUILD_TYPE=Release"
+mkdir build
+cd build
+cmake -G "Visual Studio 15 2017 Win64" "-DCMAKE_INSTALL_PREFIX=c:\mongo-c-driver" "-DCMAKE_PREFIX_PATH=c:\mongo-c-driver" "-DCMAKE_BUILD_TYPE=Release" "-DENABLE_STATIC=ON" ../
 ```
-Make sure the build directory `C:\mongo-c-driver` is same as previous libbson build directory.
-
-Open `Developer Command Prompt for 2017` and goto the `mongo-c-drive` directory then execute:
-
+`C:\mongo-c-driver` is default build location and you can change to wherever you want.
+Open `Developer Command Prompt for 2017` and goto `mongo-c-driver/build` then execute:
 ```bash
 msbuild.exe /p:Configuration=Release ALL_BUILD.vcxproj
 msbuild.exe /p:Configuration=Release INSTALL.vcxproj
 ```
 
+<a name="buildmongodbcxxdriver"></a>
 ## 2. Build mongo-cxx-driver
-Copy `mongo-cxx-driver` from `libraries` directory to anywhere you want to compile mongo-c-driver. Then execute:
+Copy `mongo-cxx-driver` from `libraries` directory to anywhere you want. Then execute:
 ```bash
 cd mongo-cxx-driver/build
-cmake -G "Visual Studio 15 2017 Win64"  -DCMAKE_INSTALL_PREFIX=C:\mongo-cxx-driver -DCMAKE_PREFIX_PATH=c:\mongo-c-driver -DBOOST_ROOT=d:\boost_1_67_0 ..
+cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=C:\mongo-cxx-driver -DCMAKE_PREFIX_PATH=c:\mongo-c-driver -DBOOST_ROOT=d:\boost_1_67_0 -DBUILD_SHARED_LIBS=OFF -DBSONCXX_POLY_USE_BOOST=1 -DCMAKE_BUILD_TYPE=Release ../
 ```
 You should fill the above directories paths according your situation.
 The `C:\mongo-cxx-driver` directory is where you want to install the mongo-cxx-driver. 
@@ -145,12 +145,11 @@ Open `Developer Command Prompt for 2017` and goto `mongo-cxx-driver/build` then 
 msbuild.exe ALL_BUILD.vcxproj
 msbuild.exe INSTALL.vcxproj
 ```
-
+<a name="buildmongodbproject"></a>
 ## 3. Use MongoDB in the xmax-mainchain project
-In order to use the MongoDB libraries, you need pass or set two CMake variables.
+In order to use the MongoDB libraries, you need to set `mongo-c-driver` and `mongo-cxx-driver` directories in the `CMAKE_PREFIX_PATH` varaible. For example:
 ```bash
--DMONGO_DB_C_ROOT=c:/mongo-c-driver
--DMONGO_DB_CXX_ROOT=c:/mongo-cxx-driver
+-DCMAKE_PREFIX_PATH="c:/mongo-c-driver;c:/mongo-cxx-driver"
 ```
 The above two path values are same as building location for `mongo-c-driver` and `mongo-cxx-driver`.
 Then you can add `find_package` command to find the necessary MongoDB environment.
@@ -167,10 +166,18 @@ target_link_libraries( target_name
 	${MongoDB_LIBRARIES})
 ```
 
-## 4. Run MongoDB in Windows
+<a name="buildmongodbserver"></a>
+## 4. Install and run MongoDB service in Windows
+
+### 4.1 Install the MongoDB server
 Download and install MongoDB server for Windows which could be found at it's offcial website: `https://www.mongodb.com/download-center`.
 
-Then find a custom data directory and start the service, for example:
+If the installation fails using the `msi` installation package, you could try it again without checking the `Install Compass` option.
+
+### 4.2 Run the MongoDB server
+After successfual installation, you will find the MongoDb program directory.
+
+Then find a custom data directory(such as `d:\mongo_db\data`) and start the service, for example:
 ```bash
 "D:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --dbpath d:\mongo_db\data
 ```

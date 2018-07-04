@@ -5,7 +5,7 @@
 
 namespace xmax {
 	namespace scriptv8 {
-		void EnterJsContext(Isolate* pIsolate, DoWorkInJsCtx dowork)
+		v8::Handle<v8::Value> EnterJsContext(Isolate* pIsolate, DoWorkInJsCtx dowork)
 		{
 			HandleScope current_handle_scope(pIsolate);
 
@@ -16,7 +16,7 @@ namespace xmax {
 			Local<Context> context = Context::New(pIsolate, NULL, global);
 			Context::Scope context_scope(context);
 
-			dowork(current_handle_scope, global, context, context_scope);
+			return dowork(current_handle_scope, global, context, context_scope);
 		}
 
 

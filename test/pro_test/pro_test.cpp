@@ -4,6 +4,9 @@
 #include <pro/utils/singleton.hpp>
 #include <pro/types/time.hpp>
 #include <pro/types/any_value.hpp>
+#include <pro/types/any_object.hpp>
+#include <pro/utils/string_utils.hpp>
+#include <pro/scode/shortname.hpp>
 
 using namespace pro;
 
@@ -34,8 +37,6 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 	BOOST_CHECK(s1.GetA() == 12345);
 }
 
-BOOST_AUTO_TEST_SUITE(pro_time_test)
-
 BOOST_AUTO_TEST_CASE(pro_time_1)
 {
 	TimeMilliseconds milli(2500ll);
@@ -56,21 +57,78 @@ BOOST_AUTO_TEST_CASE(pro_time_1)
 	BOOST_CHECK(milli3.GetValue() == 2ll * 1000ll);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-
-
-BOOST_AUTO_TEST_SUITE(any_value)
-
 BOOST_AUTO_TEST_CASE(any_value)
 {
-	pro::AnyVaule anyi32 = (int32_t)53;
-	pro::AnyVaule anyi64 = (int64_t)64;
-	pro::AnyVaule anystr = "test string";
+	const char tstring[] = "test string";
+	pro::AnyValue anyi32 = (int32_t)53;
+	pro::AnyValue anyi64 = (int64_t)64;
+	pro::AnyValue anystr = tstring;
+	pro::AnyValue anystr2 = anystr;
+	int32_t c = anyi32.CastTo<int32_t>(); 
+	BOOST_CHECK(c == 53);
+	std::string ss = anystr2.CastTo<string>();
+
+	BOOST_CHECK(ss == tstring);
+
 
 
 }
 
-BOOST_AUTO_TEST_SUITE_END()
+bool checkformat(const string& checkstring, const string& fmt, const AnyObject& args)
+{
+	string fstring = utils::StringFormat(fmt, args);
 
+	return (fstring == checkstring);
+}
+
+
+BOOST_AUTO_TEST_CASE(string_format)
+{
+	BOOST_CHECK(checkformat("hello", "hello", AnyObject()));
+
+	BOOST_CHECK(checkformat("hello lily", "hello ${name}", PACK_ARGS( ("name", "lily") )));
+}
+
+bool checkname(string real, pro::ShortName name)
+{
+	string sname = name.ToString();
+
+	return sname == real;
+}
+
+BOOST_AUTO_TEST_CASE(scode)
+{
+	BOOST_CHECK(checkname("xmax", SN(xmax)));
+	BOOST_CHECK(checkname("567890@", SN(567890@)));
+	BOOST_CHECK(checkname("m190@xm.c", SN(m190@xm.c)));
+
+	// check over name.
+	BOOST_CHECK(checkname("m19adfgge15", SN(m19adfgge15640@xm1345678275.c)));
+
+
+	// check LegalName
+	BOOST_CHECK(ShortName::LegalName("xmax") == true);
+	BOOST_CHECK(ShortName::LegalName("567890@") == true);
+	BOOST_CHECK(ShortName::LegalName("xmax$%") == false);
+
+	BOOST_CHECK(ShortName::LegalName("m19adfgge15640@xm1345678275.c") == false);
+
+	// check GlyphBitLength
+	for (int i = 1; i < SCODE_REGION_0_SIZE; ++i)
+	{
+		BOOST_CHECK(ShortName::GlyphBitLength(SCODE_REGION_0[i]) == SCODE_R_0_BITS);
+	}
+	for (int i = 1; i < SCODE_REGION_1_SIZE; ++i)
+	{
+		BOOST_CHECK(ShortName::GlyphBitLength(SCODE_REGION_1[i]) == SCODE_R_1_BITS);
+	}
+	BOOST_CHECK(ShortName::GlyphBitLength('#') == 0);
+	BOOST_CHECK(ShortName::GlyphBitLength('(') == 0);
+
+	BOOST_CHECK(ShortName::NameLengthWithBit("xmax") == (SCODE_R_0_BITS * 4));
+	BOOST_CHECK(ShortName::NameLengthWithBit("124.@") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
+	BOOST_CHECK(ShortName::NameLengthWithBit("1.@mx") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
+	BOOST_CHECK(ShortName::NameLengthWithBit("1.###@mx") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
+}
 
 BOOST_AUTO_TEST_SUITE_END()
