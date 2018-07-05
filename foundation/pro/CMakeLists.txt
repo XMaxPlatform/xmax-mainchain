@@ -4,6 +4,40 @@ set(current_lib_name pro)
 set(H_FILES)
 set(S_FILES)
 
+function(list_root ref_hpps ref_cpps hpps cpps)
+
+	if( WIN32 )
+		set(hscope "include")
+		set(sscope "${current_lib_name}")
+	else()
+		set(hscope "include")
+		set(sscope "${current_lib_name}")
+	endif()
+
+
+	file(GLOB hfiles "include/${current_lib_name}/*.hpp")
+	file(GLOB sfiles "*.cpp")
+
+	source_group( 
+		${hscope}
+		FILES 
+		${hfiles}
+	)
+	
+	source_group( 
+		${sscope}
+		FILES 
+		${sfiles}
+	)
+	set(newhpp "${hpps};${hfiles}")
+	set(${ref_hpps} ${newhpp} PARENT_SCOPE)
+
+	set(newcpp "${cpps};${sfiles}")
+	set(${ref_cpps} ${newcpp} PARENT_SCOPE)
+
+endfunction(list_root)
+
+
 function(list_source ref_hpps ref_cpps hpps cpps code_scope)
 
 	if( WIN32 )
@@ -37,7 +71,7 @@ function(list_source ref_hpps ref_cpps hpps cpps code_scope)
 
 endfunction(list_source)
 
-
+list_root(H_FILES S_FILES "${H_FILES}" "${S_FILES}")
 list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" types)
 list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" log)
 list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" utils)
