@@ -53,7 +53,9 @@ namespace xmax {
 		*  async read a message
 		*/
 		void StartReadMsg(std::shared_ptr<XMX_Connection> pConnect);
-
+		/**
+		*  handle various msg
+		*/
 		void HandleMsg();
 
 	private:
