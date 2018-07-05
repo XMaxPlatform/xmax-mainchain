@@ -54,6 +54,8 @@ namespace xmax {
 		*/
 		void StartReadMsg(std::shared_ptr<XMX_Connection> pConnect);
 
+		void HandleMsg();
+
 	private:
 
 		std::unique_ptr<tcp::acceptor>		acceptor_;
@@ -111,6 +113,11 @@ namespace xmax {
 	}
 
 	void XmaxNetPluginImpl::StartReadMsg(std::shared_ptr<XMX_Connection> pConnect)
+	{
+
+	}
+
+	void XmaxNetPluginImpl::HandleMsg()
 	{
 
 	}

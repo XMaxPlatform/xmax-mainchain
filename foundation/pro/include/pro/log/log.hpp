@@ -4,21 +4,12 @@
 */
 
 #pragma once
-#include <pro/types/generictypes.hpp>
+#include <pro/log/log_base.hpp>
 #include <pro/utils/string_utils.hpp>
 #include <pro/exception/exceptions.hpp>
 
 namespace pro
 {
-	/**
-	* log level enum
-	*/
-	enum loglevel : int
-	{
-		Info = 0,
-		Warnning = 100,
-		Error = 200,
-	};
 	/**
 	* output a log to console
 	* @param[in]	loglevel	level of log
@@ -26,8 +17,6 @@ namespace pro
 	*/
 	void LogMessage(loglevel level, const string& msg);
 
-
-	void _log_message(loglevel level, const string& format, const AnyObject& args);
 	/**
 	* save the log to a file
 	* @param[in]	stirng	 name of a file
@@ -47,7 +36,7 @@ namespace pro
 {\
 	const pro::string desc = pro::utils::Sprintf(fmt, __VA_ARGS__);\
 	pro::LogMessage(pro::loglevel(pro::loglevel::Error), desc);\
-	EXCEPT_LOG_ERROR(desc); \\
+	EXCEPT_LOG_ERROR(desc); \
 }
 
 

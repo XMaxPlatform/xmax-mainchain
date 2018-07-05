@@ -70,7 +70,8 @@ BOOST_AUTO_TEST_CASE(any_value)
 
 	BOOST_CHECK(ss == tstring);
 
-
+	pro::AnyValue bValue = true;
+	bool b = bValue.CastTo<bool>();
 
 }
 

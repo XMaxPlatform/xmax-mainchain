@@ -47,14 +47,14 @@ namespace xmax
 			app.Initialize(argc, argv);
 			app.Startup();
 
-			ilog("Xmax app start.");
+			Logf("Xmax app start.");
 			app.Loop();
 		}
 		catch (bpo::error& e) {
-			ierror("Found boost program_option error:%s", e.what());
+			WarnSprintf("Found boost program_option error:%s", e.what());
 		}
 		catch (std::exception& e) {
-			ierror("Catch exception:%s", e.what());
+			WarnSprintf("Catch exception:%s", e.what());
 		}		
 		
 	}
