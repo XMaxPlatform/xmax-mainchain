@@ -32,9 +32,9 @@ namespace xmax {
 		*/
 		void SetEndpoint(const std::string& endpoint);
 
+		void Connect(std::shared_ptr<XMX_Connection> pConnect);
 
-	protected:
-
+		void Connect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator endpointItr);
 		
 		void OnAccept();
 
@@ -120,6 +120,16 @@ namespace xmax {
 	}
 
 	void XmaxNetPluginImpl::HandleMsg()
+	{
+
+	}
+
+	void XmaxNetPluginImpl::Connect(std::shared_ptr<XMX_Connection> pConnect)
+	{
+
+	}
+
+	void XmaxNetPluginImpl::Connect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator endpointItr)
 	{
 
 	}
