@@ -36,6 +36,9 @@ namespace xmax {
 
 		void Connect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator endpointItr);
 		
+		/**
+		* call back of socket accept
+		*/
 		void OnAccept();
 
 		void OnConnect();
