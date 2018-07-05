@@ -8,7 +8,7 @@
 #include <blockbuilder_plugin.hpp>
 #include <mongodb_plugin.hpp>
 #include <xmaxnet_plugin.hpp>
-#include <pro/log/log.hpp>
+#include <pro/protypes.hpp>
 
 
 namespace xmax
@@ -37,7 +37,7 @@ namespace xmax
 		//ContractUtilPlugin::RegistSelf();
 
 		try {
-
+			//PRO_ASSERT(false, "test ${name}", ("name", "xxt"));
 			Application app;
 			app.SetDefaultConfigFilePath(fs::current_path() / "config" / "config.ini");
 

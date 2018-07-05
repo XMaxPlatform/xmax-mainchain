@@ -31,6 +31,4 @@ namespace pro
 
 #define PRO_EXCEPT_WITH_DESC(_type, desc) throw _type(desc, __FILE__, __LINE__)
 
-#define PRO_ASSERT_WITH_DESC(condition, _type, desc) if(!condition) PRO_EXCEPT_WITH_DESC(_type, desc)
-
 }
