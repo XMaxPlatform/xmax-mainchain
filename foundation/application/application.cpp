@@ -150,6 +150,11 @@ namespace xmaxapp
 	}
 
 
+	static inline std::string ExtractDefaultValue(const std::string& from_format_param) {
+		auto start = from_format_param.find("(=") + 2;
+		auto end = from_format_param.rfind(")");
+		return from_format_param.substr(start, end - start);
+	}
 
 	//--------------------------------------------------
 	void Application::CreateDefaultCfgFile()
@@ -169,12 +174,13 @@ namespace xmaxapp
 				of << "#" << od.description() << std::endl;
 			}
 
+
 			boost::any value;
 			if (!od.semantic()->apply_default(value)) {
 				of << "#" << od.long_name() << " = " << std::endl;
 			}
-			else {
-				of << od.long_name() << " = " << boost::any_cast<std::string>(value) << std::endl;
+			else {				
+				of << od.long_name() << " = " << ExtractDefaultValue(od.format_parameter()) << std::endl;
 			}
 			of << std::endl;
 		}
