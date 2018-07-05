@@ -5,6 +5,7 @@
 #include <pro/log/log.hpp>
 #include <boost/program_options.hpp>
 #include "application.hpp"
+#include <fstream>
 
 namespace bpo = boost::program_options;
 
@@ -159,6 +160,26 @@ namespace xmaxapp
 		if (!fs::exists(parent_path)) {
 			fs::create_directories(parent_path);
 		}	
+
+		std::ofstream of(cfg_file_path_);
+		for (auto op : cfg_options_.options()) {
+			//Output description
+			const bpo::option_description& od = *op;
+			if (!od.description().empty()) {
+				of << "#" << od.description() << std::endl;
+			}
+
+			boost::any value;
+			if (!od.semantic()->apply_default(value)) {
+				of << "#" << od.long_name() << " = " << std::endl;
+			}
+			else {
+				of << od.long_name() << " = " << boost::any_cast<std::string>(value) << std::endl;
+			}
+			of << std::endl;
+		}
+		
+		of.close();
 	}
 
 
