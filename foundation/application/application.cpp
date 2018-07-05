@@ -99,7 +99,7 @@ namespace xmaxapp
 		// parse options.
 		variables_map option_vars;
 
-		//LoadCfgOptions(option_vars);
+		LoadCfgOptions(option_vars);
 								
 
 		//options::store(options::parse_config_file<char>(config_file_name.make_preferred().string().c_str(),
