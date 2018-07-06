@@ -29,3 +29,5 @@ namespace xmaxapp
 	class ApplicationBase;
 	class Plugin;
 }
+
+namespace xpo = xmaxapp::options;

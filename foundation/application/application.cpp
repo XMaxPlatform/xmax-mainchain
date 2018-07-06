@@ -7,7 +7,6 @@
 #include "application.hpp"
 #include <fstream>
 
-namespace bpo = boost::program_options;
 
 namespace xmaxapp
 {
@@ -111,7 +110,7 @@ namespace xmaxapp
 
 		options::store(options::parse_command_line(argc, argv, app_options_), option_vars);
 
-		bpo::notify(option_vars);
+		xpo::notify(option_vars);
 
 
 		if (option_vars.count("data-dir")) {
@@ -185,7 +184,7 @@ namespace xmaxapp
 		std::ofstream of(cfg_file_path_);
 		for (auto op : cfg_options_.options()) {
 			//Output description
-			const bpo::option_description& od = *op;
+			const xpo::option_description& od = *op;
 			if (!od.description().empty()) {
 				of << "#" << od.description() << std::endl;
 			}
@@ -206,14 +205,14 @@ namespace xmaxapp
 
 
 	//--------------------------------------------------
-	void Application::LoadCfgOptions(bpo::variables_map& var_map)
+	void Application::LoadCfgOptions(xpo::variables_map& var_map)
 	{		
 		if (!fs::exists(cfg_file_path_))
 		{		
 			CreateDefaultCfgFile();
 		}
 
-		bpo::store(bpo::parse_config_file<char>(cfg_file_path_.make_preferred().string().c_str(), cfg_options_, true), var_map);
+		xpo::store(xpo::parse_config_file<char>(cfg_file_path_.make_preferred().string().c_str(), cfg_options_, true), var_map);
 	}
 
 void Application::Loop()
