@@ -109,7 +109,6 @@ namespace xmaxapp
 		//	cfg_options, true), option_vars);
 
 		options::store(options::parse_command_line(argc, argv, app_options_), option_vars);
-
 		xpo::notify(option_vars);
 
 
@@ -213,6 +212,7 @@ namespace xmaxapp
 		}
 
 		xpo::store(xpo::parse_config_file<char>(cfg_file_path_.make_preferred().string().c_str(), cfg_options_, true), var_map);
+		xpo::notify(var_map);
 	}
 
 void Application::Loop()
