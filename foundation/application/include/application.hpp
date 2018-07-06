@@ -4,7 +4,7 @@
 */
 #pragma once
 #include <map>
-#include <filesystem>
+#include <pro/io/file_system.hpp>
 #include <pluginface.hpp>
 
 
@@ -24,16 +24,7 @@
 
 namespace xmaxapp
 {
-#if _Project_Compiler == _Compiler_MSVC
-#	if _MSC_VER < 1914
-	namespace fs = std::experimental::filesystem;
-#	else
-	namespace fs = std::filesystem;
-#	endif
-#else
-	namespace fs = std::filesystem;
-#endif
-
+	namespace fs = pro::fs;
 	namespace bpo = boost::program_options;
 	/**
 	*  derive class of ApplicationBase
