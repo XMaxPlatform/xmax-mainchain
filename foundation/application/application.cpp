@@ -97,10 +97,17 @@ namespace xmaxapp
 			}
 		}
 
+		
+
 		SetupApplicationOptions();
 
 		// parse options.
 		variables_map option_vars;
+		
+		//Load command line options first
+		options::store(options::parse_command_line(argc, argv, app_options_), option_vars);
+		xpo::notify(option_vars);
+
 
 		LoadCfgOptions(option_vars);
 								
@@ -108,8 +115,7 @@ namespace xmaxapp
 		//options::store(options::parse_config_file<char>(config_file_name.make_preferred().string().c_str(),
 		//	cfg_options, true), option_vars);
 
-		options::store(options::parse_command_line(argc, argv, app_options_), option_vars);
-		xpo::notify(option_vars);
+		
 
 
 		if (option_vars.count("data-dir")) {
