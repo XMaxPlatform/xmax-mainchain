@@ -44,3 +44,5 @@ namespace pro
 	*/
 	using int64 = std::int64_t;
 }
+
+#define SIZE_MB (1024 * 1024)

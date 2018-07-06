@@ -5,6 +5,7 @@
 #pragma once
 #include <map>
 #include <pro/io/file_system.hpp>
+#include <apps.hpp>
 #include <pluginface.hpp>
 
 
@@ -24,7 +25,6 @@
 
 namespace xmaxapp
 {
-	namespace fs = pro::fs;
 	namespace bpo = boost::program_options;
 	/**
 	*  derive class of ApplicationBase
@@ -39,6 +39,8 @@ namespace xmaxapp
 		* return AppService
 		*/
 		AppService* GetService() const override;
+
+		virtual fs::path GetDataDir() const override;
 		/**
 		* Init a concrete plugin
 		* @param[in]	name of a plugin
@@ -87,6 +89,7 @@ namespace xmaxapp
 		OptionsDesc     cfg_options_;
 
 		fs::path cfg_file_path_;
+		fs::path data_dir_{ "data-dir" };
 
 		std::unique_ptr<AppService>  service_face_;
 	};

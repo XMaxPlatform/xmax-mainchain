@@ -4,6 +4,8 @@
 */
 #include <pro/log/log.hpp>
 #include <pro/types/time.hpp>
+#include <unitedb/unitedb.hpp>
+
 #include <boost/asio/io_service.hpp>
 #include "blockbuilder_plugin.hpp"
 
@@ -18,12 +20,15 @@ namespace xmax
 	public:
 		boost::asio::deadline_timer timer_;
 
+		std::unique_ptr<unitedb::Database> unitedb_;
+
 
 		BlockBuilderImpl(boost::asio::io_service& io)
 			: timer_(io)
 		{
 
 		}
+
 		void StartLoop()
 		{
 
@@ -45,7 +50,6 @@ namespace xmax
 		*/
 		void BlockBuilderImpl::BuildBlock()
 		{
-
 			Logf("building block.");
 			NextBlock();
 		}
@@ -65,6 +69,13 @@ namespace xmax
 	void BlockBuilderPlugin::Initialize(const VarsMap& options)
 	{
 		Super::Initialize(options);
+
+		auto db_size = options.at("db-runtime-size").as<uint64_t>();
+
+
+		impl_->unitedb_ = std::make_unique<unitedb::Database>(GetApp()->GetDataDir(), db_size * SIZE_MB);
+
+
 	}
 
 	void BlockBuilderPlugin::Startup()
@@ -75,7 +86,10 @@ namespace xmax
 
 	void BlockBuilderPlugin::InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
 	{
-		Logf("Blockbuilder plugin init options.");
+
+		cfg.add_options()
+			("db-runtime-size", xmaxapp::options::value<uint64_t>()->default_value(1024), "size(in mb) of db memory.");
+
 	}
 
 }

@@ -67,6 +67,7 @@ set(xmax_core_lib_name pro)
 set(xmax_app_lib_name application)
 
 set(xmax_run_exe_name xmaxrun)
+set(xmax_db_name unitedb)
 
 set(xmax_bcp_lib_name blockchain_plugin)
 set(xmax_builder_lib_name blockbuilder_plugin)

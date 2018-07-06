@@ -5,9 +5,11 @@
 #pragma once
 
 #include <app_types.hpp>
+#include <pro/io/file_system.hpp>
 
 namespace xmaxapp
 {
+
 	/**
 	*  base class of Plugin
 	*  pure virtual class
@@ -54,5 +56,7 @@ namespace xmaxapp
 		* return AppService
 		*/
 		virtual AppService* GetService() const = 0;
+
+		virtual fs::path	GetDataDir() const = 0;
 	};
 }

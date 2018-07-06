@@ -28,6 +28,10 @@ namespace xmaxapp
 		return service_face_.get();
 	}
 
+	fs::path Application::GetDataDir() const {
+		return data_dir_;
+	}
+
 	void Application::PluginToInit(const string& plugin_name)
 	{
 		if (pluginmap_.find(plugin_name) == pluginmap_.end())
@@ -108,6 +112,18 @@ namespace xmaxapp
 		options::store(options::parse_command_line(argc, argv, app_options_), option_vars);
 
 		bpo::notify(option_vars);
+
+
+		if (option_vars.count("data-dir")) {
+			fs::path data_dir = option_vars["data-dir"].as<fs::path>();
+			if (data_dir.is_relative())
+				data_dir = fs::current_path() / data_dir;
+			data_dir_ = data_dir;
+		}
+		else
+		{
+			data_dir_ = fs::current_path() / data_dir_;
+		}
 
 		// 
 		for (auto item : initialized_plugins_)
