@@ -30,6 +30,26 @@ namespace xmax {
 			}
 		}
 
+
+		PersistentCpyableContext CreateJsContext(v8::Isolate* pIsolate, v8::Local<v8::ObjectTemplate>& global)
+		{
+			Local<Context> context = Context::New(pIsolate, NULL, global);
+			PersistentCpyableContext ret(pIsolate, context);
+			return ret;
+		}
+
+		void EnterJsContext(v8::Isolate* pIsolate, v8::Persistent<v8::Context, v8::CopyablePersistentTraits<v8::Context>>& context)
+		{
+			Local<Context> localContext = context.Get(pIsolate);
+			localContext->Enter();
+		}
+
+		void ExitJsContext(v8::Isolate* pIsolate, v8::Persistent<v8::Context, v8::CopyablePersistentTraits<v8::Context>>& context)
+		{
+			Local<Context> localContext = context.Get(pIsolate);
+			localContext->Exit();
+		}
+
 		void CompileJsCode(Isolate* pIsolate, const Local<Context>& context,const char* jsCode)
 		{
 			//V8_ParseWithPlugin();
@@ -48,7 +68,6 @@ namespace xmax {
 				std::cerr << "js compile failed" << std::endl;
 			}
 
-			script->Run();
 		}
 
 		v8::Handle<v8::Value> CallJsFoo(Isolate* pIsolate, const Local<Context>& context, const char* fooname, unsigned int argc, Handle<v8::Value>* params)
