@@ -76,12 +76,14 @@ namespace xmaxapp
 		OptionsDesc app_cfg_opts("Application Config Options");
 		OptionsDesc app_cmd_opts("Application Command Line Options");
 
+		app_cfg_opts.add_options()
+			("plugin", options::value< std::vector<string> >()->composing(), "Plugin(s) to startup.");
+
 		cfg_options_.add(app_cfg_opts);
 		app_options_.add(app_cfg_opts);
 		app_options_.add(app_cmd_opts);
 
-		app_cfg_opts.add_options()
-			("plugin", options::value< std::vector<string> >()->composing(), "Plugin(s) to startup.");
+		
 	}
 
 
