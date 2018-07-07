@@ -1,7 +1,7 @@
 //@file
 //@copyright defined in xmax/LICENSE
 #include "script_module.hpp"
-#include "script_util.hpp"
+
 #include <libplatform/libplatform.h>
 
 namespace xmax {
@@ -56,8 +56,8 @@ namespace xmax {
 			CompileJsCode(isolate_, context, current_code_.c_str() );
 			CleanInstrunction();
 			v8::Handle<v8::Value> result =  CallJsFoo(isolate_, context, main_foo_.c_str() , 0, NULL);
-
-			//int test = result->Int32Value();
+			V8_ParseWithOutPlugin();
+			int test = result->Int32Value();
 			return result;
 		}
 
@@ -71,7 +71,8 @@ namespace xmax {
 			current_code_ = code;
 			main_foo_ = fooName;
 			namespace  ph = std::placeholders;
-			return EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
+			//return EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
+			return Undefined(isolate_);
 		}
 
 		void ScriptMoudle::Discard()
