@@ -7,6 +7,7 @@
 #include <v8.h>
 #include <string>
 #include <list>
+#include "script_util.hpp"
 
 namespace xmax {
 
@@ -18,6 +19,7 @@ namespace xmax {
 			DECLARE_USE_SINGLETON(ScriptMoudle)
 		public:
 			void Init();
+
 			
 			v8::Handle<v8::Value> Call(const std::string& code, const std::string& fooName);
 
@@ -35,11 +37,13 @@ namespace xmax {
 
 			int instruction_count_;
 			std::list<int> last_intruction_;
- 
+			
 			std::string				 current_code_;
 			std::string				 main_foo_;
 
 			Isolate*                 isolate_;
+
+			PersistentCpyableContext current_context_;
 
 		};
 		inline v8::Isolate* ScriptMoudle::GetIsolate()
