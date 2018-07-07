@@ -212,6 +212,10 @@ namespace xmaxapp
 	//--------------------------------------------------
 	void Application::LoadCfgOptions(xpo::variables_map& var_map)
 	{		
+		if (var_map.count("config-path")) {
+			cfg_file_path_ = var_map.at("config-path").as<fs::path>();
+		}
+
 		if (!fs::exists(cfg_file_path_))
 		{		
 			CreateDefaultCfgFile();
