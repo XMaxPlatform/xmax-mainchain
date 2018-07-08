@@ -1,6 +1,8 @@
 # Defines XMAX main blockchain library target.
 project(Xmax-mainchain)
 
+enable_testing()
+
 cmake_minimum_required( VERSION 3.11.0 )
 
 
