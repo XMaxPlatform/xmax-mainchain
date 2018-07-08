@@ -23,7 +23,10 @@ target_link_libraries( ${current_lib_name}
                    ${MongoDB_LIBRARIES})
 
 
-set_target_properties( ${current_lib_name} PROPERTIES FOLDER "9.test")
+set_target_properties( ${current_lib_name} PROPERTIES 
+                            FOLDER "9.test")
+
+add_test(NAME ${current_lib_name} COMMAND ${current_lib_name})
 
 install( TARGETS 
 ${current_lib_name}

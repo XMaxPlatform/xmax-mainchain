@@ -49,6 +49,8 @@ target_link_libraries( ${current_lib_name}
 
 set_target_properties( ${current_lib_name} PROPERTIES PUBLIC_HEADER "${HEADERS}" FOLDER "9.test")
 
+add_test(NAME ${current_lib_name} COMMAND ${current_lib_name})
+
 install( TARGETS 
 ${current_lib_name}
 
