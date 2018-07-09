@@ -50,8 +50,9 @@ namespace xmaxapp
 		* entry point of whole app
 		* @param[in]	argc	number of args
 		* @param[in]	argv	the content of params
+		* return If the program will continue running or exit directly
 		*/
-		void Initialize(int argc, char** argv);
+		bool Initialize(int argc, char** argv);
 		/**
 		*	start the app
 		*/

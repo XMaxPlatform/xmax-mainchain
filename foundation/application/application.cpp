@@ -93,7 +93,7 @@ namespace xmaxapp
 	}
 
 
-	void Application::Initialize(int argc, char** argv)
+	bool Application::Initialize(int argc, char** argv)
 	{
 		// create plugin objects.
 		for (auto& item : pluginmap_)
@@ -143,6 +143,8 @@ namespace xmaxapp
 			item->Initialize(option_vars);
 			Logf("Plugin '${name}' initialize. ", ("name", item->GetName()));
 		}
+
+		return true;
 	}
 
 	void Application::Startup()

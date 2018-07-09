@@ -44,7 +44,11 @@ namespace xmax
 			RegisterPlugins();
 			InitPlugins(app);
 
-			app.Initialize(argc, argv);
+			if (!app.Initialize(argc, argv)) {
+				Logf("Application initialize return false, exit directly.");
+				return;
+			}
+
 			app.Startup();
 
 			Logf("Xmax app start.");
