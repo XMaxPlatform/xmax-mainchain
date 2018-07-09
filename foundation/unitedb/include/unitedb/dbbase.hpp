@@ -4,6 +4,10 @@
 */
 #pragma once
 #include <unitedb/unitedef.hpp>
+#include <boost/multi_index_container.hpp> 
+#include <boost/multi_index/ordered_index.hpp> 
+#include <boost/multi_index/member.hpp>
+
 namespace unitedb
 {
 
@@ -11,8 +15,6 @@ namespace unitedb
 	class DBObject
 	{
 	public:
-
-
 		static const uint16_t type_id_ = TypeID;
 	};
 
