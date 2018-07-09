@@ -45,7 +45,7 @@ namespace xmax
 			InitPlugins(app);
 
 			if (!app.Initialize(argc, argv)) {
-				Logf("Application initialize return false, exit directly.");
+				//Logf("Application initialize return false, exit directly.");
 				return;
 			}
 
