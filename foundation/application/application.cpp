@@ -6,6 +6,7 @@
 #include <boost/program_options.hpp>
 #include "application.hpp"
 #include <fstream>
+#include <iostream>
 
 
 namespace xmaxapp
@@ -116,6 +117,10 @@ namespace xmaxapp
 		options::store(options::parse_command_line(argc, argv, app_options_), option_vars);
 		xpo::notify(option_vars);
 
+		if (option_vars.count("help")) {
+			std::cout << app_options_ << std::endl;
+			return false;
+		}
 
 		LoadCfgOptions(option_vars);
 								
