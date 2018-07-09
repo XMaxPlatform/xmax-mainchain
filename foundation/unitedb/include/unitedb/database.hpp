@@ -27,5 +27,7 @@ namespace unitedb
 		std::unique_ptr<mapped_file> db_file_;
 		fs::path	db_path_;
 		fs::path	db_file_path_;
+
+		std::vector<ITable*> tables;
 	};
 }
