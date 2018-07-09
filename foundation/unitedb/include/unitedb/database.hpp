@@ -4,9 +4,11 @@
 */
 #pragma once
 
+#include <unitedb/unitedef.hpp>
 #include <boost/interprocess/managed_mapped_file.hpp>
 #include <memory>
 #include <pro/io/file_system.hpp>
+#include <unitedb/dbbase.hpp>
 
 namespace unitedb
 {
