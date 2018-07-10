@@ -97,23 +97,24 @@ namespace xmaxapp
 
 	bool Application::Initialize(int argc, char** argv)
 	{
-		// create plugin objects.
-		for (auto& item : pluginmap_)
-		{
-			if (PluginFace* plugin = PluginFactory::NewPlugin(item.first, this))
-			{
-				pluginmap_[item.first].reset(plugin);
-				initialized_plugins_.push_back(plugin);
-			}
-		}
+		//// create plugin objects.
+		//for (auto& item : pluginmap_)
+		//{
+		//	if (PluginFace* plugin = PluginFactory::NewPlugin(item.first, this))
+		//	{
+		//		pluginmap_[item.first].reset(plugin);
+		//		initialized_plugins_.push_back(plugin);
+		//	}
+		//}
 
 		
+
 
 		SetupApplicationOptions();
 
 		// parse options.
 		variables_map option_vars;
-		
+
 		//Load command line options first
 		options::store(options::parse_command_line(argc, argv, app_options_), option_vars);
 		xpo::notify(option_vars);
@@ -124,10 +125,20 @@ namespace xmaxapp
 		}
 
 		LoadCfgOptions(option_vars);
-								
+
 
 		//options::store(options::parse_config_file<char>(config_file_name.make_preferred().string().c_str(),
 		//	cfg_options, true), option_vars);
+
+		if (option_vars.count("plugin")) {
+			auto plugin_ops = option_vars.at("plugin").as<std::vector<std::string>>();
+			for (auto& op : plugin_ops) {
+				auto it = pluginmap_.find(op);
+				if (it != pluginmap_.end()) {
+					initialized_plugins_.push_back(it->second.get());
+				}
+			}
+		}
 
 		
 
