@@ -6,9 +6,12 @@
 
 using namespace unitedb;
 
+enum EOBJType
+{
+	OBJType_test = 0,
+};
 
-
-class TestDBObject : public unitedb::DBObject<5>
+class TestDBObject : public unitedb::DBObject<TestDBObject, OBJType_test>
 {
 public:
 	int oid = 0;
@@ -23,7 +26,9 @@ typedef boost::multi_index::multi_index_container<
 	>
 	>
 	>
-> TestTable;
+> TestIdx;
+
+typedef DBTable<TestIdx> TestTable;
 
 
 BOOST_AUTO_TEST_SUITE(unitedb_suite)
@@ -31,6 +36,8 @@ BOOST_AUTO_TEST_SUITE(unitedb_suite)
 BOOST_AUTO_TEST_CASE(db_test)
 {
 	unitedb::Database db(fs::current_path(), 1024 * 1024);
+
+	db.InitTable<TestTable>();
 
 }
 
