@@ -78,7 +78,8 @@ namespace xmaxapp
 		OptionsDesc app_cmd_opts("Application Command Line Options");
 
 		app_cmd_opts.add_options()
-			("help,h", "Show the command line options description and usage");
+			("help,h", "Show the command line options description and usage")
+			("config-path", xpo::value<fs::path>(), "Application configuration file path.");
 
 		app_cfg_opts.add_options()			
 			("plugin", options::value< std::vector<string> >()->composing(), "Plugin(s) to startup.");
