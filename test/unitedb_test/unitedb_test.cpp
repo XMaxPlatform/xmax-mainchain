@@ -17,7 +17,7 @@ public:
 	int oid = 0;
 };
 
-typedef boost::multi_index::multi_index_container<
+typedef DBTableDeclaration<
 	TestDBObject,
 	boost::multi_index::indexed_by<
 	boost::multi_index::ordered_non_unique<

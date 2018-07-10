@@ -15,9 +15,10 @@ namespace unitedb
 	namespace fs = pro::fs;
 	namespace inpr = boost::interprocess;
 	using mapped_file = inpr::managed_mapped_file;
+	using segment_manager = inpr::managed_mapped_file::segment_manager;
 
 	template<typename T>
-	using DBAlloc = inpr::allocator<T, mapped_file::segment_manager>;
+	using DBAlloc = inpr::allocator<T, segment_manager>;
 
 	template<typename _Obj>
 	class ObjectID
@@ -74,15 +75,19 @@ namespace unitedb
 		}
 
 		DBTable(DBAlloc<ObjectType> alloc)
-			//: indices_(alloc)
+			: indices_(alloc)
 		{
 
 		}
 
 	private:
-		//MultiIndexType indices_;
+		MultiIndexType indices_;
 
 	};
+
+
+	template<typename _Object, typename... _Args>
+	using DBTableDeclaration = boost::multi_index_container<_Object, _Args..., DBAlloc<_Object> >;
 
 
 }
