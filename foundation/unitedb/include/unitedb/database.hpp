@@ -8,7 +8,7 @@
 #include <boost/interprocess/managed_mapped_file.hpp>
 #include <memory>
 #include <pro/io/file_system.hpp>
-#include <unitedb/dbbase.hpp>
+#include <unitedb/dbtable.hpp>
 
 namespace unitedb
 {

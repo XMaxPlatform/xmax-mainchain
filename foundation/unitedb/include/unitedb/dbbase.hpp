@@ -47,47 +47,13 @@ namespace unitedb
 	class DBObject
 	{
 	public:
+		DBObject() = delete;
+		template<typename T>
+		DBObject(DBAlloc<T>)
+		{
 
+		}
 		ObjectID<_Obj> id_;
 		static const ObjectTypeCode TypeCode = _Type;
 	};
-
-
-
-	class ITable
-	{
-	public:
-		virtual ~ITable() {}
-	};
-
-	template<typename _multi_index>
-	class DBTable : public ITable
-	{
-	public:
-		typedef _multi_index MultiIndexType;
-		typedef typename MultiIndexType::value_type ObjectType;
-		typedef DBAlloc<DBTable> AllocType;
-
-		static std::string TableName()
-		{
-			static std::string type_name = boost::core::demangle(typeid(typename ObjectType).name()) + "Table";
-			return type_name;
-		}
-
-		DBTable(DBAlloc<ObjectType> alloc)
-			: indices_(alloc)
-		{
-
-		}
-
-	private:
-		MultiIndexType indices_;
-
-	};
-
-
-	template<typename _Object, typename... _Args>
-	using DBTableDeclaration = boost::multi_index_container<_Object, _Args..., DBAlloc<_Object> >;
-
-
 }
