@@ -7,6 +7,7 @@
 #include <pro/types/any_object.hpp>
 #include <pro/utils/string_utils.hpp>
 #include <pro/scode/shortname.hpp>
+#include <pro/types/tree.hpp>
 
 using namespace pro;
 
@@ -131,5 +132,41 @@ BOOST_AUTO_TEST_CASE(scode)
 	BOOST_CHECK(ShortName::NameLengthWithBit("1.@mx") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
 	BOOST_CHECK(ShortName::NameLengthWithBit("1.###@mx") == (SCODE_R_0_BITS * 4 + SCODE_R_1_BITS * 1));
 }
+
+
+BOOST_AUTO_TEST_CASE(test_boost_tree) {
+
+	pro::Tree<std::string> root("rt");
+	pro::Tree<std::string> c1("c1");
+	pro::Tree<std::string> c2("c2");
+	pro::Tree<std::string> c3("c3");
+	pro::Tree<std::string> c4("c4");
+	pro::Tree<std::string> c5("c5");
+	pro::Tree<std::string> c6("c6");
+	pro::Tree<std::string> c7("c7");
+	pro::Tree<std::string> c8("c8");
+
+
+	c5.AddChild(c7);
+	c5.AddChild(c8);
+	c2.AddChild(c5);
+	c2.AddChild(c6);
+
+	c1.AddChild(c3);
+	c1.AddChild(c4);
+
+	root.AddChild(c1);
+	root.AddChild(c2);
+	
+	
+
+	std::string output;
+	root.Traverse([&output](pro::Tree<std::string>* tn) {
+		output += tn->value() + " ";
+	});
+
+	BOOST_CHECK(output.compare("c3 c4 c1 c7 c8 c5 c6 c2 rt ") == 0);
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
