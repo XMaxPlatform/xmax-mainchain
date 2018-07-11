@@ -15,11 +15,11 @@ namespace xmax {
 
 		using namespace v8;
 
-		class ScriptMoudle:public pro::Singleton<ScriptMoudle> {
-			DECLARE_USE_SINGLETON(ScriptMoudle)
+		class ScriptMoudle{
 		public:
+			ScriptMoudle();
+			~ScriptMoudle();
 			void Init();
-
 			
 			v8::Handle<v8::Value> Call(const std::string& code, const std::string& fooName);
 
