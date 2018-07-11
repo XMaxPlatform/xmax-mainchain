@@ -31,7 +31,7 @@ namespace xmax {
 
 
 			int value = (int)arg1;
-			ScriptMoudle::GetInstance().StoreInstrunction(value);
+			//ScriptMoudle::GetInstance().StoreInstrunction(value);
 			return args_object[0];
 		}
 
