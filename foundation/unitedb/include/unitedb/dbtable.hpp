@@ -3,7 +3,8 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <unitedb/dbbase.hpp>
+#include <unitedb/dbtypes.hpp>
+#include <unitedb/dbobject.hpp>
 
 namespace unitedb
 {

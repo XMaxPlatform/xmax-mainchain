@@ -4,7 +4,7 @@
 */
 #pragma once
 
-#include <unitedb/unitedef.hpp>
+#include <unitedb/dbtypes.hpp>
 #include <boost/interprocess/managed_mapped_file.hpp>
 #include <memory>
 #include <pro/io/file_system.hpp>

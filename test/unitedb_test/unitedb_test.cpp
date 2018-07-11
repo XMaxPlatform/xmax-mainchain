@@ -39,6 +39,8 @@ BOOST_AUTO_TEST_CASE(db_test)
 
 	db.InitTable<TestTable>();
 
+	MappedString()
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()

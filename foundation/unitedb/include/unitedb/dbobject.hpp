@@ -3,23 +3,13 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <unitedb/unitedef.hpp>
+#include <unitedb/dbtypes.hpp>
 #include <boost/multi_index_container.hpp> 
 #include <boost/multi_index/ordered_index.hpp> 
 #include <boost/multi_index/member.hpp>
 
 namespace unitedb
 {
-
-	typedef uint16_t ObjectTypeCode;
-	namespace fs = pro::fs;
-	namespace inpr = boost::interprocess;
-	using mapped_file = inpr::managed_mapped_file;
-	using segment_manager = inpr::managed_mapped_file::segment_manager;
-
-	template<typename T>
-	using DBAlloc = inpr::allocator<T, segment_manager>;
-
 	template<typename _Obj>
 	class ObjectID
 	{
