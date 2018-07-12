@@ -48,7 +48,7 @@ namespace unitedb
 	{
 	public:
 		typedef ObjectID<_Obj> TypeID;
-		DBObject() = delete;
+		DBObject() = default;
 		template<typename T>
 		DBObject(DBAlloc<T>)
 		{

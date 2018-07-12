@@ -15,6 +15,8 @@ namespace unitedb
 	class Database
 	{
 	public:
+
+		using BaseTable = ITable;
 		struct AnyTable 
 		{
 			AnyTable()
@@ -32,12 +34,17 @@ namespace unitedb
 				return ptr_ != nullptr;
 			}
 
-			void Set(void* p)
+			void Set(BaseTable* p)
 			{
 				ptr_ = p;
 			}
+
+			BaseTable* Get() const
+			{
+				return ptr_;
+			}
 		private:
-			void* ptr_;
+			BaseTable* ptr_;
 		}; 
 
 		Database(const fs::path& dir, uint64_t managed_file_size);
@@ -52,7 +59,7 @@ namespace unitedb
 			if (typeCode < tables_.size()  && tables_[typeCode].IsValid()) {
 				BOOST_THROW_EXCEPTION(std::logic_error(tableName + "::TypeCode is already in use"));
 			}
-			TableType* ptr = db_file_->find_or_construct< TableType >(tableName.c_str()) ( TableType::AllocType(db_file_->get_segment_manager()) );
+			TableType* ptr = db_file_->find_or_construct< TableType >(tableName.c_str()) ( TableType::AllocType(GetSegmentManager()) );
 
 			if (tables_.size() <= typeCode)
 			{
@@ -61,6 +68,35 @@ namespace unitedb
 			tables_[typeCode].Set(ptr);
 		}
 
+		template<typename TableType, typename Constructor>
+		typename const TableType::ObjectType& NewObject(Constructor&& c)
+		{
+			TableType* table = GetTable<TableType>();
+
+			auto constructor = [&](TableType::ObjectType& v) {
+				v.id_ = table->GenerateID();
+				c(v);
+			};
+
+			auto result = table->indices_.emplace(constructor, table->indices_.get_allocator());
+
+			if (!result.second) {
+				BOOST_THROW_EXCEPTION(std::logic_error("Could not insert object, most likely a uniqueness constraint was violated"));
+			}
+			return *result.first;
+		}
+
+
+		mapped_file::segment_manager* GetSegmentManager() const
+		{
+			return db_file_->get_segment_manager();
+		}
+
+		template<typename TableType>
+		TableType* GetTable() const
+		{
+			return static_cast<TableType*>(tables_[TableType::ObjectType::TypeCode].Get());
+		}
 
 	private:
 		std::unique_ptr<mapped_file> db_file_;

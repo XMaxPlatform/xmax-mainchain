@@ -12,7 +12,14 @@ enum EOBJType
 };
 
 DBOBJECT_CLASS(TestDBObject, OBJType_test)
-{
+{		
+public:
+	template<typename C, typename T>
+	TestDBObject( C&& c, DBAlloc<T>)
+	{
+		c(*this);
+	}
+	TestDBObject() = default;
 
 };
 
@@ -20,7 +27,7 @@ struct by_id;
 typedef DBTableDeclaration<
 	TestDBObject,
 	boost::multi_index::indexed_by<
-		boost::multi_index::ordered_unique<boost::multi_index::tag<by_id>, boost::multi_index::member<DBObjectBase, ObjectIDCode, &DBObjectBase::id_>>
+	INDEXED_BY_ID
 	>
 > TestIdx;
 
@@ -35,8 +42,19 @@ BOOST_AUTO_TEST_CASE(db_test)
 
 	db.InitTable<TestTable>();
 
+	db.NewObject<TestTable>([&](TestTable::ObjectType& a)
+	{
+		int xx = a.id_;
+	});
 
+	TestIdx tidxs(db.GetSegmentManager());
 
+	tidxs.emplace([&](TestTable::ObjectType& a)
+	{
+		int xx = a.id_;
+	}, TestTable::AllocType(db.GetSegmentManager()));
+
+	//tidxs.get<0>().emplace(TestDBObject());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
