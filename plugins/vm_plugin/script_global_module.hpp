@@ -22,6 +22,7 @@ namespace xmax {
 			void DiscardV8Env();
 
 		private:
+			Isolate * isolate_;
 
 		};
 	}
