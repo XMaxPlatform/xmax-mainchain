@@ -7,6 +7,7 @@
 #include "application.hpp"
 #include <fstream>
 #include <iostream>
+#include <unordered_map>
 
 
 namespace xmaxapp
@@ -129,13 +130,16 @@ namespace xmaxapp
 
 		//options::store(options::parse_config_file<char>(config_file_name.make_preferred().string().c_str(),
 		//	cfg_options, true), option_vars);
+		std::unordered_map<string, PluginFace*> added_plugins;
 
 		if (option_vars.count("plugin")) {
 			auto plugin_ops = option_vars.at("plugin").as<std::vector<std::string>>();
-			for (auto& op : plugin_ops) {
-				auto it = pluginmap_.find(op);
-				if (it != pluginmap_.end()) {
-					initialized_plugins_.push_back(it->second.get());
+			for (auto& plugin_name : plugin_ops) {
+				auto it = pluginmap_.find(plugin_name);
+				if (it != pluginmap_.end() && added_plugins.find(plugin_name) == added_plugins.end()) {
+					PluginFace* plugin = it->second.get();
+					initialized_plugins_.push_back(plugin);
+					added_plugins[plugin_name] = plugin;
 				}
 			}
 		}
