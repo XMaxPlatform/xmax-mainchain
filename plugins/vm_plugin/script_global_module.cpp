@@ -12,5 +12,16 @@ namespace xmax {
 		{
 
 		}
+
+		void ScriptGlobalMoudle::SetupV8Env()
+		{
+
+		}
+
+		void ScriptGlobalMoudle::DiscardV8Env()
+		{
+
+		}
+
 	}
 }
