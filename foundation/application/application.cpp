@@ -132,15 +132,21 @@ namespace xmaxapp
 		//	cfg_options, true), option_vars);
 		std::unordered_map<string, PluginFace*> added_plugins;
 
+		auto add_plugin_visitor = [&added_plugins, this](auto& plugin_name) {
+			if (added_plugins.find(plugin_name) == added_plugins.end()) {
+				PluginFace* plugin = PluginFactory::NewPlugin(plugin_name, this);
+				pluginmap_[plugin_name].reset(plugin);
+				initialized_plugins_.push_back(plugin);
+				added_plugins[plugin_name] = plugin;
+			}
+		};
+
 		if (option_vars.count("plugin")) {
 			auto plugin_ops = option_vars.at("plugin").as<std::vector<std::string>>();
 			for (auto& plugin_name : plugin_ops) {
 				auto it = pluginmap_.find(plugin_name);
-				if (it != pluginmap_.end() && added_plugins.find(plugin_name) == added_plugins.end()) {					
-					PluginFace* plugin = PluginFactory::NewPlugin(plugin_name, this);
-					it->second.reset(plugin);
-					initialized_plugins_.push_back(plugin);
-					added_plugins[plugin_name] = plugin;
+				if (it != pluginmap_.end()) {					
+					add_plugin_visitor(plugin_name);
 				}
 			}
 		}
