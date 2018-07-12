@@ -136,8 +136,9 @@ namespace xmaxapp
 			auto plugin_ops = option_vars.at("plugin").as<std::vector<std::string>>();
 			for (auto& plugin_name : plugin_ops) {
 				auto it = pluginmap_.find(plugin_name);
-				if (it != pluginmap_.end() && added_plugins.find(plugin_name) == added_plugins.end()) {
-					PluginFace* plugin = it->second.get();
+				if (it != pluginmap_.end() && added_plugins.find(plugin_name) == added_plugins.end()) {					
+					PluginFace* plugin = PluginFactory::NewPlugin(plugin_name, this);
+					it->second.reset(plugin);
 					initialized_plugins_.push_back(plugin);
 					added_plugins[plugin_name] = plugin;
 				}
