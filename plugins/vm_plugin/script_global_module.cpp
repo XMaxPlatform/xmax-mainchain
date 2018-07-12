@@ -27,7 +27,8 @@ namespace xmax {
 
 		void ScriptGlobalMoudle::DiscardV8Env()
 		{
-
+			v8::V8::Dispose();
+			v8::V8::ShutdownPlatform();
 		}
 
 	}
