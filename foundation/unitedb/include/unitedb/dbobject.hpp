@@ -10,11 +10,21 @@
 
 namespace unitedb
 {
+	using ObjectIDCode = int64_t;
+	using ObjectTypeCode = uint16_t;
+
+
+	class DBObjectBase
+	{
+	public:
+		ObjectIDCode id_ = 0;
+	};
+
 	template<typename _Obj>
 	class ObjectID
 	{
 	public:
-		ObjectID(int64_t i = 0) :val_(i) {}
+		ObjectID(ObjectIDCode i = 0) :val_(i) {}
 
 		ObjectID& operator++() 
 		{ 
@@ -30,20 +40,32 @@ namespace unitedb
 			s << boost::core::demangle(typeid(ObjectID<T>).name()) << '(' << id.val_ << ')'; return s;
 		}
 
-		int64_t val_ = 0;
+		ObjectIDCode val_ = 0;
 	};
 
 	template<typename _Obj, ObjectTypeCode _Type>
-	class DBObject
+	class DBObject : public DBObjectBase
 	{
 	public:
+		typedef ObjectID<_Obj> TypeID;
 		DBObject() = delete;
 		template<typename T>
 		DBObject(DBAlloc<T>)
 		{
 
 		}
-		ObjectID<_Obj> id_;
+
+		TypeID GetID() const
+		{
+			return TypeID(id_);
+		}
+
 		static const ObjectTypeCode TypeCode = _Type;
 	};
 }
+
+
+#define DBOBJECT_CLASS(_objname, _typecode )\
+class _objname : public unitedb::DBObject<_objname, _typecode>
+
+#define DBOBJECT_CLASS_END() };

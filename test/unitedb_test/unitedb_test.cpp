@@ -11,20 +11,16 @@ enum EOBJType
 	OBJType_test = 0,
 };
 
-class TestDBObject : public unitedb::DBObject<TestDBObject, OBJType_test>
+DBOBJECT_CLASS(TestDBObject, OBJType_test)
 {
-public:
-	int oid = 0;
+
 };
 
+struct by_id;
 typedef DBTableDeclaration<
 	TestDBObject,
 	boost::multi_index::indexed_by<
-	boost::multi_index::ordered_non_unique<
-	boost::multi_index::member<
-	TestDBObject, int, &TestDBObject::oid
-	>
-	>
+		boost::multi_index::ordered_unique<boost::multi_index::tag<by_id>, boost::multi_index::member<DBObjectBase, ObjectIDCode, &DBObjectBase::id_>>
 	>
 > TestIdx;
 
@@ -39,7 +35,7 @@ BOOST_AUTO_TEST_CASE(db_test)
 
 	db.InitTable<TestTable>();
 
-	MappedString()
+
 
 }
 

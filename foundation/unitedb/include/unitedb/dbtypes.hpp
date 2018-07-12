@@ -8,7 +8,7 @@
 #include <boost/interprocess/managed_mapped_file.hpp>
 namespace unitedb
 {
-	typedef uint16_t ObjectTypeCode;
+
 	namespace fs = pro::fs;
 	namespace inpr = boost::interprocess;
 	using mapped_file = inpr::managed_mapped_file;
