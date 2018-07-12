@@ -17,6 +17,11 @@ namespace xmax {
 
 		class ScriptGlobalMoudle :public pro::Singleton<ScriptGlobalMoudle> {
 			DECLARE_USE_SINGLETON(ScriptGlobalMoudle)
-		}
+		public:
+
+
+		private:
+
+		};
 	}
 }
