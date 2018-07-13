@@ -7,6 +7,7 @@
 #include <pro/log/log_base.hpp>
 #include <pro/types/generictypes.hpp>
 #include <pro/utils/singleton.hpp>
+#include <memory>
 
 namespace pro
 {

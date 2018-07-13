@@ -5,6 +5,7 @@
 
 #pragma once
 #include <pro/types/generictypes.hpp>
+#include <memory>
 
 namespace pro
 {
