@@ -15,36 +15,15 @@ namespace unitedb
 	class Database
 	{
 	public:
-
-		using BaseTable = ITable;
-		struct AnyTable 
+		template<typename T>
+		class TableInst : public T
 		{
-			AnyTable()
-				: ptr_(nullptr)
+		public:
+			typedef typename T::MappedPtr MappedPtr;
+			TableInst(MappedPtr p)
+				: T(p)
 			{
-
 			}
-
-			bool IsEmpty() const
-			{
-				return ptr_ == nullptr;
-			}
-			bool IsValid() const
-			{
-				return ptr_ != nullptr;
-			}
-
-			void Set(BaseTable* p)
-			{
-				ptr_ = p;
-			}
-
-			BaseTable* Get() const
-			{
-				return ptr_;
-			}
-		private:
-			BaseTable* ptr_;
 		};
 
 		enum InitFlag
@@ -63,16 +42,18 @@ namespace unitedb
 			ObjectTypeCode typeCode = TableType::ObjectType::TypeCode;
 
 			std::string tableName = TableType::TableName();
-			if (typeCode < tables_.size()  && tables_[typeCode].IsValid()) {
+
+
+			if (typeCode < tables_.size() && tables_[typeCode]) {
 				BOOST_THROW_EXCEPTION(std::logic_error(tableName + "::TypeCode is already in use"));
 			}
-			TableType* ptr = db_file_->find_or_construct< TableType >(tableName.c_str()) ( TableType::AllocType(GetSegmentManager()) );
+			TableType::MappedPtr ptr = db_file_->find_or_construct< TableType::MappedIndex >(tableName.c_str()) ( TableType::AllocType(GetSegmentManager()) );
 
 			if (tables_.size() <= typeCode)
 			{
 				tables_.resize(typeCode + 1);
 			}
-			tables_[typeCode].Set(ptr);
+			tables_[typeCode].reset(new TableInst<TableType>(ptr));
 		}
 
 		mapped_file::segment_manager* GetSegmentManager() const
@@ -83,7 +64,7 @@ namespace unitedb
 		template<typename TableType>
 		TableType* GetTable() const
 		{
-			return static_cast<TableType*>(tables_[TableType::ObjectType::TypeCode].Get());
+			return static_cast<TableType*>(tables_[TableType::ObjectType::TypeCode].get());
 		}
 
 		void Flush();
@@ -95,6 +76,6 @@ namespace unitedb
 		fs::path	db_path_;
 		fs::path	db_file_path_;
 
-		std::vector<AnyTable> tables_;
+		std::vector< std::unique_ptr<ITable> > tables_;
 	};
 }

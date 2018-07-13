@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_SUITE(unitedb_suite)
 
 BOOST_AUTO_TEST_CASE(db_develop_test)
 {
-	unitedb::Database db(fs::current_path(), 1024 * 1024);// , unitedb::Database::Discard);
+	unitedb::Database db(fs::current_path(), 1024 * 1024);//, unitedb::Database::Discard);//
 
 	db.InitTable<TestTable>();
 
