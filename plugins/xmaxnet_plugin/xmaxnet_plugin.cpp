@@ -2,8 +2,10 @@
 #include <google/protobuf/stubs/common.h>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/host_name.hpp>
-
+#include <pro/log/log.hpp>
 #include "xmx_connection.hpp"
+
+#include <functional>
 
 namespace xmax {
 	using namespace xmaxapp;
@@ -42,14 +44,6 @@ namespace xmax {
 		void Connect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator endpointItr);
 		
 		/**
-		* call back of socket accept
-		*/
-		void OnAccept();
-
-		void OnConnect();
-
-		void OnResolve();
-		/**
 		*  start a session
 		*/
 		void StartSession(std::shared_ptr<XMX_Connection> pConnect);
@@ -75,6 +69,8 @@ namespace xmax {
 		uint								nClients_;
 		std::string							seedServer_;
 		std::vector<std::string>			peerAddressList_;
+
+		boost::asio::io_service*			pIoService_;
 	};
 
 	/**
@@ -91,6 +87,8 @@ namespace xmax {
 	*/
 	void XmaxNetPluginImpl::Init(boost::asio::io_service& io, const VarsMap& options)
 	{
+		pIoService_ = &io;
+
 		resolver_ = std::make_unique<tcp::resolver>( io );
 		acceptor_.reset( new tcp::acceptor(io) );
 
@@ -120,27 +118,13 @@ namespace xmax {
 			acceptor_->set_option(tcp::acceptor::reuse_address(true));
 			acceptor_->bind(endpoint_);
 			acceptor_->listen();
+			Logf("start to listen incoming peers");
 		}
 	}
 
 	void XmaxNetPluginImpl::SetEndpoint(const std::string& endpoint)
 	{
 		
-	}
-
-	void XmaxNetPluginImpl::OnAccept()
-	{
-
-	}
-
-	void XmaxNetPluginImpl::OnConnect()
-	{
-
-	}
-
-	void XmaxNetPluginImpl::OnResolve()
-	{
-
 	}
 
 	void XmaxNetPluginImpl::StartSession(std::shared_ptr<XMX_Connection> pConnect)
@@ -150,7 +134,14 @@ namespace xmax {
 
 	void XmaxNetPluginImpl::StartListen()
 	{
+		std::shared_ptr<tcp::socket> pSocket = std::make_shared<tcp::socket>(*pIoService_);
+		
+		auto onAccept = [pSocket, this](boost::system::error_code ec)
+		{
 
+		};
+		
+		acceptor_->async_accept(*pSocket, onAccept);
 	}
 
 	void XmaxNetPluginImpl::StartReadMsg(std::shared_ptr<XMX_Connection> pConnect)
