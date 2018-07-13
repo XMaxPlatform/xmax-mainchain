@@ -135,9 +135,9 @@ namespace unitedb
 		//template<typename Get>
 	};
 
-	struct ByID;
+	struct ByObjectID;
 
-	#define INDEXED_BY_ID boost::multi_index::ordered_unique<boost::multi_index::tag<ByID>, boost::multi_index::member<DBObjectBase, ObjectIDCode, &DBObjectBase::id_>>
+	#define INDEXED_BY_OBJECT_ID boost::multi_index::ordered_unique<boost::multi_index::tag<ByObjectID>, boost::multi_index::member<DBObjectBase, ObjectIDCode, &DBObjectBase::id_>>
 
 	template<typename _Object, typename... _Args>
 	using DBTableDeclaration = boost::multi_index_container<_Object, _Args..., DBAlloc<_Object> >;

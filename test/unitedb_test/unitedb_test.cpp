@@ -28,7 +28,7 @@ struct by_id;
 typedef DBTableDeclaration<
 	TestDBObject,
 	boost::multi_index::indexed_by<
-	INDEXED_BY_ID
+	INDEXED_BY_OBJECT_ID
 	>
 > TestIdx;
 
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 		a.xx = 1024;
 	});
 
-	auto xxf = tbl->FindObject<ByID>((ObjectIDCode)1);
+	auto xxf = tbl->FindObject<ByObjectID>((ObjectIDCode)1);
 
 
 	tbl->UpdateObject(xx, [&](TestTable::ObjectType& a)
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 		a.xx = 2048;
 	});
 
-	const auto& ids = tbl->GetOrderIndex<ByID>();
+	const auto& ids = tbl->GetOrderIndex<ByObjectID>();
 	std::vector<TestDBObject> objs;
 	for (auto it : ids)
 	{
