@@ -4,38 +4,46 @@
 */
 #pragma once
 #include <unitedb/dbtypes.hpp>
+#include <unitedb/typebase.hpp>
 #include <unitedb/dbobject.hpp>
 
 namespace unitedb
 {
 	class Database;
-	class ITable
+
+	template<typename _multi_index>
+	class TMappedIndex
 	{
 	public:
-		virtual ~ITable() {}
-	};
+		typedef _multi_index MultiIndexType;
+		typedef typename MultiIndexType::value_type ObjectType;
+		typedef DBAlloc<TMappedIndex> AllocType;
 
-	class DBTableBase : public ITable
-	{
+		TMappedIndex(AllocType alloc)
+			: indices_(alloc)
+		{
 
-	public:
+		}
+
 		ObjectIDCode GenerateID()
 		{
 			++counter_;
 			return counter_;
 		}
 
-	private:
 		ObjectIDCode counter_ = 0;
+		MultiIndexType indices_;
 	};
 
 	template<typename _multi_index>
-	class DBTable : public DBTableBase
+	class DBTable : public ITable
 	{
 	public:
-		typedef _multi_index MultiIndexType;
-		typedef typename MultiIndexType::value_type ObjectType;
-		typedef DBAlloc<DBTable> AllocType;
+		typedef TMappedIndex<_multi_index> MappedIndex;
+		typedef MappedIndex* MappedPtr;
+		typedef typename MappedIndex::MultiIndexType MultiIndexType;
+		typedef typename MappedIndex::ObjectType ObjectType;
+		typedef typename MappedIndex::AllocType AllocType;
 
 		static std::string TableName()
 		{
@@ -43,29 +51,22 @@ namespace unitedb
 			return type_name;
 		}
 
-		DBTable(DBAlloc<ObjectType> alloc)
-			: indices_(alloc)
-		{
-
-		}
-
 		template<typename Constructor>
 		ObjPtr<ObjectType> NewObject(Constructor&& c)
 		{
-			ObjectIDCode id = GenerateID();
+			ObjectIDCode id = ptr_->GenerateID();
 			auto constructor = [&](ObjectType& v) {
 				c(v);
 				v.id_ = id;
 			};
 
-			auto result = indices_.emplace(constructor, indices_.get_allocator());
+			auto result = GetMapped().emplace(constructor, GetMapped().get_allocator());
 
 			if (!result.second) {
 				BOOST_THROW_EXCEPTION(std::logic_error("Could not insert object, most likely a uniqueness constraint was violated"));
 			}
 			return ObjPtr<ObjectType>::MakePtr(result.first.operator->());
 		}
-
 
 		template<typename OrderedTag, typename Key>
 		ObjPtr<ObjectType> FindObject(const Key& k) const
@@ -85,7 +86,7 @@ namespace unitedb
 		template<typename UpdateFunc>
 		void UpdateObject(const ObjPtr<ObjectType>& obj, UpdateFunc&& update)
 		{
-			auto result = indices_.modify(indices_.iterator_to(obj.Get()), update);
+			auto result = GetMapped().modify(GetMapped().iterator_to(obj.Get()), update);
 			if (!result)
 				BOOST_THROW_EXCEPTION(std::logic_error("Could not Update object, most likely a uniqueness constraint was violated."));
 		}
@@ -94,7 +95,7 @@ namespace unitedb
 		{
 			if (obj)
 			{
-				indices_.erase(indices_.iterator_to(obj.Get()));
+				GetMapped().erase(GetMapped().iterator_to(obj.Get()));
 			}
 		}
 
@@ -106,25 +107,38 @@ namespace unitedb
 		template<typename OrderedTag>
 		auto GetOrderIndex() const -> decltype( ((const MultiIndexType*)(nullptr))->template get<OrderedTag>() )
 		{
-			return indices_.template get<OrderedTag>();
+			return GetMapped().template get<OrderedTag>();
 		}
 
-		//template<typename Get>
-
-
-		friend class Database;
-
 	protected:
-		MultiIndexType indices_;
+		DBTable(IDatabase* owner, MappedPtr ptr)
+			: owner_(owner)
+			, ptr_(ptr)
+		{
 
+		}
+
+		inline MultiIndexType & GetMapped()
+		{
+			return ptr_->indices_;
+		}
+		inline const MultiIndexType & GetMapped() const
+		{
+			return ptr_->indices_;
+		}
+		MappedPtr ptr_ = nullptr;
+		IDatabase* owner_ = nullptr;
+		//template<typename Get>
 	};
 
-	struct ByID;
+	struct ByObjectID;
 
-	#define INDEXED_BY_ID boost::multi_index::ordered_unique<boost::multi_index::tag<ByID>, boost::multi_index::member<DBObjectBase, ObjectIDCode, &DBObjectBase::id_>>
+	#define INDEXED_BY_OBJECT_ID boost::multi_index::ordered_unique<boost::multi_index::tag<ByObjectID>, boost::multi_index::member<DBObjectBase, ObjectIDCode, &DBObjectBase::id_>>
 
 	template<typename _Object, typename... _Args>
 	using DBTableDeclaration = boost::multi_index_container<_Object, _Args..., DBAlloc<_Object> >;
+
+
 
 
 }
