@@ -4,6 +4,7 @@
 */
 #pragma once
 #include <unitedb/dbtypes.hpp>
+#include <unitedb/typebase.hpp>
 #include <unitedb/dbobject.hpp>
 
 namespace unitedb
@@ -32,13 +33,6 @@ namespace unitedb
 
 		ObjectIDCode counter_ = 0;
 		MultiIndexType indices_;
-	};
-
-
-	class ITable
-	{
-	public:
-		virtual ~ITable() {}
 	};
 
 	template<typename _multi_index>
@@ -117,8 +111,9 @@ namespace unitedb
 		}
 
 	protected:
-		DBTable(MappedPtr ptr)
-			: ptr_(ptr)
+		DBTable(IDatabase* owner, MappedPtr ptr)
+			: owner_(owner)
+			, ptr_(ptr)
 		{
 
 		}
@@ -132,6 +127,7 @@ namespace unitedb
 			return ptr_->indices_;
 		}
 		MappedPtr ptr_ = nullptr;
+		IDatabase* owner_ = nullptr;
 		//template<typename Get>
 	};
 

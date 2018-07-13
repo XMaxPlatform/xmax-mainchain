@@ -5,7 +5,7 @@
 #pragma once
 #include <unitedb/dbtypes.hpp>
 #include <unitedb/database.hpp>
-namespace unitedb
+namespace unitedb 
 {
 
 }

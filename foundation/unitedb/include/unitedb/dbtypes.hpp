@@ -22,5 +22,4 @@ namespace unitedb
 
 	template<typename T>
 	using MappedVector = std::vector<T, DBAlloc<T> >;
-
 }

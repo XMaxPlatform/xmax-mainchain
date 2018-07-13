@@ -5,14 +5,16 @@
 #pragma once
 
 #include <unitedb/dbtypes.hpp>
+#include <unitedb/typebase.hpp>
+#include <unitedb/dbtable.hpp>
 #include <boost/interprocess/managed_mapped_file.hpp>
 #include <memory>
 #include <pro/io/file_system.hpp>
-#include <unitedb/dbtable.hpp>
+
 
 namespace unitedb
 {
-	class Database
+	class Database : public IDatabase
 	{
 	public:
 		template<typename T>
@@ -20,8 +22,8 @@ namespace unitedb
 		{
 		public:
 			typedef typename T::MappedPtr MappedPtr;
-			TableInst(MappedPtr p)
-				: T(p)
+			TableInst(IDatabase* owner, MappedPtr p)
+				: T(owner, p)
 			{
 			}
 		};
@@ -53,7 +55,7 @@ namespace unitedb
 			{
 				tables_.resize(typeCode + 1);
 			}
-			tables_[typeCode].reset(new TableInst<TableType>(ptr));
+			tables_[typeCode].reset(new TableInst<TableType>(this, ptr));
 		}
 
 		mapped_file::segment_manager* GetSegmentManager() const
