@@ -15,6 +15,7 @@ namespace xmaxapp
 
 	using PluginFactoryFunction = PluginFace* (ApplicationBase*);
 	using PluginInitOptions = void (OptionsDesc& cli, OptionsDesc& cfg);
+	using DependentPluginVistior = std::function<void(const std::string& plugin_name)>;
 
 	class PluginFactory
 	{
@@ -35,18 +36,25 @@ namespace xmaxapp
 		*/
 		void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
 
+		/**
+		* Visit dependent plugin recursively
+		* @param[in] DependentPluginVistior visitor function		
+		*/
+		void VisitDependentPluginsRecursively(DependentPluginVistior visitor);
+
 	private:
 		/**
 		* constructor 
 		* @param[in] string name of plugin
 		* @param[in] std::function factory method
 		* @param[in] std::function initoptions
-		*/
-		PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2);
+		*/		
+		PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2, std::optional<const std::vector<std::string>> op_dependent_plugins);
 
 		string plugin_name_;
 		std::function<PluginFactoryFunction> create_function_;
 		std::function<PluginInitOptions> init_options_;
+		std::vector<std::string> dependent_plugins_;
 
 	public:
 		/**
@@ -133,7 +141,7 @@ namespace xmaxapp
 /**
 * this macro help you generate code of a concrete plugin
 */
-#define GENERATED_PLUGIN(plugin_self, super_class, init_opt) \
+#define GENERATED_PLUGIN(plugin_self, super_class, init_opt, ...) \
 	public:\
 		typedef super_class Super;\
 		static const xmaxapp::string& PluginName()\

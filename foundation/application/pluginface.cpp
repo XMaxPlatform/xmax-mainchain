@@ -10,12 +10,15 @@ namespace xmaxapp
 	std::unordered_map<string, std::unique_ptr<PluginFactory>> PluginFactory::sPluginFactorys;
 
 
-	PluginFactory::PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2)
+	PluginFactory::PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2
+	, std::optional<const std::vector<std::string>> op_dependent_plugins)
 		: plugin_name_(_name)
 		, create_function_(_function)
-		, init_options_(_function2)
+		, init_options_(_function2)		
 	{
-
+		if (op_dependent_plugins) {
+			dependent_plugins_ = op_dependent_plugins.value();
+		}
 	}
 
 	PluginFace* PluginFactory::CreatePlugin(ApplicationBase* owner)
@@ -43,11 +46,25 @@ namespace xmaxapp
 	}
 
 
+	//--------------------------------------------------
+	void PluginFactory::VisitDependentPluginsRecursively(DependentPluginVistior visitor)
+	{
+		for (auto& name : dependent_plugins_)
+		{
+			auto factory = GetPluginFactory(name);
+			if (factory) {
+				factory->VisitDependentPluginsRecursively(visitor);
+			}
+			visitor(name);
+		}
+
+	}
+
 	bool PluginFactory::RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2)
 	{
 		if (sPluginFactorys.find(_name) == sPluginFactorys.end())
 		{
-			sPluginFactorys[_name].reset(new PluginFactory(_name, _function, _function2));
+			sPluginFactorys[_name].reset(new PluginFactory(_name, _function, _function2, {}));
 			return true;
 		}
 		else
