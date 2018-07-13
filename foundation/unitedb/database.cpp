@@ -57,7 +57,6 @@ namespace unitedb
 
 		init(dir, managed_file_size);
 	}
-
 	void Database::init(const fs::path& dir, uint64_t managed_file_size)
 	{
 		if (!fs::exists(dir))
@@ -73,6 +72,14 @@ namespace unitedb
 
 	Database::~Database()
 	{
+		Flush();
+	}
 
+	void Database::Flush()
+	{
+		if (db_file_)
+		{
+			db_file_->flush();
+		}
 	}
 }

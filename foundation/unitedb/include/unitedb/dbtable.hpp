@@ -92,7 +92,10 @@ namespace unitedb
 
 		void DeleteObject(const ObjPtr<ObjectType>& obj)
 		{
-			indices_.erase(indices_.iterator_to(obj.Get()));
+			if (obj)
+			{
+				indices_.erase(indices_.iterator_to(obj.Get()));
+			}
 		}
 
 		//template<typename OrderedTag>

@@ -86,6 +86,7 @@ namespace unitedb
 			return static_cast<TableType*>(tables_[TableType::ObjectType::TypeCode].Get());
 		}
 
+		void Flush();
 	private:
 
 		void init(const fs::path& dir, uint64_t managed_file_size);
