@@ -62,6 +62,53 @@ namespace unitedb
 
 		static const ObjectTypeCode TypeCode = _Type;
 	};
+
+	template<typename T>
+	class ObjRef : T
+	{
+	public:
+		T* operator ->() const
+		{
+			return (T*)this;
+		}
+	};
+
+
+	template<typename T>
+	class ObjPtr
+	{
+	public:
+		const T * operator ->() const
+		{
+			return ptr;
+		}
+		explicit operator bool() const
+		{
+			return ptr != nullptr;
+		}
+
+		const T& Get() const
+		{
+			return *ptr;
+		}
+
+		static ObjPtr<T> MakePtr(const T* p)
+		{
+			return ObjPtr<T>(p);
+		}
+	private:
+
+		ObjPtr() = default;
+
+		ObjPtr(const T* p)
+			: ptr(p)
+		{
+		}
+
+		const T * ptr = nullptr;
+	};
+
+
 }
 
 

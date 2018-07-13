@@ -49,6 +49,67 @@ namespace unitedb
 
 		}
 
+		template<typename Constructor>
+		ObjPtr<ObjectType> NewObject(Constructor&& c)
+		{
+			ObjectIDCode id = GenerateID();
+			auto constructor = [&](ObjectType& v) {
+				c(v);
+				v.id_ = id;
+			};
+
+			auto result = indices_.emplace(constructor, indices_.get_allocator());
+
+			if (!result.second) {
+				BOOST_THROW_EXCEPTION(std::logic_error("Could not insert object, most likely a uniqueness constraint was violated"));
+			}
+			return ObjPtr<ObjectType>::MakePtr(result.first.operator->());
+		}
+
+
+		template<typename OrderedTag, typename Key>
+		ObjPtr<ObjectType> FindObject(const Key& k) const
+		{
+			auto& idx = GetOrderIndex<OrderedTag>();
+
+			auto it = idx.find(k);
+
+			if (it != idx.end())
+			{
+				return ObjPtr<ObjectType>::MakePtr(&(*it));
+			}
+
+			return ObjPtr<ObjectType>::MakePtr(nullptr);
+		}
+
+		template<typename UpdateFunc>
+		void UpdateObject(const ObjPtr<ObjectType>& obj, UpdateFunc&& update)
+		{
+			auto result = indices_.modify(indices_.iterator_to(obj.Get()), update);
+			if (!result)
+				BOOST_THROW_EXCEPTION(std::logic_error("Could not Update object, most likely a uniqueness constraint was violated."));
+		}
+
+		template<typename Key, typename UpdateFunc>
+		void DeleteObject(const ObjPtr<ObjectType>& obj, UpdateFunc&& update)
+		{
+			indices_.erase(indices_.iterator_to(obj));
+		}
+
+		//template<typename OrderedTag>
+		//const typename MultiIndexType::index<OrderedTag>::type& GetOrderIndex() const
+		//{
+		//	return indices_.get<OrderedTag>();
+		//}
+		template<typename OrderedTag>
+		auto GetOrderIndex() const -> decltype( ((const MultiIndexType*)(nullptr))->template get<OrderedTag>() )
+		{
+			return indices_.template get<OrderedTag>();
+		}
+
+		//template<typename Get>
+
+
 		friend class Database;
 
 	protected:
