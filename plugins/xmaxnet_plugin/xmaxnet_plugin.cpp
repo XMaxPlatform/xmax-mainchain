@@ -13,7 +13,7 @@ namespace xmax {
 	using boost::asio::ip::host_name;
 
 	const char* s_ServerAddress = "server-address";
-
+	const char* s_PeerAddress   = "peer-address";
 
 	/**
 	*  Implementation details of the xmax net plugin
@@ -34,6 +34,8 @@ namespace xmax {
 		* @param[in]	std::string		endpoint of network
 		*/
 		void SetEndpoint(const std::string& endpoint);
+
+		void StartUpImpl();
 
 		void Connect(std::shared_ptr<XMX_Connection> pConnect);
 
@@ -72,6 +74,7 @@ namespace xmax {
 		std::vector<XMX_Connection>			connections_;
 		uint								nClients_;
 		std::string							seedServer_;
+		std::vector<std::string>			peerAddressList_;
 	};
 
 	/**
@@ -80,7 +83,7 @@ namespace xmax {
 	*/
 	XmaxNetPluginImpl::~XmaxNetPluginImpl()
 	{
-		ShutdownProtobufLibrary();
+		
 	}
 	/**
 	*  Initialize network
@@ -101,6 +104,22 @@ namespace xmax {
 			tcp::resolver::query query(tcp::v4(), addr.c_str(), port.c_str());
 			endpoint_ = *resolver_->resolve(query);
 			acceptor_.reset(new tcp::acceptor(io));
+		}
+
+		if (options.count(s_PeerAddress))
+		{
+			peerAddressList_ = options.at(s_PeerAddress).as<std::vector<std::string>>();
+		}
+	}
+
+	void XmaxNetPluginImpl::StartUpImpl()
+	{
+		if (acceptor_ != nullptr)
+		{
+			acceptor_->open(endpoint_.protocol());
+			acceptor_->set_option(tcp::acceptor::reuse_address(true));
+			acceptor_->bind(endpoint_);
+			acceptor_->listen();
 		}
 	}
 
@@ -179,13 +198,16 @@ namespace xmax {
 	}
 
 	//--------------------------------------------------
-	void XmaxNetPlugin::Startup() {	
+	void XmaxNetPlugin::Startup() 
+	{	
 		PluginFace::Startup();
+		impl_->StartUpImpl();
 	}
 
 
 	//--------------------------------------------------
-	void XmaxNetPlugin::Shutdown() {	
+	void XmaxNetPlugin::Shutdown() 
+	{	
 		impl_.reset();
 
 
