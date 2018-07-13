@@ -68,25 +68,6 @@ namespace unitedb
 			tables_[typeCode].Set(ptr);
 		}
 
-		template<typename TableType, typename Constructor>
-		typename const TableType::ObjectType& NewObject(Constructor&& c)
-		{
-			TableType* table = GetTable<TableType>();
-
-			auto constructor = [&](TableType::ObjectType& v) {
-				v.id_ = table->GenerateID();
-				c(v);
-			};
-
-			auto result = table->indices_.emplace(constructor, table->indices_.get_allocator());
-
-			if (!result.second) {
-				BOOST_THROW_EXCEPTION(std::logic_error("Could not insert object, most likely a uniqueness constraint was violated"));
-			}
-			return *result.first;
-		}
-
-
 		mapped_file::segment_manager* GetSegmentManager() const
 		{
 			return db_file_->get_segment_manager();

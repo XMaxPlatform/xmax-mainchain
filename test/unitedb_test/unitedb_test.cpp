@@ -21,6 +21,7 @@ public:
 	}
 	TestDBObject() = default;
 
+	int xx = 5;
 };
 
 struct by_id;
@@ -42,18 +43,40 @@ BOOST_AUTO_TEST_CASE(db_test)
 
 	db.InitTable<TestTable>();
 
-	db.NewObject<TestTable>([&](TestTable::ObjectType& a)
+	auto tbl = db.GetTable<TestTable>();
+
+	auto xx = tbl->NewObject([&](TestTable::ObjectType& a)
 	{
-		int xx = a.id_;
+		a.xx = 1024;
+	});
+
+	auto xxf = tbl->FindObject<ByID>((ObjectIDCode)1);
+
+
+	tbl->UpdateObject(xx, [&](TestTable::ObjectType& a)
+	{
+		a.xx = 2048;
 	});
 
 	TestIdx tidxs(db.GetSegmentManager());
 
+	TestIdx::index<ByID>::type& tp = tidxs.get<ByID>();
+
 	tidxs.emplace([&](TestTable::ObjectType& a)
 	{
-		int xx = a.id_;
 	}, TestTable::AllocType(db.GetSegmentManager()));
 
+	auto& idx = tidxs.get<ByID>();
+
+	auto ff = idx.find(0);
+
+	idx.iterator_to(*ff);
+
+	tidxs.modify( ff,[&](TestTable::ObjectType& a)
+	{
+	});
+
+	int ss = 0;
 	//tidxs.get<0>().emplace(TestDBObject());
 }
 
