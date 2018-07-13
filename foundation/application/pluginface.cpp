@@ -60,11 +60,12 @@ namespace xmaxapp
 
 	}
 
-	bool PluginFactory::RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2)
+	bool PluginFactory::RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2,
+		std::vector<string> dependent_plugins)
 	{
 		if (sPluginFactorys.find(_name) == sPluginFactorys.end())
 		{
-			sPluginFactorys[_name].reset(new PluginFactory(_name, _function, _function2, {}));
+			sPluginFactorys[_name].reset(new PluginFactory(_name, _function, _function2, std::move(dependent_plugins)));
 			return true;
 		}
 		else

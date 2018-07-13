@@ -79,7 +79,8 @@ namespace xmaxapp
 		* @param[in] std::function		factory method
 		* @param[in] std::function		init options
 		*/
-		static bool RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2);
+		static bool RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2, 
+			std::vector<string> dependent_plugins);
 	protected:
 		static std::unordered_map<string, std::unique_ptr<PluginFactory>> sPluginFactorys;
 	};
@@ -151,7 +152,7 @@ namespace xmaxapp
 		}	\
 		static bool RegistSelf()\
 		{\
-			return xmaxapp::PluginFactory::RegistFactory(PluginName(), createPlugin, init_opt);\
+			return xmaxapp::PluginFactory::RegistFactory(PluginName(), createPlugin, init_opt, {__VA_ARGS__});\
 		}\
 		virtual const xmaxapp::string& GetName() const override\
 		{\
