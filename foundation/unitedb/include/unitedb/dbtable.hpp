@@ -90,10 +90,9 @@ namespace unitedb
 				BOOST_THROW_EXCEPTION(std::logic_error("Could not Update object, most likely a uniqueness constraint was violated."));
 		}
 
-		template<typename Key, typename UpdateFunc>
-		void DeleteObject(const ObjPtr<ObjectType>& obj, UpdateFunc&& update)
+		void DeleteObject(const ObjPtr<ObjectType>& obj)
 		{
-			indices_.erase(indices_.iterator_to(obj));
+			indices_.erase(indices_.iterator_to(obj.Get()));
 		}
 
 		//template<typename OrderedTag>

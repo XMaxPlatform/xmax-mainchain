@@ -45,9 +45,16 @@ namespace unitedb
 			}
 		private:
 			BaseTable* ptr_;
-		}; 
+		};
+
+		enum InitFlag
+		{
+			NoFlag = 0,
+			Discard = 1,
+		};
 
 		Database(const fs::path& dir, uint64_t managed_file_size);
+		Database(const fs::path& dir, uint64_t managed_file_size, InitFlag flag);
 		~Database();
 
 		template<typename TableType>
@@ -80,6 +87,9 @@ namespace unitedb
 		}
 
 	private:
+
+		void init(const fs::path& dir, uint64_t managed_file_size);
+
 		std::unique_ptr<mapped_file> db_file_;
 		fs::path	db_path_;
 		fs::path	db_file_path_;

@@ -32,17 +32,41 @@ namespace unitedb
 		}
 	}
 
+	static fs::path dbFilePath(const fs::path& work_path)
+	{
+		return work_path / "unitedb.bin";
+	}
+
 
 
 	Database::Database(const fs::path& dir, uint64_t managed_file_size)
 	{
-		if (!fs::exists(dir)) 
+		init(dir, managed_file_size);
+	}
+
+	Database::Database(const fs::path& dir, uint64_t managed_file_size, InitFlag flag)
+	{
+		if (flag & Discard)
+		{
+			auto file = dbFilePath(dir);
+			if (fs::exists(file))
+			{
+				fs::remove(file);
+			}
+		}
+
+		init(dir, managed_file_size);
+	}
+
+	void Database::init(const fs::path& dir, uint64_t managed_file_size)
+	{
+		if (!fs::exists(dir))
 		{
 			fs::create_directories(dir);
 		}
 
 		db_path_ = dir;
-		db_file_path_ = fs::absolute(db_path_ / "unitedb.bin");
+		db_file_path_ = dbFilePath(db_path_);
 
 		db_file_.reset(_OpenMappedFile(db_file_path_, managed_file_size));
 	}

@@ -37,9 +37,9 @@ typedef DBTable<TestIdx> TestTable;
 
 BOOST_AUTO_TEST_SUITE(unitedb_suite)
 
-BOOST_AUTO_TEST_CASE(db_test)
+BOOST_AUTO_TEST_CASE(db_develop_test)
 {
-	unitedb::Database db(fs::current_path(), 1024 * 1024);
+	unitedb::Database db(fs::current_path(), 1024 * 1024, unitedb::Database::Discard);
 
 	db.InitTable<TestTable>();
 
@@ -57,6 +57,8 @@ BOOST_AUTO_TEST_CASE(db_test)
 	{
 		a.xx = 2048;
 	});
+
+	tbl->DeleteObject(xxf);
 
 	TestIdx tidxs(db.GetSegmentManager());
 

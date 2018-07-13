@@ -63,16 +63,6 @@ namespace unitedb
 		static const ObjectTypeCode TypeCode = _Type;
 	};
 
-	template<typename T>
-	class ObjRef : T
-	{
-	public:
-		T* operator ->() const
-		{
-			return (T*)this;
-		}
-	};
-
 
 	template<typename T>
 	class ObjPtr
