@@ -12,6 +12,9 @@ namespace xmax {
 	using boost::asio::ip::address_v4;
 	using boost::asio::ip::host_name;
 
+	const char* s_ServerAddress = "server-address";
+
+
 	/**
 	*  Implementation details of the xmax net plugin
 	*
@@ -25,7 +28,7 @@ namespace xmax {
 		/**
 		* Init p2p newwork params
 		*/
-		void Init(boost::asio::io_service& io);
+		void Init(boost::asio::io_service& io, const VarsMap& options);
 		/**
 		* set endpoint (using boost params)
 		* @param[in]	std::string		endpoint of network
@@ -67,6 +70,8 @@ namespace xmax {
 		std::unique_ptr<tcp::resolver>		resolver_;
 		tcp::endpoint						endpoint_;
 		std::vector<XMX_Connection>			connections_;
+		uint								nClients_;
+		std::string							seedServer_;
 	};
 
 	/**
@@ -81,10 +86,22 @@ namespace xmax {
 	*  Initialize network
 	*
 	*/
-	void XmaxNetPluginImpl::Init(boost::asio::io_service& io)
+	void XmaxNetPluginImpl::Init(boost::asio::io_service& io, const VarsMap& options)
 	{
 		resolver_ = std::make_unique<tcp::resolver>( io );
 		acceptor_.reset( new tcp::acceptor(io) );
+
+		if (options.count(s_ServerAddress))
+		{
+			seedServer_		 = options.at(s_ServerAddress).as<std::string>();
+			size_t spos		 = seedServer_.find(':');
+			std::string addr = seedServer_.substr(0, spos);
+			std::string port = seedServer_.substr(spos + 1, seedServer_.size());
+
+			tcp::resolver::query query(tcp::v4(), addr.c_str(), port.c_str());
+			endpoint_ = *resolver_->resolve(query);
+			acceptor_.reset(new tcp::acceptor(io));
+		}
 	}
 
 	void XmaxNetPluginImpl::SetEndpoint(const std::string& endpoint)
@@ -158,7 +175,7 @@ namespace xmax {
 		PluginFace::Initialize(options);
 
 		impl_.reset(new XmaxNetPluginImpl());
-		impl_->Init(*GetApp()->GetService());
+		impl_->Init(*GetApp()->GetService(), options);
 	}
 
 	//--------------------------------------------------
