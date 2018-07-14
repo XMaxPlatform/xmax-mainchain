@@ -154,7 +154,17 @@ namespace xmax {
 				{
 					std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(pSocket);
 					connections_.push_back(pConnect);
+					StartSession(pConnect);
+					nMaxClients_++;
 				}
+				else
+				{
+					Warnf("MaxClinet exceeded!!!!\n");
+				}
+			}
+			else
+			{
+				ErrorSprintf("accept error: %s", ec.message());
 			}
 		};
 		
