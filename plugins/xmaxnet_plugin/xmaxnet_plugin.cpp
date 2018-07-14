@@ -23,7 +23,7 @@ namespace xmax {
 	*/
 	class XmaxNetPluginImpl {	
 	public:
-		XmaxNetPluginImpl() {}
+		XmaxNetPluginImpl();
 		~XmaxNetPluginImpl();
 
 	public:
@@ -62,21 +62,31 @@ namespace xmax {
 
 	private:
 
-		std::unique_ptr<tcp::acceptor>		acceptor_;
-		std::unique_ptr<tcp::resolver>		resolver_;
-		tcp::endpoint						endpoint_;
-		std::vector<XMX_Connection>			connections_;
-		uint								nClients_;
-		std::string							seedServer_;
-		std::vector<std::string>			peerAddressList_;
+		std::unique_ptr<tcp::acceptor>							acceptor_;
+		std::unique_ptr<tcp::resolver>							resolver_;
+		tcp::endpoint											endpoint_;
+		std::vector<std::shared_ptr<XMX_Connection>>			connections_;
+		uint													nMaxClients_;
+		uint													nCurrClients_;
+		std::string												seedServer_;
+		std::vector<std::string>								peerAddressList_;
 
-		boost::asio::io_service*			pIoService_;
+		boost::asio::io_service*								pIoService_;
 	};
 
 	/**
 	*  Implementations of XmaxNetPluginImpl interfaces
 	*
 	*/
+
+	XmaxNetPluginImpl::XmaxNetPluginImpl()
+		: nMaxClients_(0),
+		  nCurrClients_(0)
+	{
+
+	}
+
+
 	XmaxNetPluginImpl::~XmaxNetPluginImpl()
 	{
 		
@@ -138,7 +148,14 @@ namespace xmax {
 		
 		auto onAccept = [pSocket, this](boost::system::error_code ec)
 		{
-
+			if ( !ec )
+			{
+				if (nCurrClients_ < nMaxClients_)
+				{
+					std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(pSocket);
+					connections_.push_back(pConnect);
+				}
+			}
 		};
 		
 		acceptor_->async_accept(*pSocket, onAccept);
