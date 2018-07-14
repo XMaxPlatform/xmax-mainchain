@@ -39,47 +39,108 @@ namespace unitedb
 
 
 
-	Database::Database(const fs::path& dir, uint64_t managed_file_size)
+	class FDatabase : public Database
 	{
-		init(dir, managed_file_size);
-	}
+	public:
 
-	Database::Database(const fs::path& dir, uint64_t managed_file_size, InitFlag flag)
-	{
-		if (flag & Discard)
+
+		FDatabase(const fs::path& dir, uint64_t managed_file_size)
 		{
-			auto file = dbFilePath(dir);
-			if (fs::exists(file))
+			init(dir, managed_file_size);
+		}
+
+		FDatabase(const fs::path& dir, uint64_t managed_file_size, InitFlag flag)
+		{
+			if (flag & Discard)
 			{
-				fs::remove(file);
+				auto file = dbFilePath(dir);
+				if (fs::exists(file))
+				{
+					fs::remove(file);
+				}
+			}
+
+			init(dir, managed_file_size);
+		}
+		~FDatabase()
+		{
+			Flush();
+		}
+
+		virtual void Flush() override
+		{
+			if (db_file_)
+			{
+				db_file_->flush();
 			}
 		}
-
-		init(dir, managed_file_size);
-	}
-	void Database::init(const fs::path& dir, uint64_t managed_file_size)
-	{
-		if (!fs::exists(dir))
+		virtual mapped_file::segment_manager* GetSegmentManager() const override
 		{
-			fs::create_directories(dir);
+			return db_file_->get_segment_manager();
 		}
 
-		db_path_ = dir;
-		db_file_path_ = dbFilePath(db_path_);
+	protected:
 
-		db_file_.reset(_OpenMappedFile(db_file_path_, managed_file_size));
-	}
-
-	Database::~Database()
-	{
-		Flush();
-	}
-
-	void Database::Flush()
-	{
-		if (db_file_)
+		virtual mapped_file* getMappedFile() const override
 		{
-			db_file_->flush();
+			return db_file_.get();
 		}
+
+		virtual bool tableUsed(ObjectTypeCode code) const override
+		{
+			return (code < tablemap_.size() && tablemap_[code]);
+		}
+
+		virtual ITable* getTableInternal(ObjectTypeCode code) const override
+		{
+			return tablemap_[code].get();
+		}
+		virtual void setTableInternal(ObjectTypeCode code, ITable* table) override
+		{
+			if (tablemap_.size() <= code)
+			{
+				tablemap_.resize(code + 1);
+			}
+
+			tables_.push_back(table);
+			tablemap_[code].reset(table);
+		}
+	private:
+
+		void init(const fs::path& dir, uint64_t managed_file_size)
+		{
+			if (!fs::exists(dir))
+			{
+				fs::create_directories(dir);
+			}
+
+			db_path_ = dir;
+			db_file_path_ = dbFilePath(db_path_);
+
+			db_file_.reset(_OpenMappedFile(db_file_path_, managed_file_size));
+		}
+
+		std::unique_ptr<mapped_file> db_file_;
+		fs::path	db_path_;
+		fs::path	db_file_path_;
+
+		std::vector< ITable* > tables_;
+		std::vector< std::unique_ptr<ITable> > tablemap_;
+	};
+
+
+	Database* Database::InitDB(const fs::path& dir, uint64_t managed_file_size)
+	{
+		return new FDatabase(dir, managed_file_size);
 	}
+	Database* Database::InitDB(const fs::path& dir, uint64_t managed_file_size, InitFlag flag)
+	{
+		return new FDatabase(dir, managed_file_size, flag);
+	}
+
+	void Database::DestroyDB(Database* db)
+	{
+		delete db;
+	}
+
 }

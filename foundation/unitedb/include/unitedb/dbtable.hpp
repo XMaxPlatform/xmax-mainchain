@@ -144,11 +144,11 @@ namespace unitedb
 
 		}
 
-		inline MultiIndexType & GetMapped()
+		inline MultiIndexType& GetMapped()
 		{
 			return ptr_->GetIndices();
 		}
-		inline const MultiIndexType & GetMapped() const
+		inline const MultiIndexType& GetMapped() const
 		{
 			return ptr_->GetIndices();
 		}

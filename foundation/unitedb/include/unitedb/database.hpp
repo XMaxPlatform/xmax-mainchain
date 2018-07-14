@@ -34,9 +34,12 @@ namespace unitedb
 			Discard = 1,
 		};
 
-		Database(const fs::path& dir, uint64_t managed_file_size);
-		Database(const fs::path& dir, uint64_t managed_file_size, InitFlag flag);
-		~Database();
+		static Database* InitDB(const fs::path& dir, uint64_t managed_file_size);
+		static Database* InitDB(const fs::path& dir, uint64_t managed_file_size, InitFlag flag);
+
+		static void DestroyDB(Database* db);
+
+		virtual ~Database() {};
 
 		template<typename TableType>
 		void InitTable()
@@ -46,45 +49,31 @@ namespace unitedb
 			std::string tableName = TableType::TableName();
 
 
-			if (typeCode < tablemap_.size() && tablemap_[typeCode]) {
+			if (tableUsed(typeCode)) {
 				BOOST_THROW_EXCEPTION(std::logic_error(tableName + "::TypeCode is already in use"));
 			}
-			TableType::MappedPtr ptr = db_file_->find_or_construct< TableType::MappedIndex >(tableName.c_str()) ( TableType::AllocType(GetSegmentManager()) );
+			TableType::MappedPtr ptr = getMappedFile()->find_or_construct< TableType::MappedIndex >(tableName.c_str()) ( TableType::AllocType(GetSegmentManager()) );
 
 			ptr->Check();
 
-			if (tablemap_.size() <= typeCode)
-			{
-				tablemap_.resize(typeCode + 1);
-			}
-
 			ITable* table = new TableInst<TableType>(this, ptr);
 
-			tables_.push_back(table);
-			tablemap_[typeCode].reset(table);
+			setTableInternal(typeCode, table);
 		}
 
-		mapped_file::segment_manager* GetSegmentManager() const
-		{
-			return db_file_->get_segment_manager();
-		}
+		virtual mapped_file::segment_manager* GetSegmentManager() const = 0;
 
 		template<typename TableType>
-		TableType* GetTable() const
+		inline TableType* GetTable() const
 		{
-			return static_cast<TableType*>(tablemap_[TableType::ObjectType::TypeCode].get());
+			return static_cast<TableType*>(getTableInternal(TableType::ObjectType::TypeCode));
 		}
 
-		void Flush();
-	private:
-
-		void init(const fs::path& dir, uint64_t managed_file_size);
-
-		std::unique_ptr<mapped_file> db_file_;
-		fs::path	db_path_;
-		fs::path	db_file_path_;
-
-		std::vector< ITable* > tables_;
-		std::vector< std::unique_ptr<ITable> > tablemap_;
+		virtual void Flush() = 0;
+	protected:
+		virtual mapped_file* getMappedFile() const = 0;
+		virtual bool tableUsed(ObjectTypeCode code) const = 0;
+		virtual ITable* getTableInternal(ObjectTypeCode code) const = 0;
+		virtual void setTableInternal(ObjectTypeCode code, ITable*) = 0;
 	};
 }
