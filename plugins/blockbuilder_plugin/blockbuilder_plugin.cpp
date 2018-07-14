@@ -73,7 +73,7 @@ namespace xmax
 		auto db_size = options.at("db-runtime-size").as<uint64_t>();
 
 
-		impl_->unitedb_ = std::make_unique<unitedb::Database>(GetApp()->GetDataDir(), db_size * SIZE_MB);
+		impl_->unitedb_.reset(unitedb::Database::InitDB(GetApp()->GetDataDir(), db_size * SIZE_MB));
 
 
 	}

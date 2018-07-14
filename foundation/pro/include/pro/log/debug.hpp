@@ -3,7 +3,6 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <pro/exception/exceptions.hpp>
 
 namespace pro
 {
@@ -22,8 +21,4 @@ namespace pro
 
 #define debug_output(x) _debug_output(x);
 #define debug_output_line(x) _debug_output_line(x)
-
-
-#define PRO_ASSERT(condition, fmt, ...) if(!condition) PRO_EXCEPT_WITH_DESC(pro::AssertException,  STRING_FORMAT(fmt, __VA_ARGS__))
-
 }

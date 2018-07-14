@@ -82,6 +82,9 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 	tidxs.modify(ff, [&](TestTable::ObjectType& a)
 	{
 	});
+	
+	auto it = tidxs.erase(ff);
+
 
 	int ss = 0;
 	tidxs.get<0>().emplace(TestDBObject());

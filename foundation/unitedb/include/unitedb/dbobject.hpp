@@ -67,16 +67,22 @@ namespace unitedb
 	public:
 		const T * operator ->() const
 		{
-			return ptr;
+			return ptr_;
 		}
 		explicit operator bool() const
 		{
-			return ptr != nullptr;
+			return ptr_ != nullptr;
 		}
 
 		const T& Get() const
 		{
-			return *ptr;
+			BOOST_ASSERT_MSG(ptr_ != nullptr, "empty obj.");
+			return *ptr_;
+		}
+
+		const T* Ptr() const
+		{
+			return ptr_;
 		}
 
 		static ObjPtr<T> MakePtr(const T* p)
@@ -88,11 +94,11 @@ namespace unitedb
 		ObjPtr() = default;
 
 		ObjPtr(const T* p)
-			: ptr(p)
+			: ptr_(p)
 		{
 		}
 
-		const T * ptr = nullptr;
+		const T * ptr_ = nullptr;
 	};
 
 

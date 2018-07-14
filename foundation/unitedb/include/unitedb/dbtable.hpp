@@ -103,21 +103,22 @@ namespace unitedb
 			if (!result.second) {
 				BOOST_THROW_EXCEPTION(std::logic_error("Could not insert object, most likely a uniqueness constraint was violated"));
 			}
-			return ObjPtr<ObjectType>::MakePtr(result.first.operator->());
+			const ObjectType* ptr = result.first.operator->();
+			PushUndo(UndoOp::Create, ptr);
+			return ObjPtr<ObjectType>::MakePtr(ptr);
 		}
 
 		template<typename UpdateFunc>
 		void UpdateObject(const ObjPtr<ObjectType>& obj, UpdateFunc&& update)
 		{
-			auto result = GetMapped().modify(GetMapped().iterator_to(obj.Get()), update);
-			if (!result)
-				BOOST_THROW_EXCEPTION(std::logic_error("Could not Update object, most likely a uniqueness constraint was violated."));
+			updateObject(obj.Get(), update);
 		}
 
 		void DeleteObject(const ObjPtr<ObjectType>& obj)
 		{
 			if (obj)
 			{
+				PushUndo(UndoOp::Update, &obj);
 				GetMapped().erase(GetMapped().iterator_to(obj.Get()));
 			}
 		}
@@ -138,6 +139,17 @@ namespace unitedb
 			: ptr_(ptr)
 		{
 
+		}
+		template<typename UpdateFunc>
+		void updateObject(const ObjectType& obj, UpdateFunc&& update)
+		{
+			PushUndo(UndoOp::Update, &obj);
+			auto result = GetMapped().modify(GetMapped().iterator_to(obj), update);
+			if (!result)
+			{
+				PopUndo();
+				BOOST_THROW_EXCEPTION(std::logic_error("Could not Update object, most likely a uniqueness constraint was violated."));
+			}	
 		}
 
 		virtual void PushUndo(UndoOp::UndoCode code, const DBObjectBase* undo)

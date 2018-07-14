@@ -4,7 +4,7 @@
 */
 #pragma once
 #include <unitedb/dbtable.hpp>
-#include <stack>
+#include <deque>
 namespace unitedb
 {
 
@@ -37,7 +37,7 @@ namespace unitedb
 
 		}
 
-		std::stack< ObjectType, DBAlloc<ObjectType> > undo_;
+		std::deque< ObjectType, DBAlloc<ObjectType> > undo_;
 	};
 
 
@@ -65,7 +65,28 @@ namespace unitedb
 
 		virtual void PushUndo(UndoOp::UndoCode code, const DBObjectBase* undo) override
 		{
+			switch (code)
+			{
+			case unitedb::UndoOp::None:
+				break;
+			case unitedb::UndoOp::Create:
+			{
 
+			}
+				break;
+			case unitedb::UndoOp::Update:
+			{
+
+			}
+				break;
+			case unitedb::UndoOp::Delete:
+			{
+
+			}
+				break;
+			default:
+				break;
+			}
 		}
 
 		virtual void PopUndo() override
