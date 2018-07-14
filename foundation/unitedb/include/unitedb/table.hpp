@@ -16,6 +16,13 @@ namespace unitedb
 		virtual IDBTable* GetDBTable() const = 0;
 	};
 
+	class IDatabase
+	{
+	public:
+		virtual ~IDatabase() {}
+
+		virtual mapped_file::segment_manager* GetSegmentManager() const = 0;
+	};
 
 	template<typename T>
 	class FUndoCache
@@ -54,6 +61,18 @@ namespace unitedb
 		{
 			return const_cast<SelfType*>(this);
 		}
+
+
+		virtual void PushUndo(UndoOp::UndoCode code, const DBObjectBase* undo) override
+		{
+
+		}
+
+		virtual void PopUndo() override
+		{
+
+		}
+
 	protected:
 		UndoCacheType cache_;
 		IDatabase * owner_ = nullptr;

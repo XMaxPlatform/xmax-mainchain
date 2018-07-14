@@ -14,7 +14,7 @@
 
 namespace unitedb
 {
-	class Database : public IDatabase
+	class Database : protected IDatabase
 	{
 	public:
 
@@ -58,6 +58,11 @@ namespace unitedb
 		}
 
 		virtual void Flush() = 0;
+
+		mapped_file::segment_manager* GetSegment() const
+		{
+			return GetSegmentManager();
+		}
 	protected:
 		virtual mapped_file* getMappedFile() const = 0;
 		virtual bool tableUsed(ObjectTypeCode code) const = 0;

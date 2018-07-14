@@ -20,6 +20,16 @@ namespace unitedb
 
 		UndoCode op_ = UndoOp::None;
 		int32_t tag_ = 0;
+		
+
+	};
+
+	class UndoOpArg
+	{
+	public:
+		UndoOp::UndoCode op_ = UndoOp::None;
+		ObjectIDCode objid_ = 0;
+		int32_t tag_ = 0;
 
 	};
 }

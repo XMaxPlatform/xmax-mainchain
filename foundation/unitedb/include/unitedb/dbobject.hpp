@@ -10,9 +10,6 @@
 
 namespace unitedb
 {
-	using ObjectIDCode = int64_t;
-	using ObjectTypeCode = uint16_t;
-
 
 	class DBObjectBase
 	{

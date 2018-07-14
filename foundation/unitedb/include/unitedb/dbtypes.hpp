@@ -21,4 +21,8 @@ namespace unitedb
 
 	template<typename T>
 	using MappedVector = std::vector<T, DBAlloc<T> >;
+
+
+	using ObjectIDCode = int64_t;
+	using ObjectTypeCode = uint16_t;
 }
