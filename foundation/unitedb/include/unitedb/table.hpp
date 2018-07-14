@@ -16,37 +16,24 @@ namespace unitedb
 	};
 
 	template<typename T>
-	class DBTableInst : public T
-	{
-	public: 
-		typedef typename T::MappedPtr MappedPtr;
-		DBTableInst(MappedPtr p)
-			: T(p)
-		{
-
-		}
-	};
-
-	template<typename T>
-	class FTable : public ITable
+	class FTable : public T,  public ITable
 	{
 	public:
-		typedef typename DBTableInst<T> DBTableType;
-
+		typedef typename T DBTableType;
+		typedef typename DBTableType Super;
+		typedef typename FTable<T> SelfType;
 		typedef typename T::MappedPtr MappedPtr;
 		FTable(IDatabase* owner, MappedPtr p)
 			: owner_(owner)
-			, table(p)
+			, Super(p)
 		{
 		}
 
 		virtual IDBTable* GetDBTable() const override
 		{
-			return const_cast<DBTableType*>(&table);
+			return const_cast<SelfType*>(this);
 		}
-
 	protected:
-		DBTableType table;
 		IDatabase * owner_ = nullptr;
 	};
 }
