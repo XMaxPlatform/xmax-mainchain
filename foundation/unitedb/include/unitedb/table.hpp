@@ -4,6 +4,7 @@
 */
 #pragma once
 #include <unitedb/dbtable.hpp>
+#include <unitedb/dbundomanager.hpp>
 #include <deque>
 namespace unitedb
 {
@@ -14,6 +15,8 @@ namespace unitedb
 		virtual ~ITable() {}
 
 		virtual IDBTable* GetDBTable() const = 0;
+
+		virtual void SetUndo(bool set) = 0;
 	};
 
 	class IDatabase
@@ -22,6 +25,10 @@ namespace unitedb
 		virtual ~IDatabase() {}
 
 		virtual mapped_file::segment_manager* GetSegmentManager() const = 0;
+
+		virtual void PushUndo(const UndoOpArg& arg) = 0;
+
+		virtual void PopUndo() = 0;
 	};
 
 	template<typename T>
@@ -65,6 +72,11 @@ namespace unitedb
 
 		virtual void PushUndo(UndoOp::UndoCode code, const DBObjectBase* undo) override
 		{
+			if (noUndo())
+			{
+				return;
+			}
+
 			switch (code)
 			{
 			case unitedb::UndoOp::None:
@@ -91,10 +103,25 @@ namespace unitedb
 
 		virtual void PopUndo() override
 		{
+			if (noUndo())
+			{
+				return;
+			}
+		}
 
+		virtual void SetUndo(bool set)
+		{
+			no_undo_ = set;
 		}
 
 	protected:
+
+		inline bool noUndo() const
+		{
+			return no_undo_;
+		}
+
+		bool no_undo_ = true;
 		UndoCacheType cache_;
 		IDatabase * owner_ = nullptr;
 	};

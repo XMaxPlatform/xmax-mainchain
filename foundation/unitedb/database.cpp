@@ -2,7 +2,7 @@
 *  @file
 *  @copyright defined in xmax/LICENSE
 */
-#include <unitedb/dbundo.hpp>
+#include <unitedb/dbundomanager.hpp>
 #include <unitedb/database.hpp>
 namespace unitedb
 {
@@ -44,7 +44,6 @@ namespace unitedb
 	{
 	public:
 
-
 		FDatabase(const fs::path& dir, uint64_t managed_file_size)
 		{
 			init(dir, managed_file_size);
@@ -78,6 +77,25 @@ namespace unitedb
 		virtual mapped_file::segment_manager* GetSegmentManager() const override
 		{
 			return db_file_->get_segment_manager();
+		}
+
+		virtual UndoSession StartUndo()
+		{
+			for (auto it : tables_)
+			{
+				it->SetUndo(true);
+			}
+			return UndoMgr->StartUndo();
+		}
+
+		virtual void PushUndo(const UndoOpArg& arg) override
+		{
+			UndoMgr->PushUndo(arg);
+		}
+
+		virtual void PopUndo() override
+		{
+			UndoMgr->PopUndo();
 		}
 
 	protected:

@@ -7,6 +7,7 @@
 #include <unitedb/dbtypes.hpp>
 #include <unitedb/typebase.hpp>
 #include <unitedb/table.hpp>
+#include <unitedb/dbundo.hpp>
 #include <boost/interprocess/managed_mapped_file.hpp>
 #include <memory>
 #include <pro/io/file_system.hpp>
@@ -56,6 +57,8 @@ namespace unitedb
 		{
 			return static_cast<TableType*>(getTableInternal(TableType::ObjectType::TypeCode)->GetDBTable());
 		}
+
+		virtual UndoSession StartUndo() = 0;
 
 		virtual void Flush() = 0;
 
