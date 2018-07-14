@@ -11,28 +11,54 @@ namespace unitedb
 {
 	class Database;
 
+
+
+
 	template<typename _multi_index>
 	class TMappedIndex
 	{
 	public:
-		typedef _multi_index MultiIndexType;
-		typedef typename MultiIndexType::value_type ObjectType;
+		typedef _multi_index ContainerType;
+		typedef typename ContainerType::value_type ObjectType;
 		typedef DBAlloc<TMappedIndex> AllocType;
 
 		TMappedIndex(AllocType alloc)
 			: indices_(alloc)
+			, this_size(sizeof(*this))
+			, idxs_size(sizeof(typename ContainerType::node_type))
 		{
 
 		}
 
-		ObjectIDCode GenerateID()
+		void Check()
 		{
-			++counter_;
-			return counter_;
+			if (sizeof(*this) != this_size || sizeof(typename ContainerType::node_type) != idxs_size)
+			{
+				BOOST_THROW_EXCEPTION(std::runtime_error("content of memory does not match data expected by executable"));
+			}
 		}
 
-		ObjectIDCode counter_ = 0;
-		MultiIndexType indices_;
+		inline ObjectIDCode GenerateID()
+		{
+			++id_counter_;
+			return id_counter_;
+		}
+
+		inline ContainerType& GetIndices()
+		{
+			return indices_;
+		}
+
+		inline const ContainerType& GetIndices() const
+		{
+			return indices_;
+		}
+
+	private:
+		ContainerType indices_;
+		ObjectIDCode id_counter_ = 0;
+		const uint64_t this_size = 0;
+		const uint64_t idxs_size = 0;
 	};
 
 	template<typename _multi_index>
@@ -41,7 +67,7 @@ namespace unitedb
 	public:
 		typedef TMappedIndex<_multi_index> MappedIndex;
 		typedef MappedIndex* MappedPtr;
-		typedef typename MappedIndex::MultiIndexType MultiIndexType;
+		typedef typename MappedIndex::ContainerType MultiIndexType;
 		typedef typename MappedIndex::ObjectType ObjectType;
 		typedef typename MappedIndex::AllocType AllocType;
 
@@ -120,11 +146,11 @@ namespace unitedb
 
 		inline MultiIndexType & GetMapped()
 		{
-			return ptr_->indices_;
+			return ptr_->GetIndices();
 		}
 		inline const MultiIndexType & GetMapped() const
 		{
-			return ptr_->indices_;
+			return ptr_->GetIndices();
 		}
 		MappedPtr ptr_ = nullptr;
 		IDatabase* owner_ = nullptr;

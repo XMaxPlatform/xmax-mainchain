@@ -14,7 +14,7 @@
 
 namespace unitedb
 {
-	class Database : public IDatabase
+	class Database : protected IDatabase
 	{
 	public:
 		template<typename T>
@@ -46,16 +46,22 @@ namespace unitedb
 			std::string tableName = TableType::TableName();
 
 
-			if (typeCode < tables_.size() && tables_[typeCode]) {
+			if (typeCode < tablemap_.size() && tablemap_[typeCode]) {
 				BOOST_THROW_EXCEPTION(std::logic_error(tableName + "::TypeCode is already in use"));
 			}
 			TableType::MappedPtr ptr = db_file_->find_or_construct< TableType::MappedIndex >(tableName.c_str()) ( TableType::AllocType(GetSegmentManager()) );
 
-			if (tables_.size() <= typeCode)
+			ptr->Check();
+
+			if (tablemap_.size() <= typeCode)
 			{
-				tables_.resize(typeCode + 1);
+				tablemap_.resize(typeCode + 1);
 			}
-			tables_[typeCode].reset(new TableInst<TableType>(this, ptr));
+
+			ITable* table = new TableInst<TableType>(this, ptr);
+
+			tables_.push_back(table);
+			tablemap_[typeCode].reset(table);
 		}
 
 		mapped_file::segment_manager* GetSegmentManager() const
@@ -66,7 +72,7 @@ namespace unitedb
 		template<typename TableType>
 		TableType* GetTable() const
 		{
-			return static_cast<TableType*>(tables_[TableType::ObjectType::TypeCode].get());
+			return static_cast<TableType*>(tablemap_[TableType::ObjectType::TypeCode].get());
 		}
 
 		void Flush();
@@ -78,6 +84,7 @@ namespace unitedb
 		fs::path	db_path_;
 		fs::path	db_file_path_;
 
-		std::vector< std::unique_ptr<ITable> > tables_;
+		std::vector< ITable* > tables_;
+		std::vector< std::unique_ptr<ITable> > tablemap_;
 	};
 }
