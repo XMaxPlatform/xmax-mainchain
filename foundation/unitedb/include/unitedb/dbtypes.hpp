@@ -8,7 +8,6 @@
 #include <boost/interprocess/managed_mapped_file.hpp>
 namespace unitedb
 {
-
 	namespace fs = pro::fs;
 	namespace inpr = boost::interprocess;
 	using mapped_file = inpr::managed_mapped_file;
@@ -22,4 +21,8 @@ namespace unitedb
 
 	template<typename T>
 	using MappedVector = std::vector<T, DBAlloc<T> >;
+
+
+	using ObjectIDCode = int64_t;
+	using ObjectTypeCode = uint16_t;
 }

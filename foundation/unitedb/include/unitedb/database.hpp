@@ -6,7 +6,7 @@
 
 #include <unitedb/dbtypes.hpp>
 #include <unitedb/typebase.hpp>
-#include <unitedb/dbtable.hpp>
+#include <unitedb/table.hpp>
 #include <boost/interprocess/managed_mapped_file.hpp>
 #include <memory>
 #include <pro/io/file_system.hpp>
@@ -14,19 +14,9 @@
 
 namespace unitedb
 {
-	class Database : public IDatabase
+	class Database : protected IDatabase
 	{
 	public:
-		template<typename T>
-		class TableInst : public T
-		{
-		public:
-			typedef typename T::MappedPtr MappedPtr;
-			TableInst(IDatabase* owner, MappedPtr p)
-				: T(owner, p)
-			{
-			}
-		};
 
 		enum InitFlag
 		{
@@ -34,9 +24,12 @@ namespace unitedb
 			Discard = 1,
 		};
 
-		Database(const fs::path& dir, uint64_t managed_file_size);
-		Database(const fs::path& dir, uint64_t managed_file_size, InitFlag flag);
-		~Database();
+		static Database* InitDB(const fs::path& dir, uint64_t managed_file_size);
+		static Database* InitDB(const fs::path& dir, uint64_t managed_file_size, InitFlag flag);
+
+		static void DestroyDB(Database* db);
+
+		virtual ~Database() {};
 
 		template<typename TableType>
 		void InitTable()
@@ -46,38 +39,34 @@ namespace unitedb
 			std::string tableName = TableType::TableName();
 
 
-			if (typeCode < tables_.size() && tables_[typeCode]) {
+			if (tableUsed(typeCode)) {
 				BOOST_THROW_EXCEPTION(std::logic_error(tableName + "::TypeCode is already in use"));
 			}
-			TableType::MappedPtr ptr = db_file_->find_or_construct< TableType::MappedIndex >(tableName.c_str()) ( TableType::AllocType(GetSegmentManager()) );
+			TableType::MappedPtr ptr = getMappedFile()->find_or_construct< TableType::MappedIndex >(tableName.c_str()) ( TableType::AllocType(GetSegmentManager()) );
 
-			if (tables_.size() <= typeCode)
-			{
-				tables_.resize(typeCode + 1);
-			}
-			tables_[typeCode].reset(new TableInst<TableType>(this, ptr));
-		}
+			ptr->Check();
 
-		mapped_file::segment_manager* GetSegmentManager() const
-		{
-			return db_file_->get_segment_manager();
+			ITable* table = new FTable<TableType>(this, ptr);
+
+			setTableInternal(typeCode, table);
 		}
 
 		template<typename TableType>
-		TableType* GetTable() const
+		inline TableType* GetTable() const
 		{
-			return static_cast<TableType*>(tables_[TableType::ObjectType::TypeCode].get());
+			return static_cast<TableType*>(getTableInternal(TableType::ObjectType::TypeCode)->GetDBTable());
 		}
 
-		void Flush();
-	private:
+		virtual void Flush() = 0;
 
-		void init(const fs::path& dir, uint64_t managed_file_size);
-
-		std::unique_ptr<mapped_file> db_file_;
-		fs::path	db_path_;
-		fs::path	db_file_path_;
-
-		std::vector< std::unique_ptr<ITable> > tables_;
+		mapped_file::segment_manager* GetSegment() const
+		{
+			return GetSegmentManager();
+		}
+	protected:
+		virtual mapped_file* getMappedFile() const = 0;
+		virtual bool tableUsed(ObjectTypeCode code) const = 0;
+		virtual ITable* getTableInternal(ObjectTypeCode code) const = 0;
+		virtual void setTableInternal(ObjectTypeCode code, ITable*) = 0;
 	};
 }

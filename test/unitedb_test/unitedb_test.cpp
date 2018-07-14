@@ -39,11 +39,11 @@ BOOST_AUTO_TEST_SUITE(unitedb_suite)
 
 BOOST_AUTO_TEST_CASE(db_develop_test)
 {
-	unitedb::Database db(fs::current_path(), 1024 * 1024);//, unitedb::Database::Discard);//
+	std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::Discard));//);//
 
-	db.InitTable<TestTable>();
+	db->InitTable<TestTable>();
 
-	auto tbl = db.GetTable<TestTable>();
+	auto tbl = db->GetTable<TestTable>();
 
 	auto xx = tbl->NewObject([&](TestTable::ObjectType& a)
 	{
@@ -65,28 +65,29 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 		objs.push_back(it);
 	}
 
-	//tbl->DeleteObject(xxf);
+	TestIdx tidxs(db->GetSegment());
 
-	//TestIdx tidxs(db.GetSegmentManager());
+	TestIdx::index<ByObjectID>::type& tp = tidxs.get<ByObjectID>();
 
-	//TestIdx::index<ByID>::type& tp = tidxs.get<ByID>();
+	tidxs.emplace([&](TestTable::ObjectType& a)
+	{
+	}, TestTable::AllocType(db->GetSegment()));
 
-	//tidxs.emplace([&](TestTable::ObjectType& a)
-	//{
-	//}, TestTable::AllocType(db.GetSegmentManager()));
+	auto& idx = tidxs.get<ByObjectID>();
 
-	//auto& idx = tidxs.get<ByID>();
+	auto ff = idx.find(0);
 
-	//auto ff = idx.find(0);
+	idx.iterator_to(*ff);
 
-	//idx.iterator_to(*ff);
+	tidxs.modify(ff, [&](TestTable::ObjectType& a)
+	{
+	});
+	
+	auto it = tidxs.erase(ff);
 
-	//tidxs.modify( ff,[&](TestTable::ObjectType& a)
-	//{
-	//});
 
-	//int ss = 0;
-	//tidxs.get<0>().emplace(TestDBObject());
+	int ss = 0;
+	tidxs.get<0>().emplace(TestDBObject());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
