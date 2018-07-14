@@ -48,10 +48,20 @@ public:
 	 */
 	 void SendSignedBlockList();
 
+
+	 std::shared_ptr<tcp::socket> GetSocket() const;
+
 protected:
+
 private:
 
 	std::shared_ptr<tcp::socket>		socket_;
 };
+
+inline std::shared_ptr<tcp::socket> XMX_Connection::GetSocket() const
+{
+	return socket_;
+}
+
 
 }

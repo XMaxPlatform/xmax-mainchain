@@ -135,11 +135,14 @@ namespace xmax {
 	void XmaxNetPluginImpl::SetEndpoint(const std::string& endpoint)
 	{
 		
+		
 	}
 
 	void XmaxNetPluginImpl::StartSession(std::shared_ptr<XMX_Connection> pConnect)
 	{
-
+		tcp::no_delay nd(true);
+		pConnect->GetSocket()->set_option(nd);
+		StartReadMsg(pConnect);
 	}
 
 	void XmaxNetPluginImpl::StartListen()
