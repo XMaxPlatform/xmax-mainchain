@@ -11,9 +11,6 @@ namespace unitedb
 {
 	class Database;
 
-
-
-
 	template<typename _multi_index>
 	class TMappedIndex
 	{
@@ -62,7 +59,7 @@ namespace unitedb
 	};
 
 	template<typename _multi_index>
-	class DBTable : public ITable
+	class DBTable : public IDBTable
 	{
 	public:
 		typedef TMappedIndex<_multi_index> MappedIndex;
@@ -137,9 +134,8 @@ namespace unitedb
 		}
 
 	protected:
-		DBTable(IDatabase* owner, MappedPtr ptr)
-			: owner_(owner)
-			, ptr_(ptr)
+		DBTable( MappedPtr ptr)
+			: ptr_(ptr)
 		{
 
 		}
@@ -153,8 +149,6 @@ namespace unitedb
 			return ptr_->GetIndices();
 		}
 		MappedPtr ptr_ = nullptr;
-		IDatabase* owner_ = nullptr;
-		//template<typename Get>
 	};
 
 	struct ByObjectID;

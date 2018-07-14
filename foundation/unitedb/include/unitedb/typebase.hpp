@@ -7,10 +7,10 @@
 namespace unitedb
 {
 
-	class ITable
+	class IDBTable
 	{
 	public:
-		virtual ~ITable() {}
+		virtual ~IDBTable() {}
 	};
 
 	class IDatabase

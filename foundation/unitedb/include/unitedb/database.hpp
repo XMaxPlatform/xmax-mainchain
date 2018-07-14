@@ -6,7 +6,7 @@
 
 #include <unitedb/dbtypes.hpp>
 #include <unitedb/typebase.hpp>
-#include <unitedb/dbtable.hpp>
+#include <unitedb/table.hpp>
 #include <boost/interprocess/managed_mapped_file.hpp>
 #include <memory>
 #include <pro/io/file_system.hpp>
@@ -17,16 +17,6 @@ namespace unitedb
 	class Database : protected IDatabase
 	{
 	public:
-		template<typename T>
-		class TableInst : public T
-		{
-		public:
-			typedef typename T::MappedPtr MappedPtr;
-			TableInst(IDatabase* owner, MappedPtr p)
-				: T(owner, p)
-			{
-			}
-		};
 
 		enum InitFlag
 		{
@@ -56,7 +46,7 @@ namespace unitedb
 
 			ptr->Check();
 
-			ITable* table = new TableInst<TableType>(this, ptr);
+			ITable* table = new FTable<TableType>(this, ptr);
 
 			setTableInternal(typeCode, table);
 		}
@@ -66,7 +56,7 @@ namespace unitedb
 		template<typename TableType>
 		inline TableType* GetTable() const
 		{
-			return static_cast<TableType*>(getTableInternal(TableType::ObjectType::TypeCode));
+			return static_cast<TableType*>(getTableInternal(TableType::ObjectType::TypeCode)->GetDBTable());
 		}
 
 		virtual void Flush() = 0;

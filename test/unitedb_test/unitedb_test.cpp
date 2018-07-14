@@ -65,9 +65,6 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 		objs.push_back(it);
 	}
 
-
-
-
 	TestIdx tidxs(db->GetSegmentManager());
 
 	TestIdx::index<ByObjectID>::type& tp = tidxs.get<ByObjectID>();
