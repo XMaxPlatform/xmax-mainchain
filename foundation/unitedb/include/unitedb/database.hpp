@@ -14,7 +14,7 @@
 
 namespace unitedb
 {
-	class Database : protected IDatabase
+	class Database : public IDatabase
 	{
 	public:
 
@@ -50,8 +50,6 @@ namespace unitedb
 
 			setTableInternal(typeCode, table);
 		}
-
-		virtual mapped_file::segment_manager* GetSegmentManager() const = 0;
 
 		template<typename TableType>
 		inline TableType* GetTable() const

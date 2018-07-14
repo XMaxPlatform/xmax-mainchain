@@ -4,6 +4,7 @@
 */
 #pragma once
 #include <unitedb/dbtable.hpp>
+#include <stack>
 namespace unitedb
 {
 
@@ -15,16 +16,36 @@ namespace unitedb
 		virtual IDBTable* GetDBTable() const = 0;
 	};
 
+
+	template<typename T>
+	class FUndoCache
+	{
+	public:
+		typedef T ObjectType;
+
+		template<typename Alloc>
+		FUndoCache(const Alloc& cc)
+			: undo_(cc)
+		{
+
+		}
+
+		std::stack< ObjectType, DBAlloc<ObjectType> > undo_;
+	};
+
+
 	template<typename T>
 	class FTable : public T,  public ITable
 	{
 	public:
+		typedef FUndoCache<T> UndoCacheType;
 		typedef typename T DBTableType;
 		typedef typename DBTableType Super;
 		typedef typename FTable<T> SelfType;
 		typedef typename T::MappedPtr MappedPtr;
 		FTable(IDatabase* owner, MappedPtr p)
 			: owner_(owner)
+			, cache_(owner->GetSegmentManager())
 			, Super(p)
 		{
 		}
@@ -34,6 +55,7 @@ namespace unitedb
 			return const_cast<SelfType*>(this);
 		}
 	protected:
+		UndoCacheType cache_;
 		IDatabase * owner_ = nullptr;
 	};
 }

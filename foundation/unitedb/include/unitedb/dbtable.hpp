@@ -6,6 +6,7 @@
 #include <unitedb/dbtypes.hpp>
 #include <unitedb/typebase.hpp>
 #include <unitedb/dbobject.hpp>
+#include <unitedb/dbundoop.hpp>
 
 namespace unitedb
 {
@@ -73,6 +74,20 @@ namespace unitedb
 			static std::string type_name = boost::core::demangle(typeid(typename ObjectType).name()) + "Table";
 			return type_name;
 		}
+		template<typename OrderedTag, typename Key>
+		ObjPtr<ObjectType> FindObject(const Key& k) const
+		{
+			auto& idx = GetOrderIndex<OrderedTag>();
+
+			auto it = idx.find(k);
+
+			if (it != idx.end())
+			{
+				return ObjPtr<ObjectType>::MakePtr(&(*it));
+			}
+
+			return ObjPtr<ObjectType>::MakePtr(nullptr);
+		}
 
 		template<typename Constructor>
 		ObjPtr<ObjectType> NewObject(Constructor&& c)
@@ -89,21 +104,6 @@ namespace unitedb
 				BOOST_THROW_EXCEPTION(std::logic_error("Could not insert object, most likely a uniqueness constraint was violated"));
 			}
 			return ObjPtr<ObjectType>::MakePtr(result.first.operator->());
-		}
-
-		template<typename OrderedTag, typename Key>
-		ObjPtr<ObjectType> FindObject(const Key& k) const
-		{
-			auto& idx = GetOrderIndex<OrderedTag>();
-
-			auto it = idx.find(k);
-
-			if (it != idx.end())
-			{
-				return ObjPtr<ObjectType>::MakePtr(&(*it));
-			}
-
-			return ObjPtr<ObjectType>::MakePtr(nullptr);
 		}
 
 		template<typename UpdateFunc>
@@ -136,6 +136,16 @@ namespace unitedb
 	protected:
 		DBTable( MappedPtr ptr)
 			: ptr_(ptr)
+		{
+
+		}
+
+		virtual void PushUndo(UndoOp::UndoCode code, const DBObjectBase* undo)
+		{
+
+		}
+
+		virtual void PopUndo()
 		{
 
 		}

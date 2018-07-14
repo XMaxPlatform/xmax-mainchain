@@ -6,7 +6,6 @@
 
 namespace unitedb
 {
-
 	class IDBTable
 	{
 	public:
@@ -17,6 +16,8 @@ namespace unitedb
 	{
 	public:
 		virtual ~IDatabase() {}
+
+		virtual mapped_file::segment_manager* GetSegmentManager() const = 0;
 	};
 
 }

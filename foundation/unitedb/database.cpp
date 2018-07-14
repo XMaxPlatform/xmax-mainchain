@@ -2,6 +2,7 @@
 *  @file
 *  @copyright defined in xmax/LICENSE
 */
+#include <unitedb/dbundo.hpp>
 #include <unitedb/database.hpp>
 namespace unitedb
 {
@@ -118,6 +119,9 @@ namespace unitedb
 			db_file_path_ = dbFilePath(db_path_);
 
 			db_file_.reset(_OpenMappedFile(db_file_path_, managed_file_size));
+
+
+			UndoMgr = std::make_unique<UndoManager>(GetSegmentManager());
 		}
 
 		std::unique_ptr<mapped_file> db_file_;
@@ -126,6 +130,8 @@ namespace unitedb
 
 		std::vector< ITable* > tables_;
 		std::vector< std::unique_ptr<ITable> > tablemap_;
+
+		std::unique_ptr<UndoManager> UndoMgr;
 	};
 
 
