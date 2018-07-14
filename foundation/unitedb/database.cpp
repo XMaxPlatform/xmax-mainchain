@@ -40,7 +40,7 @@ namespace unitedb
 
 
 
-	class FDatabase : public Database
+	class FDatabase : public Database, public IDatabase
 	{
 	public:
 
@@ -79,13 +79,14 @@ namespace unitedb
 			return db_file_->get_segment_manager();
 		}
 
+		virtual mapped_file* GetMappdFile() const override
+		{
+			return db_file_.get();
+		}
+
 		virtual UndoSession StartUndo()
 		{
-			for (auto it : tables_)
-			{
-				it->SetUndo(true);
-			}
-			return UndoMgr->StartUndo();
+			return UndoSession(UndoMgr->StartUndo());
 		}
 
 		virtual void PushUndo(const UndoOpArg& arg) override
@@ -98,11 +99,23 @@ namespace unitedb
 			UndoMgr->PopUndo();
 		}
 
-	protected:
+		virtual void EnableUndo(bool set) override
+		{
+			for (auto it : tables_)
+			{
+				it->SetUndo(set);
+			}
+		}
 
-		virtual mapped_file* getMappedFile() const override
+	protected:
+		virtual mapped_file* getMappdFile() const override
 		{
 			return db_file_.get();
+		}
+
+		virtual IDatabase* castDatabase() override
+		{
+			return this;
 		}
 
 		virtual bool tableUsed(ObjectTypeCode code) const override
@@ -139,7 +152,7 @@ namespace unitedb
 			db_file_.reset(_OpenMappedFile(db_file_path_, managed_file_size));
 
 
-			UndoMgr = std::make_unique<UndoManager>(GetSegmentManager());
+			UndoMgr = std::make_unique<UndoManager>(this, GetSegmentManager());
 		}
 
 		std::unique_ptr<mapped_file> db_file_;

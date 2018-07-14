@@ -15,7 +15,7 @@
 
 namespace unitedb
 {
-	class Database : protected IDatabase
+	class Database
 	{
 	public:
 
@@ -43,11 +43,11 @@ namespace unitedb
 			if (tableUsed(typeCode)) {
 				BOOST_THROW_EXCEPTION(std::logic_error(tableName + "::TypeCode is already in use"));
 			}
-			TableType::MappedPtr ptr = getMappedFile()->find_or_construct< TableType::MappedIndex >(tableName.c_str()) ( TableType::AllocType(GetSegmentManager()) );
+			TableType::MappedPtr ptr = getMappdFile()->find_or_construct< TableType::MappedIndex >(tableName.c_str()) ( TableType::AllocType(getMappdFile()->get_segment_manager()) );
 
 			ptr->Check();
 
-			ITable* table = new FTable<TableType>(this, ptr);
+			ITable* table = new FTable<TableType>(castDatabase(), ptr);
 
 			setTableInternal(typeCode, table);
 		}
@@ -64,10 +64,11 @@ namespace unitedb
 
 		mapped_file::segment_manager* GetSegment() const
 		{
-			return GetSegmentManager();
+			return getMappdFile()->get_segment_manager();
 		}
 	protected:
-		virtual mapped_file* getMappedFile() const = 0;
+		virtual IDatabase* castDatabase() = 0;
+		virtual mapped_file* getMappdFile() const = 0;
 		virtual bool tableUsed(ObjectTypeCode code) const = 0;
 		virtual ITable* getTableInternal(ObjectTypeCode code) const = 0;
 		virtual void setTableInternal(ObjectTypeCode code, ITable*) = 0;

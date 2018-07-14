@@ -4,41 +4,17 @@
 */
 #pragma once
 #include <unitedb/dbtable.hpp>
-#include <unitedb/dbundomanager.hpp>
 #include <deque>
 namespace unitedb
 {
-
-	class ITable
-	{
-	public:
-		virtual ~ITable() {}
-
-		virtual IDBTable* GetDBTable() const = 0;
-
-		virtual void SetUndo(bool set) = 0;
-	};
-
-	class IDatabase
-	{
-	public:
-		virtual ~IDatabase() {}
-
-		virtual mapped_file::segment_manager* GetSegmentManager() const = 0;
-
-		virtual void PushUndo(const UndoOpArg& arg) = 0;
-
-		virtual void PopUndo() = 0;
-	};
 
 	template<typename T>
 	class FUndoCache
 	{
 	public:
 		typedef T ObjectType;
-
-		template<typename Alloc>
-		FUndoCache(const Alloc& cc)
+		typedef DBAlloc< FUndoCache<T> > AllocType;
+		FUndoCache(const AllocType& cc)
 			: undo_(cc)
 		{
 
@@ -59,9 +35,11 @@ namespace unitedb
 		typedef typename T::MappedPtr MappedPtr;
 		FTable(IDatabase* owner, MappedPtr p)
 			: owner_(owner)
-			, cache_(owner->GetSegmentManager())
 			, Super(p)
 		{
+			//std::string type_name = boost::core::demangle(typeid(SelfType).name()) + "UndoCache";
+
+			//cache_ = owner_->GetMappdFile()->find_or_construct< UndoCacheType >(type_name.c_str()) (UndoCacheType::AllocType(owner_->GetSegmentManager()));
 		}
 
 		virtual IDBTable* GetDBTable() const override
@@ -111,7 +89,7 @@ namespace unitedb
 
 		virtual void SetUndo(bool set)
 		{
-			no_undo_ = set;
+			no_undo_ = !set;
 		}
 
 	protected:
@@ -122,7 +100,7 @@ namespace unitedb
 		}
 
 		bool no_undo_ = true;
-		UndoCacheType cache_;
+		UndoCacheType* cache_;
 		IDatabase * owner_ = nullptr;
 	};
 }

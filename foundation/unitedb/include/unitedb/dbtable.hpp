@@ -4,14 +4,11 @@
 */
 #pragma once
 #include <unitedb/dbtypes.hpp>
-#include <unitedb/typebase.hpp>
 #include <unitedb/dbobject.hpp>
 #include <unitedb/dbundoop.hpp>
 
 namespace unitedb
 {
-	class Database;
-
 	template<typename _multi_index>
 	class TMappedIndex
 	{

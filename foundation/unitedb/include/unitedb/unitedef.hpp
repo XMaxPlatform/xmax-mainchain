@@ -6,5 +6,10 @@
 #include <pro/types/generictypes.hpp>
 namespace unitedb
 {
+	class IDBTable
+	{
+	public:
+		virtual ~IDBTable() {}
+	};
 
 }

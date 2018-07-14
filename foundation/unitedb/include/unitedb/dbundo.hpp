@@ -41,7 +41,7 @@ namespace unitedb
 			Undo();
 		}
 		
-		friend class UndoManager;
+		friend class FDatabase;
 	protected:
 
 		UndoSession(IGenericUndo* ptr)
