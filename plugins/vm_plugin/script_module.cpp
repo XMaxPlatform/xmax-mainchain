@@ -1,7 +1,7 @@
 //@file
 //@copyright defined in xmax/LICENSE
 #include "script_module.hpp"
-
+#include "script_global_module.hpp"
 #include <libplatform/libplatform.h>
 
 namespace xmax {
@@ -9,8 +9,7 @@ namespace xmax {
 	namespace scriptv8 {
 		
 		ScriptMoudle::ScriptMoudle()
-			:isolate_(nullptr)
-			,current_code_()
+			:current_code_()
 			,main_foo_()
 			,instruction_count_(0)
 			,last_intruction_()
@@ -20,7 +19,6 @@ namespace xmax {
 
 		ScriptMoudle::~ScriptMoudle()
 		{
-			if (isolate_!=nullptr)
 			{
 				Discard();
 			}
@@ -45,17 +43,14 @@ namespace xmax {
 			V8::InitializePlatform(platform);
 			V8::Initialize();
 
-			Isolate::CreateParams create_params;
-			create_params.array_buffer_allocator =v8::ArrayBuffer::Allocator::NewDefaultAllocator();
-			isolate_ = Isolate::New(create_params);
 		}
 
 		v8::Handle<v8::Value> ScriptMoudle::DoworkInContext(const v8::HandleScope& scope, const v8::Local<ObjectTemplate>& global, const v8::Local<Context>& context, const v8::Context::Scope& ctxScope)
 		{
 			V8_ParseWithPlugin();
-			CompileJsCode(isolate_, context, current_code_.c_str() );
+			CompileJsCode(ScriptGlobalMoudle::GetInstance().GetIsolate(), context, current_code_.c_str() );
 			CleanInstrunction();
-			v8::Handle<v8::Value> result =  CallJsFoo(isolate_, context, main_foo_.c_str() , 0, NULL);
+			v8::Handle<v8::Value> result =  CallJsFoo(ScriptGlobalMoudle::GetInstance().GetIsolate(), context, main_foo_.c_str() , 0, NULL);
 			V8_ParseWithOutPlugin();
 			int test = result->Int32Value();
 			return result;
@@ -72,13 +67,12 @@ namespace xmax {
 			main_foo_ = fooName;
 			namespace  ph = std::placeholders;
 			//return EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
-			return Undefined(isolate_);
+			return Undefined(ScriptGlobalMoudle::GetInstance().GetIsolate());
 		}
 
 		void ScriptMoudle::Discard()
 		{
-			isolate_->Dispose();
-			isolate_ = nullptr;
+						
 			v8::V8::Dispose();
 			v8::V8::ShutdownPlatform();
 		}

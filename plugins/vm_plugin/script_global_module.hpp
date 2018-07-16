@@ -21,9 +21,17 @@ namespace xmax {
 			void SetupV8Env();
 			void DiscardV8Env();
 
+			Isolate * GetIsolate();
 		private:
 			Isolate * isolate_;
 
 		};
+
+		inline v8::Isolate * ScriptGlobalMoudle::GetIsolate()
+		{
+			return isolate_;
+		}
+
+
 	}
 }

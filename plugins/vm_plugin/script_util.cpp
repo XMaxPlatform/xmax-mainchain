@@ -67,7 +67,14 @@ namespace xmax {
 			if (script.IsEmpty()) {
 				std::cerr << "js compile failed" << std::endl;
 			}
-
+			TryCatch trycatch(pIsolate);
+			Local<Value> v = script->Run();
+			if (v.IsEmpty()) {
+				Local<Value> exception = trycatch.Exception();
+				String::Utf8Value exception_str(exception);
+				printf("Exception: %s\n", *exception_str);
+				// ...
+			}
 		}
 
 		v8::Handle<v8::Value> CallJsFoo(Isolate* pIsolate, const Local<Context>& context, const char* fooname, unsigned int argc, Handle<v8::Value>* params)
