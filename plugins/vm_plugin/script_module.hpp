@@ -29,7 +29,6 @@ namespace xmax {
 
 			void CleanInstrunction();
 
-			Isolate* GetIsolate();
 		private:
 			v8::Handle<v8::Value> DoworkInContext(const HandleScope& scope, const Local<ObjectTemplate>& global, const Local<Context>& context, const Context::Scope& ctxScope);
 
@@ -41,14 +40,10 @@ namespace xmax {
 			std::string				 current_code_;
 			std::string				 main_foo_;
 
-			Isolate*                 isolate_;
 
 			PersistentCpyableContext current_context_;
 
 		};
-		inline v8::Isolate* ScriptMoudle::GetIsolate()
-		{
-			return isolate_;
-		}
+	
 	}
 }
