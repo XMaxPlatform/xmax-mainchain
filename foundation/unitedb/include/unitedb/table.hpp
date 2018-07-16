@@ -37,9 +37,9 @@ namespace unitedb
 			: owner_(owner)
 			, Super(p)
 		{
-			//std::string type_name = boost::core::demangle(typeid(SelfType).name()) + "UndoCache";
+			std::string type_name = boost::core::demangle(typeid(SelfType).name()) + "UndoCache";
 
-			//cache_ = owner_->GetMappdFile()->find_or_construct< UndoCacheType >(type_name.c_str()) (UndoCacheType::AllocType(owner_->GetSegmentManager()));
+			cache_ = owner_->GetMappdFile()->find_or_construct< UndoCacheType >(type_name.c_str()) (UndoCacheType::AllocType(owner_->GetSegmentManager()));
 		}
 
 		virtual IDBTable* GetDBTable() const override
