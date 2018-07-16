@@ -23,10 +23,16 @@ namespace xmax {
 			Platform* platform = platform::CreateDefaultPlatform();
 			V8::InitializePlatform(platform);
 			V8::Initialize();
+
+
+			Isolate::CreateParams create_params;
+			create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
+			isolate_ = Isolate::New(create_params);
 		}
 
 		void ScriptGlobalMoudle::DiscardV8Env()
 		{
+			isolate_->Dispose();
 			v8::V8::Dispose();
 			v8::V8::ShutdownPlatform();
 		}
