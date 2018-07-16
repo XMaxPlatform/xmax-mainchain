@@ -11,12 +11,19 @@ namespace xmax
 	using boost::asio::ip::address_v4;
 	using boost::asio::ip::host_name;
 
+	enum ConnectionStatus
+	{
+		CS_DISCONNECTED = 0,
+		CS_CONNECTING,
+		CS_CONNECTED,
+	};
+
 
 	class XMX_Connection : public std::enable_shared_from_this<XMX_Connection>
 {
 public:
 
-	 XMX_Connection(const std::string& endpoint);
+	 XMX_Connection(const std::string& endpoint, const std::shared_ptr<tcp::socket>& s);
 
 	 XMX_Connection(const std::shared_ptr<tcp::socket>& s);
 	 /**
@@ -53,12 +60,16 @@ public:
 
 	 const std::string& GetPeerAddress() const;
 
+	 void	SetConStatus(ConnectionStatus cs);
+	 ConnectionStatus GetConStatus() const;
+
 protected:
 
 private:
 
 	std::shared_ptr<tcp::socket>		socket_;
 	std::string							peerAddr_;
+	ConnectionStatus					conStatus_;
 };
 
 inline std::shared_ptr<tcp::socket> XMX_Connection::GetSocket() const
@@ -69,6 +80,16 @@ inline std::shared_ptr<tcp::socket> XMX_Connection::GetSocket() const
 inline const std::string& XMX_Connection::GetPeerAddress() const
 {
 	return peerAddr_;
+}
+
+inline void XMX_Connection::SetConStatus(ConnectionStatus cs)
+{
+	conStatus_ = cs;
+}
+
+inline ConnectionStatus XMX_Connection::GetConStatus() const
+{
+	return conStatus_;
 }
 
 }

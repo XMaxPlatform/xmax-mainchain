@@ -31,17 +31,12 @@ namespace xmax {
 		* Init p2p newwork params
 		*/
 		void Init(boost::asio::io_service& io, const VarsMap& options);
-		/**
-		* set endpoint (using boost params)
-		* @param[in]	std::string		endpoint of network
-		*/
-		void SetEndpoint(const std::string& endpoint);
 
 		void StartUpImpl();
 
 		void ConnectImpl(const std::string& host);
 
-		void Connect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator endpointItr);
+		void StartConnect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator itr);
 		
 		/**
 		*  start listening loop
@@ -128,12 +123,6 @@ namespace xmax {
 		}
 	}
 
-	void XmaxNetPluginImpl::SetEndpoint(const std::string& endpoint)
-	{
-		
-		
-	}
-
 	void XmaxNetPluginImpl::StartListen()
 	{
 		std::shared_ptr<tcp::socket> pSocket = std::make_shared<tcp::socket>(*pIoService_);
@@ -178,13 +167,55 @@ namespace xmax {
 			return;
 		}
 
-		std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(host);
+		size_t pos = host.find(':');
+
+		if (pos == std::string::npos)
+		{
+			Warnf("invalid peer address format\n");
+			return;
+		}
+
+		std::shared_ptr<tcp::socket> s = std::make_shared<tcp::socket>(*pIoService_);
+
+		std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(host, s);
 		connections_.push_back(pConnect);
+
+		std::string addr = host.substr(0, pos);
+		std::string port = host.substr(pos + 1);
+
+		tcp::resolver::query query(tcp::v4(), addr.c_str(), port.c_str());
+		auto onResolve = [&](const boost::system::error_code& ec, tcp::resolver::iterator itr)
+		{
+			if (!ec)
+			{
+				StartConnect(pConnect, itr);
+			}
+			else
+			{
+				WarnSprintf("resolve %s error : %s", host.c_str(), ec.message().c_str());
+				connections_.pop_back();
+			}
+		};
+
+		resolver_->async_resolve(query, onResolve);
 	}
 
-	void XmaxNetPluginImpl::Connect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator endpointItr)
+	void XmaxNetPluginImpl::StartConnect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator itr)
 	{
+		pConnect->SetConStatus(CS_CONNECTING);
 
+		auto onConnect = [&](const boost::system::error_code& ec)
+		{
+			if (!ec)
+			{
+				StartRecvMsg(pConnect);
+			} 
+			else
+			{
+			}
+		};
+
+		pConnect->GetSocket()->async_connect(*itr, onConnect);
 	}
 
 	bool XmaxNetPluginImpl::_IsConnectd(const std::string& host)

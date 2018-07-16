@@ -2,14 +2,17 @@
 
 namespace xmax
 {
-XMX_Connection::XMX_Connection(const std::string& endpoint)
-	: peerAddr_(endpoint)
+XMX_Connection::XMX_Connection(const std::string& endpoint, const std::shared_ptr<tcp::socket>& s)
+	: peerAddr_(endpoint),
+	  socket_(s),
+	  conStatus_(CS_DISCONNECTED)
 {
-
+	
 }
 
 XMX_Connection::XMX_Connection(const std::shared_ptr<tcp::socket>& s)
-	: socket_(s)
+	: socket_(s),
+	  conStatus_(CS_DISCONNECTED)
 {
 
 }
