@@ -3,6 +3,7 @@
 namespace xmax
 {
 XMX_Connection::XMX_Connection(const std::string& endpoint)
+	: peerAddr_(endpoint)
 {
 
 }

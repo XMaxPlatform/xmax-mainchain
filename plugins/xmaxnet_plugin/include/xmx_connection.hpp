@@ -51,11 +51,14 @@ public:
 
 	 std::shared_ptr<tcp::socket> GetSocket() const;
 
+	 const std::string& GetPeerAddress() const;
+
 protected:
 
 private:
 
 	std::shared_ptr<tcp::socket>		socket_;
+	std::string							peerAddr_;
 };
 
 inline std::shared_ptr<tcp::socket> XMX_Connection::GetSocket() const
@@ -63,5 +66,9 @@ inline std::shared_ptr<tcp::socket> XMX_Connection::GetSocket() const
 	return socket_;
 }
 
+inline const std::string& XMX_Connection::GetPeerAddress() const
+{
+	return peerAddr_;
+}
 
 }

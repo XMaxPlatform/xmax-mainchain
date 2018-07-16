@@ -39,14 +39,10 @@ namespace xmax {
 
 		void StartUpImpl();
 
-		void Connect(std::shared_ptr<XMX_Connection> pConnect);
+		void ConnectImpl(const std::string& host);
 
 		void Connect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator endpointItr);
 		
-		/**
-		*  start a session
-		*/
-		void StartSession(std::shared_ptr<XMX_Connection> pConnect);
 		/**
 		*  start listening loop
 		*/
@@ -54,11 +50,11 @@ namespace xmax {
 		/**
 		*  async read a message
 		*/
-		void StartReadMsg(std::shared_ptr<XMX_Connection> pConnect);
-		/**
-		*  handle various msg
-		*/
-		void HandleMsg();
+		void StartRecvMsg(std::shared_ptr<XMX_Connection> pConnect);
+		
+	protected:
+
+		bool _IsConnectd(const std::string& host);
 
 	private:
 
@@ -138,13 +134,6 @@ namespace xmax {
 		
 	}
 
-	void XmaxNetPluginImpl::StartSession(std::shared_ptr<XMX_Connection> pConnect)
-	{
-		tcp::no_delay nd(true);
-		pConnect->GetSocket()->set_option(nd);
-		StartReadMsg(pConnect);
-	}
-
 	void XmaxNetPluginImpl::StartListen()
 	{
 		std::shared_ptr<tcp::socket> pSocket = std::make_shared<tcp::socket>(*pIoService_);
@@ -157,7 +146,9 @@ namespace xmax {
 				{
 					std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(pSocket);
 					connections_.push_back(pConnect);
-					StartSession(pConnect);
+					tcp::no_delay nd(true);
+					pConnect->GetSocket()->set_option(nd);
+					StartRecvMsg(pConnect);
 					nMaxClients_++;
 				}
 				else
@@ -174,24 +165,39 @@ namespace xmax {
 		acceptor_->async_accept(*pSocket, onAccept);
 	}
 
-	void XmaxNetPluginImpl::StartReadMsg(std::shared_ptr<XMX_Connection> pConnect)
+	void XmaxNetPluginImpl::StartRecvMsg(std::shared_ptr<XMX_Connection> pConnect)
 	{
 
 	}
 
-	void XmaxNetPluginImpl::HandleMsg()
+	void XmaxNetPluginImpl::ConnectImpl(const std::string& host)
 	{
+		if (_IsConnectd(host))
+		{
+			Warnf("duplicated connection\n");
+			return;
+		}
 
-	}
-
-	void XmaxNetPluginImpl::Connect(std::shared_ptr<XMX_Connection> pConnect)
-	{
-
+		std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(host);
+		connections_.push_back(pConnect);
 	}
 
 	void XmaxNetPluginImpl::Connect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator endpointItr)
 	{
 
+	}
+
+	bool XmaxNetPluginImpl::_IsConnectd(const std::string& host)
+	{
+		for (const auto& pConnect : connections_)
+		{
+			if (pConnect->GetPeerAddress() == host)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 
@@ -235,10 +241,6 @@ namespace xmax {
 		PluginFace::Shutdown();
 	}
 
-	void XmaxNetPlugin::Connect(const std::string& endPoint)
-	{
-
-	}
 
 
 }
