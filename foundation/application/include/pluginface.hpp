@@ -7,6 +7,8 @@
 #include <apps.hpp>
 #include <app_types.hpp>
 #include <unordered_map>
+#include <boost/preprocessor/variadic/to_list.hpp>
+#include <boost/preprocessor/list/for_each.hpp>
 
 namespace xmaxapp
 {
@@ -142,6 +144,10 @@ namespace xmaxapp
 /**
 * this macro help you generate code of a concrete plugin
 */
+
+#define MACRO_TO_QUOTE(r, data, elem) #elem, 
+
+
 #define GENERATED_PLUGIN(plugin_self, super_class, init_opt, ...) \
 	public:\
 		typedef super_class Super;\
@@ -152,7 +158,8 @@ namespace xmaxapp
 		}	\
 		static bool RegistSelf()\
 		{\
-			return xmaxapp::PluginFactory::RegistFactory(PluginName(), createPlugin, init_opt, {#__VA_ARGS__});\
+			return xmaxapp::PluginFactory::RegistFactory(PluginName(), createPlugin, init_opt, \
+				{ BOOST_PP_LIST_FOR_EACH(MACRO_TO_QUOTE, _, BOOST_PP_VARIADIC_TO_LIST(__VA_ARGS__)) });\
 		}\
 		virtual const xmaxapp::string& GetName() const override\
 		{\
