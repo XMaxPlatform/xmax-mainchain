@@ -5,13 +5,14 @@
 #pragma once
 #include <unitedb/dbtypes.hpp>
 #include <unitedb/typebase.hpp>
+#include <unitedb/undo.hpp>
 #include <unitedb/dbundo.hpp>
 #include <unitedb/dbundoop.hpp>
 #include <deque>
 
 namespace unitedb
 {
-	using UndoOpStack = std::deque< UndoOp, DBAlloc<UndoOp> >;
+	using UndoOpStack = FUndoCache<UndoOp>;
 
 	class FUndo : public IGenericUndo
 	{
@@ -41,13 +42,17 @@ namespace unitedb
 		UndoManager(IDatabase* owner, const Alloc& cc)
 			: owner_(owner)
 		{
-
+			init();
 		}
+
 		IGenericUndo* StartUndo();
 
 		void PushUndo(const UndoOpArg& arg);
 
 		void PopUndo();
+
+	private:
+		void init();
 
 		IDatabase* owner_;
 		UndoOpStack* stack_;

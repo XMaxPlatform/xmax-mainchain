@@ -4,26 +4,9 @@
 */
 #pragma once
 #include <unitedb/dbtable.hpp>
-#include <deque>
+#include <unitedb/undo.hpp>
 namespace unitedb
 {
-
-	template<typename T>
-	class FUndoCache
-	{
-	public:
-		typedef T ObjectType;
-		typedef DBAlloc< FUndoCache<T> > AllocType;
-		FUndoCache(const AllocType& cc)
-			: undo_(cc)
-		{
-
-		}
-
-		std::deque< ObjectType, DBAlloc<ObjectType> > undo_;
-	};
-
-
 	template<typename T>
 	class FTable : public T,  public ITable
 	{

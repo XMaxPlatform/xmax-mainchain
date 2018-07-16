@@ -12,6 +12,13 @@ namespace unitedb
 		return nullptr;
 	}
 
+	void UndoManager::init()
+	{
+		std::string type_name = boost::core::demangle(typeid(UndoManager).name()) + "UndoCache";
+
+		stack_ = owner_->GetMappdFile()->find_or_construct< UndoOpStack >(type_name.c_str()) (UndoOpStack::AllocType(owner_->GetSegmentManager()));
+	}
+
 	void UndoManager::PushUndo(const UndoOpArg& arg)
 	{
 	}
