@@ -2,7 +2,7 @@
 *  @file
 *  @copyright defined in xmax/LICENSE
 */
-#include <unitedb/dbundomanager.hpp>
+#include <unitedb/undomanager.hpp>
 #include <unitedb/database.hpp>
 namespace unitedb
 {

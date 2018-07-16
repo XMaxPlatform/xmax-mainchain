@@ -43,20 +43,12 @@ namespace unitedb
 		{
 
 		}
-		IGenericUndo* StartUndo()
-		{
-			owner_->EnableUndo(true);
-			return nullptr;
-		}
+		IGenericUndo* StartUndo();
 
-		void PushUndo(const UndoOpArg& arg)
-		{
-		}
+		void PushUndo(const UndoOpArg& arg);
 
-		void PopUndo()
-		{
+		void PopUndo();
 
-		}
 		IDatabase* owner_;
 		UndoOpStack* stack_;
 
