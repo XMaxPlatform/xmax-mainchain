@@ -34,7 +34,11 @@ void XMX_Connection::Reset()
 
 void XMX_Connection::Close()
 {
-
+	conStatus_ = CS_DISCONNECTED;
+	if (socket_ != nullptr)
+	{
+		socket_->close();
+	}
 }
 
 void XMX_Connection::SendHandShake()

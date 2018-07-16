@@ -36,6 +36,8 @@ namespace xmax {
 
 		void ConnectImpl(const std::string& host);
 
+		void StartResolve(std::shared_ptr<XMX_Connection> pConnect);
+
 		void StartConnect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator itr);
 		
 		/**
@@ -180,6 +182,14 @@ namespace xmax {
 		std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(host, s);
 		connections_.push_back(pConnect);
 
+		StartResolve(pConnect);
+	}
+
+	void XmaxNetPluginImpl::StartResolve(std::shared_ptr<XMX_Connection> pConnect)
+	{
+		const std::string host = pConnect->GetPeerAddress();
+		size_t pos = host.find(':');
+
 		std::string addr = host.substr(0, pos);
 		std::string port = host.substr(pos + 1);
 
@@ -203,15 +213,28 @@ namespace xmax {
 	void XmaxNetPluginImpl::StartConnect(std::shared_ptr<XMX_Connection> pConnect, tcp::resolver::iterator itr)
 	{
 		pConnect->SetConStatus(CS_CONNECTING);
+		tcp::resolver::iterator currItr = itr;
 
 		auto onConnect = [&](const boost::system::error_code& ec)
 		{
 			if (!ec)
 			{
+				pConnect->SetConStatus(CS_CONNECTED);
 				StartRecvMsg(pConnect);
 			} 
 			else
 			{
+				if (currItr != tcp::resolver::iterator())
+				{
+					currItr++;
+					pConnect->Close();
+					StartConnect(pConnect, currItr);
+				}
+				else
+				{
+					pConnect->Close();
+					WarnSprintf("failed to connect to %s, error is %s", pConnect->GetPeerAddress().c_str(), ec.message().c_str());
+				}
 			}
 		};
 
