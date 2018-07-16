@@ -152,7 +152,7 @@ namespace xmaxapp
 		}	\
 		static bool RegistSelf()\
 		{\
-			return xmaxapp::PluginFactory::RegistFactory(PluginName(), createPlugin, init_opt, {__VA_ARGS__});\
+			return xmaxapp::PluginFactory::RegistFactory(PluginName(), createPlugin, init_opt, {#__VA_ARGS__});\
 		}\
 		virtual const xmaxapp::string& GetName() const override\
 		{\
