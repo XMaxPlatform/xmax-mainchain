@@ -135,6 +135,7 @@ namespace xmaxapp
 		auto add_plugin_visitor = [&added_plugins, this](auto& plugin_name) {
 			if (added_plugins.find(plugin_name) == added_plugins.end()) {
 				PluginFace* plugin = PluginFactory::NewPlugin(plugin_name, this);
+				assert(plugin);
 				pluginmap_[plugin_name].reset(plugin);
 				initialized_plugins_.push_back(plugin);
 				added_plugins[plugin_name] = plugin;
