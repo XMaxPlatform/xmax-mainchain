@@ -3,8 +3,9 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/host_name.hpp>
 #include <pro/log/log.hpp>
-#include "xmx_connection.hpp"
 
+#include "netmessage_pool.hpp"
+#include "xmx_connection.hpp"
 #include <functional>
 
 namespace xmax {
@@ -174,12 +175,13 @@ namespace xmax {
 
 		try
 		{
+			MessagePoolBuffer* pMsgPoolBuf = pConnect->GetMsgBuffer();
 			auto onReadFunc = [&](boost::system::error_code ec, std::size_t bytes)
 			{
 
 			};
 
-			//pConnect->GetSocket()->async_read_some()
+			pConnect->GetSocket()->async_read_some(pMsgPoolBuf->GetAvailableBufferFromPool(), onReadFunc);
 
 
 		}

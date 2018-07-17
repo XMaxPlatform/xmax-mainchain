@@ -1,6 +1,6 @@
 #include "netmessage_pool.hpp"
 
-namespace xmx
+namespace xmax
 {
 MessagePoolBuffer::MessagePoolBuffer()
 {

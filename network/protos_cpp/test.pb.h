@@ -38,7 +38,7 @@ namespace protobuf_test_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[3];
+  static const ::google::protobuf::internal::ParseTable schema[4];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -50,16 +50,22 @@ void InitDefaultsPersonImpl();
 void InitDefaultsPerson();
 void InitDefaultsAddressBookImpl();
 void InitDefaultsAddressBook();
+void InitDefaultsHelloMsgImpl();
+void InitDefaultsHelloMsg();
 inline void InitDefaults() {
   InitDefaultsPerson_PhoneNumber();
   InitDefaultsPerson();
   InitDefaultsAddressBook();
+  InitDefaultsHelloMsg();
 }
 }  // namespace protobuf_test_2eproto
 namespace tutorial {
 class AddressBook;
 class AddressBookDefaultTypeInternal;
 extern AddressBookDefaultTypeInternal _AddressBook_default_instance_;
+class HelloMsg;
+class HelloMsgDefaultTypeInternal;
+extern HelloMsgDefaultTypeInternal _HelloMsg_default_instance_;
 class Person;
 class PersonDefaultTypeInternal;
 extern PersonDefaultTypeInternal _Person_default_instance_;
@@ -492,6 +498,113 @@ class AddressBook : public ::google::protobuf::Message /* @@protoc_insertion_poi
   friend struct ::protobuf_test_2eproto::TableStruct;
   friend void ::protobuf_test_2eproto::InitDefaultsAddressBookImpl();
 };
+// -------------------------------------------------------------------
+
+class HelloMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:tutorial.HelloMsg) */ {
+ public:
+  HelloMsg();
+  virtual ~HelloMsg();
+
+  HelloMsg(const HelloMsg& from);
+
+  inline HelloMsg& operator=(const HelloMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  HelloMsg(HelloMsg&& from) noexcept
+    : HelloMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline HelloMsg& operator=(HelloMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const HelloMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const HelloMsg* internal_default_instance() {
+    return reinterpret_cast<const HelloMsg*>(
+               &_HelloMsg_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    3;
+
+  void Swap(HelloMsg* other);
+  friend void swap(HelloMsg& a, HelloMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline HelloMsg* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  HelloMsg* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const HelloMsg& from);
+  void MergeFrom(const HelloMsg& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(HelloMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string msg = 1;
+  void clear_msg();
+  static const int kMsgFieldNumber = 1;
+  const ::std::string& msg() const;
+  void set_msg(const ::std::string& value);
+  #if LANG_CXX11
+  void set_msg(::std::string&& value);
+  #endif
+  void set_msg(const char* value);
+  void set_msg(const char* value, size_t size);
+  ::std::string* mutable_msg();
+  ::std::string* release_msg();
+  void set_allocated_msg(::std::string* msg);
+
+  // @@protoc_insertion_point(class_scope:tutorial.HelloMsg)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr msg_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_test_2eproto::TableStruct;
+  friend void ::protobuf_test_2eproto::InitDefaultsHelloMsgImpl();
+};
 // ===================================================================
 
 
@@ -803,9 +916,68 @@ AddressBook::people() const {
   return people_;
 }
 
+// -------------------------------------------------------------------
+
+// HelloMsg
+
+// string msg = 1;
+inline void HelloMsg::clear_msg() {
+  msg_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& HelloMsg::msg() const {
+  // @@protoc_insertion_point(field_get:tutorial.HelloMsg.msg)
+  return msg_.GetNoArena();
+}
+inline void HelloMsg::set_msg(const ::std::string& value) {
+  
+  msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:tutorial.HelloMsg.msg)
+}
+#if LANG_CXX11
+inline void HelloMsg::set_msg(::std::string&& value) {
+  
+  msg_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:tutorial.HelloMsg.msg)
+}
+#endif
+inline void HelloMsg::set_msg(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:tutorial.HelloMsg.msg)
+}
+inline void HelloMsg::set_msg(const char* value, size_t size) {
+  
+  msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:tutorial.HelloMsg.msg)
+}
+inline ::std::string* HelloMsg::mutable_msg() {
+  
+  // @@protoc_insertion_point(field_mutable:tutorial.HelloMsg.msg)
+  return msg_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* HelloMsg::release_msg() {
+  // @@protoc_insertion_point(field_release:tutorial.HelloMsg.msg)
+  
+  return msg_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void HelloMsg::set_allocated_msg(::std::string* msg) {
+  if (msg != NULL) {
+    
+  } else {
+    
+  }
+  msg_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), msg);
+  // @@protoc_insertion_point(field_set_allocated:tutorial.HelloMsg.msg)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -5,6 +5,7 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/host_name.hpp>
 
+
 namespace xmax
 {
 	using boost::asio::ip::tcp;

@@ -1,11 +1,10 @@
 #pragma once
 
-#include "pro/utils/singleton.hpp"
 #include <boost/pool/object_pool.hpp>
 #include <boost/asio/buffer.hpp>
 #include <deque>
 
-namespace xmx
+namespace xmax
 {
 	struct bufferIndex
 	{
@@ -18,7 +17,7 @@ namespace xmx
 		{}
 	};
 
-	class MessagePoolBuffer : public pro::Singleton<MessagePoolBuffer>
+	class MessagePoolBuffer
 {
 public:
 
