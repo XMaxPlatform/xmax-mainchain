@@ -12,7 +12,7 @@ namespace unitedb
 		return nullptr;
 	}
 
-	void UndoManager::init()
+	void UndoManager::Init()
 	{
 		std::string type_name = boost::core::demangle(typeid(UndoManager).name()) + "UndoCache";
 
