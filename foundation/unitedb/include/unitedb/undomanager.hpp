@@ -42,8 +42,9 @@ namespace unitedb
 		UndoManager(IDatabase* owner, const Alloc& cc)
 			: owner_(owner)
 		{
-			init();
 		}
+
+		void Init();
 
 		IGenericUndo* StartUndo();
 
@@ -52,7 +53,7 @@ namespace unitedb
 		void PopUndo();
 
 	private:
-		void init();
+
 
 		IDatabase* owner_;
 		UndoOpStack* stack_;

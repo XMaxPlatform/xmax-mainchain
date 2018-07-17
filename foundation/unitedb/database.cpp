@@ -43,28 +43,23 @@ namespace unitedb
 	class FDatabase : public Database, public IDatabase
 	{
 	public:
-
-		FDatabase(const fs::path& dir, uint64_t managed_file_size)
+		FDatabase()
 		{
-			init(dir, managed_file_size);
-		}
 
-		FDatabase(const fs::path& dir, uint64_t managed_file_size, InitFlag flag)
-		{
-			if (flag & Discard)
-			{
-				auto file = dbFilePath(dir);
-				if (fs::exists(file))
-				{
-					fs::remove(file);
-				}
-			}
-
-			init(dir, managed_file_size);
 		}
 		~FDatabase()
 		{
 			Flush();
+		}
+
+		void Init(const fs::path& dir, uint64_t managed_file_size)
+		{
+			initImpl(dir, managed_file_size, InitFlag::NoFlag);
+		}
+
+		void Init(const fs::path& dir, uint64_t managed_file_size, InitFlag flag)
+		{
+			initImpl(dir, managed_file_size, flag);
 		}
 
 		virtual void Flush() override
@@ -137,23 +132,34 @@ namespace unitedb
 			tables_.push_back(table);
 			tablemap_[code].reset(table);
 		}
+
 	private:
 
-		void init(const fs::path& dir, uint64_t managed_file_size)
+		void initImpl(const fs::path& dir, uint64_t managed_file_size, InitFlag flag)
 		{
-			if (!fs::exists(dir))
-			{
-				fs::create_directories(dir);
-			}
-
 			db_path_ = dir;
 			db_file_path_ = dbFilePath(db_path_);
 
+			if (!fs::exists(db_path_))
+			{
+				fs::create_directories(db_path_);
+			}
+
+			if (flag & Discard)
+			{
+				if (fs::exists(db_file_path_))
+				{
+					fs::remove(db_file_path_);
+				}
+			}
 			db_file_.reset(_OpenMappedFile(db_file_path_, managed_file_size));
 
 
 			UndoMgr = std::make_unique<UndoManager>(this, GetSegmentManager());
+
+			UndoMgr->Init();
 		}
+
 
 		std::unique_ptr<mapped_file> db_file_;
 		fs::path	db_path_;
@@ -168,11 +174,16 @@ namespace unitedb
 
 	Database* Database::InitDB(const fs::path& dir, uint64_t managed_file_size)
 	{
-		return new FDatabase(dir, managed_file_size);
+		FDatabase* db = new FDatabase();
+		db->Init(dir, managed_file_size);
+		return db;
 	}
 	Database* Database::InitDB(const fs::path& dir, uint64_t managed_file_size, InitFlag flag)
 	{
-		return new FDatabase(dir, managed_file_size, flag);
+		FDatabase* db = new FDatabase();
+		db->Init(dir, managed_file_size, flag);
+
+		return db;
 	}
 
 	void Database::DestroyDB(Database* db)
