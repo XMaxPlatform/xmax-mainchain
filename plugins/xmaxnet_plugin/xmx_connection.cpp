@@ -1,4 +1,5 @@
 #include "xmx_connection.hpp"
+#include "netmessage_pool.hpp"
 
 namespace xmax
 {

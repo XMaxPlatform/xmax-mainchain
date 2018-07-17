@@ -18,6 +18,7 @@ namespace xmax
 		CS_CONNECTED,
 	};
 
+	class MessagePoolBuffer;
 
 	class XMX_Connection : public std::enable_shared_from_this<XMX_Connection>
 {
@@ -63,6 +64,8 @@ public:
 	 void	SetConStatus(ConnectionStatus cs);
 	 ConnectionStatus GetConStatus() const;
 
+	 MessagePoolBuffer*		GetMsgBuffer() const;
+
 protected:
 
 private:
@@ -70,6 +73,8 @@ private:
 	std::shared_ptr<tcp::socket>		socket_;
 	std::string							peerAddr_;
 	ConnectionStatus					conStatus_;
+
+	MessagePoolBuffer*					pMsgBuffer_;
 };
 
 inline std::shared_ptr<tcp::socket> XMX_Connection::GetSocket() const
@@ -90,6 +95,11 @@ inline void XMX_Connection::SetConStatus(ConnectionStatus cs)
 inline ConnectionStatus XMX_Connection::GetConStatus() const
 {
 	return conStatus_;
+}
+
+inline MessagePoolBuffer* XMX_Connection::GetMsgBuffer() const
+{
+	return pMsgBuffer_;
 }
 
 }

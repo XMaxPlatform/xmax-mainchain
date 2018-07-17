@@ -167,7 +167,26 @@ namespace xmax {
 
 	void XmaxNetPluginImpl::StartRecvMsg(std::shared_ptr<XMX_Connection> pConnect)
 	{
+		if (pConnect->GetSocket() == nullptr)
+		{
+			return;
+		}
 
+		try
+		{
+			auto onReadFunc = [&](boost::system::error_code ec, std::size_t bytes)
+			{
+
+			};
+
+			//pConnect->GetSocket()->async_read_some()
+
+
+		}
+		catch (...)
+		{
+
+		}
 	}
 
 	void XmaxNetPluginImpl::ConnectImpl(const std::string& host)

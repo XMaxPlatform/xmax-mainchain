@@ -1,4 +1,4 @@
-#include "netmessage_pool.h"
+#include "netmessage_pool.hpp"
 
 namespace xmx
 {
