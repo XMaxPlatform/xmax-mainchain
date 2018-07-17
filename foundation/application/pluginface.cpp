@@ -63,6 +63,7 @@ namespace xmaxapp
 	bool PluginFactory::RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2,
 		std::vector<string> dependent_plugins)
 	{
+		dependent_plugins.erase(std::remove(dependent_plugins.begin(), dependent_plugins.end(), ""), dependent_plugins.end());
 		if (sPluginFactorys.find(_name) == sPluginFactorys.end())
 		{
 			sPluginFactorys[_name].reset(new PluginFactory(_name, _function, _function2, std::move(dependent_plugins)));
