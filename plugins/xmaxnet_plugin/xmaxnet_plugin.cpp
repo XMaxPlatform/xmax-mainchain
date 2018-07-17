@@ -121,7 +121,13 @@ namespace xmax {
 			acceptor_->set_option(tcp::acceptor::reuse_address(true));
 			acceptor_->bind(endpoint_);
 			acceptor_->listen();
+			StartListen();
 			Logf("start to listen incoming peers");
+		}
+
+		for (const std::string& peer : peerAddressList_)
+		{
+			ConnectImpl(peer);
 		}
 	}
 
@@ -141,10 +147,13 @@ namespace xmax {
 					pConnect->GetSocket()->set_option(nd);
 					StartRecvMsg(pConnect);
 					nMaxClients_++;
+
+					StartListen();
 				}
 				else
 				{
 					Warnf("MaxClinet exceeded!!!!\n");
+					pSocket->close();
 				}
 			}
 			else
