@@ -7,8 +7,6 @@
 #include <memory>
 namespace unitedb
 {
-	using UndoRevision = uint64_t;
-
 	class IGenericUndo
 	{
 	public:

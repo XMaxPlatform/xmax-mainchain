@@ -12,7 +12,7 @@
 
 namespace unitedb
 {
-	using UndoOpStack = FUndoCache<UndoOp>;
+	using UndoOpStack = MappedUndo<UndoOp>;
 
 	class FUndo : public IGenericUndo
 	{

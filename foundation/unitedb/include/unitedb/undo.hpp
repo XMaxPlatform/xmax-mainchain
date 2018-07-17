@@ -8,18 +8,17 @@
 namespace unitedb
 {
 	template<typename T>
-	class FUndoCache
+	class MappedUndo
 	{
 	public:
 		typedef T ObjectType;
-		typedef DBAlloc< FUndoCache<T> > AllocType;
-		FUndoCache(const AllocType& cc)
-			: undo_(cc)
+		typedef DBAlloc< MappedUndo<T> > AllocType;
+		MappedUndo(const AllocType& cc)
+			: data_(cc)
 		{
 
 		}
 
-		std::deque< ObjectType, DBAlloc<ObjectType> > undo_;
+		std::deque< ObjectType, DBAlloc<ObjectType> > data_;
 	};
-
 }

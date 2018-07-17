@@ -25,4 +25,5 @@ namespace unitedb
 
 	using ObjectIDCode = int64_t;
 	using ObjectTypeCode = uint16_t;
+	using UndoRevision = uint64_t;
 }

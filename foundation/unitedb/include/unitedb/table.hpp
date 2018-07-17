@@ -8,14 +8,36 @@
 namespace unitedb
 {
 	template<typename T>
+	struct UndoObject : public T
+	{
+	public:
+	public:
+		typedef T ObjectType;
+		typedef T Super;
+		typedef DBAlloc< ObjectType > AllocType;
+		UndoObject(const AllocType& cc, UndoRevision v)
+			: Super(cc)
+			, revision(v)
+		{
+
+		}
+
+		UndoRevision revision;
+	};
+
+	template<typename T>
 	class FTable : public T,  public ITable
 	{
 	public:
-		typedef FUndoCache<T> UndoCacheType;
 		typedef typename T DBTableType;
+		typedef typename FTable<DBTableType> SelfType;
+		typedef typename DBTableType::MappedPtr MappedPtr;
+
+		typedef UndoObject<DBTableType> UndoObjectType;
+		typedef MappedUndo<UndoObjectType> UndoCacheType;
+
 		typedef typename DBTableType Super;
-		typedef typename FTable<T> SelfType;
-		typedef typename T::MappedPtr MappedPtr;
+
 		FTable(IDatabase* owner, MappedPtr p)
 			: owner_(owner)
 			, Super(p)
