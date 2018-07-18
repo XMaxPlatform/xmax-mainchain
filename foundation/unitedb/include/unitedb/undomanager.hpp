@@ -54,15 +54,13 @@ namespace unitedb
 
 		UndoRevision TopRevision() const
 		{
-			return 0;
+			return LastUndoRevision;
 		}
 
 	private:
-
-
-		IDatabase* owner_;
-		UndoOpStack* stack_;
-
+		IDatabase* owner_ = nullptr;
+		UndoOpStack* stack_ = nullptr;
+		UndoRevision LastUndoRevision = 0;
 	};
 
 }

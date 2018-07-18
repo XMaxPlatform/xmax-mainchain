@@ -73,6 +73,11 @@ namespace unitedb
 			return TypeID(getCode());
 		}
 
+		ObjectTypeCode GetTypeCode() const
+		{
+			return TypeCode;
+		}
+
 		static const ObjectTypeCode TypeCode = _Type;
 	};
 

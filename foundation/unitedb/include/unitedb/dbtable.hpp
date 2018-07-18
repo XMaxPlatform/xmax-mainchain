@@ -131,6 +131,11 @@ namespace unitedb
 			return GetMapped().template get<OrderedTag>();
 		}
 
+		ObjectTypeCode GetObjectTypeCode() const
+		{
+			return ObjectType::TypeCode;
+		}
+
 	protected:
 		DBTable( MappedPtr ptr)
 			: ptr_(ptr)

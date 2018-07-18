@@ -90,14 +90,14 @@ namespace unitedb
 				break;
 			case unitedb::UndoOp::Create:
 			{
-				owner_->PushUndo( UndoOpArg(code, DBObjBase::__getObjidcode(*undo)) );
+				owner_->PushUndo( UndoOpArg(code, DBObjBase::__getObjidcode(*undo), ObjectType::TypeCode) );
 			}
 			break;
 			case unitedb::UndoOp::Update:
 			case unitedb::UndoOp::Delete:
 			{
 				PushUndoObject(undo, owner_->TopRevision(), code);
-				owner_->PushUndo( UndoOpArg(code, DBObjBase::__getObjidcode(*undo)) );
+				owner_->PushUndo( UndoOpArg(code, DBObjBase::__getObjidcode(*undo), ObjectType::TypeCode) );
 			}
 			break;
 			default:
