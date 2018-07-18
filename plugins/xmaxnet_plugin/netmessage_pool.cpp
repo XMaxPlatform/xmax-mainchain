@@ -86,4 +86,20 @@ void MessagePoolBuffer::Allocate(uint32_t nBytes)
 	}
 }
 
+void MessagePoolBuffer::IncrementReadIndex(uint32_t bytes)
+{
+	_IncrementIndexImpl(readIndex_, bytes);
+	
+	// delete previous buffers
+	size_t nDelete = 0;
+	for (size_t i = 0; i < readIndex_.bufferId; ++i)
+	{
+		objectPool_.destroy(msgBuffers_.front());
+		msgBuffers_.pop_front();
+		nDelete++;
+	}
+	readIndex_.bufferId  -= nDelete;
+	writeIndex_.bufferId -= nDelete;
+}
+
 }

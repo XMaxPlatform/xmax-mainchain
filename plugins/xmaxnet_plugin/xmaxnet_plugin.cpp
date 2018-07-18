@@ -202,21 +202,30 @@ namespace xmax {
 							break;
 						}
 
-						uint32_t msgLength    = 0;
+						MsgHeader msgHeader;
 						bufferIndex readIndex = pMsgPoolBuf->GetReadIndex();
-						bool bLength          = pMsgPoolBuf->TryGetData(&msgLength, sizeof(uint32_t), readIndex);
-						if (!bLength)
+						bool bGet             = pMsgPoolBuf->TryGetData(&msgHeader, sizeof(MsgHeader), readIndex);
+						if (!bGet)
 						{
 							break;
 						}
 
-						if (nCanReadBytes >= msgLength + sizeof(MsgHeader))
+						uint32_t msgSize = msgHeader.msgLength + sizeof(MsgHeader);
+						if (nCanReadBytes >= msgSize)
 						{
-
+							pMsgPoolBuf->IncrementReadIndex(sizeof(MsgHeader));
 						}
 						else
 						{
+							uint32_t remainMsgLength = msgSize - nCanReadBytes;
+							uint32_t canWriteLength  = pMsgPoolBuf->AvailableBytes();
 
+							if (remainMsgLength > canWriteLength)
+							{
+								pMsgPoolBuf->Allocate(remainMsgLength - canWriteLength);
+							}
+
+							break;
 						}
 					}
 

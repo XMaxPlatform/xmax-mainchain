@@ -19,6 +19,13 @@ namespace xmax
 	{
 		unsigned char	id;
 		unsigned int	msgLength;
+
+		MsgHeader()
+			: id(0),
+			  msgLength(0)
+		{
+
+		}
 	};
 
 	struct NetMessage

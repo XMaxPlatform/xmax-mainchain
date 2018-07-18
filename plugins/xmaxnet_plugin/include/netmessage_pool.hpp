@@ -32,6 +32,7 @@ public:
 	uint32_t	AvailableBytes() const;
 	uint32_t	CanReadBytes() const;
 	void		IncrementWriteIndex(uint32_t bytes);
+	void		IncrementReadIndex(uint32_t bytes);
 	bool		TryGetData(void* pData, uint32_t nBytes, bufferIndex readPtr);
 	
 	bufferIndex GetReadIndex() const;
