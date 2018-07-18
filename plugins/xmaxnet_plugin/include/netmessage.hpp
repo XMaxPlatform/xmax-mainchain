@@ -8,7 +8,7 @@ namespace google
 	}
 }
 
-namespace xmx
+namespace xmax
 {
 	enum MsgId
 	{

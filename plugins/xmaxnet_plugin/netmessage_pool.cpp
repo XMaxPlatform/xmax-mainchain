@@ -34,4 +34,56 @@ std::vector<boost::asio::mutable_buffer> MessagePoolBuffer::GetAvailableBufferFr
 	return mbuffers;
 }
 
+void MessagePoolBuffer::IncrementWriteIndex(uint32_t bytes)
+{
+	_IncrementIndexImpl(writeIndex_, bytes);
+
+	size_t nBuf = writeIndex_.bufferId - msgBuffers_.size();
+	if (nBuf > 0)
+	{
+		for (size_t i = 0; i < nBuf; ++i)
+		{
+			auto pBuf = objectPool_.malloc();
+			msgBuffers_.push_back(pBuf);
+		}
+	}
+}
+
+bool MessagePoolBuffer::TryGetData(void* pData, uint32_t nBytes, bufferIndex readPtr)
+{
+	bool ret = false;
+	if (CanReadBytes() >= nBytes)
+	{
+		char* pBuffer = &msgBuffers_[readPtr.bufferId]->at(readPtr.bufferPtr);
+		if (readPtr.bufferPtr + nBytes <= bufferSize_)
+		{
+			memcpy(pData, pBuffer, nBytes);
+			ret = true;
+		}
+		else
+		{
+			uint32_t remainBytes = bufferSize_ - readPtr.bufferPtr;
+			memcpy(pData, pBuffer, remainBytes);
+			_IncrementIndexImpl(readPtr, nBytes);
+			ret |= TryGetData((char*)pData + remainBytes, nBytes - remainBytes, readPtr);
+
+		}
+		return ret;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void MessagePoolBuffer::Allocate(uint32_t nBytes)
+{
+	uint32_t nBuffers = nBytes / bufferSize_ + 1;
+	for (size_t i = 0; i < nBuffers; ++i)
+	{
+		auto buffer = objectPool_.malloc();
+		msgBuffers_.push_back(buffer);
+	}
+}
+
 }

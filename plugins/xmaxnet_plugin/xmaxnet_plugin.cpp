@@ -3,10 +3,11 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/host_name.hpp>
 #include <pro/log/log.hpp>
-
+#include <functional>
 #include "netmessage_pool.hpp"
 #include "xmx_connection.hpp"
-#include <functional>
+#include "netmessage.hpp"
+
 
 namespace xmax {
 	using namespace xmaxapp;
@@ -176,9 +177,50 @@ namespace xmax {
 		try
 		{
 			MessagePoolBuffer* pMsgPoolBuf = pConnect->GetMsgBuffer();
-			auto onReadFunc = [&](boost::system::error_code ec, std::size_t bytes)
+			auto onReadFunc = [&](boost::system::error_code ec, std::size_t bytesRead)
 			{
+				if (ec)
+				{
+					ErrorSprintf("read msg from %s error : %s", pConnect->GetPeerAddress().c_str(), ec.message().c_str());
+					return;
+				}
+				else
+				{
+					size_t nCanWrite = pMsgPoolBuf->AvailableBytes();
+					if (bytesRead > nCanWrite)
+					{
+						ErrorSprintf("read msg bytes exceeded msg buffer size\n");
+						return;
+					}
 
+					pMsgPoolBuf->IncrementWriteIndex(bytesRead);
+					uint32_t nCanReadBytes = pMsgPoolBuf->CanReadBytes();
+					while (nCanReadBytes > 0)
+					{
+						if (nCanReadBytes < sizeof(MsgHeader)  )
+						{
+							break;
+						}
+
+						uint32_t msgLength    = 0;
+						bufferIndex readIndex = pMsgPoolBuf->GetReadIndex();
+						bool bLength          = pMsgPoolBuf->TryGetData(&msgLength, sizeof(uint32_t), readIndex);
+						if (!bLength)
+						{
+							break;
+						}
+
+						if (nCanReadBytes >= msgLength + sizeof(MsgHeader))
+						{
+
+						}
+						else
+						{
+
+						}
+					}
+
+				}
 			};
 
 			pConnect->GetSocket()->async_read_some(pMsgPoolBuf->GetAvailableBufferFromPool(), onReadFunc);
