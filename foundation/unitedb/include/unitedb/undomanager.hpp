@@ -50,7 +50,12 @@ namespace unitedb
 
 		void PushUndo(const UndoOpArg& arg);
 
-		void PopUndo();
+		void LastUpdateFailure();
+
+		UndoRevision TopRevision() const
+		{
+			return 0;
+		}
 
 	private:
 

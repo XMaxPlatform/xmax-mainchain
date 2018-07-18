@@ -19,6 +19,11 @@ namespace unitedb
 
 		}
 
+		ObjectType& EmplaceBack()
+		{
+			return data_.emplace_back( ObjectType(data_.get_allocator()) );
+		}
+
 		std::deque< ObjectType, DBAlloc<ObjectType> > data_;
 	};
 }

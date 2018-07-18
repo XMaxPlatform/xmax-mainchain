@@ -24,7 +24,7 @@ namespace unitedb
 
 	}
 
-	void UndoManager::PopUndo()
+	void UndoManager::LastUpdateFailure()
 	{
 
 	}

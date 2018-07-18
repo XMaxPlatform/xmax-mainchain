@@ -89,9 +89,9 @@ namespace unitedb
 			UndoMgr->PushUndo(arg);
 		}
 
-		virtual void PopUndo() override
+		virtual void LastUpdateFailure() override
 		{
-			UndoMgr->PopUndo();
+			UndoMgr->LastUpdateFailure();
 		}
 
 		virtual void EnableUndo(bool set) override
@@ -131,6 +131,11 @@ namespace unitedb
 
 			tables_.push_back(table);
 			tablemap_[code].reset(table);
+		}
+
+		virtual UndoRevision TopRevision() const
+		{
+			return UndoMgr->TopRevision();
 		}
 
 	private:

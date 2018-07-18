@@ -31,5 +31,12 @@ namespace unitedb
 		ObjectIDCode objid_ = 0;
 		int32_t tag_ = 0;
 
+		UndoOpArg(UndoOp::UndoCode op, ObjectIDCode id)
+			: op_(op)
+			, objid_(id)
+		{
+
+		}
+
 	};
 }
