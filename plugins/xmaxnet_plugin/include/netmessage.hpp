@@ -1,5 +1,7 @@
 #pragma once
 
+#include "pro/utils/singleton.hpp"
+
 namespace google
 {
 	namespace protobuf
@@ -33,4 +35,16 @@ namespace xmax
 		MsgHeader header;
 		google::protobuf::Message *pMsg;
 	};
+
+	class NetMessasgeHandler : public pro::Singleton<NetMessasgeHandler>
+{
+public:
+
+	void HandleMessage(const char* pMsg, const MsgHeader& header);
+
+protected:
+private:
+};
+
+
 }

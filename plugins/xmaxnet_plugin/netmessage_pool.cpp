@@ -76,6 +76,33 @@ bool MessagePoolBuffer::TryGetData(void* pData, uint32_t nBytes, bufferIndex rea
 	}
 }
 
+bool MessagePoolBuffer::GetData(void* pData, uint32_t nBytes)
+{
+	bool ret = false;
+	if (CanReadBytes() >= nBytes)
+	{
+		char* pBuffer = &msgBuffers_[readIndex_.bufferId]->at(readIndex_.bufferPtr);
+		if (readIndex_.bufferPtr + nBytes <= bufferSize_)
+		{
+			memcpy(pData, pBuffer, nBytes);
+			IncrementReadIndex(nBytes);
+			ret = true;
+		}
+		else
+		{
+			uint32_t remainBytes = bufferSize_ - readIndex_.bufferPtr;
+			memcpy(pData, pBuffer, remainBytes);
+			IncrementReadIndex(remainBytes);
+			ret |= GetData((char*)pData + remainBytes, nBytes - remainBytes);
+		}
+		return ret;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void MessagePoolBuffer::Allocate(uint32_t nBytes)
 {
 	uint32_t nBuffers = nBytes / bufferSize_ + 1;

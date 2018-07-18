@@ -214,6 +214,14 @@ namespace xmax {
 						if (nCanReadBytes >= msgSize)
 						{
 							pMsgPoolBuf->IncrementReadIndex(sizeof(MsgHeader));
+							char* pMsgData = new char[msgHeader.msgLength];
+							bool bret = pMsgPoolBuf->GetData(pMsgData, msgHeader.msgLength);
+
+							if (!bret)
+							{
+								delete[] pMsgData;
+							}
+							
 						}
 						else
 						{

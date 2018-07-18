@@ -34,7 +34,7 @@ public:
 	void		IncrementWriteIndex(uint32_t bytes);
 	void		IncrementReadIndex(uint32_t bytes);
 	bool		TryGetData(void* pData, uint32_t nBytes, bufferIndex readPtr);
-	
+	bool        GetData(void* pData, uint32_t nBytes);
 	bufferIndex GetReadIndex() const;
 	void        Allocate(uint32_t nBytes);
 
