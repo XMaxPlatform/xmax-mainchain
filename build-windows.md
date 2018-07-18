@@ -13,14 +13,14 @@
     3. [Use MongoDB in the xmax-mainchain project](#buildmongodbproject)
     4. [Install and run MongoDB service in Windows](#buildmongodbserver)
 
-<a name="prerequisites"></name>
+<a name="prerequisites"></a>
 # Prerequisites 
 
 * **Visual Studio 15 2017**(Minimal detail version:**15.7.4**) Win64 with Visual C++ 2017 15 compiler and tools
 * **CMake 3.11.0** or newer
 * **Boost 1.67.0**
 
-<a name="quickguide"></name>
+<a name="quickguide"></a>
 # Quick Guide
 
 Open command prompt enter the following command to generate Visual Studio Solution
