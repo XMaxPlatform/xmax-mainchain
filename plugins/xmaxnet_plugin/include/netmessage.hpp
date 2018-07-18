@@ -36,15 +36,5 @@ namespace xmax
 		google::protobuf::Message *pMsg;
 	};
 
-	class NetMessasgeHandler : public pro::Singleton<NetMessasgeHandler>
-{
-public:
-
-	void HandleMessage(const char* pMsg, const MsgHeader& header);
-
-protected:
-private:
-};
-
 
 }
