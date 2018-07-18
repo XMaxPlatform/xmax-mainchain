@@ -11,18 +11,18 @@
 namespace unitedb
 {
 
-	class DBObjectBase
+	class DBObjBase
 	{
 	public:
-		ObjectIDCode __objid = 0;
+		ObjIDCode __objid = 0;
 
-		static inline ObjectIDCode __getObjidcode(const DBObjectBase& base)
+		static inline ObjIDCode __getObjidcode(const DBObjBase& base)
 		{
 			return base.getCode();
 		}
 
 	protected:
-		inline ObjectIDCode getCode() const
+		inline ObjIDCode getCode() const
 		{
 			return __objid;
 		}
@@ -32,7 +32,7 @@ namespace unitedb
 	class ObjectID
 	{
 	public:
-		ObjectID(ObjectIDCode i = 0) :val_(i) {}
+		ObjectID(ObjIDCode i = 0) :val_(i) {}
 
 		ObjectID& operator++() 
 		{ 
@@ -48,16 +48,16 @@ namespace unitedb
 			s << boost::core::demangle(typeid(ObjectID<T>).name()) << '(' << id.val_ << ')'; return s;
 		}
 
-		ObjectIDCode GetValue() const
+		ObjIDCode GetValue() const
 		{
 			return val_;
 		}
 	private:
-		ObjectIDCode val_ = 0;
+		ObjIDCode val_ = 0;
 	};
 
 	template<typename _Obj, ObjectTypeCode _Type>
-	class DBObject : public DBObjectBase
+	class DBObject : public DBObjBase
 	{
 	public:
 		typedef ObjectID<_Obj> TypeID;

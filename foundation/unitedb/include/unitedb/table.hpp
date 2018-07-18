@@ -14,6 +14,7 @@ namespace unitedb
 		typedef T ObjectType;
 		typedef T Super;
 		typedef DBAlloc< ObjectType > AllocType;
+
 		UndoObject(const AllocType& cc)
 			: Super(cc)
 			, revision(0)
@@ -32,6 +33,10 @@ namespace unitedb
 		inline UndoOp::UndoCode GetUndoCode() const
 		{
 			return opcode;
+		}
+		inline ObjIDCode ObjID() const
+		{
+			return DBObjBase::__getObjidcode(*this);
 		}
 
 	protected:
@@ -62,7 +67,7 @@ namespace unitedb
 			cache_ = owner_->GetMappdFile()->find_or_construct< UndoCacheType >(type_name.c_str()) (UndoCacheType::AllocType(owner_->GetSegmentManager()));
 		}
 
-		inline const ObjectType* AsObject(const DBObjectBase* base)
+		inline const ObjectType* AsObject(const DBObjBase* base)
 		{
 			return static_cast<const ObjectType*>(base);
 		}
@@ -72,7 +77,7 @@ namespace unitedb
 			return const_cast<SelfType*>(this);
 		}
 
-		virtual void PushUndo(UndoOp::UndoCode code, const DBObjectBase* undo) override
+		virtual void PushUndo(UndoOp::UndoCode code, const DBObjBase* undo) override
 		{
 			if (noUndo())
 			{
@@ -85,14 +90,14 @@ namespace unitedb
 				break;
 			case unitedb::UndoOp::Create:
 			{
-				owner_->PushUndo( UndoOpArg(code, DBObjectBase::__getObjidcode(*undo)) );
+				owner_->PushUndo( UndoOpArg(code, DBObjBase::__getObjidcode(*undo)) );
 			}
 			break;
 			case unitedb::UndoOp::Update:
 			case unitedb::UndoOp::Delete:
 			{
 				PushUndoObject(undo, owner_->TopRevision(), code);
-				owner_->PushUndo( UndoOpArg(code, DBObjectBase::__getObjidcode(*undo)) );
+				owner_->PushUndo( UndoOpArg(code, DBObjBase::__getObjidcode(*undo)) );
 			}
 			break;
 			default:
@@ -100,11 +105,16 @@ namespace unitedb
 			}
 		}
 
-		virtual void LastUpdateFailure() override
+		virtual void LastUpdateFailure(ObjIDCode id) override
 		{
 			if (noUndo())
 			{
-				//PRO_STATIC_ASSERT()
+				BOOST_ASSERT(cache_->GetBack().GetUndoCode() == UndoOp::Update);
+				if (cache_->GetBack().ObjID() == id)
+				{
+					cache_->PopBack();
+				}
+				owner_->LastUpdateFailure(id);
 				return;
 			}
 		}
@@ -121,7 +131,7 @@ namespace unitedb
 			return no_undo_;
 		}
 
-		void PushUndoObject(const DBObjectBase* undo, UndoRevision v, UndoOp::UndoCode c)
+		void PushUndoObject(const DBObjBase* undo, UndoRevision v, UndoOp::UndoCode c)
 		{
 			cache_->EmplaceBack().Set(*AsObject(undo), v, c);
 		}

@@ -50,7 +50,7 @@ namespace unitedb
 
 		void PushUndo(const UndoOpArg& arg);
 
-		void LastUpdateFailure();
+		void LastUpdateFailure(ObjIDCode id);
 
 		UndoRevision TopRevision() const
 		{

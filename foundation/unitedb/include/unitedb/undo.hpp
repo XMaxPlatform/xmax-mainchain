@@ -18,10 +18,19 @@ namespace unitedb
 		{
 
 		}
+		const ObjectType& GetBack() const
+		{
+			return data_.back();
+		}
 
 		ObjectType& EmplaceBack()
 		{
 			return data_.emplace_back( ObjectType(data_.get_allocator()) );
+		}
+
+		void PopBack()
+		{
+			data_.pop_back();
 		}
 
 		std::deque< ObjectType, DBAlloc<ObjectType> > data_;

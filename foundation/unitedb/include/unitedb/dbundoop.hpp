@@ -28,10 +28,10 @@ namespace unitedb
 	{
 	public:
 		UndoOp::UndoCode op_ = UndoOp::None;
-		ObjectIDCode objid_ = 0;
+		ObjIDCode objid_ = 0;
 		int32_t tag_ = 0;
 
-		UndoOpArg(UndoOp::UndoCode op, ObjectIDCode id)
+		UndoOpArg(UndoOp::UndoCode op, ObjIDCode id)
 			: op_(op)
 			, objid_(id)
 		{

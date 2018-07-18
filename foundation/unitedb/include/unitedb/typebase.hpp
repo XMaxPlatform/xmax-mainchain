@@ -29,7 +29,7 @@ namespace unitedb
 
 		virtual void PushUndo(const UndoOpArg& arg) = 0;
 
-		virtual void LastUpdateFailure() = 0;
+		virtual void LastUpdateFailure(ObjIDCode id) = 0;
 
 		virtual void EnableUndo(bool set) = 0;
 

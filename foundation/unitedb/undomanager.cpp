@@ -24,7 +24,7 @@ namespace unitedb
 
 	}
 
-	void UndoManager::LastUpdateFailure()
+	void UndoManager::LastUpdateFailure(ObjIDCode id)
 	{
 
 	}

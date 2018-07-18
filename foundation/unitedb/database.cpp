@@ -89,9 +89,9 @@ namespace unitedb
 			UndoMgr->PushUndo(arg);
 		}
 
-		virtual void LastUpdateFailure() override
+		virtual void LastUpdateFailure(ObjIDCode id) override
 		{
-			UndoMgr->LastUpdateFailure();
+			UndoMgr->LastUpdateFailure(id);
 		}
 
 		virtual void EnableUndo(bool set) override

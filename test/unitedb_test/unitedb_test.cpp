@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 		a.xx = 1024;
 	});
 
-	auto xxf = tbl->FindObject<ByObjectID>((ObjectIDCode)1);
+	auto xxf = tbl->FindObject<ByObjectID>((ObjIDCode)1);
 
 
 	tbl->UpdateObject(xx, [&](TestTable::ObjectType& a)
