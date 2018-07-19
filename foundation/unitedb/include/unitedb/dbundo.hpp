@@ -10,9 +10,10 @@ namespace unitedb
 	class IGenericUndo
 	{
 	public:
-		~IGenericUndo() {}
+		virtual ~IGenericUndo() {}
 		virtual void Undo() = 0;
 		virtual void Cancel() = 0;
+		virtual void Combine() = 0;
 
 		virtual UndoRevision GetRevision() const = 0;
 	};
@@ -21,34 +22,20 @@ namespace unitedb
 	{
 	public:
 
-		void Undo()
-		{
-			undo_->Undo();
-		}
-
-		void Cancel()
-		{
-			undo_->Cancel();
-		}
-		UndoRevision GetRevision() const
-		{
-			return undo_->GetRevision();
-		}
-		~UndoSession()
-		{
-			Undo();
-		}
+		void Undo();
+		void Cancel();
+		UndoRevision GetRevision() const;
+		~UndoSession();
 		
+
+		UndoSession(UndoSession&& s);
+
 		friend class FDatabase;
 	protected:
 
-		UndoSession(IGenericUndo* ptr)
-			: undo_(ptr)
-		{
+		UndoSession(IGenericUndo* ptr);
 
-		}
-
-		std::shared_ptr<IGenericUndo> undo_;
+		std::unique_ptr<IGenericUndo> undo_;
 	};
 
 }

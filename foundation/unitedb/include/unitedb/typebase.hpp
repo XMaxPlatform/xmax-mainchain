@@ -33,6 +33,7 @@ namespace unitedb
 
 		virtual void EnableUndo(bool set) = 0;
 
+		virtual ITable* GetTable(ObjectTypeCode code) = 0;
 
 	};
 }

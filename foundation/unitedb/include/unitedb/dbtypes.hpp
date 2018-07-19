@@ -27,5 +27,7 @@ namespace unitedb
 
 	using ObjIDCode = int64_t;
 	using ObjectTypeCode = uint16_t;
-	using UndoRevision = uint64_t;
+	using UndoRevision = int64_t;
+
+	constexpr UndoRevision InvalidRevision = -1;
 }

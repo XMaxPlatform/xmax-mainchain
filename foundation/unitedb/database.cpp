@@ -96,10 +96,16 @@ namespace unitedb
 
 		virtual void EnableUndo(bool set) override
 		{
-			for (auto it : tables_)
+			for (auto it : table_insts_)
 			{
 				it->SetUndo(set);
 			}
+		}
+
+		virtual ITable* GetTable(ObjectTypeCode code) override 
+		{
+			BOOST_ASSERT(code < tablemap_.size());
+			return tablemap_[code].get();
 		}
 
 	protected:
@@ -129,7 +135,7 @@ namespace unitedb
 				tablemap_.resize(code + 1);
 			}
 
-			tables_.push_back(table);
+			table_insts_.push_back(table);
 			tablemap_[code].reset(table);
 		}
 
@@ -170,7 +176,7 @@ namespace unitedb
 		fs::path	db_path_;
 		fs::path	db_file_path_;
 
-		std::vector< ITable* > tables_;
+		std::vector< ITable* > table_insts_;
 		std::vector< std::unique_ptr<ITable> > tablemap_;
 
 		std::unique_ptr<UndoManager> UndoMgr;
