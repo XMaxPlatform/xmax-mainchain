@@ -21,11 +21,14 @@ namespace unitedb
 
 	void UndoManager::PushUndo(const UndoOpArg& arg)
 	{
-
+		stack_->EmplaceBack().Set(arg.op_, arg.objid_, arg.table_);
 	}
 
-	void UndoManager::PopUndo()
+	void UndoManager::LastUpdateFailure(ObjIDCode id)
 	{
+		BOOST_ASSERT(stack_->GetBack().id_ == id);
+		BOOST_ASSERT(stack_->GetBack().op_ == UndoOp::Update);
 
+		stack_->PopBack();
 	}
 }

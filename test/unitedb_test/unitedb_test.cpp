@@ -19,7 +19,11 @@ public:
 	{
 		c(*this);
 	}
-	TestDBObject() = default;
+	template<typename T>
+	TestDBObject(DBAlloc<T>)
+	{
+
+	}
 
 	int xx = 5;
 };
@@ -50,7 +54,7 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 		a.xx = 1024;
 	});
 
-	auto xxf = tbl->FindObject<ByObjectID>((ObjectIDCode)1);
+	auto xxf = tbl->FindObject<ByObjectID>((ObjIDCode)1);
 
 
 	tbl->UpdateObject(xx, [&](TestTable::ObjectType& a)
@@ -87,7 +91,7 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 
 
 	int ss = 0;
-	tidxs.get<0>().emplace(TestDBObject());
+	//tidxs.get<0>().emplace(TestDBObject());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

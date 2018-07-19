@@ -25,10 +25,14 @@ namespace unitedb
 
 		virtual mapped_file* GetMappdFile() const = 0;
 
+		virtual UndoRevision TopRevision() const = 0;
+
 		virtual void PushUndo(const UndoOpArg& arg) = 0;
 
-		virtual void PopUndo() = 0;
+		virtual void LastUpdateFailure(ObjIDCode id) = 0;
 
 		virtual void EnableUndo(bool set) = 0;
+
+
 	};
 }

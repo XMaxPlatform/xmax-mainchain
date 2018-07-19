@@ -33,7 +33,7 @@ namespace unitedb
 			}
 		}
 
-		inline ObjectIDCode GenerateID()
+		inline ObjIDCode GenerateID()
 		{
 			++id_counter_;
 			return id_counter_;
@@ -51,7 +51,7 @@ namespace unitedb
 
 	private:
 		ContainerType indices_;
-		ObjectIDCode id_counter_ = 0;
+		ObjIDCode id_counter_ = 0;
 		const uint64_t this_size = 0;
 		const uint64_t idxs_size = 0;
 	};
@@ -89,10 +89,10 @@ namespace unitedb
 		template<typename Constructor>
 		ObjPtr<ObjectType> NewObject(Constructor&& c)
 		{
-			ObjectIDCode id = ptr_->GenerateID();
+			ObjIDCode id = ptr_->GenerateID();
 			auto constructor = [&](ObjectType& v) {
 				c(v);
-				v.id_ = id;
+				v.__objid = id;
 			};
 
 			auto result = GetMapped().emplace(constructor, GetMapped().get_allocator());
@@ -131,6 +131,11 @@ namespace unitedb
 			return GetMapped().template get<OrderedTag>();
 		}
 
+		ObjectTypeCode GetObjectTypeCode() const
+		{
+			return ObjectType::TypeCode;
+		}
+
 	protected:
 		DBTable( MappedPtr ptr)
 			: ptr_(ptr)
@@ -144,17 +149,17 @@ namespace unitedb
 			auto result = GetMapped().modify(GetMapped().iterator_to(obj), update);
 			if (!result)
 			{
-				PopUndo();
+				LastUpdateFailure(DBObjBase::__getObjidcode(obj));
 				BOOST_THROW_EXCEPTION(std::logic_error("Could not Update object, most likely a uniqueness constraint was violated."));
 			}	
 		}
 
-		virtual void PushUndo(UndoOp::UndoCode code, const DBObjectBase* undo)
+		virtual void PushUndo(UndoOp::UndoCode code, const DBObjBase* undo)
 		{
 
 		}
 
-		virtual void PopUndo()
+		virtual void LastUpdateFailure(ObjIDCode id)
 		{
 
 		}
@@ -172,7 +177,7 @@ namespace unitedb
 
 	struct ByObjectID;
 
-	#define INDEXED_BY_OBJECT_ID boost::multi_index::ordered_unique<boost::multi_index::tag<ByObjectID>, boost::multi_index::member<DBObjectBase, ObjectIDCode, &DBObjectBase::id_>>
+	#define INDEXED_BY_OBJECT_ID boost::multi_index::ordered_unique<boost::multi_index::tag<ByObjectID>, boost::multi_index::member<DBObjBase, ObjIDCode, &DBObjBase::__objid>>
 
 	template<typename _Object, typename... _Args>
 	using DBTableDeclaration = boost::multi_index_container<_Object, _Args..., DBAlloc<_Object> >;

@@ -50,14 +50,17 @@ namespace unitedb
 
 		void PushUndo(const UndoOpArg& arg);
 
-		void PopUndo();
+		void LastUpdateFailure(ObjIDCode id);
+
+		UndoRevision TopRevision() const
+		{
+			return LastUndoRevision;
+		}
 
 	private:
-
-
-		IDatabase* owner_;
-		UndoOpStack* stack_;
-
+		IDatabase* owner_ = nullptr;
+		UndoOpStack* stack_ = nullptr;
+		UndoRevision LastUndoRevision = 0;
 	};
 
 }

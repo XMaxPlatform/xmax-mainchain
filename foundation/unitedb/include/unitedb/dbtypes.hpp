@@ -23,7 +23,7 @@ namespace unitedb
 	using MappedVector = std::vector<T, DBAlloc<T> >;
 
 
-	using ObjectIDCode = int64_t;
+	using ObjIDCode = int64_t;
 	using ObjectTypeCode = uint16_t;
 	using UndoRevision = uint64_t;
 }
