@@ -12,19 +12,29 @@
 
 namespace unitedb
 {
-	using UndoOpStack = MappedUndo<UndoOp>;
+
+	class UndoManager;
+
+	class UndoOpStack
+	{
+	public:
+		UndoOpStack(DBAlloc<char> alloc)
+			: cache_(alloc)
+			, last_revision_(0)
+		{
+
+		}
+		MappedUndo<UndoOp> cache_;
+		UndoRevision last_revision_;
+	};
 
 	class FUndo : public IGenericUndo
 	{
 	public:
-		virtual void Undo() override
-		{
+		FUndo(UndoManager* owner, UndoRevision rev);
 
-		}
-		virtual void Cancel() override
-		{
-
-		}
+		virtual void Undo();
+		virtual void Cancel();
 
 		virtual UndoRevision GetRevision() const override
 		{
@@ -33,6 +43,7 @@ namespace unitedb
 
 	private:
 		UndoRevision revision_ = 0;
+		UndoManager* owner_ = nullptr;
 	};
 
 	class UndoManager
@@ -54,13 +65,12 @@ namespace unitedb
 
 		UndoRevision TopRevision() const
 		{
-			return LastUndoRevision;
+			return stack_->last_revision_;
 		}
 
 	private:
 		IDatabase* owner_ = nullptr;
 		UndoOpStack* stack_ = nullptr;
-		UndoRevision LastUndoRevision = 0;
 	};
 
 }
