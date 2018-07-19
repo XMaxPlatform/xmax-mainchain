@@ -8,7 +8,7 @@
 #include <unitedb/undo.hpp>
 #include <unitedb/dbundo.hpp>
 #include <unitedb/dbundoop.hpp>
-#include <deque>
+#include <vector>
 
 namespace unitedb
 {
@@ -31,6 +31,7 @@ namespace unitedb
 	class FUndo : public IGenericUndo
 	{
 	public:
+		typedef uint64_t UndoID;
 		virtual void Undo() override;
 		virtual void Cancel() override;
 		virtual void Combine() override;
@@ -39,12 +40,32 @@ namespace unitedb
 		{
 			return revision_;
 		}
+
+		inline UndoID GetID() const
+		{
+			return id_;
+		}
+
 		friend class UndoManager;
 	private:
 		FUndo(UndoManager* owner, UndoRevision rev);
 		UndoRevision revision_ = 0;
 		UndoManager* owner_ = nullptr;
 		bool valid_ = true;
+		UndoID id_ = 0;
+		static UndoID scounter_;
+	};
+
+	struct UndoRecord
+	{
+		UndoRecord(FUndo* undo)
+		{
+			id_ = undo->GetID();
+			rev_ = undo->GetRevision();
+		}
+		UndoRecord() = default;
+		FUndo::UndoID id_ = 0;
+		UndoRevision rev_ = InvalidRevision;
 	};
 
 	class UndoManager
@@ -74,8 +95,12 @@ namespace unitedb
 		void OnCombine(FUndo* undo);
 
 	private:
+		bool popupRecord(FUndo::UndoID id, UndoRecord& out);
+		void removeRecords(UndoRevision rev_begin);
 		IDatabase* owner_ = nullptr;
 		UndoOpStack* stack_ = nullptr;
+
+		std::vector<UndoRecord> records_;
 	};
 
 }

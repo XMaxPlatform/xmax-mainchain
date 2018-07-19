@@ -6,11 +6,14 @@
 
 namespace unitedb
 {
+
+	FUndo::UndoID FUndo::scounter_ = 0;
+
 	FUndo::FUndo(UndoManager* owner, UndoRevision rev)
 		: owner_(owner)
 		, revision_(rev)
 	{
-
+		id_ = scounter_++;
 	}
 	void FUndo::Undo()
 	{
@@ -49,8 +52,9 @@ namespace unitedb
 	IGenericUndo* UndoManager::StartUndo()
 	{
 		owner_->EnableUndo(true);
-		FUndo* undo = new FUndo(this, stack_->last_undo_);
 		++stack_->last_undo_;
+		FUndo* undo = new FUndo(this, stack_->last_undo_);
+		records_.emplace_back(UndoRecord(undo));
 		return undo;
 	}
 
@@ -69,13 +73,51 @@ namespace unitedb
 
 	void UndoManager::OnUndo(FUndo* undo)
 	{
-		if (stack_->last_commit_ <= undo->GetRevision() && undo->GetRevision() < stack_->last_undo_)
+		UndoRecord record;
+		if (popupRecord(undo->GetID(), record))
 		{
+			BOOST_ASSERT((stack_->last_commit_ + 1) < record.rev_ && record.rev_ < stack_->last_undo_);
 		}
 	}
 
 	void UndoManager::OnCombine(FUndo* undo)
 	{
+		UndoRecord record;
+		if (popupRecord(undo->GetID(), record))
+		{
+			BOOST_ASSERT((stack_->last_commit_ + 1) < record.rev_ && record.rev_ < stack_->last_undo_);
+			removeRecords(record.rev_);
+		}
+	}
 
+	bool UndoManager::popupRecord(FUndo::UndoID id, UndoRecord& out)
+	{
+		for (auto it = records_.begin(); it != records_.end(); ++it)
+		{
+			if (it->id_ == id)
+			{
+				out = *it;
+				records_.erase(it);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	void UndoManager::removeRecords(UndoRevision rev_begin)
+	{
+		auto it = records_.begin();
+		while (it != records_.end())
+		{
+			if (it->rev_ >= rev_begin)
+			{
+				it = records_.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
 	}
 }

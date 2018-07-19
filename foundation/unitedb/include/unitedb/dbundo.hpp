@@ -18,22 +18,22 @@ namespace unitedb
 		virtual UndoRevision GetRevision() const = 0;
 	};
 
-	class UndoSession
+	class UndoPatch
 	{
 	public:
 
 		void Undo();
 		void Cancel();
 		UndoRevision GetRevision() const;
-		~UndoSession();
+		~UndoPatch();
 		
 
-		UndoSession(UndoSession&& s);
+		UndoPatch(UndoPatch&& s);
 
 		friend class FDatabase;
 	protected:
 
-		UndoSession(IGenericUndo* ptr);
+		UndoPatch(IGenericUndo* ptr);
 
 		std::unique_ptr<IGenericUndo> undo_;
 	};

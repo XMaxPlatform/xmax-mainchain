@@ -8,7 +8,7 @@ namespace unitedb
 {
 
 
-	void UndoSession::Undo()
+	void UndoPatch::Undo()
 	{
 		if (undo_)
 		{
@@ -17,14 +17,14 @@ namespace unitedb
 
 	}
 
-	void UndoSession::Cancel()
+	void UndoPatch::Cancel()
 	{
 		if (undo_)
 		{
 			undo_->Cancel();
 		}
 	}
-	UndoRevision UndoSession::GetRevision() const
+	UndoRevision UndoPatch::GetRevision() const
 	{
 		if (undo_)
 		{
@@ -32,17 +32,17 @@ namespace unitedb
 		}
 		return InvalidRevision;
 	}
-	UndoSession::~UndoSession()
+	UndoPatch::~UndoPatch()
 	{
 		Undo();
 	}
 
-	UndoSession::UndoSession(UndoSession&& s)
+	UndoPatch::UndoPatch(UndoPatch&& s)
 	{
 		undo_.swap(s.undo_);
 	}
 
-	UndoSession::UndoSession(IGenericUndo* ptr)
+	UndoPatch::UndoPatch(IGenericUndo* ptr)
 		: undo_(ptr)
 	{
 

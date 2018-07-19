@@ -79,9 +79,9 @@ namespace unitedb
 			return db_file_.get();
 		}
 
-		virtual UndoSession StartUndo()
+		virtual UndoPatch StartUndo()
 		{
-			return UndoSession(UndoMgr->StartUndo());
+			return UndoPatch(UndoMgr->StartUndo());
 		}
 
 		virtual void PushUndo(const UndoOpArg& arg) override
