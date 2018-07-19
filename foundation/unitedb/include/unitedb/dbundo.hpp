@@ -10,7 +10,7 @@ namespace unitedb
 	class IGenericUndo
 	{
 	public:
-
+		~IGenericUndo() {}
 		virtual void Undo() = 0;
 		virtual void Cancel() = 0;
 

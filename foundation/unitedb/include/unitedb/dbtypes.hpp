@@ -17,6 +17,8 @@ namespace unitedb
 	using DBAlloc = inpr::allocator<T, segment_manager>;
 
 
+	using DefAlloc = inpr::allocator<char, segment_manager>;
+
 	using MappedString = std::basic_string< char, std::char_traits< char >, DBAlloc< char > >;
 
 	template<typename T>
