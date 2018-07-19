@@ -91,7 +91,7 @@ namespace xmax {
 
 	XmaxNetPluginImpl::~XmaxNetPluginImpl()
 	{
-		
+		ShutdownProtobufLibrary();
 	}
 	/**
 	*  Initialize network
