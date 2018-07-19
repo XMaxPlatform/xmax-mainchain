@@ -2,9 +2,11 @@
 
 #include <memory>
 #include <string>
+#include <queue>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/host_name.hpp>
 
+#include "netmessage.hpp"
 
 namespace xmax
 {
@@ -67,15 +69,20 @@ public:
 
 	 MessagePoolBuffer*		GetMsgBuffer() const;
 
+	 void PushMsg(const NetMessage& msg);
+
 protected:
+
+	void _AsyncSend();
 
 private:
 
-	std::shared_ptr<tcp::socket>		socket_;
-	std::string							peerAddr_;
-	ConnectionStatus					conStatus_;
+	std::shared_ptr<tcp::socket>				socket_;
+	std::string									peerAddr_;
+	ConnectionStatus							conStatus_;
 
-	MessagePoolBuffer*					pMsgBuffer_;
+	MessagePoolBuffer*							pMsgBuffer_;
+	std::queue< std::pair<char*, size_t> >		messeageQueue_;
 };
 
 inline std::shared_ptr<tcp::socket> XMX_Connection::GetSocket() const

@@ -30,8 +30,13 @@ namespace xmax
 		}
 	};
 
-	struct NetMessage
+	class NetMessage
 	{
+public:
+
+		char*	ToBinary() const;
+		size_t	TotalLength() const;
+	
 		MsgHeader header;
 		google::protobuf::Message *pMsg;
 	};

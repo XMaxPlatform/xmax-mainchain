@@ -7,7 +7,9 @@
 #include "netmessage_pool.hpp"
 #include "xmx_connection.hpp"
 #include "netmessage.hpp"
+#include "../../network/protos_cpp/netmessage.pb.h"
 
+using namespace google::protobuf;
 
 namespace xmax {
 	using namespace xmaxapp;
@@ -54,6 +56,11 @@ namespace xmax {
 	protected:
 
 		bool _IsConnectd(const std::string& host);
+
+		void _ParseMsg(const char* pMsg, const MsgHeader& header, std::shared_ptr<XMX_Connection> pConnect);
+
+		void _OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const HelloMsg& msg);
+
 
 	private:
 
@@ -149,14 +156,14 @@ namespace xmax {
 					pConnect->GetSocket()->set_option(nd);
 					StartRecvMsg(pConnect);
 					nMaxClients_++;
-
-					StartListen();
 				}
 				else
 				{
 					Warnf("MaxClinet exceeded!!!!\n");
 					pSocket->close();
 				}
+
+				StartListen();
 			}
 			else
 			{
@@ -220,8 +227,12 @@ namespace xmax {
 							if (!bret)
 							{
 								delete[] pMsgData;
-							}
-							
+								break;
+							}	
+
+							_ParseMsg(pMsgData, msgHeader, pConnect);
+							pMsgPoolBuf->IncrementReadIndex(msgHeader.msgLength);
+							delete[] pMsgData;
 						}
 						else
 						{
@@ -237,6 +248,7 @@ namespace xmax {
 						}
 					}
 
+					StartRecvMsg(pConnect);
 				}
 			};
 
@@ -343,6 +355,22 @@ namespace xmax {
 		return false;
 	}
 
+	void XmaxNetPluginImpl::_ParseMsg(const char* pMsg, const MsgHeader& header, std::shared_ptr<XMX_Connection> pConnect)
+	{
+		//Test msg
+		MsgId id = (MsgId)header.id;
+		if (header.id == MSG_TEST)
+		{
+			HelloMsg msg;
+			msg.ParseFromArray(pMsg, header.msgLength);
+			_OnHandleMsg(pConnect, msg);
+		}
+	}
+
+	void XmaxNetPluginImpl::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const HelloMsg& msg)
+	{
+		LogSprintf("recv hellomsg from peer(%s), content is %s", pConnect->GetPeerAddress().c_str(), msg.msg().c_str());
+	}
 
 	/**
 	*  Implementations of XmaxNetPlugin interfaces
