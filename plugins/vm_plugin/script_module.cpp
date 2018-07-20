@@ -72,7 +72,9 @@ namespace xmax {
 
 		void ScriptMoudle::LoadScript(const char* code)
 		{
-
+			current_context_ = CreateJsContext(ScriptGlobalMoudle::GetInstance().GetIsolate(), *ScriptGlobalMoudle::GetInstance().GetGlobalObjTemplate());
+			EnterJsContext(ScriptGlobalMoudle::GetInstance().GetIsolate(), current_context_);
+			CompileJsCode(ScriptGlobalMoudle::GetInstance().GetIsolate(), current_context_.Get(ScriptGlobalMoudle::GetInstance().GetIsolate()), code);
 		}
 
 		void ScriptMoudle::Discard()
