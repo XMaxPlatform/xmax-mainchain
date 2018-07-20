@@ -79,30 +79,7 @@ namespace unitedb
 
 		virtual void PushUndo(UndoOp::UndoCode code, const DBObjBase* undo) override
 		{
-			if (noUndo())
-			{
-				return;
-			}
-
-			switch (code)
-			{
-			case unitedb::UndoOp::None:
-				break;
-			case unitedb::UndoOp::Create:
-			{
-				owner_->PushUndo( UndoOpArg(code, DBObjBase::__getObjidcode(*undo), ObjectType::TypeCode) );
-			}
-			break;
-			case unitedb::UndoOp::Update:
-			case unitedb::UndoOp::Delete:
-			{
-				PushUndoObject(undo, owner_->TopRevision(), code);
-				owner_->PushUndo( UndoOpArg(code, DBObjBase::__getObjidcode(*undo), ObjectType::TypeCode) );
-			}
-			break;
-			default:
-				break;
-			}
+			pushUndoImpl(code, undo);
 		}
 
 		virtual void LastUpdateFailure(ObjIDCode id) override
@@ -124,6 +101,11 @@ namespace unitedb
 			no_undo_ = !set;
 		}
 
+		virtual void Undo(const UndoOp& op) override
+		{
+			undoImpl(op);
+		}
+
 	protected:
 
 		inline bool noUndo() const
@@ -131,7 +113,58 @@ namespace unitedb
 			return no_undo_;
 		}
 
-		void PushUndoObject(const DBObjBase* undo, UndoRevision v, UndoOp::UndoCode c)
+		void pushUndoImpl(UndoOp::UndoCode code, const DBObjBase* undo)
+		{
+			if (noUndo())
+			{
+				return;
+			}
+
+			switch (code)
+			{
+			case unitedb::UndoOp::Create:
+			{
+				owner_->PushUndo(UndoOpArg(code, DBObjBase::__getObjidcode(*undo), ObjectType::TypeCode));
+			}
+			break;
+			case unitedb::UndoOp::Update:
+			case unitedb::UndoOp::Delete:
+			{
+				pushUndoObject(undo, owner_->TopRevision(), code);
+				owner_->PushUndo(UndoOpArg(code, DBObjBase::__getObjidcode(*undo), ObjectType::TypeCode));
+			}
+			break;
+			default:
+				break;
+			}
+		}
+		void undoImpl(const UndoOp& op)
+		{
+			switch (op.op_)
+			{
+			case UndoOp::Create:
+			{
+
+			}
+			break;
+			case UndoOp::Update:
+			{
+				GetMapped().modify(GetMapped().iterator_to(obj), cache_->GetBack());
+				cache_->PopBack();
+			}
+			break;
+			case UndoOp::Delete:
+			{
+
+			}
+			break;
+
+			default:
+				break;
+			}
+		}
+
+		void pushUndoObject(const DBObjBase* undo, UndoRevision v, UndoOp::UndoCode c)
 		{
 			cache_->EmplaceBack().Set(*AsObject(undo), v, c);
 		}

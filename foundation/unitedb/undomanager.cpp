@@ -148,6 +148,8 @@ namespace unitedb
 		{
 			reverseForEach(*stack_, rbegin, rend, [&](const UndoOp& op) {
 
+				ITable* table = owner_->GetTable(op.table_);
+				table->Undo(op);
 			});
 		}
 

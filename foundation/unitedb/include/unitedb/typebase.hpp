@@ -14,6 +14,8 @@ namespace unitedb
 		virtual IDBTable* GetDBTable() const = 0;
 
 		virtual void SetUndo(bool set) = 0;
+
+		virtual void Undo(const UndoOp& op) = 0;
 	};
 
 	class IDatabase
