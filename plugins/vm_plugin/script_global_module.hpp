@@ -22,14 +22,22 @@ namespace xmax {
 			void DiscardV8Env();
 
 			Isolate * GetIsolate();
+			v8::Local<v8::ObjectTemplate>* GetGlobalObjTemplate();
 		private:
 			Isolate * isolate_;
+
+			v8::Local<v8::ObjectTemplate>* global_obj_template_;
 
 		};
 
 		inline v8::Isolate * ScriptGlobalMoudle::GetIsolate()
 		{
 			return isolate_;
+		}
+
+		inline v8::Local<v8::ObjectTemplate>* ScriptGlobalMoudle::GetGlobalObjTemplate()
+		{
+			return global_obj_template_;
 		}
 
 
