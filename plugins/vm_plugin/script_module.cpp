@@ -20,7 +20,7 @@ namespace xmax {
 		ScriptMoudle::~ScriptMoudle()
 		{
 			{
-				Discard();
+			//	Discard();
 			}
 		}
 		v8::Object* CallBackCheck(int args_length, v8::Object** args_object, v8::Isolate* isolate) {
@@ -33,17 +33,17 @@ namespace xmax {
 			return args_object[0];
 		}
 
-		void ScriptMoudle::Init()
-		{
-			V8_AddIntrinsicFoo("CallBackCheck", (void*)CallBackCheck, 2, 1);
-
-			V8::InitializeICUDefaultLocation("");
-			V8::InitializeExternalStartupData("");
-			Platform* platform = platform::CreateDefaultPlatform();
-			V8::InitializePlatform(platform);
-			V8::Initialize();
-
-		}
+// 		void ScriptMoudle::Init()
+// 		{
+// 			V8_AddIntrinsicFoo("CallBackCheck", (void*)CallBackCheck, 2, 1);
+// 
+// 			V8::InitializeICUDefaultLocation("");
+// 			V8::InitializeExternalStartupData("");
+// 			Platform* platform = platform::CreateDefaultPlatform();
+// 			V8::InitializePlatform(platform);
+// 			V8::Initialize();
+// 
+// 		}
 
 		v8::Handle<v8::Value> ScriptMoudle::DoworkInContext(const v8::HandleScope& scope, const v8::Local<ObjectTemplate>& global, const v8::Local<Context>& context, const v8::Context::Scope& ctxScope)
 		{
@@ -61,14 +61,14 @@ namespace xmax {
 
 		}
 
-		v8::Handle<v8::Value> ScriptMoudle::Call(const std::string& code, const std::string& fooName)
-		{
-			current_code_ = code;
-			main_foo_ = fooName;
-			namespace  ph = std::placeholders;
-			//return EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
-			return Undefined(ScriptGlobalMoudle::GetInstance().GetIsolate());
-		}
+// 		v8::Handle<v8::Value> ScriptMoudle::Call(const std::string& code, const std::string& fooName)
+// 		{
+// 			current_code_ = code;
+// 			main_foo_ = fooName;
+// 			namespace  ph = std::placeholders;
+// 			//return EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
+// 			return Undefined(ScriptGlobalMoudle::GetInstance().GetIsolate());
+// 		}
 
 		void ScriptMoudle::LoadScript(const char* code)
 		{
@@ -77,12 +77,12 @@ namespace xmax {
 			CompileJsCode(ScriptGlobalMoudle::GetInstance().GetIsolate(), current_context_.Get(ScriptGlobalMoudle::GetInstance().GetIsolate()), code);
 		}
 
-		void ScriptMoudle::Discard()
-		{
-						
-			v8::V8::Dispose();
-			v8::V8::ShutdownPlatform();
-		}
+// 		void ScriptMoudle::Discard()
+// 		{
+// 						
+// 			v8::V8::Dispose();
+// 			v8::V8::ShutdownPlatform();
+// 		}
 
 		void ScriptMoudle::StoreInstrunction(int ins)
 		{
