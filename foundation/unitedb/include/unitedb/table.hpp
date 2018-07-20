@@ -30,6 +30,12 @@ namespace unitedb
 			opcode = c;
 		}
 
+		const ObjectType& Object() const
+		{
+			return *((ObjectType*)this);
+		}
+
+
 		inline UndoOp::UndoCode GetUndoCode() const
 		{
 			return opcode;
@@ -144,18 +150,21 @@ namespace unitedb
 			{
 			case UndoOp::Create:
 			{
-
+				auto itr = GetMapped().find(op.id_);
+				GetMapped().erase(itr);
 			}
 			break;
 			case UndoOp::Update:
 			{
-				GetMapped().modify(GetMapped().iterator_to(obj), cache_->GetBack());
+				auto itr = GetMapped().find(op.id_);
+				GetMapped().replace(itr, getBackObject());
 				cache_->PopBack();
 			}
 			break;
 			case UndoOp::Delete:
 			{
-
+				GetMapped().emplace(getBackObject());
+				cache_->PopBack();
 			}
 			break;
 
@@ -167,6 +176,11 @@ namespace unitedb
 		void pushUndoObject(const DBObjBase* undo, UndoRevision v, UndoOp::UndoCode c)
 		{
 			cache_->EmplaceBack().Set(*AsObject(undo), v, c);
+		}
+
+		const ObjectType& getBackObject() const
+		{
+			return cache_->GetBack().Object();
 		}
 
 		bool no_undo_ = true;
