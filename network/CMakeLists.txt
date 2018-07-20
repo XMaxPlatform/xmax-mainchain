@@ -56,4 +56,5 @@ set_target_properties(compile_protos
         FOLDER "Tools"
 )
 
+add_subdirectory(proto_base)
 add_subdirectory(test)
