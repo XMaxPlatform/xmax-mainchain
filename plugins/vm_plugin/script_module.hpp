@@ -27,6 +27,8 @@ namespace xmax {
 
 			void LoadScript(const char* code);
 
+			void RunFoo(const char* foo);
+
 			void StoreInstrunction(int ins);
 
 			void CleanInstrunction();
