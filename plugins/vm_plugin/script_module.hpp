@@ -23,6 +23,8 @@ namespace xmax {
 			
 			v8::Handle<v8::Value> Call(const std::string& code, const std::string& fooName);
 
+			void LoadScript(const char* code);
+
 			void Discard();
 
 			void StoreInstrunction(int ins);
