@@ -70,6 +70,11 @@ namespace xmax {
 			return Undefined(ScriptGlobalMoudle::GetInstance().GetIsolate());
 		}
 
+		void ScriptMoudle::LoadScript(const char* code)
+		{
+
+		}
+
 		void ScriptMoudle::Discard()
 		{
 						
