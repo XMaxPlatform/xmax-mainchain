@@ -7,7 +7,7 @@
 #include "netmessage_pool.hpp"
 #include "xmx_connection.hpp"
 #include "netmessage.hpp"
-#include "../../network/protos_cpp/netmessage.pb.h"
+#include "netmessage.pb.h"
 
 using namespace google::protobuf;
 
