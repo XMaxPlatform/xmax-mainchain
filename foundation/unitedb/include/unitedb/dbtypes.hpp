@@ -30,4 +30,10 @@ namespace unitedb
 	using UndoRevision = int64_t;
 
 	constexpr UndoRevision InvalidRevision = -1;
+
+
+#define DB_ASSERT(expr) assert(expr)
+
+#define DB_ASSERT_MSG(expr, msg) BOOST_ASSERT_MSG(expr, msg)
+
 }

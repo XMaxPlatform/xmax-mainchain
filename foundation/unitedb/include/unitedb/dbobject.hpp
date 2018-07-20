@@ -97,7 +97,7 @@ namespace unitedb
 
 		const T& Get() const
 		{
-			BOOST_ASSERT_MSG(ptr_ != nullptr, "empty obj.");
+			DB_ASSERT_MSG(ptr_ != nullptr, "empty obj.");
 			return *ptr_;
 		}
 
@@ -128,5 +128,3 @@ namespace unitedb
 
 #define DBOBJECT_CLASS(_objname, _typecode )\
 class _objname : public unitedb::DBObject<_objname, _typecode>
-
-#define DBOBJECT_CLASS_END() };

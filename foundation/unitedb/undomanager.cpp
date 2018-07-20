@@ -54,7 +54,7 @@ namespace unitedb
 		owner_->EnableUndo(true);
 		++stack_->last_undo_;
 		FUndo* undo = new FUndo(this, stack_->last_undo_);
-		records_.emplace_back(UndoRecord(undo));
+		records_.emplace_back(UndoRecord(undo, stack_->Size()));
 		return undo;
 	}
 
@@ -65,32 +65,95 @@ namespace unitedb
 
 	void UndoManager::LastUpdateFailure(ObjIDCode id)
 	{
-		BOOST_ASSERT(stack_->cache_.GetBack().id_ == id);
-		BOOST_ASSERT(stack_->cache_.GetBack().op_ == UndoOp::Update);
+		DB_ASSERT(stack_->cache_.GetBack().id_ == id);
+		DB_ASSERT(stack_->cache_.GetBack().op_ == UndoOp::Update);
 
 		stack_->cache_.PopBack();
 	}
 
-	void UndoManager::OnUndo(FUndo* undo)
+	using Records = UndoManager::UndoRecords;
+
+	template<typename Func>
+	static void reverseForEach(const UndoOpStack& stack, int rbeg, int rend, Func f)
 	{
-		UndoRecord record;
-		if (popupRecord(undo->GetID(), record))
+		using ArrayType = UndoOpStack::StackType::ArrayType;
+
+		const ArrayType& data = stack.cache_.data_;
+
+		for (int i = rbeg; i > rend; --i)
 		{
-			BOOST_ASSERT((stack_->last_commit_ + 1) < record.rev_ && record.rev_ < stack_->last_undo_);
+			f(data[i]);
 		}
 	}
+
+	static Records::const_iterator findRecord(const Records& list, FUndo::UndoID id)
+	{
+		for (auto it = list.begin(); it != list.end(); ++it)
+		{
+			if (it->id_ == id)
+			{
+				return it;
+			}
+		}
+		return list.end();
+	}
+	static void removeExpiredRecords(Records& list, UndoRevision rev_begin)
+	{
+		auto it = list.begin();
+		while (it != list.end())
+		{
+			if (it->rev_ >= rev_begin)
+			{
+				it = list.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
+
+	void UndoManager::OnUndo(FUndo* undo)
+	{
+		auto it = findRecord(records_, undo->GetID());
+
+		if (it != records_.end())
+		{
+			DB_ASSERT((stack_->last_commit_ + 1) < it->rev_ && it->rev_ < stack_->last_undo_);
+
+			auto next = it + 1;
+		
+			int rbegin = stack_->Size() - 1;
+			int rend = it->begin_ - 1;
+
+			undoImpl(rbegin, rend);
+			removeExpiredRecords(records_, it->rev_);
+		}
+	}
+
 
 	void UndoManager::OnCombine(FUndo* undo)
 	{
 		UndoRecord record;
 		if (popupRecord(undo->GetID(), record))
 		{
-			BOOST_ASSERT((stack_->last_commit_ + 1) < record.rev_ && record.rev_ < stack_->last_undo_);
-			removeRecords(record.rev_);
+			DB_ASSERT((stack_->last_commit_ + 1) < record.rev_ && record.rev_ < stack_->last_undo_);
 		}
 	}
 
-	bool UndoManager::popupRecord(FUndo::UndoID id, UndoRecord& out)
+
+	void UndoManager::undoImpl(int rbegin, int rend)
+	{
+		if (rbegin > rend)
+		{
+			reverseForEach(*stack_, rbegin, rend, [&](const UndoOp& op) {
+
+			});
+		}
+
+	}
+
+	bool UndoManager::popupRecord(FUndo::UndoID id, UndoRecord& out) // get a record and remove it.
 	{
 		for (auto it = records_.begin(); it != records_.end(); ++it)
 		{
@@ -103,21 +166,5 @@ namespace unitedb
 		}
 
 		return false;
-	}
-
-	void UndoManager::removeRecords(UndoRevision rev_begin)
-	{
-		auto it = records_.begin();
-		while (it != records_.end())
-		{
-			if (it->rev_ >= rev_begin)
-			{
-				it = records_.erase(it);
-			}
-			else
-			{
-				++it;
-			}
-		}
 	}
 }

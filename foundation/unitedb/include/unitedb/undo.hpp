@@ -13,6 +13,7 @@ namespace unitedb
 	public:
 		typedef T ObjectType;
 		typedef DBAlloc< MappedUndo<T> > AllocType;
+		typedef std::deque< ObjectType, DBAlloc<ObjectType> > ArrayType;
 		MappedUndo(const AllocType& cc)
 			: data_(cc)
 		{
@@ -33,6 +34,6 @@ namespace unitedb
 			data_.pop_back();
 		}
 
-		std::deque< ObjectType, DBAlloc<ObjectType> > data_;
+		ArrayType data_;
 	};
 }

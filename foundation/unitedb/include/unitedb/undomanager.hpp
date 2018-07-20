@@ -18,12 +18,19 @@ namespace unitedb
 	class UndoOpStack
 	{
 	public:
-		UndoOpStack(DBAlloc<char> alloc)
+		typedef MappedUndo<UndoOp> StackType;
+		UndoOpStack(DefAlloc alloc)
 			: cache_(alloc)
 		{
 
 		}
-		MappedUndo<UndoOp> cache_;
+
+		inline size_t Size() const
+		{
+			return cache_.data_.size();
+		}
+
+		StackType cache_;
 		UndoRevision last_commit_ = 0;
 		UndoRevision last_undo_ = 0;
 	};
@@ -58,12 +65,14 @@ namespace unitedb
 
 	struct UndoRecord
 	{
-		UndoRecord(FUndo* undo)
+		UndoRecord(FUndo* undo, uint32_t beg)
 		{
 			id_ = undo->GetID();
 			rev_ = undo->GetRevision();
+			begin_ = beg;
 		}
 		UndoRecord() = default;
+		int32_t begin_ = 0;
 		FUndo::UndoID id_ = 0;
 		UndoRevision rev_ = InvalidRevision;
 	};
@@ -71,6 +80,7 @@ namespace unitedb
 	class UndoManager
 	{
 	public:
+		typedef std::vector<UndoRecord> UndoRecords;
 		template<typename Alloc>
 		UndoManager(IDatabase* owner, const Alloc& cc)
 			: owner_(owner)
@@ -95,12 +105,12 @@ namespace unitedb
 		void OnCombine(FUndo* undo);
 
 	private:
+		void undoImpl(int rbegin, int rend);
 		bool popupRecord(FUndo::UndoID id, UndoRecord& out);
-		void removeRecords(UndoRevision rev_begin);
 		IDatabase* owner_ = nullptr;
 		UndoOpStack* stack_ = nullptr;
 
-		std::vector<UndoRecord> records_;
+		UndoRecords records_;
 	};
 
 }

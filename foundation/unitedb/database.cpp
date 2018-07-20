@@ -104,7 +104,7 @@ namespace unitedb
 
 		virtual ITable* GetTable(ObjectTypeCode code) override 
 		{
-			BOOST_ASSERT(code < tablemap_.size());
+			DB_ASSERT(code < tablemap_.size());
 			return tablemap_[code].get();
 		}
 
