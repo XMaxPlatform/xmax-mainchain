@@ -412,6 +412,13 @@ namespace xmax {
 		PluginFace::Shutdown();
 	}
 
+	void XmaxNetPlugin::InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
+	{
+		cfg.add_options()
+			(std::string("#").append(std::string(s_ServerAddress)).c_str(), xmaxapp::options::value<std::string>()->default_value("127.0.0.1:8080"), "default server address(ip:port)");
 
+		cfg.add_options()
+			(s_PeerAddress, xmaxapp::options::value<std::vector<std::string>>()->composing(), "list of peer address");
+	}
 
 }
