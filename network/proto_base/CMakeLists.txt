@@ -42,6 +42,8 @@ target_include_directories(${current_lib_name}
 target_link_libraries( ${current_lib_name}
         ${xmax_core_lib_name} 
         ${Boost_LIBRARIES}
+        libprotobuf
+	    libprotoc
  )
 
 set_target_properties( ${current_lib_name} PROPERTIES PUBLIC_HEADER "${HEADERS}" FOLDER "1.Foundation")
