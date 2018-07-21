@@ -25,8 +25,7 @@ add_library( ${current_lib_name} ${SOURCE_FILES} ${HEADERS} )
 target_link_libraries( ${current_lib_name}
     ${Boost_LIBRARIES}
 	${xmax_app_lib_name}
-	libprotobuf
-	libprotoc
+	proto_base
 )
 
 target_include_directories( ${current_lib_name} 
