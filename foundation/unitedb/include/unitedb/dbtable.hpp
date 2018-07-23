@@ -71,6 +71,15 @@ namespace unitedb
 			static std::string type_name = boost::core::demangle(typeid(typename ObjectType).name()) + "Table";
 			return type_name;
 		}
+
+
+
+		template<typename OrderedTag, typename T2>
+		ObjPtr<ObjectType> FindObject(const ObjectID<T2>& k) const
+		{
+			return FindObject<OrderedTag>(k.GetValue());
+		}
+
 		template<typename OrderedTag, typename Key>
 		ObjPtr<ObjectType> FindObject(const Key& k) const
 		{
@@ -137,6 +146,14 @@ namespace unitedb
 		}
 
 	protected:
+		template<typename OrderedTag>
+		ObjPtr<ObjectType> FindObject(ObjIDCode) const
+		{
+			DB_ASSERT(0);
+			return ObjPtr<ObjectType>::MakePtr(nullptr);
+		}
+
+
 		DBTable( MappedPtr ptr)
 			: ptr_(ptr)
 		{

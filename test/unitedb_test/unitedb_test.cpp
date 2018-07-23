@@ -25,7 +25,7 @@ public:
 
 	}
 
-	int xx = 5;
+	int tval = 5;
 };
 
 struct by_id;
@@ -49,18 +49,33 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 
 	auto tbl = db->GetTable<TestTable>();
 
-	auto xx = tbl->NewObject([&](TestTable::ObjectType& a)
+	auto val1 = tbl->NewObject([&](TestDBObject& a)
 	{
-		a.xx = 1024;
+		a.tval = 1024;
 	});
 
-	auto xxf = tbl->FindObject<ByObjectID>((ObjIDCode)1);
+	BOOST_CHECK(val1->tval == 1024);
 
+	auto id1 = val1->GetID();
 
-	tbl->UpdateObject(xx, [&](TestTable::ObjectType& a)
+	auto val1_a = tbl->FindObject<ByObjectID>(id1);
+
+	BOOST_CHECK(val1_a->tval == 1024);
+
+	auto undo = db->StartUndo();
+
+	tbl->UpdateObject(val1_a, [&](TestTable::ObjectType& a)
 	{
-		a.xx = 2048;
+		a.tval = 1025;
 	});
+	val1_a = tbl->FindObject<ByObjectID>(id1);
+
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1)->tval == 1025);
+
+	undo.Undo();
+
+
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1)->tval == 1024);
 
 	const auto& ids = tbl->GetOrderIndex<ByObjectID>();
 	std::vector<TestDBObject> objs;
@@ -68,6 +83,11 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 	{
 		objs.push_back(it);
 	}
+
+
+
+
+	//==========================================================
 
 	TestIdx tidxs(db->GetSegment());
 

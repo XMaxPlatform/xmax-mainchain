@@ -48,7 +48,7 @@ namespace unitedb
 			s << boost::core::demangle(typeid(ObjectID<T>).name()) << '(' << id.val_ << ')'; return s;
 		}
 
-		ObjIDCode GetValue() const
+		const ObjIDCode& GetValue() const
 		{
 			return val_;
 		}
