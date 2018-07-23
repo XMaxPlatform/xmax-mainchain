@@ -52,9 +52,9 @@ namespace unitedb
 	IGenericUndo* UndoManager::StartUndo()
 	{
 		owner_->EnableUndo(true);
-		++stack_->last_undo_;
-		FUndo* undo = new FUndo(this, stack_->last_undo_);
-		records_.emplace_back(UndoRecord(undo, stack_->Size()));
+		FUndo* undo = new FUndo(this, stack_->undo_counter_);
+		++stack_->undo_counter_;
+		records_.emplace_back(UndoRecord(undo, (UndoRecord::IndexType)stack_->Size()));
 		return undo;
 	}
 
@@ -73,14 +73,14 @@ namespace unitedb
 
 	using Records = UndoManager::UndoRecords;
 
-	template<typename Func>
-	static void reverseForEach(const UndoOpStack& stack, int rbeg, int rend, Func f)
+	template<typename Func, typename IndexType>
+	static void reverseForEach(const UndoOpStack& stack, IndexType rbeg, IndexType rend, Func f)
 	{
 		using ArrayType = UndoOpStack::StackType::ArrayType;
 
 		const ArrayType& data = stack.cache_.data_;
 
-		for (int i = rbeg; i > rend; --i)
+		for (IndexType i = rbeg; i > rend; --i)
 		{
 			f(data[i]);
 		}
@@ -119,12 +119,10 @@ namespace unitedb
 
 		if (it != records_.end())
 		{
-			DB_ASSERT((stack_->last_commit_ + 1) < it->rev_ && it->rev_ < stack_->last_undo_);
-
-			auto next = it + 1;
+			DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->undo_counter_);
 		
-			int rbegin = stack_->Size() - 1;
-			int rend = it->begin_ - 1;
+			int64_t rbegin = stack_->Size() - 1;
+			int64_t rend = it->begin_ - 1;
 
 			undoImpl(rbegin, rend);
 			removeExpiredRecords(records_, it->rev_);
@@ -137,12 +135,12 @@ namespace unitedb
 		UndoRecord record;
 		if (popupRecord(undo->GetID(), record))
 		{
-			DB_ASSERT((stack_->last_commit_ + 1) < record.rev_ && record.rev_ < stack_->last_undo_);
+			DB_ASSERT((stack_->last_commit_ + 1) < record.rev_ && record.rev_ < stack_->undo_counter_);
 		}
 	}
 
 
-	void UndoManager::undoImpl(int rbegin, int rend)
+	void UndoManager::undoImpl(int64_t rbegin, int64_t rend)
 	{
 		if (rbegin > rend)
 		{

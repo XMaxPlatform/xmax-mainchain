@@ -31,8 +31,8 @@ namespace unitedb
 		}
 
 		StackType cache_;
-		UndoRevision last_commit_ = 0;
-		UndoRevision last_undo_ = 0;
+		UndoRevision last_commit_ = -1;
+		UndoRevision undo_counter_ = 0;
 	};
 
 	class FUndo : public IGenericUndo
@@ -65,14 +65,15 @@ namespace unitedb
 
 	struct UndoRecord
 	{
-		UndoRecord(FUndo* undo, uint32_t beg)
+		typedef int32_t IndexType;
+		UndoRecord(FUndo* undo, IndexType beg)
 		{
 			id_ = undo->GetID();
 			rev_ = undo->GetRevision();
 			begin_ = beg;
 		}
 		UndoRecord() = default;
-		int32_t begin_ = 0;
+		IndexType begin_ = 0;
 		FUndo::UndoID id_ = 0;
 		UndoRevision rev_ = InvalidRevision;
 	};
@@ -97,7 +98,7 @@ namespace unitedb
 
 		UndoRevision TopRevision() const
 		{
-			return stack_->last_undo_;
+			return stack_->undo_counter_;
 		}
 
 		void OnUndo(FUndo* undo);
@@ -105,7 +106,7 @@ namespace unitedb
 		void OnCombine(FUndo* undo);
 
 	private:
-		void undoImpl(int rbegin, int rend);
+		void undoImpl(int64_t rbegin, int64_t rend);
 		bool popupRecord(FUndo::UndoID id, UndoRecord& out);
 		IDatabase* owner_ = nullptr;
 		UndoOpStack* stack_ = nullptr;

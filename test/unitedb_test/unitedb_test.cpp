@@ -68,14 +68,14 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 	{
 		a.tval = 1025;
 	});
-	val1_a = tbl->FindObject<ByObjectID>(id1);
 
-	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1)->tval == 1025);
+	auto newid1 = tbl->FindObject(id1);
+	BOOST_CHECK(newid1->tval == 1025);
 
 	undo.Undo();
 
-
-	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1)->tval == 1024);
+	auto undoid1 = tbl->FindObject(id1);
+	BOOST_CHECK(undoid1->tval == 1024);
 
 	const auto& ids = tbl->GetOrderIndex<ByObjectID>();
 	std::vector<TestDBObject> objs;

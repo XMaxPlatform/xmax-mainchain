@@ -80,19 +80,16 @@ namespace unitedb
 			return FindObject<OrderedTag>(k.GetValue());
 		}
 
+		template<typename T2>
+		ObjPtr<ObjectType> FindObject(const ObjectID<T2>& k) const
+		{
+			return FindObjectImpl<ByObjectID>(k.GetValue());
+		}
+
 		template<typename OrderedTag, typename Key>
 		ObjPtr<ObjectType> FindObject(const Key& k) const
 		{
-			auto& idx = GetOrderIndex<OrderedTag>();
-
-			auto it = idx.find(k);
-
-			if (it != idx.end())
-			{
-				return ObjPtr<ObjectType>::MakePtr(&(*it));
-			}
-
-			return ObjPtr<ObjectType>::MakePtr(nullptr);
+			return FindObjectImpl<OrderedTag>(k);
 		}
 
 		template<typename Constructor>
@@ -146,11 +143,26 @@ namespace unitedb
 		}
 
 	protected:
-		template<typename OrderedTag>
-		ObjPtr<ObjectType> FindObject(ObjIDCode) const
+
+		template<typename OrderedTag, typename Key>
+		ObjPtr<ObjectType> FindObjectImpl(const Key& k) const
 		{
-			DB_ASSERT(0);
+			auto& idx = GetOrderIndex<OrderedTag>();
+
+			auto it = idx.find(k);
+
+			if (it != idx.end())
+			{
+				return ObjPtr<ObjectType>::MakePtr(&(*it));
+			}
+
 			return ObjPtr<ObjectType>::MakePtr(nullptr);
+		}
+
+		template<typename OrderedTag>
+		ObjPtr<ObjectType> FindObject(ObjIDCode c) const
+		{
+			return FindObjectImpl<OrderedTag>(c);
 		}
 
 
