@@ -44,9 +44,11 @@ namespace unitedb
 
 	void UndoManager::Init()
 	{
-		std::string type_name = boost::core::demangle( typeid(UndoManager).name() ) + "UndoCache";
+		std::string stack_name = boost::core::demangle( typeid(UndoManager).name() ) + "UndoCache";
+		std::string record_name = boost::core::demangle(typeid(UndoManager).name()) + "UndoRecord";
 
-		stack_ = owner_->GetMappdFile()->find_or_construct< UndoOpStack >( type_name.c_str() ) (DefAlloc(owner_->GetSegmentManager()) );
+		stack_ = owner_->GetMappdFile()->find_or_construct< UndoOpStack >(stack_name.c_str()) (DefAlloc(owner_->GetSegmentManager()));
+		records_ = owner_->GetMappdFile()->find_or_construct< UndoRecords >(record_name.c_str()) (DefAlloc(owner_->GetSegmentManager()));
 	}
 
 	IGenericUndo* UndoManager::StartUndo()
@@ -54,7 +56,7 @@ namespace unitedb
 		owner_->EnableUndo(true);
 		FUndo* undo = new FUndo(this, stack_->undo_counter_);
 		++stack_->undo_counter_;
-		records_.emplace_back(UndoRecord(undo, (UndoRecord::IndexType)stack_->Size()));
+		getRecords().emplace_back(UndoRecord(undo, (UndoRecord::IndexType)stack_->Size()));
 		return undo;
 	}
 
@@ -115,9 +117,9 @@ namespace unitedb
 
 	void UndoManager::OnUndo(FUndo* undo)
 	{
-		auto it = findRecord(records_, undo->GetID());
+		auto it = findRecord(getRecords(), undo->GetID());
 
-		if (it != records_.end())
+		if (it != getRecords().end())
 		{
 			DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->undo_counter_);
 		
@@ -125,7 +127,7 @@ namespace unitedb
 			int64_t rend = it->begin_ - 1;
 
 			undoImpl(rbegin, rend);
-			removeExpiredRecords(records_, it->rev_);
+			removeExpiredRecords(getRecords(), it->rev_);
 		}
 	}
 
@@ -133,17 +135,24 @@ namespace unitedb
 	void UndoManager::OnCombine(FUndo* undo)
 	{
 		auto id = undo->GetID();
-		auto preit = records_.begin();
+		auto preit = getRecords().begin();
 		auto it = preit + 1;
-		while (it != records_.end())
+		while (it != getRecords().end())
 		{
 			if (it->id_ == id) // find undo by id.
 			{
 				DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->undo_counter_);
 
+				int rbeg = it->begin_ < stack_->Size() ? (it->begin_) : (stack_->Size());
+				int rend = preit->rev_ - 1;
 
+				reverseForEach(*stack_, rbeg, rend, [&](const UndoOp& op) {
 
-				records_.erase(it);
+					ITable* table = owner_->GetTable(op.table_);
+					
+				});
+
+				getRecords().erase(it);
 				break;
 			}
 			else if (it->id_ > id)

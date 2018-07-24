@@ -81,7 +81,7 @@ namespace unitedb
 	class UndoManager
 	{
 	public:
-		typedef std::vector<UndoRecord> UndoRecords;
+		typedef MappedVector<UndoRecord> UndoRecords;
 		template<typename Alloc>
 		UndoManager(IDatabase* owner, const Alloc& cc)
 			: owner_(owner)
@@ -106,11 +106,20 @@ namespace unitedb
 		void OnCombine(FUndo* undo);
 
 	private:
+
+		inline const UndoRecords& getRecords() const
+		{
+			return *records_;
+		}
+		inline UndoRecords& getRecords()
+		{
+			return *records_;
+		}
 		void undoImpl(int64_t rbegin, int64_t rend);
 		IDatabase* owner_ = nullptr;
 		UndoOpStack* stack_ = nullptr;
 
-		UndoRecords records_;
+		UndoRecords* records_;
 	};
 
 };
