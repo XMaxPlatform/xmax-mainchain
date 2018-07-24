@@ -45,10 +45,8 @@ namespace unitedb
 	void UndoManager::Init()
 	{
 		std::string stack_name = boost::core::demangle( typeid(UndoManager).name() ) + "UndoCache";
-		std::string record_name = boost::core::demangle(typeid(UndoManager).name()) + "UndoRecord";
 
 		stack_ = owner_->GetMappdFile()->find_or_construct< UndoOpStack >(stack_name.c_str()) (DefAlloc(owner_->GetSegmentManager()));
-		records_ = owner_->GetMappdFile()->find_or_construct< UndoRecords >(record_name.c_str()) (DefAlloc(owner_->GetSegmentManager()));
 	}
 
 	IGenericUndo* UndoManager::StartUndo()
@@ -73,8 +71,6 @@ namespace unitedb
 		stack_->cache_.PopBack();
 	}
 
-	using Records = UndoManager::UndoRecords;
-
 	template<typename Func, typename IndexType>
 	static void reverseForEach(const UndoOpStack& stack, IndexType rbeg, IndexType rend, Func f)
 	{
@@ -88,7 +84,7 @@ namespace unitedb
 		}
 	}
 
-	static Records::const_iterator findRecord(const Records& list, FUndo::UndoID id)
+	static UndoRecords::const_iterator findRecord(const UndoRecords& list, FUndo::UndoID id)
 	{
 		for (auto it = list.begin(); it != list.end(); ++it)
 		{
@@ -99,7 +95,7 @@ namespace unitedb
 		}
 		return list.end();
 	}
-	static void removeExpiredRecords(Records& list, UndoRevision rev_begin)
+	static void removeExpiredRecords(UndoRecords& list, UndoRevision rev_begin)
 	{
 		auto it = list.begin();
 		while (it != list.end())

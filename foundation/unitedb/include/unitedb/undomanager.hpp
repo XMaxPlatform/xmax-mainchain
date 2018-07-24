@@ -15,26 +15,6 @@ namespace unitedb
 
 	class UndoManager;
 
-	class UndoOpStack
-	{
-	public:
-		typedef MappedUndo<UndoOp> StackType;
-		UndoOpStack(DefAlloc alloc)
-			: cache_(alloc)
-		{
-
-		}
-
-		inline size_t Size() const
-		{
-			return cache_.data_.size();
-		}
-
-		StackType cache_;
-		UndoRevision last_commit_ = -1;
-		UndoRevision undo_counter_ = 0;
-	};
-
 	class FUndo : public IGenericUndo
 	{
 	public:
@@ -78,10 +58,33 @@ namespace unitedb
 		UndoRevision rev_ = InvalidRevision;
 	};
 
+	typedef MappedVector<UndoRecord> UndoRecords;
+
+	class UndoOpStack
+	{
+	public:
+		typedef MappedUndo<UndoOp> StackType;
+		UndoOpStack(DefAlloc alloc)
+			: cache_(alloc)
+			, records_(alloc)
+		{
+
+		}
+
+		inline size_t Size() const
+		{
+			return cache_.data_.size();
+		}
+
+		StackType cache_;
+		UndoRecords records_;
+		UndoRevision last_commit_ = -1;
+		UndoRevision undo_counter_ = 0;
+	};
+
 	class UndoManager
 	{
 	public:
-		typedef MappedVector<UndoRecord> UndoRecords;
 		template<typename Alloc>
 		UndoManager(IDatabase* owner, const Alloc& cc)
 			: owner_(owner)
@@ -109,17 +112,15 @@ namespace unitedb
 
 		inline const UndoRecords& getRecords() const
 		{
-			return *records_;
+			return stack_->records_;
 		}
 		inline UndoRecords& getRecords()
 		{
-			return *records_;
+			return stack_->records_;
 		}
 		void undoImpl(int64_t rbegin, int64_t rend);
 		IDatabase* owner_ = nullptr;
 		UndoOpStack* stack_ = nullptr;
-
-		UndoRecords* records_;
 	};
 
 };

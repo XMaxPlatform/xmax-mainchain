@@ -50,6 +50,12 @@ namespace unitedb
 		UndoRevision revision;
 	};
 
+	class TableUndoStack
+	{
+
+	};
+
+
 	template<typename T>
 	class FTable : public T,  public ITable
 	{
