@@ -107,11 +107,10 @@ namespace unitedb
 
 	private:
 		void undoImpl(int64_t rbegin, int64_t rend);
-		bool popupRecord(FUndo::UndoID id, UndoRecord& out);
 		IDatabase* owner_ = nullptr;
 		UndoOpStack* stack_ = nullptr;
 
 		UndoRecords records_;
 	};
 
-}
+};

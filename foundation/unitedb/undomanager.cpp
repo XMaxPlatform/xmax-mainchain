@@ -132,11 +132,29 @@ namespace unitedb
 
 	void UndoManager::OnCombine(FUndo* undo)
 	{
-		UndoRecord record;
-		if (popupRecord(undo->GetID(), record))
+		auto id = undo->GetID();
+		auto preit = records_.begin();
+		auto it = preit + 1;
+		while (it != records_.end())
 		{
-			DB_ASSERT((stack_->last_commit_ + 1) < record.rev_ && record.rev_ < stack_->undo_counter_);
+			if (it->id_ == id) // find undo by id.
+			{
+				DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->undo_counter_);
+
+
+
+				records_.erase(it);
+				break;
+			}
+			else if (it->id_ > id)
+			{
+				break;
+			}
+
+			preit = it;
+			++it;
 		}
+
 	}
 
 
@@ -151,20 +169,5 @@ namespace unitedb
 			});
 		}
 
-	}
-
-	bool UndoManager::popupRecord(FUndo::UndoID id, UndoRecord& out) // get a record and remove it.
-	{
-		for (auto it = records_.begin(); it != records_.end(); ++it)
-		{
-			if (it->id_ == id)
-			{
-				out = *it;
-				records_.erase(it);
-				return true;
-			}
-		}
-
-		return false;
 	}
 }
