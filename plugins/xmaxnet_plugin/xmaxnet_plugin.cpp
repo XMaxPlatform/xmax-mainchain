@@ -92,6 +92,18 @@ namespace xmax {
 	XmaxNetPluginImpl::~XmaxNetPluginImpl()
 	{
 		ShutdownProtobufLibrary();
+
+		if (acceptor_ != nullptr)
+		{
+			acceptor_->close();
+			acceptor_.reset(nullptr);
+			Logf(" acceptor is closed");
+		}
+
+		for (auto pConnect : connections_)
+		{
+			pConnect->Close();
+		}
 	}
 	/**
 	*  Initialize network

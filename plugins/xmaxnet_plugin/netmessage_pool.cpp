@@ -9,7 +9,11 @@ MessagePoolBuffer::MessagePoolBuffer()
 
 MessagePoolBuffer::~MessagePoolBuffer()
 {
-
+	for (size_t i = 0; i < msgBuffers_.size(); ++i)
+	{
+		objectPool_.destroy(msgBuffers_[i]);
+	}
+	msgBuffers_.clear();
 }
 
 std::vector<boost::asio::mutable_buffer> MessagePoolBuffer::GetAvailableBufferFromPool()
