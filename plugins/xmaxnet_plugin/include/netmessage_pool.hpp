@@ -45,7 +45,7 @@ protected:
 
 private:
 
-	const static uint32_t								bufferSize_ = 40;
+	const static uint32_t								bufferSize_ = 1024 * 1024;
 	boost::object_pool<std::array<char, bufferSize_> >	objectPool_;
 	bufferIndex											writeIndex_;
 	bufferIndex											readIndex_;
