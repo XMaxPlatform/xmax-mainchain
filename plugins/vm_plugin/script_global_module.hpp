@@ -20,7 +20,7 @@ namespace xmax {
 		public:
 			void SetupV8Env();
 			void DiscardV8Env();
-
+			void V8SetupGlobalObjTemplate(v8::Local<v8::ObjectTemplate>* pGlobalTemp);
 			Isolate * GetIsolate();
 			v8::Local<v8::ObjectTemplate>* GetGlobalObjTemplate();
 		private:
