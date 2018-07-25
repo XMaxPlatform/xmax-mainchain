@@ -14,10 +14,9 @@ namespace xmaxapp
 {
 	namespace bpo = boost::program_options;
 
-	/*! \brief Application instance.
-	*         Brief description continued.
-	*
-	*  Use for Application and Plugin System.
+	/**
+	* Application instance. 
+	* Use for Application and Plugin System.
 	*/
 	class Application : public ApplicationBase
 	{
@@ -25,29 +24,28 @@ namespace xmaxapp
 		Application();
 		virtual ~Application();
 
-		//! Get the app service interface.
-		/*!
-		\return App service interface.
+		/**
+		* Get the app service interface.
+		* @return App service interface.
 		*/
 		virtual AppService* GetService() const override;
 
-		//! Get data dir.
-		/*!
-		\return data dir.
+		/**
+		* Get data dir.
+		* @return data dir.
 		*/
 		virtual fs::path GetDataDir() const override;
 
-		//! Init a concrete plugin
-		/*!
-		\param plugin_name the plugin name.
+		/**
+		* Init a concrete plugin
+		* @param[in] plugin_name the plugin name.
 		*/
 		void PluginToInit(const string& plugin_name);
 
-		//! Init a concrete plugin
-		/*!
-		\param argc	number of args
-		\param argv	the content of params
-		\return If the program will continue running or exit directly
+		/**
+		* Init a concrete plugin
+		* @param[in] argc number of args
+		* @param[in] argv the content of params
 		*/
 		bool Initialize(int argc, char** argv);
 		/**

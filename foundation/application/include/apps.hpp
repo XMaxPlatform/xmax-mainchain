@@ -18,7 +18,6 @@ namespace xmaxapp
 	public:
 		/**
 		*  State of Plugin
-		* 
 		*/
 		enum class State
 		{
@@ -58,6 +57,6 @@ namespace xmaxapp
 		/**
 		* return data dir
 		*/
-		virtual fs::path	GetDataDir() const = 0;
+		virtual fs::path GetDataDir() const = 0;
 	};
 }
