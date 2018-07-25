@@ -183,8 +183,7 @@ namespace xmax {
 
 		try
 		{
-			MessagePoolBuffer* pMsgPoolBuf = pConnect->GetMsgBuffer();
-			auto onReadFunc = [&](boost::system::error_code ec, std::size_t bytesRead)
+			auto onReadFunc = [pConnect, this](boost::system::error_code ec, std::size_t bytesRead)
 			{
 				if (ec)
 				{
@@ -193,6 +192,7 @@ namespace xmax {
 				}
 				else
 				{
+					MessagePoolBuffer* pMsgPoolBuf = pConnect->GetMsgBuffer();
 					size_t nCanWrite = pMsgPoolBuf->AvailableBytes();
 					if (bytesRead > nCanWrite)
 					{
@@ -251,8 +251,8 @@ namespace xmax {
 					StartRecvMsg(pConnect);
 				}
 			};
-
-			pConnect->GetSocket()->async_read_some(pMsgPoolBuf->GetAvailableBufferFromPool(), onReadFunc);
+			std::vector<boost::asio::mutable_buffer> mbBuffers = pConnect->GetMsgBuffer()->GetAvailableBufferFromPool();
+			pConnect->GetSocket()->async_read_some(mbBuffers, onReadFunc);
 
 
 		}

@@ -4,7 +4,7 @@ namespace xmax
 {
 MessagePoolBuffer::MessagePoolBuffer()
 {
-
+	msgBuffers_.push_back(objectPool_.malloc());
 }
 
 MessagePoolBuffer::~MessagePoolBuffer()
