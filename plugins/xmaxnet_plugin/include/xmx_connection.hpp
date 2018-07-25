@@ -30,6 +30,9 @@ public:
 	 XMX_Connection(const std::string& endpoint, const std::shared_ptr<tcp::socket>& s);
 
 	 XMX_Connection(const std::shared_ptr<tcp::socket>& s);
+
+	 ~XMX_Connection();
+
 	 /**
 	 * is network connectd and not connecting
 	 */

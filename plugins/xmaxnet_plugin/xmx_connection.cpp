@@ -9,16 +9,24 @@ namespace xmax
 XMX_Connection::XMX_Connection(const std::string& endpoint, const std::shared_ptr<tcp::socket>& s)
 	: peerAddr_(endpoint),
 	  socket_(s),
-	  conStatus_(CS_DISCONNECTED)
+	  conStatus_(CS_DISCONNECTED),
+	  pMsgBuffer_(new MessagePoolBuffer)
 {
 	
 }
 
 XMX_Connection::XMX_Connection(const std::shared_ptr<tcp::socket>& s)
 	: socket_(s),
-	  conStatus_(CS_DISCONNECTED)
+	  conStatus_(CS_DISCONNECTED),
+	  pMsgBuffer_(new MessagePoolBuffer)
 {
 
+}
+
+XMX_Connection::~XMX_Connection()
+{
+	delete pMsgBuffer_;
+	pMsgBuffer_ = nullptr;
 }
 
 bool XMX_Connection::Connected()
