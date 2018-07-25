@@ -70,7 +70,6 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
-<a href="#friends">Friends</a> &#124;
 <a href="classxmaxapp_1_1_plugin_face-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">xmaxapp::PluginFace Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -84,23 +83,29 @@ Inheritance diagram for xmaxapp::PluginFace:</div>
  <div class="center">
   <img src="classxmaxapp_1_1_plugin_face.png" usemap="#xmaxapp::PluginFace_map" alt=""/>
   <map id="xmaxapp::PluginFace_map" name="xmaxapp::PluginFace_map">
-<area href="classxmaxapp_1_1_plugin.html" alt="xmaxapp::Plugin" shape="rect" coords="0,0,131,24"/>
+<area href="classxmaxapp_1_1_plugin.html" title="Base class of all plugins. " alt="xmaxapp::Plugin" shape="rect" coords="0,0,131,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a324c20136f10037dbca5407722150c15"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426b">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_face.html#a324c20136f10037dbca5407722150c15">GetState</a> () const override</td></tr>
+<tr class="memdesc:a324c20136f10037dbca5407722150c15"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the state of plugin  <a href="#a324c20136f10037dbca5407722150c15">More...</a><br /></td></tr>
 <tr class="separator:a324c20136f10037dbca5407722150c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ace80cd6c3e4a78356e5661b63a9e98"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_face.html#a2ace80cd6c3e4a78356e5661b63a9e98">GetApp</a> () const override</td></tr>
+<tr class="memdesc:a2ace80cd6c3e4a78356e5661b63a9e98"><td class="mdescLeft">&#160;</td><td class="mdescRight">return <a class="el" href="classxmaxapp_1_1_application_base.html" title="base class of ApplicationBase pure virtual class ">ApplicationBase</a>  <a href="#a2ace80cd6c3e4a78356e5661b63a9e98">More...</a><br /></td></tr>
 <tr class="separator:a2ace80cd6c3e4a78356e5661b63a9e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb8e6cc5852b404c929d0c2290059d00"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_face.html#afb8e6cc5852b404c929d0c2290059d00">Initialize</a> (const <a class="el" href="namespacexmaxapp.html#a232880527107c8061033a0b0ca9f4593">VarsMap</a> &amp;options)</td></tr>
+<tr class="memdesc:afb8e6cc5852b404c929d0c2290059d00"><td class="mdescLeft">&#160;</td><td class="mdescRight">set state of the plugin  <a href="#afb8e6cc5852b404c929d0c2290059d00">More...</a><br /></td></tr>
 <tr class="separator:afb8e6cc5852b404c929d0c2290059d00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7757977426a97e9c3185c2f485ee58e3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_face.html#a7757977426a97e9c3185c2f485ee58e3">Startup</a> ()</td></tr>
+<tr class="memdesc:a7757977426a97e9c3185c2f485ee58e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">start a plugin  <a href="#a7757977426a97e9c3185c2f485ee58e3">More...</a><br /></td></tr>
 <tr class="separator:a7757977426a97e9c3185c2f485ee58e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a366a68dbf49093375b3150be9bd80774"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_face.html#a366a68dbf49093375b3150be9bd80774">Shutdown</a> ()</td></tr>
+<tr class="memdesc:a366a68dbf49093375b3150be9bd80774"><td class="mdescLeft">&#160;</td><td class="mdescRight">stutdown a plugin  <a href="#a366a68dbf49093375b3150be9bd80774">More...</a><br /></td></tr>
 <tr class="separator:a366a68dbf49093375b3150be9bd80774"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6b34c7e86f0d93866a267ca66a57e51"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_face.html#ae6b34c7e86f0d93866a267ca66a57e51">GetName</a> () const =0</td></tr>
+<tr class="memdesc:ae6b34c7e86f0d93866a267ca66a57e51"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the name of plugin  <a href="#ae6b34c7e86f0d93866a267ca66a57e51">More...</a><br /></td></tr>
 <tr class="separator:ae6b34c7e86f0d93866a267ca66a57e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classxmaxapp_1_1_plugin"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classxmaxapp_1_1_plugin')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classxmaxapp_1_1_plugin.html">xmaxapp::Plugin</a></td></tr>
 <tr class="memitem:aa2bb8754e6f63283ba0ef89bf649a759 inherit pub_methods_classxmaxapp_1_1_plugin"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin.html#aa2bb8754e6f63283ba0ef89bf649a759">~Plugin</a> ()</td></tr>
@@ -119,11 +124,6 @@ Static Protected Member Functions</h2></td></tr>
 <tr class="memitem:a5eb36cc0575bb78f5abd21638b2689b3"><td class="memTemplItemLeft" align="right" valign="top">static TPlugin *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_face.html#a5eb36cc0575bb78f5abd21638b2689b3">CreatePluginImpl</a> (<a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> *_owner)</td></tr>
 <tr class="separator:a5eb36cc0575bb78f5abd21638b2689b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:ab6329b1766c6f72a57a753928cd2df00"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_face.html#ab6329b1766c6f72a57a753928cd2df00">PluginFactory</a></td></tr>
-<tr class="separator:ab6329b1766c6f72a57a753928cd2df00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classxmaxapp_1_1_plugin"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classxmaxapp_1_1_plugin')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classxmaxapp_1_1_plugin.html">xmaxapp::Plugin</a></td></tr>
@@ -132,6 +132,7 @@ Additional Inherited Members</h2></td></tr>
 <a class="el" href="classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426baea2f12d4bf0bd189fde9a8bafabe9b3a">State::startuped</a>, 
 <a class="el" href="classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426baf0a0bfe6bc7d2c58d2989034f83183e0">State::stopped</a>
  }</td></tr>
+<tr class="memdesc:a99f959ebc68b33ccd382537b4a70426b"><td class="mdescLeft">&#160;</td><td class="mdescRight">State of <a class="el" href="classxmaxapp_1_1_plugin.html" title="Base class of all plugins. ">Plugin</a>.  <a href="classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426b">More...</a><br /></td></tr>
 <tr class="separator:a99f959ebc68b33ccd382537b4a70426b inherit pub_types_classxmaxapp_1_1_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -211,7 +212,6 @@ template&lt;typename TPlugin &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>return <a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> </p>
 
 <p>Implements <a class="el" href="classxmaxapp_1_1_plugin.html#ab886083150a54af983fb6fb87fd9d693">xmaxapp::Plugin</a>.</p>
 
@@ -239,7 +239,6 @@ template&lt;typename TPlugin &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>return the name of plugin </p>
 
 <p>Implements <a class="el" href="classxmaxapp_1_1_plugin.html#abfe3bc77cddd76c821cf1c900c0c62a5">xmaxapp::Plugin</a>.</p>
 
@@ -267,7 +266,6 @@ template&lt;typename TPlugin &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>return the state of plugin </p>
 
 <p>Implements <a class="el" href="classxmaxapp_1_1_plugin.html#ae00cbeec4fd3f6f5e312cb064df30f24">xmaxapp::Plugin</a>.</p>
 
@@ -296,7 +294,7 @@ template&lt;typename TPlugin &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>set state of the plugin </p><dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">options::variables_map</td><td>param map </td></tr>
   </table>
@@ -352,7 +350,6 @@ template&lt;typename TPlugin &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>stutdown a plugin </p>
 
 </div>
 </div>
@@ -375,30 +372,6 @@ template&lt;typename TPlugin &gt; </div>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>start a plugin </p>
-
-</div>
-</div>
-<h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a id="ab6329b1766c6f72a57a753928cd2df00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6329b1766c6f72a57a753928cd2df00">&#9670;&nbsp;</a></span>PluginFactory</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">friend class <a class="el" href="classxmaxapp_1_1_plugin_factory.html">PluginFactory</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

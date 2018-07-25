@@ -68,9 +68,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">pluginface.hpp File Reference</div>  </div>
 </div><!--header-->
@@ -86,115 +84,19 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html">xmaxapp::PluginFactory</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_face.html">xmaxapp::PluginFace</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespacexmaxapp"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexmaxapp.html">xmaxapp</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">plugin factory.  <a href="classxmaxapp_1_1_plugin_factory.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a03bc16bf3bd96a43f9e5cb985ae2a170"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pluginface_8hpp.html#a03bc16bf3bd96a43f9e5cb985ae2a170">MACRO_TO_QUOTE</a>(r,  data,  elem)&#160;&#160;&#160;#elem,</td></tr>
+<tr class="memitem:a03bc16bf3bd96a43f9e5cb985ae2a170"><td class="memItemLeft" align="right" valign="top"><a id="a03bc16bf3bd96a43f9e5cb985ae2a170"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pluginface_8hpp.html#a03bc16bf3bd96a43f9e5cb985ae2a170">MACRO_TO_QUOTE</a>(r,  data,  elem)&#160;&#160;&#160;#elem,</td></tr>
+<tr class="memdesc:a03bc16bf3bd96a43f9e5cb985ae2a170"><td class="mdescLeft">&#160;</td><td class="mdescRight">this macro help you generate code of a concrete plugin <br /></td></tr>
 <tr class="separator:a03bc16bf3bd96a43f9e5cb985ae2a170"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27b73da2160c7948d786cc574d21954d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pluginface_8hpp.html#a27b73da2160c7948d786cc574d21954d">GENERATED_PLUGIN</a>(plugin_self,  super_class,  init_opt, ...)</td></tr>
-<tr class="separator:a27b73da2160c7948d786cc574d21954d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:abe0a312fa09feb9fb4f4e83411b35c78"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexmaxapp.html#abe0a312fa09feb9fb4f4e83411b35c78">xmaxapp::PluginFactoryFunction</a> = PluginFace *(ApplicationBase *)</td></tr>
-<tr class="separator:abe0a312fa09feb9fb4f4e83411b35c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2666a9cf6a1031dbb5e1a9e11e8f719"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexmaxapp.html#af2666a9cf6a1031dbb5e1a9e11e8f719">xmaxapp::PluginInitOptions</a> = void(OptionsDesc &amp;cli, OptionsDesc &amp;cfg)</td></tr>
-<tr class="separator:af2666a9cf6a1031dbb5e1a9e11e8f719"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabc0de34c4a08749f0452aba5fab57fe"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexmaxapp.html#aabc0de34c4a08749f0452aba5fab57fe">xmaxapp::DependentPluginVistior</a> = std::function&lt; void(const std::string &amp;plugin_name)&gt;</td></tr>
-<tr class="separator:aabc0de34c4a08749f0452aba5fab57fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>defined in xmax/LICENSE </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a27b73da2160c7948d786cc574d21954d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27b73da2160c7948d786cc574d21954d">&#9670;&nbsp;</a></span>GENERATED_PLUGIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define GENERATED_PLUGIN</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">plugin_self, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">super_class, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">init_opt, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>:\</div><div class="line">        typedef super_class Super;\</div><div class="line">        static <span class="keyword">const</span> <a class="code" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">xmaxapp::string</a>&amp; PluginName()\</div><div class="line">        {   \</div><div class="line">            static <span class="keyword">const</span> <a class="code" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">xmaxapp::string</a> _plugin_name(#plugin_self);\</div><div class="line">            return _plugin_name;\</div><div class="line">        }   \</div><div class="line">        static <span class="keywordtype">bool</span> RegistSelf()\</div><div class="line">        {\</div><div class="line">            return <a class="code" href="classxmaxapp_1_1_plugin_factory.html#aab9b72c890e12bad6cecb8e7bafbba09">xmaxapp::PluginFactory::RegistFactory</a>(PluginName(), createPlugin, init_opt, \</div><div class="line">                { BOOST_PP_LIST_FOR_EACH(<a class="code" href="pluginface_8hpp.html#a03bc16bf3bd96a43f9e5cb985ae2a170">MACRO_TO_QUOTE</a>, _, BOOST_PP_VARIADIC_TO_LIST(__VA_ARGS__)) });\</div><div class="line">        }\</div><div class="line">        virtual <span class="keyword">const</span> <a class="code" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">xmaxapp::string</a>&amp; GetName() const override\</div><div class="line">        {\</div><div class="line">            return PluginName();\</div><div class="line">        }\</div><div class="line">    private:\</div><div class="line">        static <a class="code" href="classxmaxapp_1_1_plugin_face.html">xmaxapp::PluginFace</a>* createPlugin(<a class="code" href="classxmaxapp_1_1_application_base.html">xmaxapp::ApplicationBase</a>* _owner)\</div><div class="line">        {\</div><div class="line">            return CreatePluginImpl&lt;plugin_self&gt;(_owner);\</div><div class="line">        }</div><div class="ttc" id="classxmaxapp_1_1_plugin_face_html"><div class="ttname"><a href="classxmaxapp_1_1_plugin_face.html">xmaxapp::PluginFace</a></div><div class="ttdef"><b>Definition:</b> pluginface.hpp:90</div></div>
-<div class="ttc" id="classxmaxapp_1_1_application_base_html"><div class="ttname"><a href="classxmaxapp_1_1_application_base.html">xmaxapp::ApplicationBase</a></div><div class="ttdef"><b>Definition:</b> apps.hpp:51</div></div>
-<div class="ttc" id="namespacexmaxapp_html_a93bd5d7f559d4a9f82ce9ff0ba53127f"><div class="ttname"><a href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">xmaxapp::string</a></div><div class="ttdeci">std::string string</div><div class="ttdef"><b>Definition:</b> app_types.hpp:19</div></div>
-<div class="ttc" id="classxmaxapp_1_1_plugin_factory_html_aab9b72c890e12bad6cecb8e7bafbba09"><div class="ttname"><a href="classxmaxapp_1_1_plugin_factory.html#aab9b72c890e12bad6cecb8e7bafbba09">xmaxapp::PluginFactory::RegistFactory</a></div><div class="ttdeci">static bool RegistFactory(const string &amp;_name, const std::function&lt; PluginFactoryFunction &gt; &amp;_function, const std::function&lt; PluginInitOptions &gt; &amp;_function2, std::vector&lt; string &gt; dependent_plugins)</div><div class="ttdef"><b>Definition:</b> pluginface.cpp:63</div></div>
-<div class="ttc" id="pluginface_8hpp_html_a03bc16bf3bd96a43f9e5cb985ae2a170"><div class="ttname"><a href="pluginface_8hpp.html#a03bc16bf3bd96a43f9e5cb985ae2a170">MACRO_TO_QUOTE</a></div><div class="ttdeci">#define MACRO_TO_QUOTE(r, data, elem)</div><div class="ttdef"><b>Definition:</b> pluginface.hpp:148</div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a03bc16bf3bd96a43f9e5cb985ae2a170"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03bc16bf3bd96a43f9e5cb985ae2a170">&#9670;&nbsp;</a></span>MACRO_TO_QUOTE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MACRO_TO_QUOTE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">r, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">data, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">elem&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;#elem,</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>this macro help you generate code of a concrete plugin </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

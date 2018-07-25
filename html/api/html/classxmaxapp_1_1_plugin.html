@@ -62,7 +62,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacexmaxapp.html">xmaxapp</a></li><li class="navelem"><a class="el" href="classxmaxapp_1_1_plugin.html">Plugin</a></li>  </ul>
+<li class="navelem"><b>xmaxapp</b></li><li class="navelem"><a class="el" href="classxmaxapp_1_1_plugin.html">Plugin</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -75,16 +75,12 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Base class of all plugins.  
+</p>
+
 <p><code>#include &lt;<a class="el" href="apps_8hpp_source.html">apps.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for xmaxapp::Plugin:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="classxmaxapp_1_1_plugin.png" usemap="#xmaxapp::Plugin_map" alt=""/>
-  <map id="xmaxapp::Plugin_map" name="xmaxapp::Plugin_map">
-<area href="classxmaxapp_1_1_plugin_face.html" alt="xmaxapp::PluginFace" shape="rect" coords="0,56,131,80"/>
-</map>
- </div></div>
+
+<p>Inherited by xmaxapp::PluginFace.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -93,22 +89,25 @@ Public Types</h2></td></tr>
 <a class="el" href="classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426baea2f12d4bf0bd189fde9a8bafabe9b3a">State::startuped</a>, 
 <a class="el" href="classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426baf0a0bfe6bc7d2c58d2989034f83183e0">State::stopped</a>
  }</td></tr>
+<tr class="memdesc:a99f959ebc68b33ccd382537b4a70426b"><td class="mdescLeft">&#160;</td><td class="mdescRight">State of <a class="el" href="classxmaxapp_1_1_plugin.html" title="Base class of all plugins. ">Plugin</a>.  <a href="classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426b">More...</a><br /></td></tr>
 <tr class="separator:a99f959ebc68b33ccd382537b4a70426b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa2bb8754e6f63283ba0ef89bf649a759"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin.html#aa2bb8754e6f63283ba0ef89bf649a759">~Plugin</a> ()</td></tr>
-<tr class="separator:aa2bb8754e6f63283ba0ef89bf649a759"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae00cbeec4fd3f6f5e312cb064df30f24"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426b">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin.html#ae00cbeec4fd3f6f5e312cb064df30f24">GetState</a> () const =0</td></tr>
+<tr class="memitem:ae00cbeec4fd3f6f5e312cb064df30f24"><td class="memItemLeft" align="right" valign="top"><a id="ae00cbeec4fd3f6f5e312cb064df30f24"></a>
+virtual <a class="el" href="classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426b">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin.html#ae00cbeec4fd3f6f5e312cb064df30f24">GetState</a> () const =0</td></tr>
+<tr class="memdesc:ae00cbeec4fd3f6f5e312cb064df30f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the state of <a class="el" href="classxmaxapp_1_1_plugin.html" title="Base class of all plugins. ">Plugin</a> <br /></td></tr>
 <tr class="separator:ae00cbeec4fd3f6f5e312cb064df30f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfe3bc77cddd76c821cf1c900c0c62a5"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin.html#abfe3bc77cddd76c821cf1c900c0c62a5">GetName</a> () const =0</td></tr>
+<tr class="memitem:abfe3bc77cddd76c821cf1c900c0c62a5"><td class="memItemLeft" align="right" valign="top"><a id="abfe3bc77cddd76c821cf1c900c0c62a5"></a>
+virtual const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin.html#abfe3bc77cddd76c821cf1c900c0c62a5">GetName</a> () const =0</td></tr>
+<tr class="memdesc:abfe3bc77cddd76c821cf1c900c0c62a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the name of plugin <br /></td></tr>
 <tr class="separator:abfe3bc77cddd76c821cf1c900c0c62a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab886083150a54af983fb6fb87fd9d693"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin.html#ab886083150a54af983fb6fb87fd9d693">GetApp</a> () const =0</td></tr>
+<tr class="memitem:ab886083150a54af983fb6fb87fd9d693"><td class="memItemLeft" align="right" valign="top"><a id="ab886083150a54af983fb6fb87fd9d693"></a>
+virtual <a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin.html#ab886083150a54af983fb6fb87fd9d693">GetApp</a> () const =0</td></tr>
+<tr class="memdesc:ab886083150a54af983fb6fb87fd9d693"><td class="mdescLeft">&#160;</td><td class="mdescRight">return <a class="el" href="classxmaxapp_1_1_application_base.html" title="base class of ApplicationBase pure virtual class ">ApplicationBase</a> <br /></td></tr>
 <tr class="separator:ab886083150a54af983fb6fb87fd9d693"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>base class of <a class="el" href="classxmaxapp_1_1_plugin.html">Plugin</a> pure virtual class </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a99f959ebc68b33ccd382537b4a70426b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a99f959ebc68b33ccd382537b4a70426b">&#9670;&nbsp;</a></span>State</h2>
 
@@ -128,124 +127,16 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>state of <a class="el" href="classxmaxapp_1_1_plugin.html">Plugin</a> </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a99f959ebc68b33ccd382537b4a70426baad921d60486366258809553a3db49a4a"></a>unknown&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a99f959ebc68b33ccd382537b4a70426ba84d10a1ed612e61dbf6880f6e3ee533a"></a>initialized&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a99f959ebc68b33ccd382537b4a70426baea2f12d4bf0bd189fde9a8bafabe9b3a"></a>startuped&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a99f959ebc68b33ccd382537b4a70426baf0a0bfe6bc7d2c58d2989034f83183e0"></a>stopped&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a99f959ebc68b33ccd382537b4a70426baad921d60486366258809553a3db49a4a"></a>unknown&#160;</td><td class="fielddoc"><p>unknown state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a99f959ebc68b33ccd382537b4a70426ba84d10a1ed612e61dbf6880f6e3ee533a"></a>initialized&#160;</td><td class="fielddoc"><p>initialized state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a99f959ebc68b33ccd382537b4a70426baea2f12d4bf0bd189fde9a8bafabe9b3a"></a>startuped&#160;</td><td class="fielddoc"><p>startuped state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a99f959ebc68b33ccd382537b4a70426baf0a0bfe6bc7d2c58d2989034f83183e0"></a>stopped&#160;</td><td class="fielddoc"><p>stopped state. </p>
+</td></tr>
 </table>
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aa2bb8754e6f63283ba0ef89bf649a759"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2bb8754e6f63283ba0ef89bf649a759">&#9670;&nbsp;</a></span>~Plugin()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual xmaxapp::Plugin::~Plugin </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab886083150a54af983fb6fb87fd9d693"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab886083150a54af983fb6fb87fd9d693">&#9670;&nbsp;</a></span>GetApp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a>* xmaxapp::Plugin::GetApp </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>return <a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> </p>
-
-<p>Implemented in <a class="el" href="classxmaxapp_1_1_plugin_face.html#a2ace80cd6c3e4a78356e5661b63a9e98">xmaxapp::PluginFace</a>.</p>
-
-</div>
-</div>
-<a id="abfe3bc77cddd76c821cf1c900c0c62a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfe3bc77cddd76c821cf1c900c0c62a5">&#9670;&nbsp;</a></span>GetName()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a>&amp; xmaxapp::Plugin::GetName </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>name of plugin </p>
-
-<p>Implemented in <a class="el" href="classxmaxapp_1_1_plugin_face.html#ae6b34c7e86f0d93866a267ca66a57e51">xmaxapp::PluginFace</a>.</p>
-
-</div>
-</div>
-<a id="ae00cbeec4fd3f6f5e312cb064df30f24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae00cbeec4fd3f6f5e312cb064df30f24">&#9670;&nbsp;</a></span>GetState()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426b">State</a> xmaxapp::Plugin::GetState </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>return the state of <a class="el" href="classxmaxapp_1_1_plugin.html">Plugin</a> </p>
-
-<p>Implemented in <a class="el" href="classxmaxapp_1_1_plugin_face.html#a324c20136f10037dbca5407722150c15">xmaxapp::PluginFace</a>.</p>
 
 </div>
 </div>

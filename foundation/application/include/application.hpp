@@ -9,48 +9,43 @@
 #include <pluginface.hpp>
 
 
-//namespace boost {
-//	namespace asio {
-//
-//#if !defined(BOOST_ASIO_NO_DEPRECATED)
-//		/// Typedef for backwards compatibility.
-//		class io_context;
-//		typedef io_context io_service;
-//#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
-//
-//	} // namespace asio
-//} // namespace boost
-
-
 
 namespace xmaxapp
 {
 	namespace bpo = boost::program_options;
+
 	/**
-	*  derive class of ApplicationBase
-	*  implement the concrete Initialization
+	* Application instance. 
+	* Use for Application and Plugin System.
 	*/
 	class Application : public ApplicationBase
 	{
 	public:
 		Application();
 		virtual ~Application();
-		/**
-		* return AppService
-		*/
-		AppService* GetService() const override;
 
+		/**
+		* Get the app service interface.
+		* @return App service interface.
+		*/
+		virtual AppService* GetService() const override;
+
+		/**
+		* Get data dir.
+		* @return data dir.
+		*/
 		virtual fs::path GetDataDir() const override;
+
 		/**
 		* Init a concrete plugin
-		* @param[in]	name of a plugin
+		* @param[in] plugin_name the plugin name.
 		*/
 		void PluginToInit(const string& plugin_name);
+
 		/**
-		* entry point of whole app
-		* @param[in]	argc	number of args
-		* @param[in]	argv	the content of params
-		* return If the program will continue running or exit directly
+		* Init a concrete plugin
+		* @param[in] argc number of args
+		* @param[in] argv the content of params
 		*/
 		bool Initialize(int argc, char** argv);
 		/**
@@ -72,8 +67,8 @@ namespace xmaxapp
 
 
 		//==============Utility methods ============
+
 		void SetDefaultConfigFilePath(const fs::path& path) { cfg_file_path_ = path; }
-	
 
 	private:
 		void SetupApplicationOptions();
@@ -92,7 +87,8 @@ namespace xmaxapp
 		fs::path cfg_file_path_;
 		fs::path data_dir_{ "data-dir" };
 
-		std::unique_ptr<AppService>  service_face_;
+
+		std::unique_ptr<AppService>  service_face_;	
 	};
 
 

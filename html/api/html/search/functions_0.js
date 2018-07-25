@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['application',['Application',['../classxmaxapp_1_1_application.html#a1d10658e27dfb33a199ba1167464f04d',1,'xmaxapp::Application']]]
+  ['createplugin',['CreatePlugin',['../classxmaxapp_1_1_plugin_factory.html#a3f64669b5fedefdfc7463ad581932b8a',1,'xmaxapp::PluginFactory']]]
 ];

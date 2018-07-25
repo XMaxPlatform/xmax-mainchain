@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['registfactory',['RegistFactory',['../classxmaxapp_1_1_plugin_factory.html#aab9b72c890e12bad6cecb8e7bafbba09',1,'xmaxapp::PluginFactory']]]
+  ['unknown',['unknown',['../classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426baad921d60486366258809553a3db49a4a',1,'xmaxapp::Plugin']]]
 ];

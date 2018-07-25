@@ -11,22 +11,20 @@ namespace xmaxapp
 {
 
 	/**
-	*  base class of Plugin
-	*  pure virtual class
+	* Base class of all plugins
 	*/
 	class Plugin
 	{
 	public:
 		/**
-		*  state of Plugin
-		* 
+		*  State of Plugin
 		*/
 		enum class State
 		{
-			unknown = 0,
-			initialized, 
-			startuped,
-			stopped 
+			unknown = 0,	/*!< unknown state. */  
+			initialized,	/*!< initialized state. */  
+			startuped,		/*!< startuped state. */  
+			stopped			/*!< stopped state. */  
 		};
 
 		virtual ~Plugin() {}
@@ -35,7 +33,7 @@ namespace xmaxapp
 		*/
 		virtual State GetState() const = 0;
 		/**
-		*	name of plugin
+		*  return the name of plugin
 		*/
 		virtual const string& GetName() const = 0;
 		/**
@@ -56,7 +54,9 @@ namespace xmaxapp
 		* return AppService
 		*/
 		virtual AppService* GetService() const = 0;
-
-		virtual fs::path	GetDataDir() const = 0;
+		/**
+		* return data dir
+		*/
+		virtual fs::path GetDataDir() const = 0;
 	};
 }
