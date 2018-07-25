@@ -82,7 +82,7 @@ namespace xmax {
 	*/
 
 	XmaxNetPluginImpl::XmaxNetPluginImpl()
-		: nMaxClients_(0),
+		: nMaxClients_(30),
 		  nCurrClients_(0)
 	{
 
@@ -415,7 +415,7 @@ namespace xmax {
 	void XmaxNetPlugin::InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
 	{
 		cfg.add_options()
-			(std::string("#").append(std::string(s_ServerAddress)).c_str(), xmaxapp::options::value<std::string>()->default_value("127.0.0.1:8080"), "default server address(ip:port)");
+			(s_ServerAddress, xmaxapp::options::value<std::string>()->default_value("127.0.0.1:8080"), "default server address(ip:port)");
 
 		cfg.add_options()
 			(s_PeerAddress, xmaxapp::options::value<std::vector<std::string>>()->composing(), "list of peer address");
