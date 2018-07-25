@@ -37,5 +37,10 @@ namespace xmax {
 			v8::V8::ShutdownPlatform();
 		}
 
+		void ScriptGlobalMoudle::V8SetupGlobalObjTemplate(v8::Local<v8::ObjectTemplate>* pGlobalTemp)
+		{
+
+		}
+
 	}
 }
