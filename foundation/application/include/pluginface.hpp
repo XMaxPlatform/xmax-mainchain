@@ -19,6 +19,10 @@ namespace xmaxapp
 	using PluginInitOptions = void (OptionsDesc& cli, OptionsDesc& cfg);
 	using DependentPluginVistior = std::function<void(const std::string& plugin_name)>;
 
+
+	/**
+	*  plugin factory.
+	*/
 	class PluginFactory
 	{
 	public:

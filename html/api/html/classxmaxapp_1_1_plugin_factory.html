@@ -62,50 +62,58 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacexmaxapp.html">xmaxapp</a></li><li class="navelem"><a class="el" href="classxmaxapp_1_1_plugin_factory.html">PluginFactory</a></li>  </ul>
+<li class="navelem"><b>xmaxapp</b></li><li class="navelem"><a class="el" href="classxmaxapp_1_1_plugin_factory.html">PluginFactory</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="classxmaxapp_1_1_plugin_factory-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">xmaxapp::PluginFactory Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
+<p>plugin factory.  
+ <a href="classxmaxapp_1_1_plugin_factory.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="pluginface_8hpp_source.html">pluginface.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3f64669b5fedefdfc7463ad581932b8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxmaxapp_1_1_plugin_face.html">PluginFace</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#a3f64669b5fedefdfc7463ad581932b8a">CreatePlugin</a> (<a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> *owner)</td></tr>
+<tr class="memitem:a3f64669b5fedefdfc7463ad581932b8a"><td class="memItemLeft" align="right" valign="top">PluginFace *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#a3f64669b5fedefdfc7463ad581932b8a">CreatePlugin</a> (<a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> *owner)</td></tr>
+<tr class="memdesc:a3f64669b5fedefdfc7463ad581932b8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a plugin  <a href="#a3f64669b5fedefdfc7463ad581932b8a">More...</a><br /></td></tr>
 <tr class="separator:a3f64669b5fedefdfc7463ad581932b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1221e0181f2016d1bfe830d59b61f987"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#a1221e0181f2016d1bfe830d59b61f987">GetName</a> () const</td></tr>
+<tr class="memitem:a1221e0181f2016d1bfe830d59b61f987"><td class="memItemLeft" align="right" valign="top"><a id="a1221e0181f2016d1bfe830d59b61f987"></a>
+const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#a1221e0181f2016d1bfe830d59b61f987">GetName</a> () const</td></tr>
+<tr class="memdesc:a1221e0181f2016d1bfe830d59b61f987"><td class="mdescLeft">&#160;</td><td class="mdescRight">name of plugin <br /></td></tr>
 <tr class="separator:a1221e0181f2016d1bfe830d59b61f987"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54d3bbeaeffcc7140d125853e0c64686"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#a54d3bbeaeffcc7140d125853e0c64686">InitOptions</a> (<a class="el" href="namespacexmaxapp.html#afcc6b4025279ac4ddb46fcb38e7bee06">OptionsDesc</a> &amp;cli, <a class="el" href="namespacexmaxapp.html#afcc6b4025279ac4ddb46fcb38e7bee06">OptionsDesc</a> &amp;cfg)</td></tr>
+<tr class="memitem:a54d3bbeaeffcc7140d125853e0c64686"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#a54d3bbeaeffcc7140d125853e0c64686">InitOptions</a> (OptionsDesc &amp;cli, OptionsDesc &amp;cfg)</td></tr>
+<tr class="memdesc:a54d3bbeaeffcc7140d125853e0c64686"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize options  <a href="#a54d3bbeaeffcc7140d125853e0c64686">More...</a><br /></td></tr>
 <tr class="separator:a54d3bbeaeffcc7140d125853e0c64686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb1a3eb7b0c9a6c05faf39f058131e19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#adb1a3eb7b0c9a6c05faf39f058131e19">VisitDependentPluginsRecursively</a> (<a class="el" href="namespacexmaxapp.html#aabc0de34c4a08749f0452aba5fab57fe">DependentPluginVistior</a> visitor)</td></tr>
+<tr class="memitem:adb1a3eb7b0c9a6c05faf39f058131e19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#adb1a3eb7b0c9a6c05faf39f058131e19">VisitDependentPluginsRecursively</a> (DependentPluginVistior visitor)</td></tr>
+<tr class="memdesc:adb1a3eb7b0c9a6c05faf39f058131e19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Visit dependent plugin recursively.  <a href="#adb1a3eb7b0c9a6c05faf39f058131e19">More...</a><br /></td></tr>
 <tr class="separator:adb1a3eb7b0c9a6c05faf39f058131e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a794becff0eeab47d98f6b3ee6c4807c0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#a794becff0eeab47d98f6b3ee6c4807c0">IsRegist</a> (const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;name)</td></tr>
+<tr class="memitem:a794becff0eeab47d98f6b3ee6c4807c0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#a794becff0eeab47d98f6b3ee6c4807c0">IsRegist</a> (const string &amp;name)</td></tr>
+<tr class="memdesc:a794becff0eeab47d98f6b3ee6c4807c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">return if this factory is created  <a href="#a794becff0eeab47d98f6b3ee6c4807c0">More...</a><br /></td></tr>
 <tr class="separator:a794becff0eeab47d98f6b3ee6c4807c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad19011e16e7db4d9787ac08285f168c8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classxmaxapp_1_1_plugin_factory.html">PluginFactory</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#ad19011e16e7db4d9787ac08285f168c8">GetPluginFactory</a> (const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;name)</td></tr>
+<tr class="memitem:ad19011e16e7db4d9787ac08285f168c8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classxmaxapp_1_1_plugin_factory.html">PluginFactory</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#ad19011e16e7db4d9787ac08285f168c8">GetPluginFactory</a> (const string &amp;name)</td></tr>
+<tr class="memdesc:ad19011e16e7db4d9787ac08285f168c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">get factory  <a href="#ad19011e16e7db4d9787ac08285f168c8">More...</a><br /></td></tr>
 <tr class="separator:ad19011e16e7db4d9787ac08285f168c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abee186bf11a4f49aa5e0b8576dc1db97"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classxmaxapp_1_1_plugin_face.html">PluginFace</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#abee186bf11a4f49aa5e0b8576dc1db97">NewPlugin</a> (const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;name, <a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> *owner)</td></tr>
+<tr class="memitem:abee186bf11a4f49aa5e0b8576dc1db97"><td class="memItemLeft" align="right" valign="top">static PluginFace *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#abee186bf11a4f49aa5e0b8576dc1db97">NewPlugin</a> (const string &amp;name, <a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> *owner)</td></tr>
+<tr class="memdesc:abee186bf11a4f49aa5e0b8576dc1db97"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a plugin  <a href="#abee186bf11a4f49aa5e0b8576dc1db97">More...</a><br /></td></tr>
 <tr class="separator:abee186bf11a4f49aa5e0b8576dc1db97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab9b72c890e12bad6cecb8e7bafbba09"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#aab9b72c890e12bad6cecb8e7bafbba09">RegistFactory</a> (const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;_name, const std::function&lt; <a class="el" href="namespacexmaxapp.html#abe0a312fa09feb9fb4f4e83411b35c78">PluginFactoryFunction</a> &gt; &amp;_function, const std::function&lt; <a class="el" href="namespacexmaxapp.html#af2666a9cf6a1031dbb5e1a9e11e8f719">PluginInitOptions</a> &gt; &amp;_function2, std::vector&lt; <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &gt; dependent_plugins)</td></tr>
+<tr class="memitem:aab9b72c890e12bad6cecb8e7bafbba09"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#aab9b72c890e12bad6cecb8e7bafbba09">RegistFactory</a> (const string &amp;_name, const std::function&lt; PluginFactoryFunction &gt; &amp;_function, const std::function&lt; PluginInitOptions &gt; &amp;_function2, std::vector&lt; string &gt; dependent_plugins)</td></tr>
+<tr class="memdesc:aab9b72c890e12bad6cecb8e7bafbba09"><td class="mdescLeft">&#160;</td><td class="mdescRight">register a factory  <a href="#aab9b72c890e12bad6cecb8e7bafbba09">More...</a><br /></td></tr>
 <tr class="separator:aab9b72c890e12bad6cecb8e7bafbba09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
-Static Protected Attributes</h2></td></tr>
-<tr class="memitem:aa8b0cdfa05f85b2544968c50f483e923"><td class="memItemLeft" align="right" valign="top">static std::unordered_map&lt; <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a>, std::unique_ptr&lt; <a class="el" href="classxmaxapp_1_1_plugin_factory.html">PluginFactory</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmaxapp_1_1_plugin_factory.html#aa8b0cdfa05f85b2544968c50f483e923">sPluginFactorys</a></td></tr>
-<tr class="separator:aa8b0cdfa05f85b2544968c50f483e923"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>plugin factory. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3f64669b5fedefdfc7463ad581932b8a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3f64669b5fedefdfc7463ad581932b8a">&#9670;&nbsp;</a></span>CreatePlugin()</h2>
 
@@ -113,7 +121,7 @@ Static Protected Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classxmaxapp_1_1_plugin_face.html">PluginFace</a> * xmaxapp::PluginFactory::CreatePlugin </td>
+          <td class="memname">PluginFace * xmaxapp::PluginFactory::CreatePlugin </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a> *&#160;</td>
           <td class="paramname"><em>owner</em></td><td>)</td>
@@ -121,30 +129,14 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>create a plugin </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>create a plugin </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname"><a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a></td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname"><a class="el" href="classxmaxapp_1_1_application_base.html" title="base class of ApplicationBase pure virtual class ">ApplicationBase</a></td><td></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a1221e0181f2016d1bfe830d59b61f987"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1221e0181f2016d1bfe830d59b61f987">&#9670;&nbsp;</a></span>GetName()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp; xmaxapp::PluginFactory::GetName </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>name of plugin </p>
 
 </div>
 </div>
@@ -160,7 +152,7 @@ Static Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classxmaxapp_1_1_plugin_factory.html">PluginFactory</a> * xmaxapp::PluginFactory::GetPluginFactory </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;&#160;</td>
+          <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
@@ -171,7 +163,9 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>get factory </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>get factory </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">string</td><td>name of plugin </td></tr>
   </table>
@@ -189,13 +183,13 @@ Static Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void xmaxapp::PluginFactory::InitOptions </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacexmaxapp.html#afcc6b4025279ac4ddb46fcb38e7bee06">OptionsDesc</a> &amp;&#160;</td>
+          <td class="paramtype">OptionsDesc &amp;&#160;</td>
           <td class="paramname"><em>cli</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacexmaxapp.html#afcc6b4025279ac4ddb46fcb38e7bee06">OptionsDesc</a> &amp;&#160;</td>
+          <td class="paramtype">OptionsDesc &amp;&#160;</td>
           <td class="paramname"><em>cfg</em>&#160;</td>
         </tr>
         <tr>
@@ -205,7 +199,9 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>initialize options </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>initialize options </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">OptionsDesc</td><td>option desc </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">OptionsDesc</td><td>option cfg </td></tr>
@@ -227,7 +223,7 @@ Static Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">bool xmaxapp::PluginFactory::IsRegist </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;&#160;</td>
+          <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
@@ -238,7 +234,9 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>return if this factory is created </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>return if this factory is created </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">string</td><td>name of plugin </td></tr>
   </table>
@@ -257,9 +255,9 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classxmaxapp_1_1_plugin_face.html">PluginFace</a> * xmaxapp::PluginFactory::NewPlugin </td>
+          <td class="memname">PluginFace * xmaxapp::PluginFactory::NewPlugin </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;&#160;</td>
+          <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
@@ -280,10 +278,12 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>create a plugin </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>create a plugin </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">string</td><td>name of plugin </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname"><a class="el" href="classxmaxapp_1_1_application_base.html">ApplicationBase</a></td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname"><a class="el" href="classxmaxapp_1_1_application_base.html" title="base class of ApplicationBase pure virtual class ">ApplicationBase</a></td><td></td></tr>
   </table>
   </dd>
 </dl>
@@ -302,25 +302,25 @@ Static Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">bool xmaxapp::PluginFactory::RegistFactory </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &amp;&#160;</td>
+          <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>_name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::function&lt; <a class="el" href="namespacexmaxapp.html#abe0a312fa09feb9fb4f4e83411b35c78">PluginFactoryFunction</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const std::function&lt; PluginFactoryFunction &gt; &amp;&#160;</td>
           <td class="paramname"><em>_function</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::function&lt; <a class="el" href="namespacexmaxapp.html#af2666a9cf6a1031dbb5e1a9e11e8f719">PluginInitOptions</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const std::function&lt; PluginInitOptions &gt; &amp;&#160;</td>
           <td class="paramname"><em>_function2</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a> &gt;&#160;</td>
+          <td class="paramtype">std::vector&lt; string &gt;&#160;</td>
           <td class="paramname"><em>dependent_plugins</em>&#160;</td>
         </tr>
         <tr>
@@ -335,7 +335,9 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>register a factory </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>register a factory </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">string</td><td>name of plugin </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">std::function</td><td>factory method </td></tr>
@@ -355,41 +357,20 @@ Static Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void xmaxapp::PluginFactory::VisitDependentPluginsRecursively </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacexmaxapp.html#aabc0de34c4a08749f0452aba5fab57fe">DependentPluginVistior</a>&#160;</td>
+          <td class="paramtype">DependentPluginVistior&#160;</td>
           <td class="paramname"><em>visitor</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Visit dependent plugin recursively </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Visit dependent plugin recursively. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">DependentPluginVistior</td><td>visitor function </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="aa8b0cdfa05f85b2544968c50f483e923"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8b0cdfa05f85b2544968c50f483e923">&#9670;&nbsp;</a></span>sPluginFactorys</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::unordered_map&lt; <a class="el" href="namespacexmaxapp.html#a93bd5d7f559d4a9f82ce9ff0ba53127f">string</a>, std::unique_ptr&lt; <a class="el" href="classxmaxapp_1_1_plugin_factory.html">PluginFactory</a> &gt; &gt; xmaxapp::PluginFactory::sPluginFactorys</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>
