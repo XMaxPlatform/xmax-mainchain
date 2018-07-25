@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['testv',['testv',['../classxmaxapp_1_1_application.html#a5ef5b6654c3927afd907d056387c1832',1,'xmaxapp::Application']]]
+  ['spluginfactorys',['sPluginFactorys',['../classxmaxapp_1_1_plugin_factory.html#aa8b0cdfa05f85b2544968c50f483e923',1,'xmaxapp::PluginFactory']]]
 ];
