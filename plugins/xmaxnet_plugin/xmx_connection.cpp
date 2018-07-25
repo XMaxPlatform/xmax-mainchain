@@ -44,6 +44,12 @@ void XMX_Connection::Reset()
 
 }
 
+void XMX_Connection::AddressToString()
+{
+	peerAddr_ = socket_->remote_endpoint().address().to_string() + ":" +
+				std::to_string(socket_->remote_endpoint().port());
+}
+
 void XMX_Connection::Close()
 {
 	conStatus_ = CS_DISCONNECTED;

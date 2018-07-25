@@ -66,6 +66,7 @@ public:
 	 std::shared_ptr<tcp::socket> GetSocket() const;
 
 	 const std::string& GetPeerAddress() const;
+	 void	AddressToString();
 
 	 void	SetConStatus(ConnectionStatus cs);
 	 ConnectionStatus GetConStatus() const;
