@@ -163,7 +163,6 @@ namespace xmax {
 				if (nCurrClients_ < nMaxClients_)
 				{
 					std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(pSocket);
-					pConnect->AddressToString();
 					connections_.push_back(pConnect);
 					tcp::no_delay nd(true);
 					pConnect->GetSocket()->set_option(nd);
@@ -244,8 +243,9 @@ namespace xmax {
 							}	
 
 							_ParseMsg(pMsgData, msgHeader, pConnect);
-							pMsgPoolBuf->IncrementReadIndex(msgHeader.msgLength);
 							delete[] pMsgData;
+
+							nCanReadBytes = pMsgPoolBuf->CanReadBytes();
 						}
 						else
 						{

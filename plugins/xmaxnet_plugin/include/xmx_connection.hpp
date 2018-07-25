@@ -66,7 +66,6 @@ public:
 	 std::shared_ptr<tcp::socket> GetSocket() const;
 
 	 const std::string& GetPeerAddress() const;
-	 void	AddressToString();
 
 	 void	SetConStatus(ConnectionStatus cs);
 	 ConnectionStatus GetConStatus() const;
@@ -82,7 +81,7 @@ protected:
 private:
 
 	std::shared_ptr<tcp::socket>				socket_;
-	std::string									peerAddr_;
+	mutable std::string							peerAddr_;
 	ConnectionStatus							conStatus_;
 
 	MessagePoolBuffer*							pMsgBuffer_;
@@ -96,6 +95,11 @@ inline std::shared_ptr<tcp::socket> XMX_Connection::GetSocket() const
 
 inline const std::string& XMX_Connection::GetPeerAddress() const
 {
+	if (peerAddr_.empty())
+	{
+		peerAddr_ = socket_->remote_endpoint().address().to_string() + ":" +
+			std::to_string(socket_->remote_endpoint().port());
+	}
 	return peerAddr_;
 }
 
