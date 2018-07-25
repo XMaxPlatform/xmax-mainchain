@@ -38,7 +38,7 @@ void MessagePoolBuffer::IncrementWriteIndex(uint32_t bytes)
 {
 	_IncrementIndexImpl(writeIndex_, bytes);
 
-	size_t nBuf = writeIndex_.bufferId - msgBuffers_.size();
+	int nBuf = writeIndex_.bufferId - msgBuffers_.size();
 	if (nBuf > 0)
 	{
 		for (size_t i = 0; i < nBuf; ++i)

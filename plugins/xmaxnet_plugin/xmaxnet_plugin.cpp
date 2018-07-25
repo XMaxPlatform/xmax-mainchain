@@ -295,7 +295,7 @@ namespace xmax {
 		std::string port = host.substr(pos + 1);
 
 		tcp::resolver::query query(tcp::v4(), addr.c_str(), port.c_str());
-		auto onResolve = [&](const boost::system::error_code& ec, tcp::resolver::iterator itr)
+		auto onResolve = [pConnect, host, this](const boost::system::error_code& ec, tcp::resolver::iterator itr)
 		{
 			if (!ec)
 			{
@@ -315,8 +315,9 @@ namespace xmax {
 	{
 		pConnect->SetConStatus(CS_CONNECTING);
 		tcp::resolver::iterator currItr = itr;
+		currItr++;
 
-		auto onConnect = [&](const boost::system::error_code& ec)
+		auto onConnect = [pConnect, currItr, this](const boost::system::error_code& ec)
 		{
 			if (!ec)
 			{
@@ -327,7 +328,6 @@ namespace xmax {
 			{
 				if (currItr != tcp::resolver::iterator())
 				{
-					currItr++;
 					pConnect->Close();
 					StartConnect(pConnect, currItr);
 				}
