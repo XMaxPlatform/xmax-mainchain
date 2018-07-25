@@ -67,7 +67,7 @@ namespace xmax {
 // 			main_foo_ = fooName;
 // 			namespace  ph = std::placeholders;
 // 			//return EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
-// 			return Undefined(ScriptGlobalMoudle::GetInstance().GetIsolate());
+// 			return Undefined(ScriptGlobalMoudle::GetInstance().GetIsolate());  
 // 		}
 
 		void ScriptMoudle::LoadScript(const char* code)
