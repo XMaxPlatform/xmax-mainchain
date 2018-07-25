@@ -39,7 +39,12 @@ namespace xmax {
 
 		void ScriptGlobalMoudle::V8SetupGlobalObjTemplate(v8::Local<v8::ObjectTemplate>* pGlobalTemp)
 		{
-
+			global_obj_template_ = pGlobalTemp;
+			//if (m_pBind != nullptr)
+			{
+				BindJsFoos(isolate_, *global_obj_template_, FooBind::GetBindFoos(isolate_));
+			//	m_pBind->Setup(m_pIsolate, *m_pGlobalObjectTemplate);
+			}
 		}
 
 	}
