@@ -87,7 +87,8 @@ namespace xmaxapp
 		fs::path cfg_file_path_;
 		fs::path data_dir_{ "data-dir" };
 
-		std::unique_ptr<AppService>  service_face_;
+
+		std::unique_ptr<AppService>  service_face_;	
 	};
 
 

@@ -21,10 +21,10 @@ namespace xmaxapp
 		*/
 		enum class State
 		{
-			unknown = 0,
-			initialized, 
-			startuped,
-			stopped 
+			unknown = 0,	/*!< unknown state. */  
+			initialized,	/*!< initialized state. */  
+			startuped,		/*!< startuped state. */  
+			stopped			/*!< stopped state. */  
 		};
 
 		virtual ~Plugin() {}
