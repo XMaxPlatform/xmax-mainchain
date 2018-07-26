@@ -147,7 +147,9 @@ namespace unitedb
 
 		virtual void Combine(UndoRevision revision) override
 		{
-			for (int i = stack_->infos_.size() - 1; i >= 0; --i)
+			// note, when combine with self, do nothing.so "i > 0".
+
+			for (int i = stack_->infos_.size() - 1; i > 0; --i)
 			{
 				if (stack_->infos_[i].rev_ == revision)
 				{
