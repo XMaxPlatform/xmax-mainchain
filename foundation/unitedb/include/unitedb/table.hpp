@@ -132,9 +132,9 @@ namespace unitedb
 			}
 		}
 
-		virtual void SetUndo(bool set)
+		virtual void StartUndo(UndoRevision revision) override
 		{
-			no_undo_ = !set;
+
 		}
 
 		virtual void Undo(const UndoOp& op) override

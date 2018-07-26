@@ -51,8 +51,9 @@ namespace unitedb
 
 	IGenericUndo* UndoManager::StartUndo()
 	{
-		owner_->EnableUndo(true);
-		FUndo* undo = new FUndo(this, stack_->undo_counter_);
+		UndoRevision revision = stack_->undo_counter_;
+		owner_->OnStartUndo(revision);
+		FUndo* undo = new FUndo(this, revision);
 		++stack_->undo_counter_;
 		getRecords().emplace_back(UndoRecord(undo, (UndoRecord::IndexType)stack_->Size()));
 		return undo;
