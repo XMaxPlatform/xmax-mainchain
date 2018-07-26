@@ -70,6 +70,9 @@ public:
 	 void	SetConStatus(ConnectionStatus cs);
 	 ConnectionStatus GetConStatus() const;
 
+	 void   SetInitiative(bool b);
+	 bool   IsInitiative() const;
+
 	 MessagePoolBuffer*		GetMsgBuffer() const;
 
 	 void PushMsg(const NetMessage& msg);
@@ -86,6 +89,8 @@ private:
 
 	MessagePoolBuffer*							pMsgBuffer_;
 	std::queue< std::pair<char*, size_t> >		messeageQueue_;
+
+	bool										bInitiative_;
 };
 
 inline std::shared_ptr<tcp::socket> XMX_Connection::GetSocket() const
@@ -116,6 +121,16 @@ inline ConnectionStatus XMX_Connection::GetConStatus() const
 inline MessagePoolBuffer* XMX_Connection::GetMsgBuffer() const
 {
 	return pMsgBuffer_;
+}
+
+inline void XMX_Connection::SetInitiative(bool b)
+{
+	bInitiative_ = b;
+}
+
+inline bool XMX_Connection::IsInitiative() const
+{
+	return bInitiative_;
 }
 
 }

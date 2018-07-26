@@ -10,7 +10,8 @@ XMX_Connection::XMX_Connection(const std::string& endpoint, const std::shared_pt
 	: peerAddr_(endpoint),
 	  socket_(s),
 	  conStatus_(CS_DISCONNECTED),
-	  pMsgBuffer_(new MessagePoolBuffer)
+	  pMsgBuffer_(new MessagePoolBuffer),
+	  bInitiative_(true)
 {
 	
 }
@@ -18,7 +19,8 @@ XMX_Connection::XMX_Connection(const std::string& endpoint, const std::shared_pt
 XMX_Connection::XMX_Connection(const std::shared_ptr<tcp::socket>& s)
 	: socket_(s),
 	  conStatus_(CS_DISCONNECTED),
-	  pMsgBuffer_(new MessagePoolBuffer)
+	  pMsgBuffer_(new MessagePoolBuffer),
+	  bInitiative_(true)
 {
 
 }

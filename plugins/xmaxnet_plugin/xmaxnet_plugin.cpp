@@ -8,11 +8,13 @@
 #include "xmx_connection.hpp"
 #include "netmessage.hpp"
 #include "netmessage.pb.h"
+#include "pro/types/time.hpp"
 
 using namespace google::protobuf;
 
 namespace xmax {
 	using namespace xmaxapp;
+	using namespace pro;
 	using namespace google::protobuf;
 	using boost::asio::ip::tcp;
 	using boost::asio::ip::address_v4;
@@ -27,16 +29,16 @@ namespace xmax {
 	*/
 	class XmaxNetPluginImpl {	
 	public:
-		XmaxNetPluginImpl();
+		XmaxNetPluginImpl(const boost::asio::io_service& io);
 		~XmaxNetPluginImpl();
 
 	public:
 		/**
 		* Init p2p newwork params
 		*/
-		void Init(boost::asio::io_service& io, const VarsMap& options);
+		void Init(const VarsMap& options);
 
-		void StartUpImpl();
+		void StartupImpl();
 
 		void ConnectImpl(const std::string& host);
 
@@ -61,6 +63,11 @@ namespace xmax {
 
 		void _OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const HelloMsg& msg);
 
+		void _ConnectionTimer();
+
+		void _CheckConnection();
+
+		void _Disconnect(std::shared_ptr<XMX_Connection> pc);
 
 	private:
 
@@ -73,7 +80,8 @@ namespace xmax {
 		std::string												seedServer_;
 		std::vector<std::string>								peerAddressList_;
 
-		boost::asio::io_service*								pIoService_;
+		const boost::asio::io_service&							ioService_;
+		boost::asio::deadline_timer								connectionTimer_;
 	};
 
 	/**
@@ -81,9 +89,11 @@ namespace xmax {
 	*
 	*/
 
-	XmaxNetPluginImpl::XmaxNetPluginImpl()
+	XmaxNetPluginImpl::XmaxNetPluginImpl(const boost::asio::io_service& io)
 		: nMaxClients_(30),
-		  nCurrClients_(0)
+		  nCurrClients_(0),
+		  connectionTimer_(const_cast<boost::asio::io_service&>(io)),
+		  ioService_(io)
 	{
 
 	}
@@ -109,12 +119,11 @@ namespace xmax {
 	*  Initialize network
 	*
 	*/
-	void XmaxNetPluginImpl::Init(boost::asio::io_service& io, const VarsMap& options)
+	void XmaxNetPluginImpl::Init(const VarsMap& options)
 	{
-		pIoService_ = &io;
 
-		resolver_ = std::make_unique<tcp::resolver>( io );
-		acceptor_.reset( new tcp::acceptor(io) );
+		resolver_ = std::make_unique<tcp::resolver>( const_cast<boost::asio::io_service&>(ioService_) );
+		acceptor_.reset(new tcp::acceptor(const_cast<boost::asio::io_service&>(ioService_)));
 
 		if (options.count(s_ServerAddress))
 		{
@@ -125,7 +134,7 @@ namespace xmax {
 
 			tcp::resolver::query query(tcp::v4(), addr.c_str(), port.c_str());
 			endpoint_ = *resolver_->resolve(query);
-			acceptor_.reset(new tcp::acceptor(io));
+			acceptor_.reset(new tcp::acceptor(const_cast<boost::asio::io_service&>(ioService_)));
 		}
 
 		if (options.count(s_PeerAddress))
@@ -134,7 +143,7 @@ namespace xmax {
 		}
 	}
 
-	void XmaxNetPluginImpl::StartUpImpl()
+	void XmaxNetPluginImpl::StartupImpl()
 	{
 		if (acceptor_ != nullptr)
 		{
@@ -150,11 +159,12 @@ namespace xmax {
 		{
 			ConnectImpl(peer);
 		}
+
 	}
 
 	void XmaxNetPluginImpl::StartListen()
 	{
-		std::shared_ptr<tcp::socket> pSocket = std::make_shared<tcp::socket>(*pIoService_);
+		std::shared_ptr<tcp::socket> pSocket = std::make_shared<tcp::socket>(const_cast<boost::asio::io_service&>(ioService_));
 		
 		auto onAccept = [pSocket, this](boost::system::error_code ec)
 		{
@@ -166,6 +176,7 @@ namespace xmax {
 					connections_.push_back(pConnect);
 					tcp::no_delay nd(true);
 					pConnect->GetSocket()->set_option(nd);
+					pConnect->SetInitiative(false);
 					StartRecvMsg(pConnect);
 					nMaxClients_++;
 				}
@@ -199,7 +210,16 @@ namespace xmax {
 			{
 				if (ec)
 				{
-					ErrorSprintf("read msg from %s error : %s", pConnect->GetPeerAddress().c_str(), ec.message().c_str());
+					if ((boost::asio::error::eof == ec) ||
+						(boost::asio::error::connection_reset == ec))
+					{			
+						LogSprintf("peer disconnected: %s", pConnect->GetPeerAddress());
+					}
+					else
+					{
+						WarnSprintf("read msg from %s error : %s", pConnect->GetPeerAddress().c_str(), ec.message().c_str());
+					}
+					_Disconnect(pConnect);
 					return;
 				}
 				else
@@ -291,7 +311,7 @@ namespace xmax {
 			return;
 		}
 
-		std::shared_ptr<tcp::socket> s = std::make_shared<tcp::socket>(*pIoService_);
+		std::shared_ptr<tcp::socket> s = std::make_shared<tcp::socket>(const_cast<boost::asio::io_service&>(ioService_));
 
 		std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(host, s);
 		connections_.push_back(pConnect);
@@ -385,6 +405,44 @@ namespace xmax {
 		LogSprintf("recv hellomsg from peer(%s), content is %s", pConnect->GetPeerAddress().c_str(), msg.msg().c_str());
 	}
 
+	void XmaxNetPluginImpl::_ConnectionTimer()
+	{
+		TimeMicroseconds time(2000000);
+		connectionTimer_.expires_from_now(boost::posix_time::microseconds(time.GetValue()));
+		connectionTimer_.async_wait(std::bind(&XmaxNetPluginImpl::_CheckConnection, this));
+	}
+
+	void XmaxNetPluginImpl::_CheckConnection()
+	{
+		for (auto pc : connections_)
+		{
+			if (pc->GetConStatus() == CS_DISCONNECTED || !pc->GetSocket()->is_open())
+			{
+				if (pc->IsInitiative())
+				{
+					ConnectImpl(pc->GetPeerAddress());
+				}
+				
+			}
+			
+		}
+
+		_ConnectionTimer();
+	}
+
+	void XmaxNetPluginImpl::_Disconnect(std::shared_ptr<XMX_Connection> pc)
+	{
+		for (auto itr = connections_.begin(); itr != connections_.end(); ++itr)
+		{
+			if (*itr == pc)
+			{
+				pc->Close();
+				connections_.erase(itr);
+				break;
+			}
+		}
+	}
+
 	/**
 	*  Implementations of XmaxNetPlugin interfaces
 	*
@@ -404,15 +462,15 @@ namespace xmax {
 		
 		PluginFace::Initialize(options);
 
-		impl_.reset(new XmaxNetPluginImpl());
-		impl_->Init(*GetApp()->GetService(), options);
+		impl_.reset(new XmaxNetPluginImpl(*GetApp()->GetService()));
+		impl_->Init(options);
 	}
 
 	//--------------------------------------------------
 	void XmaxNetPlugin::Startup() 
 	{	
 		PluginFace::Startup();
-		impl_->StartUpImpl();
+		impl_->StartupImpl();
 	}
 
 
