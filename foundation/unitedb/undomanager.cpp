@@ -140,8 +140,8 @@ namespace unitedb
 			{
 				DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->undo_counter_);
 
-				int rbeg = it->begin_ < stack_->Size() ? (it->begin_) : (stack_->Size());
-				int rend = preit->rev_ - 1;
+				int64_t rbeg = it->begin_ < stack_->Size() ? (it->begin_) : (stack_->Size());
+				int64_t rend = preit->rev_ - 1;
 
 				reverseForEach(*stack_, rbeg, rend, [&](const UndoOp& op) {
 
