@@ -15,6 +15,8 @@ namespace unitedb
 
 		virtual void StartUndo(UndoRevision revision) = 0;
 
+		virtual void Combine(UndoRevision revision) = 0;
+
 		virtual void Undo(const UndoOp& op) = 0;
 	};
 
@@ -34,6 +36,8 @@ namespace unitedb
 		virtual void LastUpdateFailure(ObjIDCode id) = 0;
 
 		virtual void OnStartUndo(UndoRevision revision) = 0;
+
+		virtual void OnCombine(UndoRevision revision) = 0;
 
 		virtual ITable* GetTable(ObjectTypeCode code) = 0;
 

@@ -144,6 +144,11 @@ namespace unitedb
 			stack_->infos_.emplace_back( TableUndoInfo(stack_->cache_.Size(), revision) );
 		}
 
+		virtual void Combine(UndoRevision revision) override
+		{
+			
+		}
+
 		virtual void Undo(const UndoOp& op) override
 		{
 			undoImpl(op);
