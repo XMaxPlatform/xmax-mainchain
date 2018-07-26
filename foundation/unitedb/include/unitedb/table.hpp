@@ -54,6 +54,13 @@ namespace unitedb
 	{
 		typedef int32_t IndexType;
 
+		TableUndoInfo(IndexType beg, UndoRevision rev)
+			: begin_(beg)
+			, rev_(rev)
+		{
+
+		}
+
 		IndexType begin_ = 0;
 		UndoRevision rev_ = InvalidRevision;
 	};
@@ -134,7 +141,7 @@ namespace unitedb
 
 		virtual void StartUndo(UndoRevision revision) override
 		{
-
+			stack_->infos_.emplace_back( TableUndoInfo(stack_->cache_.Size(), revision) );
 		}
 
 		virtual void Undo(const UndoOp& op) override

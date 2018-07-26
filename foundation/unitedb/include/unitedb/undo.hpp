@@ -24,6 +24,11 @@ namespace unitedb
 			return data_.back();
 		}
 
+		int64_t Size() const
+		{
+			return data_.size();
+		}
+
 		ObjectType& EmplaceBack()
 		{
 			return data_.emplace_back( ObjectType(data_.get_allocator()) );
