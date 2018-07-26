@@ -129,7 +129,7 @@ namespace unitedb
 		{
 			if (noUndo())
 			{
-				BOOST_ASSERT(stack_->cache_.GetBack().GetUndoCode() == UndoOp::Update);
+				DB_ASSERT(stack_->cache_.GetBack().GetUndoCode() == UndoOp::Update);
 				if (stack_->cache_.GetBack().ObjID() == id)
 				{
 					stack_->cache_.PopBack();
@@ -141,12 +141,20 @@ namespace unitedb
 
 		virtual void StartUndo(UndoRevision revision) override
 		{
+			DB_ASSERT(stack_->infos_.back().rev_ + 1 == revision);
 			stack_->infos_.emplace_back( TableUndoInfo(stack_->cache_.Size(), revision) );
 		}
 
 		virtual void Combine(UndoRevision revision) override
 		{
-			
+			for (int i = stack_->infos_.size() - 1; i >= 0; --i)
+			{
+				if (stack_->infos_[i].rev_ == revision)
+				{
+					stack_->infos_.erase(stack_->infos_.begin() + i);
+					break;
+				}
+			}
 		}
 
 		virtual void Undo(const UndoOp& op) override
