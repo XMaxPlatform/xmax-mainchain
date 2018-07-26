@@ -103,6 +103,8 @@ namespace unitedb
 
 		void OnCombine(FUndo* undo);
 
+		void OnCancel(FUndo* undo);
+
 	private:
 
 		inline const UndoRecords& getRecords() const

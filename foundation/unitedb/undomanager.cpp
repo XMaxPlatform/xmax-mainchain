@@ -20,12 +20,14 @@ namespace unitedb
 		if (valid_)
 		{
 			owner_->OnUndo(this);
+			valid_ = false;
 		}
 	}
 	void FUndo::Cancel()
 	{
 		if (valid_)
 		{
+			owner_->OnCancel(this);
 			valid_ = false;
 		}
 
@@ -35,8 +37,8 @@ namespace unitedb
 	{
 		if (valid_)
 		{
-			valid_ = false;
 			owner_->OnCombine(this);
+			valid_ = false;
 		}
 	}
 
@@ -129,7 +131,7 @@ namespace unitedb
 	{
 		auto id = undo->GetID();
 		auto& records = getRecords();
-		for (int i = records.size() - 1; i >= 0; --i)
+		for (int64_t i = records.size() - 1; i >= 0; --i)
 		{
 			auto& curr = records[i];
 			if (curr.id_ == id)// find undo info by id.
@@ -153,6 +155,11 @@ namespace unitedb
 				owner_->OnCombine(curr.rev_);
 			}
 		}
+	}
+
+	void UndoManager::OnCancel(FUndo* undo)
+	{
+
 	}
 
 
