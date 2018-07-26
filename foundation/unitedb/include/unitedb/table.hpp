@@ -50,9 +50,33 @@ namespace unitedb
 		UndoRevision revision;
 	};
 
+	struct TableUndoInfo
+	{
+		typedef int32_t IndexType;
+
+		IndexType begin_ = 0;
+		UndoRevision rev_ = InvalidRevision;
+	};
+
+	typedef MappedVector<TableUndoInfo> TableUndoInfos;
+
+	template<typename T>
 	class TableUndoStack
 	{
+	public:
+		typedef T UndoObjectType;
+		typedef MappedUndo<UndoObjectType> UndoCacheType;
 
+		TableUndoStack(DefAlloc al)
+			: cache_(al)
+			, infos_(al)
+		{
+
+		}
+
+		UndoCacheType cache_;
+
+		TableUndoInfos infos_;
 	};
 
 
@@ -66,7 +90,7 @@ namespace unitedb
 		typedef typename DBTableType::MappedPtr MappedPtr;
 
 		typedef UndoObject<ObjectType> UndoObjectType;
-		typedef MappedUndo<UndoObjectType> UndoCacheType;
+		typedef TableUndoStack<UndoObjectType> UndoStackType;
 
 		typedef typename DBTableType Super;
 
@@ -76,7 +100,7 @@ namespace unitedb
 		{
 			std::string type_name = boost::core::demangle(typeid(SelfType).name()) + "UndoCache";
 
-			cache_ = owner_->GetMappdFile()->find_or_construct< UndoCacheType >(type_name.c_str()) (UndoCacheType::AllocType(owner_->GetSegmentManager()));
+			stack_ = owner_->GetMappdFile()->find_or_construct< UndoStackType >(type_name.c_str()) (DefAlloc(owner_->GetSegmentManager()));
 		}
 
 		inline const ObjectType* AsObject(const DBObjBase* base)
@@ -98,19 +122,19 @@ namespace unitedb
 		{
 			if (noUndo())
 			{
-				BOOST_ASSERT(cache_->GetBack().GetUndoCode() == UndoOp::Update);
-				if (cache_->GetBack().ObjID() == id)
+				BOOST_ASSERT(stack_->cache_.GetBack().GetUndoCode() == UndoOp::Update);
+				if (stack_->cache_.GetBack().ObjID() == id)
 				{
-					cache_->PopBack();
+					stack_->cache_.PopBack();
 				}
 				owner_->LastUpdateFailure(id);
 				return;
 			}
 		}
 
-		virtual void SetUndo(bool set)
+		virtual void StartUndo(UndoRevision revision) override
 		{
-			no_undo_ = !set;
+
 		}
 
 		virtual void Undo(const UndoOp& op) override
@@ -164,13 +188,13 @@ namespace unitedb
 			{
 				auto itr = GetMapped().find(op.id_);
 				GetMapped().replace(itr, getBackObject());
-				cache_->PopBack();
+				stack_->cache_.PopBack();
 			}
 			break;
 			case UndoOp::Delete:
 			{
 				GetMapped().emplace(getBackObject());
-				cache_->PopBack();
+				stack_->cache_.PopBack();
 			}
 			break;
 
@@ -181,16 +205,16 @@ namespace unitedb
 
 		void pushUndoObject(const DBObjBase* undo, UndoRevision v, UndoOp::UndoCode c)
 		{
-			cache_->EmplaceBack().Set(*AsObject(undo), v, c);
+			stack_->cache_.EmplaceBack().Set(*AsObject(undo), v, c);
 		}
 
 		const ObjectType& getBackObject() const
 		{
-			return cache_->GetBack().Object();
+			return stack_->cache_.GetBack().Object();
 		}
 
 		bool no_undo_ = true;
-		UndoCacheType* cache_;
+		UndoStackType* stack_;
 		IDatabase * owner_ = nullptr;
 	};
 }

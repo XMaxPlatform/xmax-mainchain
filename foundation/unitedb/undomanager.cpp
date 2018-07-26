@@ -51,8 +51,9 @@ namespace unitedb
 
 	IGenericUndo* UndoManager::StartUndo()
 	{
-		owner_->EnableUndo(true);
-		FUndo* undo = new FUndo(this, stack_->undo_counter_);
+		UndoRevision revision = stack_->undo_counter_;
+		owner_->OnStartUndo(revision);
+		FUndo* undo = new FUndo(this, revision);
 		++stack_->undo_counter_;
 		getRecords().emplace_back(UndoRecord(undo, (UndoRecord::IndexType)stack_->Size()));
 		return undo;
@@ -139,8 +140,8 @@ namespace unitedb
 			{
 				DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->undo_counter_);
 
-				int rbeg = it->begin_ < stack_->Size() ? (it->begin_) : (stack_->Size());
-				int rend = preit->rev_ - 1;
+				int64_t rbeg = it->begin_ < stack_->Size() ? (it->begin_) : (stack_->Size());
+				int64_t rend = preit->rev_ - 1;
 
 				reverseForEach(*stack_, rbeg, rend, [&](const UndoOp& op) {
 

@@ -13,7 +13,7 @@ namespace unitedb
 
 		virtual IDBTable* GetDBTable() const = 0;
 
-		virtual void SetUndo(bool set) = 0;
+		virtual void StartUndo(UndoRevision revision) = 0;
 
 		virtual void Undo(const UndoOp& op) = 0;
 	};
@@ -33,7 +33,7 @@ namespace unitedb
 
 		virtual void LastUpdateFailure(ObjIDCode id) = 0;
 
-		virtual void EnableUndo(bool set) = 0;
+		virtual void OnStartUndo(UndoRevision revision) = 0;
 
 		virtual ITable* GetTable(ObjectTypeCode code) = 0;
 

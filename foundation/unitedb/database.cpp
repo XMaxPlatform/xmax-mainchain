@@ -94,11 +94,11 @@ namespace unitedb
 			UndoMgr->LastUpdateFailure(id);
 		}
 
-		virtual void EnableUndo(bool set) override
+		virtual void OnStartUndo(UndoRevision revision) override
 		{
 			for (auto it : table_insts_)
 			{
-				it->SetUndo(set);
+				it->StartUndo(revision);
 			}
 		}
 

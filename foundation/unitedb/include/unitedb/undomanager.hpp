@@ -71,9 +71,9 @@ namespace unitedb
 
 		}
 
-		inline size_t Size() const
+		inline int64_t Size() const
 		{
-			return cache_.data_.size();
+			return (int64_t)cache_.data_.size();
 		}
 
 		StackType cache_;
