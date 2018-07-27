@@ -49,6 +49,12 @@ namespace xmaxapp
 		void VisitDependentPluginsRecursively(DependentPluginVistior visitor);
 
 		/**
+		* register a plugin's dependent plugins.
+		* @param[in] string				dependent plugin vector
+		*/
+		bool RegistPluginDependencies(std::vector<string> dependent_plugins);
+
+		/**
 		* return if this factory is created
 		* @param[in] string name of plugin
 		*/
@@ -70,8 +76,8 @@ namespace xmaxapp
 		* @param[in] std::function		factory method
 		* @param[in] std::function		init options
 		*/
-		static bool RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2,
-			std::vector<string> dependent_plugins);
+		static bool RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2);
+		
 
 	private:
 		/**
@@ -80,7 +86,7 @@ namespace xmaxapp
 		* @param[in] std::function factory method
 		* @param[in] std::function initoptions
 		*/		
-		PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2, std::optional<const std::vector<std::string>> op_dependent_plugins);
+		PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2);
 
 
 	protected:
@@ -137,6 +143,8 @@ namespace xmaxapp
 			return _self;
 		}
 
+		static void RegistPluginDependencies() {}
+
 	private:
 		void SetOwner(ApplicationBase* _owner)
 		{
@@ -155,7 +163,7 @@ namespace xmaxapp
 #define MACRO_TO_QUOTE(r, data, elem) #elem, 
 
 
-#define GENERATED_PLUGIN(plugin_self, super_class, init_opt, ...) \
+#define GENERATED_PLUGIN(plugin_self, super_class, init_opt) \
 	public:\
 		typedef super_class Super;\
 		static const xmaxapp::string& PluginName()\
@@ -165,8 +173,9 @@ namespace xmaxapp
 		}	\
 		static bool RegistSelf()\
 		{\
-			return xmaxapp::PluginFactory::RegistFactory(PluginName(), createPlugin, init_opt, \
-				{ BOOST_PP_LIST_FOR_EACH(MACRO_TO_QUOTE, _, BOOST_PP_VARIADIC_TO_LIST(__VA_ARGS__)) });\
+			bool ret = xmaxapp::PluginFactory::RegistFactory(PluginName(), createPlugin, init_opt);\
+			RegistPluginDependencies();\
+			return ret;\
 		}\
 		virtual const xmaxapp::string& GetName() const override\
 		{\
@@ -176,6 +185,13 @@ namespace xmaxapp
 		static xmaxapp::PluginFace* createPlugin(xmaxapp::ApplicationBase* _owner)\
 		{\
 			return CreatePluginImpl<plugin_self>(_owner);\
+		}
+
+#define PLUGIN_DEPENDS(...) \
+	protected:\
+		static void RegistPluginDependencies() { \
+			xmaxapp::PluginFactory::GetPluginFactory(PluginName())->RegistPluginDependencies( \
+				{ BOOST_PP_LIST_FOR_EACH(MACRO_TO_QUOTE, _, BOOST_PP_VARIADIC_TO_LIST(__VA_ARGS__)) }); \
 		}
 
 //#define ALWAYS_REGIST_PLUGIN(plugin_self) \

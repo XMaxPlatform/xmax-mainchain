@@ -26,12 +26,14 @@ namespace xmax
 		// xmaxapp::PluginFace interface ----------------------------------
 		virtual void Initialize(const VarsMap& options) override;
 		virtual void Startup() override;
+			
 		// ----------------------------------------------------------------
 	protected:
 
 		virtual void OnCreated() override;
 
-		static void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
+		static void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);		
+		
 
 
 		std::unique_ptr<BlockBuilderImpl> impl_;
