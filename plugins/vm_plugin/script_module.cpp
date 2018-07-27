@@ -78,13 +78,6 @@ namespace xmax {
 			CallJsFoo(ScriptGlobalMoudle::GetInstance().GetIsolate(), context, foo, 0, NULL);
 		}
 
-// 		void ScriptMoudle::Discard()
-// 		{
-// 						
-// 			v8::V8::Dispose();
-// 			v8::V8::ShutdownPlatform();
-// 		}
-
 		void ScriptMoudle::StoreInstrunction(int ins)
 		{
 			instruction_count_++;
