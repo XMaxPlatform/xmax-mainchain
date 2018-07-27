@@ -48,21 +48,6 @@ namespace xmaxapp
 		*/
 		void VisitDependentPluginsRecursively(DependentPluginVistior visitor);
 
-	private:
-		/**
-		* constructor 
-		* @param[in] string name of plugin
-		* @param[in] std::function factory method
-		* @param[in] std::function initoptions
-		*/		
-		PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2, std::optional<const std::vector<std::string>> op_dependent_plugins);
-
-		string plugin_name_;
-		std::function<PluginFactoryFunction> create_function_;
-		std::function<PluginInitOptions> init_options_;
-		std::vector<std::string> dependent_plugins_;
-
-	public:
 		/**
 		* return if this factory is created
 		* @param[in] string name of plugin
@@ -76,7 +61,7 @@ namespace xmaxapp
 		/**
 		* create a plugin
 		* @param[in] string				name of plugin
-		* @param[in] ApplicationBase  
+		* @param[in] ApplicationBase
 		*/
 		static PluginFace* NewPlugin(const string& name, ApplicationBase* owner);
 		/**
@@ -85,10 +70,28 @@ namespace xmaxapp
 		* @param[in] std::function		factory method
 		* @param[in] std::function		init options
 		*/
-		static bool RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2, 
+		static bool RegistFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2,
 			std::vector<string> dependent_plugins);
+
+	private:
+		/**
+		* constructor 
+		* @param[in] string name of plugin
+		* @param[in] std::function factory method
+		* @param[in] std::function initoptions
+		*/		
+		PluginFactory(const string& _name, const std::function<PluginFactoryFunction>& _function, const std::function<PluginInitOptions>& _function2, std::optional<const std::vector<std::string>> op_dependent_plugins);
+
+
 	protected:
 		static std::unordered_map<string, std::unique_ptr<PluginFactory>> sPluginFactorys;
+
+	private:
+		string plugin_name_;
+		std::function<PluginFactoryFunction> create_function_;
+		std::function<PluginInitOptions> init_options_;
+		std::vector<std::string> dependent_plugins_;	
+
 	};
 
 	class PluginFace : public Plugin
