@@ -6,5 +6,6 @@ var searchData=
   ['getname',['GetName',['../classxmaxapp_1_1_plugin.html#abfe3bc77cddd76c821cf1c900c0c62a5',1,'xmaxapp::Plugin::GetName()'],['../classxmaxapp_1_1_plugin_factory.html#a1221e0181f2016d1bfe830d59b61f987',1,'xmaxapp::PluginFactory::GetName()']]],
   ['getpluginfactory',['GetPluginFactory',['../classxmaxapp_1_1_plugin_factory.html#ad19011e16e7db4d9787ac08285f168c8',1,'xmaxapp::PluginFactory']]],
   ['getservice',['GetService',['../classxmaxapp_1_1_application.html#a7192a4fae64a6c5bb759b8ae9cc2d36b',1,'xmaxapp::Application::GetService()'],['../classxmaxapp_1_1_application_base.html#a6437516923692a3f1db78d3150fb795f',1,'xmaxapp::ApplicationBase::GetService()']]],
-  ['getstate',['GetState',['../classxmaxapp_1_1_plugin.html#ae00cbeec4fd3f6f5e312cb064df30f24',1,'xmaxapp::Plugin']]]
+  ['getstate',['GetState',['../classxmaxapp_1_1_plugin.html#ae00cbeec4fd3f6f5e312cb064df30f24',1,'xmaxapp::Plugin']]],
+  ['getvalue',['GetValue',['../classpro_1_1_time_base.html#acd0d717387dc194ad75a66eaeac27ed8',1,'pro::TimeBase']]]
 ];
