@@ -1,7 +1,8 @@
 # Configurations Documentation
 
 # Table of contents
-1. [Xmaxrun config.ini](#xmaxrunconf)
+1. [Xmaxrun configuration - config.ini](#xmaxrunconf)
+2. [Xmaxrun program options](#xmaxrunprogramopt)
 
 
 <a name="xmaxrunconf"></a>
@@ -22,3 +23,8 @@ plugin = MongoDBPlugin
 plugin = BlockChainPlugin
 plugin = BlockBuilderPlugin
 ```
+
+<a name="xmaxrunprogramopt"></a>
+
+# Xmaxrun program options
+
