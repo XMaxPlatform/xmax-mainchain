@@ -28,3 +28,8 @@ plugin = BlockBuilderPlugin
 
 # Xmaxrun program options
 
+## Usage
+You can pass some options as custom configurations when execute the **xmaxrun** program. Its format is:
+```bash
+xmaxrun --opt1 opt_value --opt2 opt_valu2 ...
+```
