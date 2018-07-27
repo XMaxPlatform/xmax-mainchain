@@ -36,7 +36,7 @@ namespace protobuf_netmessage_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[1];
+  static const ::google::protobuf::internal::ParseTable schema[3];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -44,8 +44,14 @@ struct TableStruct {
 void AddDescriptors();
 void InitDefaultsHelloMsgImpl();
 void InitDefaultsHelloMsg();
+void InitDefaultsVersionMsgImpl();
+void InitDefaultsVersionMsg();
+void InitDefaultsVerAckMsgImpl();
+void InitDefaultsVerAckMsg();
 inline void InitDefaults() {
   InitDefaultsHelloMsg();
+  InitDefaultsVersionMsg();
+  InitDefaultsVerAckMsg();
 }
 }  // namespace protobuf_netmessage_2eproto
 namespace google {
@@ -53,6 +59,12 @@ namespace protobuf {
 class HelloMsg;
 class HelloMsgDefaultTypeInternal;
 extern HelloMsgDefaultTypeInternal _HelloMsg_default_instance_;
+class VerAckMsg;
+class VerAckMsgDefaultTypeInternal;
+extern VerAckMsgDefaultTypeInternal _VerAckMsg_default_instance_;
+class VersionMsg;
+class VersionMsgDefaultTypeInternal;
+extern VersionMsgDefaultTypeInternal _VersionMsg_default_instance_;
 }  // namespace protobuf
 }  // namespace google
 namespace google {
@@ -165,6 +177,190 @@ class HelloMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(
   friend struct ::protobuf_netmessage_2eproto::TableStruct;
   friend void ::protobuf_netmessage_2eproto::InitDefaultsHelloMsgImpl();
 };
+// -------------------------------------------------------------------
+
+class VersionMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:google.protobuf.VersionMsg) */ {
+ public:
+  VersionMsg();
+  virtual ~VersionMsg();
+
+  VersionMsg(const VersionMsg& from);
+
+  inline VersionMsg& operator=(const VersionMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  VersionMsg(VersionMsg&& from) noexcept
+    : VersionMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline VersionMsg& operator=(VersionMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const VersionMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const VersionMsg* internal_default_instance() {
+    return reinterpret_cast<const VersionMsg*>(
+               &_VersionMsg_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    1;
+
+  void Swap(VersionMsg* other);
+  friend void swap(VersionMsg& a, VersionMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline VersionMsg* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  VersionMsg* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const VersionMsg& from);
+  void MergeFrom(const VersionMsg& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(VersionMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:google.protobuf.VersionMsg)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_netmessage_2eproto::TableStruct;
+  friend void ::protobuf_netmessage_2eproto::InitDefaultsVersionMsgImpl();
+};
+// -------------------------------------------------------------------
+
+class VerAckMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:google.protobuf.VerAckMsg) */ {
+ public:
+  VerAckMsg();
+  virtual ~VerAckMsg();
+
+  VerAckMsg(const VerAckMsg& from);
+
+  inline VerAckMsg& operator=(const VerAckMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  VerAckMsg(VerAckMsg&& from) noexcept
+    : VerAckMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline VerAckMsg& operator=(VerAckMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const VerAckMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const VerAckMsg* internal_default_instance() {
+    return reinterpret_cast<const VerAckMsg*>(
+               &_VerAckMsg_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    2;
+
+  void Swap(VerAckMsg* other);
+  friend void swap(VerAckMsg& a, VerAckMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline VerAckMsg* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  VerAckMsg* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const VerAckMsg& from);
+  void MergeFrom(const VerAckMsg& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(VerAckMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:google.protobuf.VerAckMsg)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_netmessage_2eproto::TableStruct;
+  friend void ::protobuf_netmessage_2eproto::InitDefaultsVerAckMsgImpl();
+};
 // ===================================================================
 
 
@@ -229,9 +425,21 @@ inline void HelloMsg::set_allocated_msg(::std::string* msg) {
   // @@protoc_insertion_point(field_set_allocated:google.protobuf.HelloMsg.msg)
 }
 
+// -------------------------------------------------------------------
+
+// VersionMsg
+
+// -------------------------------------------------------------------
+
+// VerAckMsg
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
