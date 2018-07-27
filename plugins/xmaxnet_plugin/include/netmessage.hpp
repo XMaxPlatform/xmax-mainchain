@@ -15,16 +15,21 @@ namespace xmax
 	enum MsgId
 	{
 		MSG_TEST = 0,
+		MSG_VER,
+		MSG_VERACK,
+
 	};
 
 	struct MsgHeader
 	{
 		unsigned char	id;
+		unsigned int	version;
 		unsigned int	msgLength;
 
 		MsgHeader()
 			: id(0),
-			  msgLength(0)
+			  msgLength(0),
+			  version(0)
 		{
 
 		}
