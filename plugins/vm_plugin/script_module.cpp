@@ -61,14 +61,6 @@ namespace xmax {
 
 		}
 
-// 		v8::Handle<v8::Value> ScriptMoudle::Call(const std::string& code, const std::string& fooName)
-// 		{
-// 			current_code_ = code;
-// 			main_foo_ = fooName;
-// 			namespace  ph = std::placeholders;
-// 			//return EnterJsContext(isolate_, std::bind(&ScriptMoudle::DoworkInContext, this, ph::_1, ph::_2, ph::_3, ph::_4));
-// 			return Undefined(ScriptGlobalMoudle::GetInstance().GetIsolate());  
-// 		}
 
 		void ScriptMoudle::LoadScript(const char* code)
 		{
@@ -85,13 +77,6 @@ namespace xmax {
 		
 			CallJsFoo(ScriptGlobalMoudle::GetInstance().GetIsolate(), context, foo, 0, NULL);
 		}
-
-// 		void ScriptMoudle::Discard()
-// 		{
-// 						
-// 			v8::V8::Dispose();
-// 			v8::V8::ShutdownPlatform();
-// 		}
 
 		void ScriptMoudle::StoreInstrunction(int ins)
 		{

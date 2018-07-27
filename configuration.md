@@ -1,7 +1,8 @@
 # Configurations Documentation
 
 # Table of contents
-1. [Xmaxrun config.ini](#xmaxrunconf)
+1. [Xmaxrun configuration - config.ini](#xmaxrunconf)
+2. [Xmaxrun program options](#xmaxrunprogramopt)
 
 
 <a name="xmaxrunconf"></a>
@@ -22,3 +23,22 @@ plugin = MongoDBPlugin
 plugin = BlockChainPlugin
 plugin = BlockBuilderPlugin
 ```
+
+<a name="xmaxrunprogramopt"></a>
+
+# Xmaxrun program options
+
+## Usage
+You can pass some options as custom configurations when execute the **xmaxrun** program. Its format is:
+```bash
+xmaxrun --opt1 opt_value --opt2 opt_valu2 ...
+```
+Bellow will list the global options which supported in the program.
+
+## **Help**
+Option **help** show the command line options description and usage.
+Its format is:
+```bash
+xmaxrun --help
+```
+

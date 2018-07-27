@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['newplugin',['NewPlugin',['../classxmaxapp_1_1_plugin_factory.html#abee186bf11a4f49aa5e0b8576dc1db97',1,'xmaxapp::PluginFactory']]]
+  ['emplace',['Emplace',['../classpro_1_1_any_object.html#ab227237820f9d9327d269c7aa85f184c',1,'pro::AnyObject']]],
+  ['end',['End',['../classpro_1_1_any_object.html#ad87aa2196804f33e791367b136bf9751',1,'pro::AnyObject']]],
+  ['erase',['Erase',['../classpro_1_1_any_object.html#a98426f93629ed9155214a7a5540f0960',1,'pro::AnyObject']]]
 ];

@@ -16,7 +16,8 @@ namespace pro
 	{
 	public:
 
-
+		
+		// Constructs by base types.
 		ANY_TYPE_BIND_TMPLT(bool)
 			ANY_TYPE_BIND_TMPLT(int32_t)
 			ANY_TYPE_BIND_TMPLT(uint32_t)
@@ -28,62 +29,139 @@ namespace pro
 			ANY_TYPE_BIND_TMPLT(const AnyValue&)
 			ANY_TYPE_BIND_TMPLT(const char*)
 
+	public:
+		/**
+		* Constructs by string.
+		* @param[in] v string.
+		*/
 		AnyValue(string&& v);
-
+		/**
+		* Constructs by DataStream.
+		* @param[in] v DataStream.
+		*/
 		AnyValue(DataStream&& v);
-
+		/**
+		* Constructs by binary data.
+		* @param[in] data data ptr.
+		* @param[in] len data size.
+		*/
 		AnyValue(const void* data, size_t len);
 
+		/**
+		* Constructs right AnyValue.
+		* @param[in] v right AnyValue.
+		*/
 		AnyValue(AnyValue&& v);
+		/**
+		* Constructs with null.
+		*/
+		AnyValue();
 
+		/**
+		* operator = AnyValue&&, and return self.
+		* @param[in] v right AnyValue.
+		* @return self.
+		*/
 		AnyValue & operator=(AnyValue&&);
 
 		~AnyValue();
-		AnyValue();
 
+		/**
+		* set by a value.
+		* @param[in] v any value.
+		*/
 		template<typename T>
 		void SetValue(const T& v)
 		{
 			Clear();
 			assign(v);
 		}
+		/**
+		* set by a right value.
+		* @param[in] v any value.
+		*/
 		template<typename T>
 		void SetValue(T&& v)
 		{
 			Clear();
-			assign(v);
+			assign(std::forward<T>(v));
 		}
-
+		/**
+		* set by binary data.
+		* @param[in] data data ptr.
+		* @param[in] len data size.
+		*/
 		void SetValue(const void* data, size_t len)
 		{
 			Clear();
 			assign(data, len);
 		}
 
+		/**
+		* clear.
+		*/
 		void Clear();
 
+		/**
+		* convert to string.
+		* @return string.
+		*/
 		string ToString() const;
-		void ToString(string& str) const;
 
+		/**
+		* convert to string.
+		* @param[out] str out string.
+		*/
+		void ToString(string& str) const;
+		/**
+		* get value type.
+		* @return the type of value.
+		*/
 		inline AnyType::Code GetType() const
 		{
 			return code_;
 		}
-
+		/**
+		* return if empty or not.
+		* @return the result.
+		*/
 		inline bool IsEmpty() const
 		{
 			return (AnyType::Type_Void == code_);
 		}
+		/**
+		* return if valid or not.
+		* @return the result.
+		*/
 		inline bool IsValid() const
 		{
 			return (AnyType::Type_Void != code_);
 		}
-
+		/**
+		* check the value type.
+		* @param[in] code value type.
+		* @return the result.
+		*/
 		inline bool IsType(AnyType::Code code) const
 		{
 			return (code == code_);
 		}
-
+		/**
+		* check the value type.
+		* @param[in] c value type.
+		* @return the result.
+		*/
+		template<AnyType::Code c>
+		inline bool IsType() const
+		{
+			return IsType(c);
+		}
+		/**
+		* cast to a type.
+		* cast to a type, throw when cast false.
+		* @param[in] T value type.
+		* @return the result.
+		*/
 		template<typename T>
 		inline const T& CastTo() const
 		{

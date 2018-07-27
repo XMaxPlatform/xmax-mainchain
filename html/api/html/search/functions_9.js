@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['visitdependentpluginsrecursively',['VisitDependentPluginsRecursively',['../classxmaxapp_1_1_plugin_factory.html#adb1a3eb7b0c9a6c05faf39f058131e19',1,'xmaxapp::PluginFactory']]]
+  ['newplugin',['NewPlugin',['../classxmaxapp_1_1_plugin_factory.html#abee186bf11a4f49aa5e0b8576dc1db97',1,'xmaxapp::PluginFactory']]]
 ];

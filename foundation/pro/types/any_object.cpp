@@ -138,9 +138,9 @@ namespace pro
 		}
 		
 	}
-	AnyObject::Iterator AnyObject::Erase(ConstIterator it)
+	AnyObject::Iterator AnyObject::Erase(ConstIterator wh)
 	{
-		return entities_->erase(it);
+		return entities_->erase(wh);
 	}
 
 	bool AnyObject::Remove(const EntityKey& key)

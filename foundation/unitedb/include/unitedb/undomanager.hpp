@@ -71,11 +71,6 @@ namespace unitedb
 
 		}
 
-		inline int64_t Size() const
-		{
-			return (int64_t)cache_.data_.size();
-		}
-
 		StackType cache_;
 		UndoRecords records_;
 		UndoRevision last_commit_ = -1;
@@ -107,6 +102,8 @@ namespace unitedb
 		void OnUndo(FUndo* undo);
 
 		void OnCombine(FUndo* undo);
+
+		void OnCancel(FUndo* undo);
 
 	private:
 

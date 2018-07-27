@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['varsmap',['VarsMap',['../namespacexmaxapp.html#a232880527107c8061033a0b0ca9f4593',1,'xmaxapp']]],
-  ['visitdependentpluginsrecursively',['VisitDependentPluginsRecursively',['../classxmaxapp_1_1_plugin_factory.html#adb1a3eb7b0c9a6c05faf39f058131e19',1,'xmaxapp::PluginFactory']]]
+  ['plugin',['Plugin',['../classxmaxapp_1_1_plugin.html',1,'xmaxapp']]],
+  ['pluginface_2ecpp',['pluginface.cpp',['../pluginface_8cpp.html',1,'']]],
+  ['pluginface_2ehpp',['pluginface.hpp',['../pluginface_8hpp.html',1,'']]],
+  ['pluginfactory',['PluginFactory',['../classxmaxapp_1_1_plugin_factory.html',1,'xmaxapp']]],
+  ['plugintoinit',['PluginToInit',['../classxmaxapp_1_1_application.html#a5e221e7389195871de403a157117eaf8',1,'xmaxapp::Application']]],
+  ['protypes_2ehpp',['protypes.hpp',['../protypes_8hpp.html',1,'']]]
 ];

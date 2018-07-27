@@ -23,7 +23,10 @@ namespace pro
 		Singleton<T>() = default;
 		virtual ~Singleton<T>() = default;
 
-	public:
+	public:		
+		/**
+		* Get The singleton instance.
+		*/
 		static inline T& GetInstance() {
 			static T inst;
 			return inst;

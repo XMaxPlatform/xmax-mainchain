@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['shutdown',['Shutdown',['../classxmaxapp_1_1_application.html#a3bdf1f0b3a396caab17e0c01d13c8a79',1,'xmaxapp::Application']]],
-  ['startup',['Startup',['../classxmaxapp_1_1_application.html#ae0ed1bb4bd7de3dec7cad29847688ab8',1,'xmaxapp::Application']]],
-  ['startuped',['startuped',['../classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426baea2f12d4bf0bd189fde9a8bafabe9b3a',1,'xmaxapp::Plugin']]],
-  ['state',['State',['../classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426b',1,'xmaxapp::Plugin']]],
-  ['stopped',['stopped',['../classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426baf0a0bfe6bc7d2c58d2989034f83183e0',1,'xmaxapp::Plugin']]]
+  ['log_2ecpp',['log.cpp',['../log_8cpp.html',1,'']]],
+  ['log_2ehpp',['log.hpp',['../log_8hpp.html',1,'']]],
+  ['log_5fbase_2ehpp',['log_base.hpp',['../log__base_8hpp.html',1,'']]],
+  ['log_5fsystem_2ecpp',['log_system.cpp',['../log__system_8cpp.html',1,'']]],
+  ['log_5fsystem_2ehpp',['log_system.hpp',['../log__system_8hpp.html',1,'']]],
+  ['loglevel',['loglevel',['../log__base_8hpp.html#a2b190e371a2add283b6419b3547193aa',1,'pro']]],
+  ['logmessage',['LogMessage',['../log_8hpp.html#aec2c3beca6b763840477975f2e102369',1,'pro']]],
+  ['loop',['Loop',['../classxmaxapp_1_1_application.html#a9f94592dba6a6e3f95318513455d2458',1,'xmaxapp::Application']]]
 ];

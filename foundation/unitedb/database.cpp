@@ -102,6 +102,14 @@ namespace unitedb
 			}
 		}
 
+		virtual void OnCombine(UndoRevision revision) override
+		{
+			for (auto it : table_insts_)
+			{
+				it->Combine(revision);
+			}
+		}
+
 		virtual ITable* GetTable(ObjectTypeCode code) override 
 		{
 			DB_ASSERT(code < tablemap_.size());

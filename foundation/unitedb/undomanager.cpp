@@ -20,12 +20,14 @@ namespace unitedb
 		if (valid_)
 		{
 			owner_->OnUndo(this);
+			valid_ = false;
 		}
 	}
 	void FUndo::Cancel()
 	{
 		if (valid_)
 		{
+			owner_->OnCancel(this);
 			valid_ = false;
 		}
 
@@ -35,8 +37,8 @@ namespace unitedb
 	{
 		if (valid_)
 		{
-			valid_ = false;
 			owner_->OnCombine(this);
+			valid_ = false;
 		}
 	}
 
@@ -55,7 +57,7 @@ namespace unitedb
 		owner_->OnStartUndo(revision);
 		FUndo* undo = new FUndo(this, revision);
 		++stack_->undo_counter_;
-		getRecords().emplace_back(UndoRecord(undo, (UndoRecord::IndexType)stack_->Size()));
+		getRecords().emplace_back(UndoRecord(undo, (UndoRecord::IndexType)stack_->cache_.Size()));
 		return undo;
 	}
 
@@ -72,13 +74,9 @@ namespace unitedb
 		stack_->cache_.PopBack();
 	}
 
-	template<typename Func, typename IndexType>
-	static void reverseForEach(const UndoOpStack& stack, IndexType rbeg, IndexType rend, Func f)
+	template<typename Func, typename ArrayType, typename IndexType>
+	static void reverseForEach(const ArrayType& data, IndexType rbeg, IndexType rend, Func f)
 	{
-		using ArrayType = UndoOpStack::StackType::ArrayType;
-
-		const ArrayType& data = stack.cache_.data_;
-
 		for (IndexType i = rbeg; i > rend; --i)
 		{
 			f(data[i]);
@@ -120,7 +118,7 @@ namespace unitedb
 		{
 			DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->undo_counter_);
 		
-			int64_t rbegin = stack_->Size() - 1;
+			int64_t rbegin = stack_->cache_.Size() - 1;
 			int64_t rend = it->begin_ - 1;
 
 			undoImpl(rbegin, rend);
@@ -132,34 +130,35 @@ namespace unitedb
 	void UndoManager::OnCombine(FUndo* undo)
 	{
 		auto id = undo->GetID();
-		auto preit = getRecords().begin();
-		auto it = preit + 1;
-		while (it != getRecords().end())
+		auto& records = getRecords();
+		for (int64_t i = records.size() - 1; i >= 0; --i)
 		{
-			if (it->id_ == id) // find undo by id.
+			auto& curr = records[i];
+			if (curr.id_ == id)// find undo info by id.
 			{
-				DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->undo_counter_);
+				DB_ASSERT(stack_->last_commit_ < curr.rev_ && curr.rev_ < stack_->undo_counter_);
+				if (0 == i)
+				{
+					// combine with self, do nothing.
+					break;
+				}
 
-				int64_t rbeg = it->begin_ < stack_->Size() ? (it->begin_) : (stack_->Size());
-				int64_t rend = preit->rev_ - 1;
+				//auto& pre = records[i - 1];
+				//int64_t tmp = (i == records.size() - 1) ? (stack_->cache_.Size()) : (records[i = 1].begin_);
+				//int64_t rbeg = tmp - 1;
+				//int64_t rend = curr.begin_ - 1;
+				//reverseForEach(stack_->cache_, rbeg, rend, [&](const UndoOp& op) {
+				//});
 
-				reverseForEach(*stack_, rbeg, rend, [&](const UndoOp& op) {
+				records.erase(records.begin() + i);
 
-					ITable* table = owner_->GetTable(op.table_);
-					
-				});
-
-				getRecords().erase(it);
-				break;
+				owner_->OnCombine(curr.rev_);
 			}
-			else if (it->id_ > id)
-			{
-				break;
-			}
-
-			preit = it;
-			++it;
 		}
+	}
+
+	void UndoManager::OnCancel(FUndo* undo)
+	{
 
 	}
 
@@ -168,7 +167,7 @@ namespace unitedb
 	{
 		if (rbegin > rend)
 		{
-			reverseForEach(*stack_, rbegin, rend, [&](const UndoOp& op) {
+			reverseForEach(stack_->cache_.data_, rbegin, rend, [&](const UndoOp& op) {
 
 				ITable* table = owner_->GetTable(op.table_);
 				table->Undo(op);

@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['app_5ftypes_2ehpp',['app_types.hpp',['../app__types_8hpp.html',1,'']]],
-  ['application',['Application',['../classxmaxapp_1_1_application.html',1,'xmaxapp']]],
-  ['application_2ecpp',['application.cpp',['../application_8cpp.html',1,'']]],
-  ['application_2ehpp',['application.hpp',['../application_8hpp.html',1,'']]],
-  ['applicationbase',['ApplicationBase',['../classxmaxapp_1_1_application_base.html',1,'xmaxapp']]],
-  ['apps_2ehpp',['apps.hpp',['../apps_8hpp.html',1,'']]]
+  ['_5fdebug_5foutput',['_debug_output',['../debug_8hpp.html#aaab555174927d2fef80b605530017a65',1,'pro']]],
+  ['_5fdebug_5foutput_5fline',['_debug_output_line',['../debug_8hpp.html#aa108d00d178cfe7745bebc1ba1955c52',1,'pro']]],
+  ['_5fset_5flogfilename',['_set_logfilename',['../log_8hpp.html#a2acf2521adc290343d000e87ec5f637f',1,'pro']]]
 ];
