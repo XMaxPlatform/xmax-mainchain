@@ -12,10 +12,10 @@ namespace pro
 		static const int64_t FracOfSecond = _FracOfSecond;\
 	private:
 
-/*
- * class TimeBase
- * the base class of time.
- */
+	/**
+	* class TimeBase
+	* the base class of time.
+	*/
 	template<typename _Time>
 	class TimeBase
 	{
@@ -56,7 +56,7 @@ namespace pro
 
 		TimeType time_;
 	};
-	/*
+	/**
 	*   Implementation of Seconds class
 	*/
 	class TimeSeconds : public TimeBase<TimeSeconds>
@@ -64,7 +64,7 @@ namespace pro
 		TIME_GENERAL(1);
 
 	};
-	/*
+	/**
 	*  Implementation of Millisecond class
 	*/
 	class TimeMilliseconds : public TimeBase<TimeMilliseconds>
@@ -72,7 +72,7 @@ namespace pro
 	public:
 		TIME_GENERAL(1000);
 	};
-	/*
+	/**
 	*  Implementation of Microsecond class
 	*/
 	class TimeMicroseconds : public TimeBase<TimeMicroseconds>
