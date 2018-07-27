@@ -150,15 +150,39 @@ namespace pro
 		*/
 		AnyValue& operator [] (size_t index);
 
+		/**
+		* operator = AnyObject&&, and return self.
+		* @param[in] anys AnyObject.
+		* @return self.
+		*/
 		AnyObject& operator =(const AnyObject& anys);
+		/**
+		* operator = AnyObject&&, and return self.
+		* @param[in] anys right AnyObject.
+		* @return self.
+		*/
 		AnyObject& operator =(AnyObject&& anys);
 
+		/**
+		* get the const iteractor of begin.
+		* @return const iteractor.
+		*/
 		ConstIterator Begin() const;
-
+		/**
+		* get the const iteractor of end.
+		* @return const iteractor.
+		*/
 		ConstIterator End() const;
 
-		// get Entity by index. if not found, throw
+		/**
+		* get Entity by index. if not found, throw
+		* @return const Entity&.
+		*/
 		const Entity& GetEntity(size_t index) const;
+		/**
+		* get Entity count
+		* @return const Entity&.
+		*/
 		size_t Count() const;
 	public: // for std.
 		ConstIterator begin() const;
