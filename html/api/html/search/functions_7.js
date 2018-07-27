@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quit',['Quit',['../classxmaxapp_1_1_application.html#abac47b7a82fa736017e96bb5f5ee5e6a',1,'xmaxapp::Application']]]
+  ['operator_3d',['operator=',['../classpro_1_1_any_value.html#acef005b8eb27c921a81734e23e493e2f',1,'pro::AnyValue']]]
 ];
