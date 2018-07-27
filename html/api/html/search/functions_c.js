@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['tostring',['ToString',['../classpro_1_1_any_value.html#ae50ecf33d725c75fcd413190c19ccaed',1,'pro::AnyValue::ToString() const'],['../classpro_1_1_any_value.html#ab2739b9cffedb6c05e3af0e5c544bab4',1,'pro::AnyValue::ToString(string &amp;str) const']]],
-  ['totime',['ToTime',['../classpro_1_1_time_base.html#ab9bfc52f34bf120036ad0a6ad60ba100',1,'pro::TimeBase']]]
+  ['registfactory',['RegistFactory',['../classxmaxapp_1_1_plugin_factory.html#aab9b72c890e12bad6cecb8e7bafbba09',1,'xmaxapp::PluginFactory']]],
+  ['remove',['Remove',['../classpro_1_1_any_object.html#a976c748791d49ac1c892e8f3ca6cdd51',1,'pro::AnyObject']]]
 ];

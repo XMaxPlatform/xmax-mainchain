@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['newplugin',['NewPlugin',['../classxmaxapp_1_1_plugin_factory.html#abee186bf11a4f49aa5e0b8576dc1db97',1,'xmaxapp::PluginFactory']]]
+  ['macro_5fto_5fquote',['MACRO_TO_QUOTE',['../pluginface_8hpp.html#a03bc16bf3bd96a43f9e5cb985ae2a170',1,'pluginface.hpp']]]
 ];

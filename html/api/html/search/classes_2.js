@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['singleton',['Singleton',['../classpro_1_1_singleton.html',1,'pro']]],
-  ['singleton_3c_20logsystem_20_3e',['Singleton&lt; LogSystem &gt;',['../classpro_1_1_singleton.html',1,'pro']]]
+  ['plugin',['Plugin',['../classxmaxapp_1_1_plugin.html',1,'xmaxapp']]],
+  ['pluginfactory',['PluginFactory',['../classxmaxapp_1_1_plugin_factory.html',1,'xmaxapp']]]
 ];

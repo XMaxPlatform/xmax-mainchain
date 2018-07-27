@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['pluginfactoryfunction',['PluginFactoryFunction',['../namespacexmaxapp.html#abe0a312fa09feb9fb4f4e83411b35c78',1,'xmaxapp']]],
-  ['plugininitoptions',['PluginInitOptions',['../namespacexmaxapp.html#af2666a9cf6a1031dbb5e1a9e11e8f719',1,'xmaxapp']]]
+  ['uint16',['uint16',['../generictypes_8hpp.html#a4620cc4efdf99e91df6c48e17db88354',1,'pro']]],
+  ['uint32',['uint32',['../generictypes_8hpp.html#a7becca02e5fc159e1a8f0da4d291f9ba',1,'pro']]],
+  ['uint64',['uint64',['../generictypes_8hpp.html#ab107b67317912edad07dfbb521412b13',1,'pro']]],
+  ['uint8',['uint8',['../generictypes_8hpp.html#a2ebd7c298f3bdf7bf9b92adda84a0fdd',1,'pro']]]
 ];
