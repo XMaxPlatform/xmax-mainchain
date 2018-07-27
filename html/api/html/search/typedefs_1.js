@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dependentpluginvistior',['DependentPluginVistior',['../namespacexmaxapp.html#aabc0de34c4a08749f0452aba5fab57fe',1,'xmaxapp']]]
+  ['string',['string',['../generictypes_8hpp.html#a400814459741a9ef89b9064ff53becac',1,'pro']]]
 ];

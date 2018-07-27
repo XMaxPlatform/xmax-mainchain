@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unknown',['unknown',['../classxmaxapp_1_1_plugin.html#a99f959ebc68b33ccd382537b4a70426baad921d60486366258809553a3db49a4a',1,'xmaxapp::Plugin']]]
+  ['newplugin',['NewPlugin',['../classxmaxapp_1_1_plugin_factory.html#abee186bf11a4f49aa5e0b8576dc1db97',1,'xmaxapp::PluginFactory']]]
 ];
