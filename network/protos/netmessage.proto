@@ -6,3 +6,13 @@ message HelloMsg
 {
 	 string msg = 1;
 }
+
+message VersionMsg
+{
+	
+}
+
+message VerAckMsg
+{
+
+}
