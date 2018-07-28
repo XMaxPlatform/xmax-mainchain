@@ -15,7 +15,8 @@ namespace xmax
 {	
 	using namespace xmaxapp;
 
-
+	///
+	//registration function plugin  modules 
 	void RegisterPlugins() {
 		BlockChainPlugin::RegistSelf();
 		BlockBuilderPlugin::RegistSelf();
