@@ -20,7 +20,6 @@ namespace xmax {
 		ScriptMoudle::~ScriptMoudle()
 		{
 			{
-			//	Discard();
 			}
 		}
 		v8::Object* CallBackCheck(int args_length, v8::Object** args_object, v8::Isolate* isolate) {
@@ -29,21 +28,9 @@ namespace xmax {
 
 
 			int value = (int)arg1;
-			//ScriptMoudle::GetInstance().StoreInstrunction(value);
+
 			return args_object[0];
 		}
-
-// 		void ScriptMoudle::Init()
-// 		{
-// 			V8_AddIntrinsicFoo("CallBackCheck", (void*)CallBackCheck, 2, 1);
-// 
-// 			V8::InitializeICUDefaultLocation("");
-// 			V8::InitializeExternalStartupData("");
-// 			Platform* platform = platform::CreateDefaultPlatform();
-// 			V8::InitializePlatform(platform);
-// 			V8::Initialize();
-// 
-// 		}
 
 		v8::Handle<v8::Value> ScriptMoudle::DoworkInContext(const v8::HandleScope& scope, const v8::Local<ObjectTemplate>& global, const v8::Local<Context>& context, const v8::Context::Scope& ctxScope)
 		{
