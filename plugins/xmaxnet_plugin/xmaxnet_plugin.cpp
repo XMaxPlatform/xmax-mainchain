@@ -9,6 +9,18 @@
 #include "netmessage.hpp"
 #include "netmessage.pb.h"
 #include "pro/types/time.hpp"
+#include "netutl.hpp"
+
+
+#ifdef USE_UPNP
+#include "miniwget.h"
+#include "miniupnpc.h"
+#include "upnpcommands.h"
+#include "portlistingparse.h"
+#include "upnperrors.h"
+#include "miniupnpcstrings.h"
+#endif
+
 
 using namespace google::protobuf;
 
@@ -19,9 +31,11 @@ namespace xmax {
 	using boost::asio::ip::tcp;
 	using boost::asio::ip::address_v4;
 	using boost::asio::ip::host_name;
+	using boost::asio::ip::address;
 
 	const char* s_ServerAddress = "server-address";
 	const char* s_PeerAddress   = "peer-address";
+	const char* s_UPNP = "upnp";
 
 	/**
 	*  Implementation details of the xmax net plugin
@@ -69,6 +83,10 @@ namespace xmax {
 
 		void _Disconnect(std::shared_ptr<XMX_Connection> pc);
 
+		void _DetectExternalAddr();
+
+		void _MapPort();
+
 	private:
 
 		std::unique_ptr<tcp::acceptor>							acceptor_;
@@ -79,6 +97,10 @@ namespace xmax {
 		uint													nCurrClients_;
 		std::string												seedServer_;
 		std::vector<std::string>								peerAddressList_;
+		std::string												listeningPort_;
+		std::string												localAddr_;
+		std::string												externalAddr_;
+		bool													bUpnp_;
 
 		const boost::asio::io_service&							ioService_;
 		boost::asio::deadline_timer								connectionTimer_;
@@ -93,7 +115,8 @@ namespace xmax {
 		: nMaxClients_(30),
 		  nCurrClients_(0),
 		  connectionTimer_(const_cast<boost::asio::io_service&>(io)),
-		  ioService_(io)
+		  ioService_(io),
+		  bUpnp_(false)
 	{
 
 	}
@@ -121,6 +144,7 @@ namespace xmax {
 	*/
 	void XmaxNetPluginImpl::Init(const VarsMap& options)
 	{
+		bUpnp_ = options.at(s_UPNP).as<bool>();
 
 		resolver_ = std::make_unique<tcp::resolver>( const_cast<boost::asio::io_service&>(ioService_) );
 		acceptor_.reset(new tcp::acceptor(const_cast<boost::asio::io_service&>(ioService_)));
@@ -131,6 +155,9 @@ namespace xmax {
 			size_t spos		 = seedServer_.find(':');
 			std::string addr = seedServer_.substr(0, spos);
 			std::string port = seedServer_.substr(spos + 1, seedServer_.size());
+
+			listeningPort_	 = port;
+			localAddr_		 = addr;
 
 			tcp::resolver::query query(tcp::v4(), addr.c_str(), port.c_str());
 			endpoint_ = *resolver_->resolve(query);
@@ -153,6 +180,8 @@ namespace xmax {
 			acceptor_->listen();
 			StartListen();
 			Logf("start to listen incoming peers");
+
+			_DetectExternalAddr();
 		}
 
 		for (const std::string& peer : peerAddressList_)
@@ -443,6 +472,94 @@ namespace xmax {
 		}
 	}
 
+	void XmaxNetPluginImpl::_DetectExternalAddr()
+	{
+		std::vector<std::string> publicAddrList = GetExternalAddress();
+		auto listenAddr = address::from_string(localAddr_);
+		bool bListenAddrSet = !listenAddr.is_unspecified();
+		bool listenIsPublic = bListenAddrSet && IsPublicAddress(localAddr_);
+
+		if (bUpnp_ && listenIsPublic)
+		{
+			LogSprintf("Listening Address is public : %s", localAddr_.c_str());
+			externalAddr_ = localAddr_;
+		}
+		else if (bUpnp_)
+		{
+			_MapPort();
+		}
+		else
+		{
+			Logf("can not find external addresses, upnp not supported\n");
+		}
+	}
+
+	void XmaxNetPluginImpl::_MapPort()
+	{
+#ifdef USE_UPNP 
+		const char * multicastif = 0;
+		const char * minissdpdpath = 0;
+		struct UPNPDev * devlist = 0;
+		struct UPNPDev* dev;
+		int error = 0;
+		char lanaddr[64];
+
+		devlist = upnpDiscover(2000, multicastif, minissdpdpath, 0, 0, 2, &error);
+		struct UPNPUrls urls;
+		struct IGDdatas data;
+		int r;
+
+		char* descXML;
+		int descXMLsize = 0;
+		int upnperror = 0;
+
+		r = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr));
+
+		if (r == 1)
+		{
+			char externalIPAddress[40];
+			r = UPNP_GetExternalIPAddress(urls.controlURL, data.first.servicetype, externalIPAddress);
+			if (r != UPNPCOMMAND_SUCCESS)
+			{
+				LogSprintf("UPnP: GetExternalIPAddress() returned %d\n", r);
+			}
+			else
+			{
+				if (externalIPAddress[0])
+				{
+					externalAddr_ = lanaddr;
+				}
+				else
+				{
+					LogSprintf("UPnP: GetExternalIPAddress failed.\n");
+				}
+			}
+
+			r = UPNP_AddPortMapping(urls.controlURL, data.first.servicetype,
+				listeningPort_.c_str(), listeningPort_.c_str(), lanaddr, "xmax", "TCP", 0, "0");
+
+			if (r != UPNPCOMMAND_SUCCESS)
+			{
+				LogSprintf("AddPortMapping(%s, %s, %s) failed with code %d (%s)\n",
+					listeningPort_, listeningPort_, lanaddr, r, strupnperror(r));
+			}					
+			else
+			{
+				LogSprintf("UPnP Port Mapping successful.\n");
+			}
+				
+		}
+		else if (r == 2)
+		{
+			Logf("A valid IGD has been found but it reported as not connected");
+		}
+		else if (r == 3)
+		{
+			Logf("an UPnP device has been found but was not recognized as an IGD");
+		}
+#endif
+	}
+
 	/**
 	*  Implementations of XmaxNetPlugin interfaces
 	*
@@ -490,6 +607,9 @@ namespace xmax {
 
 		cfg.add_options()
 			(s_PeerAddress, xmaxapp::options::value<std::vector<std::string>>()->composing(), "list of peer address");
+
+		cfg.add_options()
+			(s_UPNP, xmaxapp::options::value<bool>()->default_value(false), "turn on/off upnp\n");
 	}
 
 }
