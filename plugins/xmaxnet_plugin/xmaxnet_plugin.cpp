@@ -253,16 +253,16 @@ namespace xmax {
 				}
 				else
 				{
-					MessagePoolBuffer* pMsgPoolBuf = pConnect->GetMsgBuffer();
-					size_t nCanWrite = pMsgPoolBuf->AvailableBytes();
+					MessagePoolBuffer* msg_pool_buf = pConnect->GetMsgBuffer();
+					size_t nCanWrite = msg_pool_buf->AvailableBytes();
 					if (bytesRead > nCanWrite)
 					{
 						ErrorSprintf("read msg bytes exceeded msg buffer size\n");
 						return;
 					}
 
-					pMsgPoolBuf->IncrementWriteIndex(bytesRead);
-					uint32_t nCanReadBytes = pMsgPoolBuf->CanReadBytes();
+					msg_pool_buf->IncrementWriteIndex(bytesRead);
+					uint32_t nCanReadBytes = msg_pool_buf->CanReadBytes();
 					while (nCanReadBytes > 0)
 					{
 						if (nCanReadBytes < sizeof(MsgHeader)  )
@@ -271,8 +271,8 @@ namespace xmax {
 						}
 
 						MsgHeader msgHeader;
-						bufferIndex readIndex = pMsgPoolBuf->GetReadIndex();
-						bool bGet             = pMsgPoolBuf->TryGetData(&msgHeader, sizeof(MsgHeader), readIndex);
+						bufferIndex readIndex = msg_pool_buf->GetReadIndex();
+						bool bGet             = msg_pool_buf->TryGetData(&msgHeader, sizeof(MsgHeader), readIndex);
 						if (!bGet)
 						{
 							break;
@@ -281,9 +281,9 @@ namespace xmax {
 						uint32_t msgSize = msgHeader.msgLength + sizeof(MsgHeader);
 						if (nCanReadBytes >= msgSize)
 						{
-							pMsgPoolBuf->IncrementReadIndex(sizeof(MsgHeader));
+							msg_pool_buf->IncrementReadIndex(sizeof(MsgHeader));
 							char* pMsgData = new char[msgHeader.msgLength];
-							bool bret = pMsgPoolBuf->GetData(pMsgData, msgHeader.msgLength);
+							bool bret = msg_pool_buf->GetData(pMsgData, msgHeader.msgLength);
 
 							if (!bret)
 							{
@@ -294,16 +294,16 @@ namespace xmax {
 							_ParseMsg(pMsgData, msgHeader, pConnect);
 							delete[] pMsgData;
 
-							nCanReadBytes = pMsgPoolBuf->CanReadBytes();
+							nCanReadBytes = msg_pool_buf->CanReadBytes();
 						}
 						else
 						{
 							uint32_t remainMsgLength = msgSize - nCanReadBytes;
-							uint32_t canWriteLength  = pMsgPoolBuf->AvailableBytes();
+							uint32_t canWriteLength  = msg_pool_buf->AvailableBytes();
 
 							if (remainMsgLength > canWriteLength)
 							{
-								pMsgPoolBuf->Allocate(remainMsgLength - canWriteLength);
+								msg_pool_buf->Allocate(remainMsgLength - canWriteLength);
 							}
 
 							break;
