@@ -20,7 +20,7 @@ source_group(
 
 add_library( ${current_lib_name} ${SOURCE_FILES} ${HEADERS} )
 
-
+add_definitions(-DMINIUPNP_STATICLIB)
 
 target_link_libraries( ${current_lib_name}
     ${Boost_LIBRARIES}
@@ -31,5 +31,8 @@ target_link_libraries( ${current_lib_name}
 target_include_directories( ${current_lib_name} 
 	PUBLIC  "include"  "${Boost_INCLUDE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" 
 		)
+target_include_directories( ${current_lib_name}  
+	PUBLIC "include" ${CMAKE_CURRENT_SOURCE_DIR}/../../libraries/miniupnp/include )		
+		
 
 set_target_properties( ${current_lib_name} PROPERTIES PUBLIC_HEADER "${HEADERS}" FOLDER "5.Plugins")
