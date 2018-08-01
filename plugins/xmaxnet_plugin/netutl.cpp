@@ -73,16 +73,16 @@ namespace xmax
 		if (bi_addr.is_v4())
 		{
 			address_v4 v4Address = bi_addr.to_v4();
-			address_v4::bytes_type bytesToCheck = v4Address.to_bytes();
-			if (bytesToCheck[0] == 10 || bytesToCheck[0] == 127)
+			address_v4::bytes_type bytes_to_check = v4Address.to_bytes();
+			if (bytes_to_check[0] == 10 || bytes_to_check[0] == 127)
 			{
 				return true;
 			}			
-			if (bytesToCheck[0] == 172 && (bytesToCheck[1] >= 16 && bytesToCheck[1] <= 31))
+			if (bytes_to_check[0] == 172 && (bytes_to_check[1] >= 16 && bytes_to_check[1] <= 31))
 			{
 				return true;
 			}				
-			if (bytesToCheck[0] == 192 && bytesToCheck[1] == 168)
+			if (bytes_to_check[0] == 192 && bytes_to_check[1] == 168)
 			{
 				return true;
 			}				
