@@ -58,12 +58,12 @@ namespace xmax
 	{
 		address bi_addr = address::from_string(addr);
 
-		static const std::set<address> c_rejectAddresses = {
+		static const std::set<address> kRejectAddresses = {
 			{ address_v4::from_string("127.0.0.1") },
 		{ address_v4::from_string("0.0.0.0") },
 		};
 
-		return std::find(c_rejectAddresses.begin(), c_rejectAddresses.end(), bi_addr) != c_rejectAddresses.end();
+		return std::find(kRejectAddresses.begin(), kRejectAddresses.end(), bi_addr) != kRejectAddresses.end();
 	}
 
 	bool IsPrivateAddress(const std::string& addr)
