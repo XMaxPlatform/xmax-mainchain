@@ -226,34 +226,34 @@ namespace xmax {
 		acceptor_->async_accept(*pSocket, onAccept);
 	}
 
-	void XmaxNetPluginImpl::StartRecvMsg(std::shared_ptr<XMX_Connection> pConnect)
+	void XmaxNetPluginImpl::StartRecvMsg(std::shared_ptr<XMX_Connection> connection)
 	{
-		if (pConnect->GetSocket() == nullptr)
+		if (connection->GetSocket() == nullptr)
 		{
 			return;
 		}
 
 		try
 		{
-			auto onReadFunc = [pConnect, this](boost::system::error_code ec, std::size_t bytesRead)
+			auto onReadFunc = [connection, this](boost::system::error_code ec, std::size_t bytesRead)
 			{
 				if (ec)
 				{
 					if ((boost::asio::error::eof == ec) ||
 						(boost::asio::error::connection_reset == ec))
 					{			
-						LogSprintf("peer disconnected: %s", pConnect->GetPeerAddress());
+						LogSprintf("peer disconnected: %s", connection->GetPeerAddress());
 					}
 					else
 					{
-						WarnSprintf("read msg from %s error : %s", pConnect->GetPeerAddress().c_str(), ec.message().c_str());
+						WarnSprintf("read msg from %s error : %s", connection->GetPeerAddress().c_str(), ec.message().c_str());
 					}
-					_Disconnect(pConnect);
+					_Disconnect(connection);
 					return;
 				}
 				else
 				{
-					MessagePoolBuffer* msg_pool_buf = pConnect->GetMsgBuffer();
+					MessagePoolBuffer* msg_pool_buf = connection->GetMsgBuffer();
 					size_t nCanWrite = msg_pool_buf->AvailableBytes();
 					if (bytesRead > nCanWrite)
 					{
@@ -291,7 +291,7 @@ namespace xmax {
 								break;
 							}	
 
-							_ParseMsg(pMsgData, msgHeader, pConnect);
+							_ParseMsg(pMsgData, msgHeader, connection);
 							delete[] pMsgData;
 
 							nCanReadBytes = msg_pool_buf->CanReadBytes();
@@ -310,11 +310,11 @@ namespace xmax {
 						}
 					}
 
-					StartRecvMsg(pConnect);
+					StartRecvMsg(connection);
 				}
 			};
-			std::vector<boost::asio::mutable_buffer> mbBuffers = pConnect->GetMsgBuffer()->GetAvailableBufferFromPool();
-			pConnect->GetSocket()->async_read_some(mbBuffers, onReadFunc);
+			std::vector<boost::asio::mutable_buffer> mbBuffers = connection->GetMsgBuffer()->GetAvailableBufferFromPool();
+			connection->GetSocket()->async_read_some(mbBuffers, onReadFunc);
 
 
 		}
