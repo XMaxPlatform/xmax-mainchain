@@ -235,7 +235,7 @@ namespace xmax {
 
 		try
 		{
-			auto onReadFunc = [connection, this](boost::system::error_code ec, std::size_t bytesRead)
+			auto onReadFunc = [connection, this](boost::system::error_code ec, std::size_t bytes_read)
 			{
 				if (ec)
 				{
@@ -255,13 +255,13 @@ namespace xmax {
 				{
 					MessagePoolBuffer* msg_pool_buf = connection->GetMsgBuffer();
 					size_t nCanWrite = msg_pool_buf->AvailableBytes();
-					if (bytesRead > nCanWrite)
+					if (bytes_read > nCanWrite)
 					{
 						ErrorSprintf("read msg bytes exceeded msg buffer size\n");
 						return;
 					}
 
-					msg_pool_buf->IncrementWriteIndex(bytesRead);
+					msg_pool_buf->IncrementWriteIndex(bytes_read);
 					uint32_t nCanReadBytes = msg_pool_buf->CanReadBytes();
 					while (nCanReadBytes > 0)
 					{
