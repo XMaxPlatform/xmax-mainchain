@@ -5,7 +5,8 @@
 
 namespace xmax
 {
-	std::vector<std::string> GetExternalAddress();
+	std::vector<std::string> GetPublicPrivateAddress();
+	std::vector<std::string> GetLocalAddress();
 
 	bool IsLocalAddress(const std::string& addr);
 

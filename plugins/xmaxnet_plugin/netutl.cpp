@@ -12,7 +12,7 @@ namespace xmax
 	using boost::asio::ip::host_name;
 	using boost::asio::ip::address;
 
-	std::vector<std::string> GetExternalAddress()
+	std::vector<std::string> GetPublicPrivateAddress()
 	{
 		std::vector<std::string> addrList;
 

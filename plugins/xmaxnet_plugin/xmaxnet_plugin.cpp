@@ -474,7 +474,7 @@ namespace xmax {
 
 	void XmaxNetPluginImpl::_DetectExternalAddr()
 	{
-		std::vector<std::string> publicAddrList = GetExternalAddress();
+		std::vector<std::string> publicAddrList = GetPublicPrivateAddress();
 		auto listenAddr = address::from_string(localAddr_);
 		bool bListenAddrSet = !listenAddr.is_unspecified();
 		bool listenIsPublic = bListenAddrSet && IsPublicAddress(localAddr_);
