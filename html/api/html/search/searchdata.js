@@ -5,10 +5,10 @@ var indexSectionsWithContent =
   2: "abcdefglpst",
   3: "_abcegiklnopqrstv",
   4: "kv",
-  5: "eisu",
+  5: "eilsu",
   6: "ls",
-  7: "isu",
-  8: "aim",
+  7: "eisuw",
+  8: "adeilmw",
   9: "w"
 };
 

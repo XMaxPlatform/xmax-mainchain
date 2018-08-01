@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['string',['string',['../generictypes_8hpp.html#a400814459741a9ef89b9064ff53becac',1,'pro']]]
+  ['loggerptr',['LoggerPtr',['../log__base_8hpp.html#a335bf10071ab6aec4a42fba9af426466',1,'pro']]]
 ];
