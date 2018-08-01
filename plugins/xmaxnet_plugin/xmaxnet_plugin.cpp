@@ -193,15 +193,15 @@ namespace xmax {
 
 	void XmaxNetPluginImpl::StartListen()
 	{
-		std::shared_ptr<tcp::socket> pSocket = std::make_shared<tcp::socket>(const_cast<boost::asio::io_service&>(ioService_));
+		std::shared_ptr<tcp::socket> socket = std::make_shared<tcp::socket>(const_cast<boost::asio::io_service&>(ioService_));
 		
-		auto onAccept = [pSocket, this](boost::system::error_code ec)
+		auto onAccept = [socket, this](boost::system::error_code ec)
 		{
 			if ( !ec )
 			{
 				if (nCurrClients_ < nMaxClients_)
 				{
-					std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(pSocket);
+					std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(socket);
 					connections_.push_back(pConnect);
 					tcp::no_delay nd(true);
 					pConnect->GetSocket()->set_option(nd);
@@ -212,7 +212,7 @@ namespace xmax {
 				else
 				{
 					Warnf("MaxClinet exceeded!!!!\n");
-					pSocket->close();
+					socket->close();
 				}
 
 				StartListen();
@@ -223,7 +223,7 @@ namespace xmax {
 			}
 		};
 		
-		acceptor_->async_accept(*pSocket, onAccept);
+		acceptor_->async_accept(*socket, onAccept);
 	}
 
 	void XmaxNetPluginImpl::StartRecvMsg(std::shared_ptr<XMX_Connection> connection)
