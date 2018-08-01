@@ -40,18 +40,18 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 
 BOOST_AUTO_TEST_CASE(pro_time_1)
 {
-	TimeMilliseconds milli(2500ll);
-	TimeMicroseconds micro = milli.ToTime<TimeMicroseconds>();
-	TimeMilliseconds milli2 = micro.ToTime<TimeMilliseconds>();
+	TimeMilliseconds baseMillisecs(2500ll);
+	TimeMicroseconds toMicrosecs = baseMillisecs.ToTime<TimeMicroseconds>();
+	TimeMilliseconds backMircosecs = toMicrosecs.ToTime<TimeMilliseconds>();
 
-	TimeSeconds sec = micro.ToTime<TimeSeconds>();
+	TimeSeconds sec = toMicrosecs.ToTime<TimeSeconds>();
 
 	TimeMicroseconds micro2 = sec.ToTime<TimeMicroseconds>();
 	TimeMilliseconds milli3 = sec.ToTime<TimeMilliseconds>();
 
-	BOOST_CHECK(milli.GetValue() == 2500ll);
-	BOOST_CHECK(micro.GetValue() == 2500ll * 1000ll);
-	BOOST_CHECK(milli2.GetValue() == 2500ll);
+	BOOST_CHECK(baseMillisecs.GetValue() == 2500ll);
+	BOOST_CHECK(toMicrosecs.GetValue() == 2500ll * 1000ll);
+	BOOST_CHECK(backMircosecs.GetValue() == 2500ll);
 
 	BOOST_CHECK(sec.GetValue() == 2ll);
 	BOOST_CHECK(micro2.GetValue() == 2ll * 1000ll * 1000ll);
