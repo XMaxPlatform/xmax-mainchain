@@ -82,12 +82,12 @@ namespace unitedb
 			return false;
 		}
 
-		virtual DBRevision GetLastRevision() const override
+		virtual DBRevision GetTopRevision() const override
 		{
 			return 0;
 		}
 
-		virtual DBRevision GetCommitedRevision() const override
+		virtual DBRevision GetLastCommit() const override
 		{
 			return 0;
 		}

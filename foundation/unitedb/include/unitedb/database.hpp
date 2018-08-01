@@ -64,9 +64,9 @@ namespace unitedb
 
 		virtual bool Commit(DBRevision rev) = 0;
 
-		virtual DBRevision GetLastRevision() const = 0;
+		virtual DBRevision GetTopRevision() const = 0;
 
-		virtual DBRevision GetCommitedRevision() const = 0;
+		virtual DBRevision GetLastCommit() const = 0;
 
 		mapped_file::segment_manager* GetSegment() const
 		{

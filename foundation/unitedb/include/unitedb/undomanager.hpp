@@ -98,6 +98,10 @@ namespace unitedb
 		{
 			return stack_->top_revision_;
 		}
+		DBRevision LastCommit() const
+		{
+			return stack_->last_commit_;
+		}
 
 		void OnUndo(FUndo* undo);
 
