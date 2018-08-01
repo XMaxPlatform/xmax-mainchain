@@ -74,7 +74,7 @@ namespace unitedb
 		StackType cache_;
 		UndoRecords records_;
 		DBRevision last_commit_ = -1;
-		DBRevision undo_counter_ = 0;
+		DBRevision top_revision_ = -1;
 	};
 
 	class UndoManager
@@ -96,7 +96,7 @@ namespace unitedb
 
 		DBRevision TopRevision() const
 		{
-			return stack_->undo_counter_;
+			return stack_->top_revision_;
 		}
 
 		void OnUndo(FUndo* undo);
