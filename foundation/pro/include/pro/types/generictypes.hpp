@@ -47,6 +47,7 @@ namespace pro
 
 	using uint128 = boost::multiprecision::uint128_t;
 
+	using int128 = boost::multiprecision::int128_t;
 
 }
 
