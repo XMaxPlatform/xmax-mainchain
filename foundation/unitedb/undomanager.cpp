@@ -9,7 +9,7 @@ namespace unitedb
 
 	FUndo::UndoID FUndo::scounter_ = 0;
 
-	FUndo::FUndo(UndoManager* owner, UndoRevision rev)
+	FUndo::FUndo(UndoManager* owner, DBRevision rev)
 		: owner_(owner)
 		, revision_(rev)
 	{
@@ -53,7 +53,7 @@ namespace unitedb
 
 	IGenericUndo* UndoManager::StartUndo()
 	{
-		UndoRevision revision = stack_->undo_counter_;
+		DBRevision revision = stack_->undo_counter_;
 		owner_->OnStartUndo(revision);
 		FUndo* undo = new FUndo(this, revision);
 		++stack_->undo_counter_;
@@ -94,7 +94,7 @@ namespace unitedb
 		}
 		return list.end();
 	}
-	static void removeExpiredRecords(UndoRecords& list, UndoRevision rev_begin)
+	static void removeExpiredRecords(UndoRecords& list, DBRevision rev_begin)
 	{
 		auto it = list.begin();
 		while (it != list.end())

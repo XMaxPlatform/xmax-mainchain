@@ -77,17 +77,17 @@ namespace unitedb
 			}
 		}
 
-		virtual bool Commit(UndoRevision rev) override
+		virtual bool Commit(DBRevision rev) override
 		{
 			return false;
 		}
 
-		virtual UndoRevision GetLastRevision() const override
+		virtual DBRevision GetLastRevision() const override
 		{
 			return 0;
 		}
 
-		virtual UndoRevision GetCommitedRevision() const override
+		virtual DBRevision GetCommitedRevision() const override
 		{
 			return 0;
 		}
@@ -115,7 +115,7 @@ namespace unitedb
 			UndoMgr->LastUpdateFailure(id);
 		}
 
-		virtual void OnStartUndo(UndoRevision revision) override
+		virtual void OnStartUndo(DBRevision revision) override
 		{
 			for (auto it : table_insts_)
 			{
@@ -123,7 +123,7 @@ namespace unitedb
 			}
 		}
 
-		virtual void OnCombine(UndoRevision revision) override
+		virtual void OnCombine(DBRevision revision) override
 		{
 			for (auto it : table_insts_)
 			{
@@ -168,7 +168,7 @@ namespace unitedb
 			tablemap_[code].reset(table);
 		}
 
-		virtual UndoRevision TopRevision() const
+		virtual DBRevision TopRevision() const
 		{
 			return UndoMgr->TopRevision();
 		}
