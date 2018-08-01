@@ -49,6 +49,8 @@ namespace pro
 
 	using int128 = boost::multiprecision::int128_t;
 
+	using int256 = boost::multiprecision::int256_t;
+
 }
 
 #define SIZE_MB (1024 * 1024)
