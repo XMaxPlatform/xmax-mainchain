@@ -62,6 +62,11 @@ namespace unitedb
 			initImpl(dir, managed_file_size, flag);
 		}
 
+		virtual UndoPatch StartUndo() override
+		{
+			return UndoPatch(UndoMgr->StartUndo());
+		}
+
 		virtual void Flush() override
 		{
 			if (db_file_)
@@ -69,6 +74,23 @@ namespace unitedb
 				db_file_->flush();
 			}
 		}
+
+		virtual bool Commit(UndoRevision rev) override
+		{
+
+		}
+
+		virtual UndoRevision GetLastRevision() const override
+		{
+
+		}
+
+		virtual UndoRevision GetCommitedRevision() const override
+		{
+
+		}
+
+
 		virtual mapped_file::segment_manager* GetSegmentManager() const override
 		{
 			return db_file_->get_segment_manager();
@@ -79,10 +101,6 @@ namespace unitedb
 			return db_file_.get();
 		}
 
-		virtual UndoPatch StartUndo()
-		{
-			return UndoPatch(UndoMgr->StartUndo());
-		}
 
 		virtual void PushUndo(const UndoOpArg& arg) override
 		{
