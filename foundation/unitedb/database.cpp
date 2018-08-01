@@ -79,17 +79,17 @@ namespace unitedb
 
 		virtual bool Commit(DBRevision rev) override
 		{
-			return false;
+			return UndoMgr->Commit(rev);
 		}
 
 		virtual DBRevision GetTopRevision() const override
 		{
-			return 0;
+			return UndoMgr->TopRevision();
 		}
 
 		virtual DBRevision GetLastCommit() const override
 		{
-			return 0;
+			return UndoMgr->LastCommit();
 		}
 
 		// Database API end.

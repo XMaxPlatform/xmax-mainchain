@@ -111,6 +111,11 @@ namespace unitedb
 		}
 	}
 
+	bool UndoManager::Commit(DBRevision rev)
+	{
+		return false;
+	}
+
 	void UndoManager::OnUndo(FUndo* undo)
 	{
 		auto it = findRecord(getRecords(), undo->GetID());

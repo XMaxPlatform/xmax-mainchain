@@ -94,14 +94,16 @@ namespace unitedb
 
 		void LastUpdateFailure(ObjIDCode id);
 
-		DBRevision TopRevision() const
+		inline DBRevision TopRevision() const
 		{
 			return stack_->top_revision_;
 		}
-		DBRevision LastCommit() const
+		inline DBRevision LastCommit() const
 		{
 			return stack_->last_commit_;
 		}
+
+		bool Commit(DBRevision rev);
 
 		void OnUndo(FUndo* undo);
 
