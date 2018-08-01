@@ -62,6 +62,8 @@ namespace unitedb
 			initImpl(dir, managed_file_size, flag);
 		}
 
+		// Database API 
+
 		virtual UndoPatch StartUndo() override
 		{
 			return UndoPatch(UndoMgr->StartUndo());
@@ -77,19 +79,20 @@ namespace unitedb
 
 		virtual bool Commit(UndoRevision rev) override
 		{
-
+			return false;
 		}
 
 		virtual UndoRevision GetLastRevision() const override
 		{
-
+			return 0;
 		}
 
 		virtual UndoRevision GetCommitedRevision() const override
 		{
-
+			return 0;
 		}
 
+		// Database API end.
 
 		virtual mapped_file::segment_manager* GetSegmentManager() const override
 		{
