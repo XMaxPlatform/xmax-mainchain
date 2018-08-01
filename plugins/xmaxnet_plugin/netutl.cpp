@@ -14,7 +14,7 @@ namespace xmax
 
 	std::vector<std::string> GetExternalAddress()
 	{
-		std::vector<std::string> addrList;
+		std::vector<std::string> addr_list;
 
 #if defined(_WIN32)
 		WSAData wsaData;
@@ -27,7 +27,7 @@ namespace xmax
 		if (gethostname(ac, sizeof(ac)) == SOCKET_ERROR)
 		{
 			WSACleanup();
-			return addrList;
+			return addr_list;
 		}
 
 		struct hostent* phe = gethostbyname(ac);
@@ -35,7 +35,7 @@ namespace xmax
 		{
 			Logf("Bad host lookup\n");
 			WSACleanup();
-			return addrList;
+			return addr_list;
 		}
 
 		for (int i = 0; phe->h_addr_list[i] != 0; ++i)
@@ -45,13 +45,13 @@ namespace xmax
 			std::string addrStr = std::string(inet_ntoa(addr));
 			if (!IsLocalAddress(addrStr))
 			{
-				addrList.push_back(addrStr);
+				addr_list.push_back(addrStr);
 			}
 		}
 
 		WSACleanup();
 #endif
-		return addrList;
+		return addr_list;
 	}
 
 	bool IsLocalAddress(const std::string& addr)
