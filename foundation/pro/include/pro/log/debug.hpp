@@ -18,7 +18,12 @@ namespace pro
 	*/
 	void _debug_output_line(const char* ouput);
 
-
+	/**
+	* ouput a msg to console
+	*/
 #define debug_output(x) _debug_output(x);
+	/**
+	* ouput a msg with line code to console
+	*/
 #define debug_output_line(x) _debug_output_line(x)
 }

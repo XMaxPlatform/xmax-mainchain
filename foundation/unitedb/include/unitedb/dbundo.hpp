@@ -15,7 +15,7 @@ namespace unitedb
 		virtual void Cancel() = 0;
 		virtual void Combine() = 0;
 
-		virtual UndoRevision GetRevision() const = 0;
+		virtual DBRevision GetRevision() const = 0;
 	};
 
 	class UndoPatch
@@ -24,7 +24,7 @@ namespace unitedb
 
 		void Undo();
 		void Cancel();
-		UndoRevision GetRevision() const;
+		DBRevision GetRevision() const;
 		~UndoPatch();
 		
 

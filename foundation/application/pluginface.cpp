@@ -114,7 +114,7 @@ namespace xmaxapp
 
 
 	PluginFace::PluginFace()
-		: plugin_state_(Plugin::State::unknown)
+		: plugin_state_(Plugin::State::kUnkown)
 		, plugin_owner_(nullptr)
 	{
 
@@ -131,16 +131,16 @@ namespace xmaxapp
 
 	void PluginFace::Initialize(const VarsMap& options)
 	{
-		plugin_state_ = Plugin::State::initialized;
+		plugin_state_ = Plugin::State::kInitialized;
 	}
 
 	void PluginFace::Startup()
 	{
-		plugin_state_ = Plugin::State::startuped;
+		plugin_state_ = Plugin::State::kStartuped;
 	}
 	void PluginFace::Shutdown()
 	{
-		plugin_state_ = Plugin::State::stopped;
+		plugin_state_ = Plugin::State::kStopped;
 	}
 
 	void PluginFace::OnCreated()

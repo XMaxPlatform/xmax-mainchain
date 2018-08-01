@@ -23,7 +23,7 @@ namespace unitedb
 		virtual void Cancel() override;
 		virtual void Combine() override;
 
-		virtual UndoRevision GetRevision() const override
+		virtual DBRevision GetRevision() const override
 		{
 			return revision_;
 		}
@@ -35,8 +35,8 @@ namespace unitedb
 
 		friend class UndoManager;
 	private:
-		FUndo(UndoManager* owner, UndoRevision rev);
-		UndoRevision revision_ = 0;
+		FUndo(UndoManager* owner, DBRevision rev);
+		DBRevision revision_ = 0;
 		UndoManager* owner_ = nullptr;
 		bool valid_ = true;
 		UndoID id_ = 0;
@@ -55,7 +55,7 @@ namespace unitedb
 		UndoRecord() = default;
 		IndexType begin_ = 0;
 		FUndo::UndoID id_ = 0;
-		UndoRevision rev_ = InvalidRevision;
+		DBRevision rev_ = InvalidRevision;
 	};
 
 	typedef MappedVector<UndoRecord> UndoRecords;
@@ -73,8 +73,8 @@ namespace unitedb
 
 		StackType cache_;
 		UndoRecords records_;
-		UndoRevision last_commit_ = -1;
-		UndoRevision undo_counter_ = 0;
+		DBRevision last_commit_ = -1;
+		DBRevision top_revision_ = -1;
 	};
 
 	class UndoManager
@@ -94,10 +94,16 @@ namespace unitedb
 
 		void LastUpdateFailure(ObjIDCode id);
 
-		UndoRevision TopRevision() const
+		inline DBRevision TopRevision() const
 		{
-			return stack_->undo_counter_;
+			return stack_->top_revision_;
 		}
+		inline DBRevision LastCommit() const
+		{
+			return stack_->last_commit_;
+		}
+
+		bool Commit(DBRevision rev);
 
 		void OnUndo(FUndo* undo);
 

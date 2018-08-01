@@ -27,11 +27,17 @@ namespace pro
 
 #define EXCEPT_LOG_ERROR(desc) PRO_EXCEPT_WITH_DESC(pro::AssertException, desc);
 
-
+/**
+* format warn log.
+*/
 #define WarnSprintf(fmt, ...) pro::LogMessage(pro::loglevel(pro::loglevel::Warnning), pro::utils::Sprintf(fmt, __VA_ARGS__))
-
+/**
+* format info log.
+*/
 #define LogSprintf(fmt, ...) pro::LogMessage(pro::loglevel(pro::loglevel::Info), pro::utils::Sprintf(fmt, __VA_ARGS__))
-
+/**
+* format error log.
+*/
 #define ErrorSprintf(fmt, ...) \
 {\
 	const pro::string desc = pro::utils::Sprintf(fmt, __VA_ARGS__);\
@@ -41,12 +47,18 @@ namespace pro
 
 
 
-
+/**
+* warn log.
+*/
 #define Warnf(fmt, ...) pro::LogMessage(pro::loglevel(pro::loglevel::Warnning), STRING_FORMAT(fmt, __VA_ARGS__))
-
+/**
+* info log.
+*/
 #define Logf(fmt, ...) pro::LogMessage(pro::loglevel(pro::loglevel::Info), STRING_FORMAT(fmt, __VA_ARGS__))
 
-
+/**
+* error log.
+*/
 #define Errorf(fmt, ...) \
 {\
 	const pro::string desc = STRING_FORMAT(fmt, __VA_ARGS__);\

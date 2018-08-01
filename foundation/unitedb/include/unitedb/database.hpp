@@ -62,6 +62,12 @@ namespace unitedb
 
 		virtual void Flush() = 0;
 
+		virtual bool Commit(DBRevision rev) = 0;
+
+		virtual DBRevision GetTopRevision() const = 0;
+
+		virtual DBRevision GetLastCommit() const = 0;
+
 		mapped_file::segment_manager* GetSegment() const
 		{
 			return getMappdFile()->get_segment_manager();

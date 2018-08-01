@@ -62,6 +62,13 @@ namespace unitedb
 			initImpl(dir, managed_file_size, flag);
 		}
 
+		// Database API 
+
+		virtual UndoPatch StartUndo() override
+		{
+			return UndoPatch(UndoMgr->StartUndo());
+		}
+
 		virtual void Flush() override
 		{
 			if (db_file_)
@@ -69,6 +76,24 @@ namespace unitedb
 				db_file_->flush();
 			}
 		}
+
+		virtual bool Commit(DBRevision rev) override
+		{
+			return UndoMgr->Commit(rev);
+		}
+
+		virtual DBRevision GetTopRevision() const override
+		{
+			return UndoMgr->TopRevision();
+		}
+
+		virtual DBRevision GetLastCommit() const override
+		{
+			return UndoMgr->LastCommit();
+		}
+
+		// Database API end.
+
 		virtual mapped_file::segment_manager* GetSegmentManager() const override
 		{
 			return db_file_->get_segment_manager();
@@ -79,10 +104,6 @@ namespace unitedb
 			return db_file_.get();
 		}
 
-		virtual UndoPatch StartUndo()
-		{
-			return UndoPatch(UndoMgr->StartUndo());
-		}
 
 		virtual void PushUndo(const UndoOpArg& arg) override
 		{
@@ -94,7 +115,7 @@ namespace unitedb
 			UndoMgr->LastUpdateFailure(id);
 		}
 
-		virtual void OnStartUndo(UndoRevision revision) override
+		virtual void OnStartUndo(DBRevision revision) override
 		{
 			for (auto it : table_insts_)
 			{
@@ -102,7 +123,7 @@ namespace unitedb
 			}
 		}
 
-		virtual void OnCombine(UndoRevision revision) override
+		virtual void OnCombine(DBRevision revision) override
 		{
 			for (auto it : table_insts_)
 			{
@@ -147,7 +168,7 @@ namespace unitedb
 			tablemap_[code].reset(table);
 		}
 
-		virtual UndoRevision TopRevision() const
+		virtual DBRevision TopRevision() const
 		{
 			return UndoMgr->TopRevision();
 		}

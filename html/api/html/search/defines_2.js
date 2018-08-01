@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['macro_5fto_5fquote',['MACRO_TO_QUOTE',['../pluginface_8hpp.html#a03bc16bf3bd96a43f9e5cb985ae2a170',1,'pluginface.hpp']]]
+  ['errorf',['Errorf',['../log_8hpp.html#a83386a1f89e09cfdb46a50d6f872f5d1',1,'log.hpp']]],
+  ['errorsprintf',['ErrorSprintf',['../log_8hpp.html#a86c1c1c6662553b78c7d0fa590933b2e',1,'log.hpp']]]
 ];

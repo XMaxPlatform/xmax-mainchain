@@ -5,6 +5,7 @@
 #pragma once
 #include <pro/types/build.hpp>
 #include <string>
+#include <boost/multiprecision/cpp_int.hpp>
 namespace pro
 {
 	/**
@@ -43,6 +44,14 @@ namespace pro
 	* typedef of int64, using stl version
 	*/
 	using int64 = std::int64_t;
+
+	using uint128 = boost::multiprecision::uint128_t;
+
+	using int128 = boost::multiprecision::int128_t;
+
+	using int256 = boost::multiprecision::int256_t;
+
+	using uint256 = boost::multiprecision::uint256_t;
 }
 
 #define SIZE_MB (1024 * 1024)

@@ -23,7 +23,7 @@ namespace unitedb
 
 		}
 
-		void Set(const ObjectType& data, UndoRevision v, UndoOp::UndoCode c)
+		void Set(const ObjectType& data, DBRevision v, UndoOp::UndoCode c)
 		{
 			*static_cast<Super*>(this) = data;
 			revision = v;
@@ -47,14 +47,14 @@ namespace unitedb
 
 	protected:
 		UndoOp::UndoCode opcode;
-		UndoRevision revision;
+		DBRevision revision;
 	};
 
 	struct TableUndoInfo
 	{
 		typedef int32_t IndexType;
 
-		TableUndoInfo(IndexType beg, UndoRevision rev)
+		TableUndoInfo(IndexType beg, DBRevision rev)
 			: begin_(beg)
 			, rev_(rev)
 		{
@@ -62,7 +62,7 @@ namespace unitedb
 		}
 
 		IndexType begin_ = 0;
-		UndoRevision rev_ = InvalidRevision;
+		DBRevision rev_ = InvalidRevision;
 	};
 
 	typedef MappedVector<TableUndoInfo> TableUndoInfos;
@@ -139,13 +139,13 @@ namespace unitedb
 			}
 		}
 
-		virtual void StartUndo(UndoRevision revision) override
+		virtual void StartUndo(DBRevision revision) override
 		{
 			DB_ASSERT(stack_->infos_.back().rev_ + 1 == revision);
 			stack_->infos_.emplace_back( TableUndoInfo(stack_->cache_.Size(), revision) );
 		}
 
-		virtual void Combine(UndoRevision revision) override
+		virtual void Combine(DBRevision revision) override
 		{
 			// note, when combine with self, do nothing.so "i > 0".
 
@@ -225,7 +225,7 @@ namespace unitedb
 			}
 		}
 
-		void pushUndoObject(const DBObjBase* undo, UndoRevision v, UndoOp::UndoCode c)
+		void pushUndoObject(const DBObjBase* undo, DBRevision v, UndoOp::UndoCode c)
 		{
 			stack_->cache_.EmplaceBack().Set(*AsObject(undo), v, c);
 		}

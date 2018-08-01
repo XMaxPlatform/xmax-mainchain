@@ -67,6 +67,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">log.hpp File Reference</div>  </div>
@@ -78,6 +79,33 @@ $(function() {
 </div>
 <p><a href="log_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:abfe5d876015ae4e0fb1fbd6be921a957"><td class="memItemLeft" align="right" valign="top"><a id="abfe5d876015ae4e0fb1fbd6be921a957"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8hpp.html#abfe5d876015ae4e0fb1fbd6be921a957">WarnSprintf</a>(fmt, ...)&#160;&#160;&#160;pro::LogMessage(<a class="el" href="log__base_8hpp.html#a2b190e371a2add283b6419b3547193aa">pro::loglevel</a>(pro::loglevel::Warnning), pro::utils::Sprintf(fmt, __VA_ARGS__))</td></tr>
+<tr class="memdesc:abfe5d876015ae4e0fb1fbd6be921a957"><td class="mdescLeft">&#160;</td><td class="mdescRight">format warn log. <br /></td></tr>
+<tr class="separator:abfe5d876015ae4e0fb1fbd6be921a957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cc064d3b724ae371c9fb653db3c0155"><td class="memItemLeft" align="right" valign="top"><a id="a1cc064d3b724ae371c9fb653db3c0155"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8hpp.html#a1cc064d3b724ae371c9fb653db3c0155">LogSprintf</a>(fmt, ...)&#160;&#160;&#160;pro::LogMessage(<a class="el" href="log__base_8hpp.html#a2b190e371a2add283b6419b3547193aa">pro::loglevel</a>(pro::loglevel::Info), pro::utils::Sprintf(fmt, __VA_ARGS__))</td></tr>
+<tr class="memdesc:a1cc064d3b724ae371c9fb653db3c0155"><td class="mdescLeft">&#160;</td><td class="mdescRight">format info log. <br /></td></tr>
+<tr class="separator:a1cc064d3b724ae371c9fb653db3c0155"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86c1c1c6662553b78c7d0fa590933b2e"><td class="memItemLeft" align="right" valign="top"><a id="a86c1c1c6662553b78c7d0fa590933b2e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8hpp.html#a86c1c1c6662553b78c7d0fa590933b2e">ErrorSprintf</a>(fmt, ...)</td></tr>
+<tr class="memdesc:a86c1c1c6662553b78c7d0fa590933b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">format error log. <br /></td></tr>
+<tr class="separator:a86c1c1c6662553b78c7d0fa590933b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a373d0cd711705e851cb5839f578c5ef6"><td class="memItemLeft" align="right" valign="top"><a id="a373d0cd711705e851cb5839f578c5ef6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8hpp.html#a373d0cd711705e851cb5839f578c5ef6">Warnf</a>(fmt, ...)&#160;&#160;&#160;pro::LogMessage(<a class="el" href="log__base_8hpp.html#a2b190e371a2add283b6419b3547193aa">pro::loglevel</a>(pro::loglevel::Warnning), STRING_FORMAT(fmt, __VA_ARGS__))</td></tr>
+<tr class="memdesc:a373d0cd711705e851cb5839f578c5ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">warn log. <br /></td></tr>
+<tr class="separator:a373d0cd711705e851cb5839f578c5ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81db0a88ee54039f1dfc1d874bd972a6"><td class="memItemLeft" align="right" valign="top"><a id="a81db0a88ee54039f1dfc1d874bd972a6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8hpp.html#a81db0a88ee54039f1dfc1d874bd972a6">Logf</a>(fmt, ...)&#160;&#160;&#160;pro::LogMessage(<a class="el" href="log__base_8hpp.html#a2b190e371a2add283b6419b3547193aa">pro::loglevel</a>(pro::loglevel::Info), STRING_FORMAT(fmt, __VA_ARGS__))</td></tr>
+<tr class="memdesc:a81db0a88ee54039f1dfc1d874bd972a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">info log. <br /></td></tr>
+<tr class="separator:a81db0a88ee54039f1dfc1d874bd972a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83386a1f89e09cfdb46a50d6f872f5d1"><td class="memItemLeft" align="right" valign="top"><a id="a83386a1f89e09cfdb46a50d6f872f5d1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8hpp.html#a83386a1f89e09cfdb46a50d6f872f5d1">Errorf</a>(fmt, ...)</td></tr>
+<tr class="memdesc:a83386a1f89e09cfdb46a50d6f872f5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">error log. <br /></td></tr>
+<tr class="separator:a83386a1f89e09cfdb46a50d6f872f5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aec2c3beca6b763840477975f2e102369"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8hpp.html#aec2c3beca6b763840477975f2e102369">pro::LogMessage</a> (loglevel level, const string &amp;msg)</td></tr>

@@ -27,9 +27,9 @@ namespace unitedb
 
 	using ObjIDCode = int64_t;
 	using ObjectTypeCode = uint16_t;
-	using UndoRevision = int64_t;
+	using DBRevision = int64_t;
 
-	constexpr UndoRevision InvalidRevision = -1;
+	constexpr DBRevision InvalidRevision = -1;
 
 
 #define DB_ASSERT(expr) BOOST_ASSERT(expr)

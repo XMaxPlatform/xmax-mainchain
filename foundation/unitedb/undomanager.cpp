@@ -9,7 +9,7 @@ namespace unitedb
 
 	FUndo::UndoID FUndo::scounter_ = 0;
 
-	FUndo::FUndo(UndoManager* owner, UndoRevision rev)
+	FUndo::FUndo(UndoManager* owner, DBRevision rev)
 		: owner_(owner)
 		, revision_(rev)
 	{
@@ -53,10 +53,11 @@ namespace unitedb
 
 	IGenericUndo* UndoManager::StartUndo()
 	{
-		UndoRevision revision = stack_->undo_counter_;
+		++stack_->top_revision_;
+		DBRevision revision = stack_->top_revision_;
 		owner_->OnStartUndo(revision);
 		FUndo* undo = new FUndo(this, revision);
-		++stack_->undo_counter_;
+		
 		getRecords().emplace_back(UndoRecord(undo, (UndoRecord::IndexType)stack_->cache_.Size()));
 		return undo;
 	}
@@ -94,7 +95,7 @@ namespace unitedb
 		}
 		return list.end();
 	}
-	static void removeExpiredRecords(UndoRecords& list, UndoRevision rev_begin)
+	static void removeExpiredRecords(UndoRecords& list, DBRevision rev_begin)
 	{
 		auto it = list.begin();
 		while (it != list.end())
@@ -110,13 +111,18 @@ namespace unitedb
 		}
 	}
 
+	bool UndoManager::Commit(DBRevision rev)
+	{
+		return false;
+	}
+
 	void UndoManager::OnUndo(FUndo* undo)
 	{
 		auto it = findRecord(getRecords(), undo->GetID());
 
 		if (it != getRecords().end())
 		{
-			DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->undo_counter_);
+			DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->top_revision_);
 		
 			int64_t rbegin = stack_->cache_.Size() - 1;
 			int64_t rend = it->begin_ - 1;
@@ -136,7 +142,7 @@ namespace unitedb
 			auto& curr = records[i];
 			if (curr.id_ == id)// find undo info by id.
 			{
-				DB_ASSERT(stack_->last_commit_ < curr.rev_ && curr.rev_ < stack_->undo_counter_);
+				DB_ASSERT(stack_->last_commit_ < curr.rev_ && curr.rev_ < stack_->top_revision_);
 				if (0 == i)
 				{
 					// combine with self, do nothing.

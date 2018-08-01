@@ -193,15 +193,15 @@ namespace xmax {
 
 	void XmaxNetPluginImpl::StartListen()
 	{
-		std::shared_ptr<tcp::socket> pSocket = std::make_shared<tcp::socket>(const_cast<boost::asio::io_service&>(ioService_));
+		std::shared_ptr<tcp::socket> socket = std::make_shared<tcp::socket>(const_cast<boost::asio::io_service&>(ioService_));
 		
-		auto onAccept = [pSocket, this](boost::system::error_code ec)
+		auto onAccept = [socket, this](boost::system::error_code ec)
 		{
 			if ( !ec )
 			{
 				if (nCurrClients_ < nMaxClients_)
 				{
-					std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(pSocket);
+					std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(socket);
 					connections_.push_back(pConnect);
 					tcp::no_delay nd(true);
 					pConnect->GetSocket()->set_option(nd);
@@ -212,7 +212,7 @@ namespace xmax {
 				else
 				{
 					Warnf("MaxClinet exceeded!!!!\n");
-					pSocket->close();
+					socket->close();
 				}
 
 				StartListen();
@@ -223,46 +223,46 @@ namespace xmax {
 			}
 		};
 		
-		acceptor_->async_accept(*pSocket, onAccept);
+		acceptor_->async_accept(*socket, onAccept);
 	}
 
-	void XmaxNetPluginImpl::StartRecvMsg(std::shared_ptr<XMX_Connection> pConnect)
+	void XmaxNetPluginImpl::StartRecvMsg(std::shared_ptr<XMX_Connection> connection)
 	{
-		if (pConnect->GetSocket() == nullptr)
+		if (connection->GetSocket() == nullptr)
 		{
 			return;
 		}
 
 		try
 		{
-			auto onReadFunc = [pConnect, this](boost::system::error_code ec, std::size_t bytesRead)
+			auto onReadFunc = [connection, this](boost::system::error_code ec, std::size_t bytes_read)
 			{
 				if (ec)
 				{
 					if ((boost::asio::error::eof == ec) ||
 						(boost::asio::error::connection_reset == ec))
 					{			
-						LogSprintf("peer disconnected: %s", pConnect->GetPeerAddress());
+						LogSprintf("peer disconnected: %s", connection->GetPeerAddress());
 					}
 					else
 					{
-						WarnSprintf("read msg from %s error : %s", pConnect->GetPeerAddress().c_str(), ec.message().c_str());
+						WarnSprintf("read msg from %s error : %s", connection->GetPeerAddress().c_str(), ec.message().c_str());
 					}
-					_Disconnect(pConnect);
+					_Disconnect(connection);
 					return;
 				}
 				else
 				{
-					MessagePoolBuffer* pMsgPoolBuf = pConnect->GetMsgBuffer();
-					size_t nCanWrite = pMsgPoolBuf->AvailableBytes();
-					if (bytesRead > nCanWrite)
+					MessagePoolBuffer* msg_pool_buf = connection->GetMsgBuffer();
+					size_t nCanWrite = msg_pool_buf->AvailableBytes();
+					if (bytes_read > nCanWrite)
 					{
 						ErrorSprintf("read msg bytes exceeded msg buffer size\n");
 						return;
 					}
 
-					pMsgPoolBuf->IncrementWriteIndex(bytesRead);
-					uint32_t nCanReadBytes = pMsgPoolBuf->CanReadBytes();
+					msg_pool_buf->IncrementWriteIndex(bytes_read);
+					uint32_t nCanReadBytes = msg_pool_buf->CanReadBytes();
 					while (nCanReadBytes > 0)
 					{
 						if (nCanReadBytes < sizeof(MsgHeader)  )
@@ -271,8 +271,8 @@ namespace xmax {
 						}
 
 						MsgHeader msgHeader;
-						bufferIndex readIndex = pMsgPoolBuf->GetReadIndex();
-						bool bGet             = pMsgPoolBuf->TryGetData(&msgHeader, sizeof(MsgHeader), readIndex);
+						bufferIndex readIndex = msg_pool_buf->GetReadIndex();
+						bool bGet             = msg_pool_buf->TryGetData(&msgHeader, sizeof(MsgHeader), readIndex);
 						if (!bGet)
 						{
 							break;
@@ -281,9 +281,9 @@ namespace xmax {
 						uint32_t msgSize = msgHeader.msgLength + sizeof(MsgHeader);
 						if (nCanReadBytes >= msgSize)
 						{
-							pMsgPoolBuf->IncrementReadIndex(sizeof(MsgHeader));
+							msg_pool_buf->IncrementReadIndex(sizeof(MsgHeader));
 							char* pMsgData = new char[msgHeader.msgLength];
-							bool bret = pMsgPoolBuf->GetData(pMsgData, msgHeader.msgLength);
+							bool bret = msg_pool_buf->GetData(pMsgData, msgHeader.msgLength);
 
 							if (!bret)
 							{
@@ -291,30 +291,30 @@ namespace xmax {
 								break;
 							}	
 
-							_ParseMsg(pMsgData, msgHeader, pConnect);
+							_ParseMsg(pMsgData, msgHeader, connection);
 							delete[] pMsgData;
 
-							nCanReadBytes = pMsgPoolBuf->CanReadBytes();
+							nCanReadBytes = msg_pool_buf->CanReadBytes();
 						}
 						else
 						{
 							uint32_t remainMsgLength = msgSize - nCanReadBytes;
-							uint32_t canWriteLength  = pMsgPoolBuf->AvailableBytes();
+							uint32_t canWriteLength  = msg_pool_buf->AvailableBytes();
 
 							if (remainMsgLength > canWriteLength)
 							{
-								pMsgPoolBuf->Allocate(remainMsgLength - canWriteLength);
+								msg_pool_buf->Allocate(remainMsgLength - canWriteLength);
 							}
 
 							break;
 						}
 					}
 
-					StartRecvMsg(pConnect);
+					StartRecvMsg(connection);
 				}
 			};
-			std::vector<boost::asio::mutable_buffer> mbBuffers = pConnect->GetMsgBuffer()->GetAvailableBufferFromPool();
-			pConnect->GetSocket()->async_read_some(mbBuffers, onReadFunc);
+			std::vector<boost::asio::mutable_buffer> mbBuffers = connection->GetMsgBuffer()->GetAvailableBufferFromPool();
+			connection->GetSocket()->async_read_some(mbBuffers, onReadFunc);
 
 
 		}

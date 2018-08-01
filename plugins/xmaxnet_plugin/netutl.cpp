@@ -14,7 +14,7 @@ namespace xmax
 
 	std::vector<std::string> GetPublicPrivateAddress()
 	{
-		std::vector<std::string> addrList;
+		std::vector<std::string> addr_list;
 
 #if defined(_WIN32)
 		WSAData wsaData;
@@ -27,7 +27,7 @@ namespace xmax
 		if (gethostname(ac, sizeof(ac)) == SOCKET_ERROR)
 		{
 			WSACleanup();
-			return addrList;
+			return addr_list;
 		}
 
 		struct hostent* phe = gethostbyname(ac);
@@ -35,7 +35,7 @@ namespace xmax
 		{
 			Logf("Bad host lookup\n");
 			WSACleanup();
-			return addrList;
+			return addr_list;
 		}
 
 		for (int i = 0; phe->h_addr_list[i] != 0; ++i)
@@ -45,25 +45,25 @@ namespace xmax
 			std::string addrStr = std::string(inet_ntoa(addr));
 			if (!IsLocalAddress(addrStr))
 			{
-				addrList.push_back(addrStr);
+				addr_list.push_back(addrStr);
 			}
 		}
 
 		WSACleanup();
 #endif
-		return addrList;
+		return addr_list;
 	}
 
 	bool IsLocalAddress(const std::string& addr)
 	{
 		address bi_addr = address::from_string(addr);
 
-		static const std::set<address> c_rejectAddresses = {
+		static const std::set<address> kRejectAddresses = {
 			{ address_v4::from_string("127.0.0.1") },
 		{ address_v4::from_string("0.0.0.0") },
 		};
 
-		return std::find(c_rejectAddresses.begin(), c_rejectAddresses.end(), bi_addr) != c_rejectAddresses.end();
+		return std::find(kRejectAddresses.begin(), kRejectAddresses.end(), bi_addr) != kRejectAddresses.end();
 	}
 
 	bool IsPrivateAddress(const std::string& addr)
@@ -73,16 +73,16 @@ namespace xmax
 		if (bi_addr.is_v4())
 		{
 			address_v4 v4Address = bi_addr.to_v4();
-			address_v4::bytes_type bytesToCheck = v4Address.to_bytes();
-			if (bytesToCheck[0] == 10 || bytesToCheck[0] == 127)
+			address_v4::bytes_type bytes_to_check = v4Address.to_bytes();
+			if (bytes_to_check[0] == 10 || bytes_to_check[0] == 127)
 			{
 				return true;
 			}			
-			if (bytesToCheck[0] == 172 && (bytesToCheck[1] >= 16 && bytesToCheck[1] <= 31))
+			if (bytes_to_check[0] == 172 && (bytes_to_check[1] >= 16 && bytes_to_check[1] <= 31))
 			{
 				return true;
 			}				
-			if (bytesToCheck[0] == 192 && bytesToCheck[1] == 168)
+			if (bytes_to_check[0] == 192 && bytes_to_check[1] == 168)
 			{
 				return true;
 			}				
