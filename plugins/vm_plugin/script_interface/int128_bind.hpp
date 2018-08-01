@@ -3,41 +3,39 @@
 #include <map>
 #include <libplatform/libplatform.h>
 #include <v8.h>
-using namespace v8;
+#include "V8BindObject.hpp"
+//#include "libraries/protobuf/src/google/protobuf/stubs/int128.h"
+
+
 
 namespace xmax {
 	namespace scriptv8 {
 
-		class V8i128
+		//Internal struct
+		class V8u128 : public V8BindObject<V8u128>
 		{
 		public:
-			V8i128(uint64_t)
-			{
+			//V8u128(uint128 value) :value_(value) {}
 
-			}
-			V8i128()
-			{
+			//V8u128() :value_(0) {}
 
+			//operator Basetypes::uint128() { return value_; }
+
+
+			//V8 bind
+			static constexpr inline const char* TypeName() {
+				return "V8u128";
 			}
-			V8i128(int l1, int l2, int l3, int l4 )
-			{
-				data[0] = l1;
-				data[1] = l2;
-				data[2] = l3;
-				data[3] = l4;
-			}
-			int data[2];
+
+			static V8u128* NewV8CppObj(const v8::FunctionCallbackInfo<v8::Value>& args);
+			static void RegisterWithV8(v8::Isolate* isolate, v8::Handle<v8::ObjectTemplate> global);
+			static void ConstructV8Object(const v8::FunctionCallbackInfo<v8::Value>& args);
+			static void WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8u128>& data);
+
+		private:
+			//:uint128 value_;
 		};
 
-		V8i128* NewV8i128Function(const FunctionCallbackInfo<v8::Value>& args);
-
-		void V8i128WeakExternalReferenceCallback(Persistent<v8::Value>, void* parameter);
-
-		void V8i128FunctionInvocationCallback(const FunctionCallbackInfo<v8::Value>& args);
-
-		void SetupV8i128ObjectToJs(Isolate* isolate, Handle<ObjectTemplate> global);
-
-		void V8i128GetBit(int i,const FunctionCallbackInfo<v8::Value>& args);
 
 		
 
