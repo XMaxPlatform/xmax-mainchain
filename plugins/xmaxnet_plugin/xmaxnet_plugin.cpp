@@ -22,8 +22,6 @@
 #endif
 
 
-using namespace google::protobuf;
-
 namespace xmax {
 	using namespace xmaxapp;
 	using namespace pro;
@@ -76,6 +74,8 @@ namespace xmax {
 		void _ParseMsg(const char* pMsg, const MsgHeader& header, std::shared_ptr<XMX_Connection> pConnect);
 
 		void _OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const HelloMsg& msg);
+		void _OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const VersionMsg& msg);
+		void _OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const VerAckMsg& msg);
 
 		void _ConnectionTimer();
 
@@ -205,7 +205,7 @@ namespace xmax {
 					connections_.push_back(pConnect);
 					tcp::no_delay nd(true);
 					pConnect->GetSocket()->set_option(nd);
-					pConnect->SetInitiative(false);
+					pConnect->SetInBound(true);
 					StartRecvMsg(pConnect);
 					nMaxClients_++;
 				}
@@ -385,6 +385,7 @@ namespace xmax {
 			{
 				pConnect->SetConStatus(CS_CONNECTED);
 				StartRecvMsg(pConnect);
+				pConnect->SendVersionMsg();
 			} 
 			else
 			{
@@ -427,11 +428,40 @@ namespace xmax {
 			msg.ParseFromArray(pMsg, header.msgLength);
 			_OnHandleMsg(pConnect, msg);
 		}
+		else if (header.id == MSG_VER)
+		{
+			VersionMsg msg;
+			msg.ParseFromArray(pMsg, header.msgLength);
+			_OnHandleMsg(pConnect, msg);
+		}
+		else if (header.id == MSG_VERACK)
+		{
+			VerAckMsg msg;
+			msg.ParseFromArray(pMsg, header.msgLength);
+			_OnHandleMsg(pConnect, msg);
+		}
 	}
 
 	void XmaxNetPluginImpl::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const HelloMsg& msg)
 	{
 		LogSprintf("recv hellomsg from peer(%s), content is %s", pConnect->GetPeerAddress().c_str(), msg.msg().c_str());
+	}
+
+	void XmaxNetPluginImpl::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const VersionMsg& msg)
+	{
+		LogSprintf("recv versionmsg from peer(%s)\n", pConnect->GetPeerAddress().c_str());
+
+
+		pConnect->SendVerAckMsg();
+
+
+	}
+
+	void XmaxNetPluginImpl::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const VerAckMsg& msg)
+	{
+		LogSprintf("recv verackmsg from peer(%s)\n", pConnect->GetPeerAddress().c_str());
+
+
 	}
 
 	void XmaxNetPluginImpl::_ConnectionTimer()
@@ -447,7 +477,7 @@ namespace xmax {
 		{
 			if (pc->GetConStatus() == CS_DISCONNECTED || !pc->GetSocket()->is_open())
 			{
-				if (pc->IsInitiative())
+				if (!pc->IsInBound())
 				{
 					ConnectImpl(pc->GetPeerAddress());
 				}

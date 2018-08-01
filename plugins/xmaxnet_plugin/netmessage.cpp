@@ -4,6 +4,12 @@
 
 namespace xmax
 {
+NetMessage::NetMessage(const google::protobuf::Message& proMsg)
+	: pMsg(&proMsg)
+{
+
+}
+
 char* NetMessage::ToBinary() const
 {
 	size_t nHeader = sizeof(MsgHeader);

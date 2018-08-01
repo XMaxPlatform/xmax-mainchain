@@ -1,17 +1,19 @@
 #include "xmx_connection.hpp"
 #include "netmessage_pool.hpp"
-
+#include "netmessage.pb.h"
 #include <boost/asio/write.hpp>
 #include <pro/log/log.hpp>
 
 namespace xmax
 {
+	using namespace google::protobuf;
+
 XMX_Connection::XMX_Connection(const std::string& endpoint, const std::shared_ptr<tcp::socket>& s)
 	: peerAddr_(endpoint),
 	  socket_(s),
 	  conStatus_(CS_DISCONNECTED),
 	  pMsgBuffer_(new MessagePoolBuffer),
-	  bInitiative_(true)
+	  bInBound_(false)
 {
 	
 }
@@ -20,7 +22,7 @@ XMX_Connection::XMX_Connection(const std::shared_ptr<tcp::socket>& s)
 	: socket_(s),
 	  conStatus_(CS_DISCONNECTED),
 	  pMsgBuffer_(new MessagePoolBuffer),
-	  bInitiative_(true)
+	  bInBound_(false)
 {
 
 }
@@ -119,6 +121,21 @@ void XMX_Connection::_AsyncSend()
 	const std::pair<char*, size_t>& toSendMsg = messeageQueue_.front();
 	boost::asio::async_write(*socket_, boost::asio::buffer(toSendMsg.first, toSendMsg.second), onWriteFinish);
 }
+
+void XMX_Connection::SendVersionMsg()
+{
+	VersionMsg ver;
+	NetMessage msg(ver);
+	PushMsg(msg);
+}
+
+void XMX_Connection::SendVerAckMsg()
+{
+	VerAckMsg ack;
+	NetMessage msg(ack);
+	PushMsg(msg);
+}
+
 
 
 }

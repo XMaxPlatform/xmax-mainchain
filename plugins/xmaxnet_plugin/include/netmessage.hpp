@@ -38,12 +38,13 @@ namespace xmax
 	class NetMessage
 	{
 public:
+		NetMessage(const google::protobuf::Message& proMsg);
 
 		char*	ToBinary() const;
 		size_t	TotalLength() const;
 	
 		MsgHeader header;
-		google::protobuf::Message *pMsg;
+		const google::protobuf::Message *pMsg;
 	};
 
 
