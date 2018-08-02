@@ -20,13 +20,13 @@ namespace xmax {
 		}
 
 
-		void BindJsFoos(Isolate* pIsolate, const Local<ObjectTemplate>& fooGlobal, const std::map<std::string, Local<FunctionTemplate>>& foosToBind)
+		void BindJsFoos(Isolate* isolate, const Local<ObjectTemplate>& foo_global, const std::map<std::string, Local<FunctionTemplate>>& foos_to_bind)
 		{
-			for (const std::pair<std::string, Local<FunctionTemplate> >& foobind : foosToBind)
+			for (const std::pair<std::string, Local<FunctionTemplate> >& foo_bind : foos_to_bind)
 			{
-				fooGlobal->Set(
-					v8::String::NewFromUtf8(pIsolate, foobind.first.c_str(), v8::NewStringType::kNormal).ToLocalChecked(),
-					foobind.second);
+				foo_global->Set(
+					v8::String::NewFromUtf8(isolate, foo_bind.first.c_str(), v8::NewStringType::kNormal).ToLocalChecked(),
+					foo_bind.second);
 			}
 		}
 
