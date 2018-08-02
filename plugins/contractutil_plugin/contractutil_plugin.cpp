@@ -43,7 +43,7 @@ namespace xmax {
 
 		impl_.reset(new ContractUtilPluginImpl());
 
-		// test initialize 
+		// test initialize code 
 		test();
 	}
 
