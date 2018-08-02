@@ -153,11 +153,12 @@ namespace unitedb
 				stack_->cache_.Clear();
 			}
 
-
-
-
 			stack_->last_commit_ = rev;
 			removeCommitedRecords(records, rev);
+			for (auto& itr : records)
+			{
+				itr.begin_ -= count;
+			}
 		}
 		return false;
 	}
