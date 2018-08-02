@@ -149,13 +149,6 @@ namespace unitedb
 					break;
 				}
 
-				//auto& pre = records[i - 1];
-				//int64_t tmp = (i == records.size() - 1) ? (stack_->cache_.Size()) : (records[i = 1].begin_);
-				//int64_t rbeg = tmp - 1;
-				//int64_t rend = curr.begin_ - 1;
-				//reverseForEach(stack_->cache_, rbeg, rend, [&](const UndoOp& op) {
-				//});
-
 				records.erase(records.begin() + i);
 
 				owner_->OnCombine(curr.rev_);
