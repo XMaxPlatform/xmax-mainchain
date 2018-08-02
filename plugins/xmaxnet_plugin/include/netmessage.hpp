@@ -44,7 +44,7 @@ public:
 		size_t	TotalLength() const;
 	
 		MsgHeader header;
-		const google::protobuf::Message *pMsg;
+		const google::protobuf::Message *msg_;
 	};
 
 
