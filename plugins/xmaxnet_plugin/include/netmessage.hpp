@@ -17,7 +17,8 @@ namespace xmax
 		MSG_TEST = 0,
 		MSG_VER,
 		MSG_VERACK,
-
+		MSG_ADDR,
+		MSG_GETADDR,
 	};
 
 	struct MsgHeader
