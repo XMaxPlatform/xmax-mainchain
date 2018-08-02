@@ -16,7 +16,6 @@ namespace xmax {
 
 		void ScriptGlobalMoudle::SetupV8Env()
 		{
-			//V8_AddIntrinsicFoo("CallBackCheck", (void*)CallBackCheck, 2, 1);
 
 			V8::InitializeICUDefaultLocation("");
 			V8::InitializeExternalStartupData("");
