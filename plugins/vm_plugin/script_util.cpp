@@ -5,15 +5,15 @@
 
 namespace xmax {
 	namespace scriptv8 {
-		v8::Handle<v8::Value> EnterJsContext(Isolate* pIsolate, DoWorkInJsCtx dowork)
+		v8::Handle<v8::Value> EnterJsContext(Isolate* isolate, DoWorkInJsCtx dowork)
 		{
-			HandleScope current_handle_scope(pIsolate);
+			HandleScope current_handle_scope(isolate);
 
-			v8::Local<v8::ObjectTemplate> global = v8::ObjectTemplate::New(pIsolate);
+			v8::Local<v8::ObjectTemplate> global = v8::ObjectTemplate::New(isolate);
 
-			BindJsFoos(pIsolate, global, FooBind::GetBindFoos(pIsolate));
+			BindJsFoos(isolate, global, FooBind::GetBindFoos(isolate));
 
-			Local<Context> context = Context::New(pIsolate, NULL, global);
+			Local<Context> context = Context::New(isolate, NULL, global);
 			Context::Scope context_scope(context);
 
 			return dowork(current_handle_scope, global, context, context_scope);

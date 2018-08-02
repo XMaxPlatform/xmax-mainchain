@@ -15,11 +15,11 @@ namespace xmax {
 
 		typedef std::map<std::string, Local<FunctionTemplate>> JsFooBindMap;
 
-		void EnterJsContext(v8::Isolate* pIsolate, v8::Local<v8::ObjectTemplate>& global, DoWorkInJsCtx dowork);
+		void EnterJsContext(v8::Isolate* isolate, v8::Local<v8::ObjectTemplate>& global, DoWorkInJsCtx dowork);
 
 		PersistentCpyableContext CreateJsContext(v8::Isolate* pIsolate, v8::Local<v8::ObjectTemplate>& global);
 
-		void EnterJsContext(v8::Isolate* pIsolate, v8::Persistent<v8::Context, v8::CopyablePersistentTraits<v8::Context>>& context);
+		void EnterJsContext(v8::Isolate* isolate, v8::Persistent<v8::Context, v8::CopyablePersistentTraits<v8::Context>>& context);
 
 		void ExitJsContext(v8::Isolate* pIsolate, v8::Persistent<v8::Context, v8::CopyablePersistentTraits<v8::Context>>& context);
 
