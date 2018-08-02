@@ -19,7 +19,7 @@ message VerAckMsg
 
 message AddrMsg
 {
-	Repeated	string addrList = 1;
+	repeated string addrList = 1;
 }
 
 message GetAddrMsg
