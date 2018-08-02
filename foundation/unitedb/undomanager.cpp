@@ -95,7 +95,20 @@ namespace unitedb
 		}
 		return list.end();
 	}
-	static void removeExpiredRecords(UndoRecords& list, DBRevision rev_begin)
+
+	static UndoRecords::const_iterator findRecordByRevision(const UndoRecords& list, DBRevision rev)
+	{
+		for (auto it = list.begin(); it != list.end(); ++it)
+		{
+			if (it->rev_ == rev)
+			{
+				return it;
+			}
+		}
+		return list.end();
+	}
+
+	static void popExpiredRecords(UndoRecords& list, DBRevision rev_begin)
 	{
 		auto it = list.begin();
 		while (it != list.end())
@@ -111,24 +124,51 @@ namespace unitedb
 		}
 	}
 
+
+	static void removeCommitedRecords(UndoRecords& list, DBRevision rev_)
+	{
+		auto it = list.begin();
+		while (it != list.end() && it->rev_ <= rev_)
+		{
+			it = list.erase(it);
+		}
+	}
+
 	bool UndoManager::Commit(DBRevision rev)
 	{
+		auto itr = findRecordByRevision(getRecords(), rev);
+		if (itr != getRecords().end())
+		{
+			auto next = itr + 1;
+			if (next != getRecords().end())
+			{
+				stack_->cache_.Remove(0, next->begin_);
+			}
+			else
+			{
+				stack_->cache_.Clear();
+			}
+	
+
+			stack_->last_commit_ = rev;
+			removeCommitedRecords(getRecords(), rev);
+		}
 		return false;
 	}
 
 	void UndoManager::OnUndo(FUndo* undo)
 	{
-		auto it = findRecord(getRecords(), undo->GetID());
+		auto itr = findRecord(getRecords(), undo->GetID());
 
-		if (it != getRecords().end())
+		if (itr != getRecords().end())
 		{
-			DB_ASSERT(stack_->last_commit_ < it->rev_ && it->rev_ < stack_->top_revision_);
+			DB_ASSERT(stack_->last_commit_ < itr->rev_ && itr->rev_ < stack_->top_revision_);
 		
 			int64_t rbegin = stack_->cache_.Size() - 1;
-			int64_t rend = it->begin_ - 1;
+			int64_t rend = itr->begin_ - 1;
 
 			undoImpl(rbegin, rend);
-			removeExpiredRecords(getRecords(), it->rev_);
+			popExpiredRecords(getRecords(), itr->rev_);
 		}
 	}
 
