@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_CASE(bpt_1)
  	xmax::scriptv8::ScriptGlobalMoudle::GetInstance().SetupV8Env();
 	xmax::scriptv8::ScriptMoudle module;
 	module.CleanInstrunction();
-	
+	module.LoadScript("function test(){int i =0;while(i>0){i--})");
  	xmax::scriptv8::ScriptGlobalMoudle::GetInstance().DiscardV8Env();
 }
 
