@@ -22,7 +22,9 @@ BOOST_AUTO_TEST_SUITE(vm_plugin_test)
 BOOST_AUTO_TEST_CASE(bpt_1)
 {
  	xmax::scriptv8::ScriptGlobalMoudle::GetInstance().SetupV8Env();
-
+	xmax::scriptv8::ScriptMoudle module;
+	module.CleanInstrunction();
+	
  	xmax::scriptv8::ScriptGlobalMoudle::GetInstance().DiscardV8Env();
 }
 
