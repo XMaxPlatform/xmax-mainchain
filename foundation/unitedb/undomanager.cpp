@@ -136,22 +136,28 @@ namespace unitedb
 
 	bool UndoManager::Commit(DBRevision rev)
 	{
-		auto itr = findRecordByRevision(getRecords(), rev);
-		if (itr != getRecords().end())
+		auto& records = getRecords();
+		auto itr = findRecordByRevision(records, rev);
+		if (itr != records.end())
 		{
 			auto next = itr + 1;
-			if (next != getRecords().end())
+			int64_t count = 0;
+			if (next != records.end())
 			{
-				stack_->cache_.Remove(0, next->begin_);
+				count = next->begin_;
+				stack_->cache_.Remove(0, count);
 			}
 			else
 			{
+				count = stack_->cache_.Size();
 				stack_->cache_.Clear();
 			}
-	
+
+
+
 
 			stack_->last_commit_ = rev;
-			removeCommitedRecords(getRecords(), rev);
+			removeCommitedRecords(records, rev);
 		}
 		return false;
 	}
