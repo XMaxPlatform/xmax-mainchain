@@ -24,6 +24,8 @@ namespace xmax
 		virtual void Startup() override;
 		virtual void Shutdown() override;
 
+	private:
+		void test(){}
 
 	private:
 		std::unique_ptr<class ContractUtilPluginImpl> impl_;

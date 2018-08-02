@@ -42,6 +42,9 @@ namespace xmax {
 		PluginFace::Initialize(options);
 
 		impl_.reset(new ContractUtilPluginImpl());
+
+		// test initialize code 
+		test();
 	}
 
 	//--------------------------------------------------

@@ -5,28 +5,28 @@
 
 namespace xmax {
 	namespace scriptv8 {
-		v8::Handle<v8::Value> EnterJsContext(Isolate* pIsolate, DoWorkInJsCtx dowork)
+		v8::Handle<v8::Value> EnterJsContext(Isolate* isolate, DoWorkInJsCtx dowork)
 		{
-			HandleScope current_handle_scope(pIsolate);
+			HandleScope current_handle_scope(isolate);
 
-			v8::Local<v8::ObjectTemplate> global = v8::ObjectTemplate::New(pIsolate);
+			v8::Local<v8::ObjectTemplate> global = v8::ObjectTemplate::New(isolate);
 
-			BindJsFoos(pIsolate, global, FooBind::GetBindFoos(pIsolate));
+			BindJsFoos(isolate, global, FooBind::GetBindFoos(isolate));
 
-			Local<Context> context = Context::New(pIsolate, NULL, global);
+			Local<Context> context = Context::New(isolate, NULL, global);
 			Context::Scope context_scope(context);
 
 			return dowork(current_handle_scope, global, context, context_scope);
 		}
 
 
-		void BindJsFoos(Isolate* pIsolate, const Local<ObjectTemplate>& fooGlobal, const std::map<std::string, Local<FunctionTemplate>>& foosToBind)
+		void BindJsFoos(Isolate* isolate, const Local<ObjectTemplate>& foo_global, const std::map<std::string, Local<FunctionTemplate>>& foos_to_bind)
 		{
-			for (const std::pair<std::string, Local<FunctionTemplate> >& foobind : foosToBind)
+			for (const std::pair<std::string, Local<FunctionTemplate> >& foo_bind : foos_to_bind)
 			{
-				fooGlobal->Set(
-					v8::String::NewFromUtf8(pIsolate, foobind.first.c_str(), v8::NewStringType::kNormal).ToLocalChecked(),
-					foobind.second);
+				foo_global->Set(
+					v8::String::NewFromUtf8(isolate, foo_bind.first.c_str(), v8::NewStringType::kNormal).ToLocalChecked(),
+					foo_bind.second);
 			}
 		}
 
@@ -44,10 +44,10 @@ namespace xmax {
 			localContext->Enter();
 		}
 
-		void ExitJsContext(v8::Isolate* pIsolate, v8::Persistent<v8::Context, v8::CopyablePersistentTraits<v8::Context>>& context)
+		void ExitJsContext(v8::Isolate* isolate, v8::Persistent<v8::Context, v8::CopyablePersistentTraits<v8::Context>>& context)
 		{
-			Local<Context> localContext = context.Get(pIsolate);
-			localContext->Exit();
+			Local<Context> local_context = context.Get(isolate);
+			local_context->Exit();
 		}
 
 		void CompileJsCode(Isolate* pIsolate, const Local<Context>& context,const char* jsCode)

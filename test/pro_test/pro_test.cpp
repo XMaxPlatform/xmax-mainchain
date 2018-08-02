@@ -40,20 +40,26 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 
 BOOST_AUTO_TEST_CASE(pro_time_1)
 {
-	TimeMilliseconds milli(2500ll);
-	TimeMicroseconds micro = milli.ToTime<TimeMicroseconds>();
-	TimeMilliseconds milli2 = micro.ToTime<TimeMilliseconds>();
+	TimeMilliseconds baseMillisecs(2500ll);
 
-	TimeSeconds sec = micro.ToTime<TimeSeconds>();
+	TimeMicroseconds toMicrosecs = baseMillisecs.ToTime<TimeMicroseconds>();
+	TimeMilliseconds backMircosecs = toMicrosecs.ToTime<TimeMilliseconds>();
 
-	TimeMicroseconds micro2 = sec.ToTime<TimeMicroseconds>();
-	TimeMilliseconds milli3 = sec.ToTime<TimeMilliseconds>();
+	BOOST_CHECK(baseMillisecs.GetValue() == 2500ll);
+	BOOST_CHECK(toMicrosecs.GetValue() == 2500ll * 1000ll);
+	BOOST_CHECK(backMircosecs.GetValue() == 2500ll);
 
-	BOOST_CHECK(milli.GetValue() == 2500ll);
-	BOOST_CHECK(micro.GetValue() == 2500ll * 1000ll);
-	BOOST_CHECK(milli2.GetValue() == 2500ll);
+	TimeSeconds toSecs = baseMillisecs.ToTime<TimeSeconds>();
+	TimeSeconds backSecs = toSecs.ToTime<TimeSeconds>();
 
-	BOOST_CHECK(sec.GetValue() == 2ll);
+	BOOST_CHECK(baseMillisecs.GetValue() == 2500ll);
+	BOOST_CHECK(toSecs.GetValue() == 2ll);
+	BOOST_CHECK(backSecs.GetValue() == 2ll * 1000ll);
+
+	TimeMicroseconds micro2 = toSecs.ToTime<TimeMicroseconds>();
+	TimeMilliseconds milli3 = toSecs.ToTime<TimeMilliseconds>();
+
+	BOOST_CHECK(toSecs.GetValue() == 2ll);
 	BOOST_CHECK(micro2.GetValue() == 2ll * 1000ll * 1000ll);
 	BOOST_CHECK(milli3.GetValue() == 2ll * 1000ll);
 }
@@ -73,7 +79,7 @@ BOOST_AUTO_TEST_CASE(any_value)
 
 	pro::AnyValue bValue = true;
 	bool b = bValue.CastTo<bool>();
-
+	BOOST_CHECK(b == true);
 }
 
 bool checkformat(const string& checkstring, const string& fmt, const AnyObject& args)

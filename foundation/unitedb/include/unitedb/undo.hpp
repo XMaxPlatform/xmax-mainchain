@@ -39,6 +39,18 @@ namespace unitedb
 			data_.pop_back();
 		}
 
+		void Remove(int64_t begidx, int64_t count)
+		{
+			ArrayType::const_iterator beg = data_.begin() + begidx;
+			ArrayType::const_iterator last = beg + count;
+			data_.erase(beg, last);
+		}
+
+		void Clear()
+		{
+			data_.clear();
+		}
+
 		ArrayType data_;
 	};
 }

@@ -4,7 +4,7 @@
 #include <libplatform/libplatform.h>
 #include <v8.h>
 #include "V8BindObject.hpp"
-//#include "libraries/protobuf/src/google/protobuf/stubs/int128.h"
+#include "pro/types/generictypes.hpp"
 
 
 
@@ -15,11 +15,11 @@ namespace xmax {
 		class V8u128 : public V8BindObject<V8u128>
 		{
 		public:
-			//V8u128(uint128 value) :value_(value) {}
+			V8u128(pro::uint128 value) :value_(value) {}
 
-			//V8u128() :value_(0) {}
+			V8u128() :value_(0) {}
 
-			//operator Basetypes::uint128() { return value_; }
+			operator pro::uint128() { return value_; }
 
 
 			//V8 bind
@@ -33,7 +33,7 @@ namespace xmax {
 			static void WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8u128>& data);
 
 		private:
-			//:uint128 value_;
+			pro::uint128 value_;
 		};
 
 
