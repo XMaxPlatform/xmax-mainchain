@@ -43,7 +43,7 @@ public:
 		char*	ToBinary() const;
 		size_t	TotalLength() const;
 	
-		MsgHeader header;
+		MsgHeader header_;
 		const google::protobuf::Message *msg_;
 	};
 
