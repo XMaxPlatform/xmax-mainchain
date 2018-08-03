@@ -47,10 +47,7 @@ namespace xmax {
 			return result;
 		}
 
-		void ScriptMoudle::AstBlockCallbackInsert()
-		{
-
-		}
+	
 
 
 		void ScriptMoudle::LoadScript(const char* code)
