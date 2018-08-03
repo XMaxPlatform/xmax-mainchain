@@ -24,7 +24,7 @@ namespace xmax {
 
 		void ScriptMoudle::EnterContext()
 		{
-
+			EnterJsContext(ScriptGlobalMoudle::GetInstance().GetIsolate(), current_context_);
 		}
 
 		v8::Object* CallBackCheck(int args_length, v8::Object** args_object, v8::Isolate* isolate) {
