@@ -57,11 +57,10 @@ BOOST_AUTO_TEST_CASE(pro_time_1)
 	BOOST_CHECK(backSecs.GetValue() == 2ll * 1000ll);
 
 	TimeSeconds microsecsToSecs = toMicrosecs.ToTime<TimeSeconds>();
-	TimeMilliseconds secsToMicrosecs = toSecs.ToTime<TimeMilliseconds>();
+	TimeMicroseconds secsToMicrosecs = toSecs.ToTime<TimeMicroseconds>();
 
-	BOOST_CHECK(toSecs.GetValue() == 2ll);
-	BOOST_CHECK(microsecsToSecs.GetValue() == 2ll * 1000ll * 1000ll);
-	BOOST_CHECK(secsToMicrosecs.GetValue() == 2ll * 1000ll);
+	BOOST_CHECK(microsecsToSecs.GetValue() == 2ll);
+	BOOST_CHECK(secsToMicrosecs.GetValue() == 2ll * 1000ll * 1000ll);
 }
 
 BOOST_AUTO_TEST_CASE(any_value)
