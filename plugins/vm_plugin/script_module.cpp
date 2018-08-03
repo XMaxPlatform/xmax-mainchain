@@ -21,6 +21,9 @@ namespace xmax {
 		{
 
 		}
+
+	
+
 		v8::Object* CallBackCheck(int args_length, v8::Object** args_object, v8::Isolate* isolate) {
 		
 			void* arg1 = *(reinterpret_cast<v8::Object**>(reinterpret_cast<intptr_t>(args_object) - 1 * sizeof(int)));
@@ -61,6 +64,11 @@ namespace xmax {
 			Handle<v8::Value> params[2];
 		
 			CallJsFoo(ScriptGlobalMoudle::GetInstance().GetIsolate(), context, foo, 0, NULL);
+		}
+
+		void ScriptMoudle::ExitContext()
+		{
+
 		}
 
 		void ScriptMoudle::StoreInstrunction(int ins)
