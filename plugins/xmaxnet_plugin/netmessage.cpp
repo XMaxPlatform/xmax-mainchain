@@ -5,31 +5,31 @@
 namespace xmax
 {
 NetMessage::NetMessage(const google::protobuf::Message& proMsg)
-	: pMsg(&proMsg)
+	: msg_(&proMsg)
 {
 
 }
 
 char* NetMessage::ToBinary() const
 {
-	size_t nHeader = sizeof(MsgHeader);
-	size_t nMsg    = pMsg->ByteSize();
-	size_t nBytes  = nHeader + nMsg;
+	size_t header_sz = sizeof(MsgHeader);
+	size_t msg_sz    = msg_->ByteSize();
+	size_t data_bytes  = header_sz + msg_sz;
 
-	char* pData = new char[nBytes];
-	memcpy(pData, &header, nHeader);
+	char* data = new char[data_bytes];
+	memcpy(data, &header_, header_sz);
 
-	bool ret = pMsg->SerializeToArray(pData + nHeader, nMsg);
+	bool ret = msg_->SerializeToArray(data + header_sz, msg_sz);
 
 	if (!ret)
 	{
-		delete[] pData;
-		ErrorSprintf("serialize msg error, id is: %d", header.id);
+		delete[] data;
+		ErrorSprintf("serialize msg error, id is: %d", header_.id);
 		return nullptr;
 	}
 	else
 	{
-		return pData;
+		return data;
 	}
 
 }
@@ -37,7 +37,7 @@ char* NetMessage::ToBinary() const
 size_t NetMessage::TotalLength() const
 {
 	size_t nHeader = sizeof(MsgHeader);
-	size_t nMsg = pMsg->ByteSize();
+	size_t nMsg = msg_->ByteSize();
 	size_t nBytes = nHeader + nMsg;
 	return nBytes;
 }

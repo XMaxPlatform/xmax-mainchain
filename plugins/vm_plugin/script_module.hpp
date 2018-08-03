@@ -20,10 +20,13 @@ namespace xmax {
 			ScriptMoudle();
 			~ScriptMoudle();
 
+			void EnterContext();
 
 			void LoadScript(const char* code);
 
 			void RunFoo(const char* foo);
+
+			void ExitContext();
 
 			void StoreInstrunction(int ins);
 

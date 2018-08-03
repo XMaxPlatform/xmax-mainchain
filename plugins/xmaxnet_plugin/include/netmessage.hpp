@@ -17,7 +17,8 @@ namespace xmax
 		MSG_TEST = 0,
 		MSG_VER,
 		MSG_VERACK,
-
+		MSG_ADDR,
+		MSG_GETADDR,
 	};
 
 	struct MsgHeader
@@ -43,8 +44,8 @@ public:
 		char*	ToBinary() const;
 		size_t	TotalLength() const;
 	
-		MsgHeader header;
-		const google::protobuf::Message *pMsg;
+		MsgHeader header_;
+		const google::protobuf::Message *msg_;
 	};
 
 

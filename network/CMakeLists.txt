@@ -48,6 +48,7 @@ add_protobuf_compile_target(netmessage)
 add_custom_target(compile_protos
     DEPENDS protoc ${PROTO_COMPILE_TARGETS_SOURCES}
     COMMAND echo "Generate proto targets ${PROTO_COMPILE_TARGETS_SOURCES}."
+	COMMAND echo "Generate proto targets ${PROTO_COMPILE_TARGETS_HEADERS}."
     SOURCES ${PROTO_COMPILE_TARGETS}
 )
 

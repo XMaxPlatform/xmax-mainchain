@@ -16,3 +16,13 @@ message VerAckMsg
 {
 
 }
+
+message AddrMsg
+{
+	repeated string addrList = 1;
+}
+
+message GetAddrMsg
+{
+	
+}
