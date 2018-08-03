@@ -16,7 +16,6 @@ namespace xmax {
 
 		void ScriptGlobalMoudle::SetupV8Env()
 		{
-			//V8_AddIntrinsicFoo("CallBackCheck", (void*)CallBackCheck, 2, 1);
 
 			V8::InitializeICUDefaultLocation("");
 			V8::InitializeExternalStartupData("");
@@ -37,19 +36,17 @@ namespace xmax {
 			v8::V8::ShutdownPlatform();
 		}
 
-		void ScriptGlobalMoudle::V8SetupGlobalObjTemplate(v8::Local<v8::ObjectTemplate>* pGlobalTemp)
+		void ScriptGlobalMoudle::V8SetupGlobalObjTemplate(v8::Local<v8::ObjectTemplate>* global_templ)
 		{
-			global_obj_template_ = pGlobalTemp;
-			//if (m_pBind != nullptr)
+			global_obj_template_ = global_templ;
 			{
 				BindJsFoos(isolate_, *global_obj_template_, FooBind::GetBindFoos(isolate_));
-			//	m_pBind->Setup(m_pIsolate, *m_pGlobalObjectTemplate);
 			}
 		}
 
-		void ScriptGlobalMoudle::SetCurrentModule(ScriptMoudle* pModule)
+		void ScriptGlobalMoudle::SetCurrentModule(ScriptMoudle* module)
 		{
-			script_module_ = pModule;
+			script_module_ = module;
 		}
 
 	}

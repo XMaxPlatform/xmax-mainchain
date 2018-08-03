@@ -50,12 +50,12 @@ namespace xmax {
 			local_context->Exit();
 		}
 
-		void CompileJsCode(Isolate* pIsolate, const Local<Context>& context,const char* jsCode)
+		void CompileJsCode(Isolate* isolate, const Local<Context>& context,const char* js_code)
 		{
 			//V8_ParseWithPlugin();
 
 			Local<String> source =
-				String::NewFromUtf8(pIsolate, jsCode,
+				String::NewFromUtf8(isolate, js_code,
 					NewStringType::kNormal).ToLocalChecked();
 			MaybeLocal<Script> temp = Script::Compile(context, source);
 
@@ -67,7 +67,7 @@ namespace xmax {
 			if (script.IsEmpty()) {
 				std::cerr << "js compile failed" << std::endl;
 			}
-			TryCatch trycatch(pIsolate);
+			TryCatch trycatch(isolate);
 			Local<Value> v = script->Run();
 			if (v.IsEmpty()) {
 				Local<Value> exception = trycatch.Exception();

@@ -7,7 +7,7 @@ namespace xmax {
 	*  Implementation details of the contract util plugin
 	*
 	*/
-	class ContractUtilPluginImpl {	
+	class ContractUtilPluginImpl {
 	public:
 		ContractUtilPluginImpl() {}
 		~ContractUtilPluginImpl();
@@ -27,18 +27,18 @@ namespace xmax {
 	*
 	*/
 	//--------------------------------------------------
-	ContractUtilPlugin::ContractUtilPlugin() {	
+	ContractUtilPlugin::ContractUtilPlugin() {
 		// TODO : initialize members
 	}
 
 	//--------------------------------------------------
-	ContractUtilPlugin::~ContractUtilPlugin() {	
+	ContractUtilPlugin::~ContractUtilPlugin() {
 
 	}
 
 	//--------------------------------------------------
 	void ContractUtilPlugin::Initialize(const xmaxapp::VarsMap& options) {
-		
+
 		PluginFace::Initialize(options);
 
 		impl_.reset(new ContractUtilPluginImpl());
@@ -48,17 +48,20 @@ namespace xmax {
 	}
 
 	//--------------------------------------------------
-	void ContractUtilPlugin::Startup() {	
+	void ContractUtilPlugin::Startup() {
 		PluginFace::Startup();
 	}
 
 
 	//--------------------------------------------------
-	void ContractUtilPlugin::Shutdown() {	
+	void ContractUtilPlugin::Shutdown() {
 		impl_.reset();
 
 
 		PluginFace::Shutdown();
 	}
 
+	//--------------------------------------------------
+	void ContractUtilPlugin::test() {
+	}
 }
