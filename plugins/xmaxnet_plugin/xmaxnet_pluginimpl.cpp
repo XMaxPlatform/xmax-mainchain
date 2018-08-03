@@ -33,6 +33,7 @@ XmaxNetPluginImpl::XmaxNetPluginImpl(const boost::asio::io_service& io)
 		: nMaxClients_(30),
 		nCurrClients_(0),
 		connectionTimer_(const_cast<boost::asio::io_service&>(io)),
+		sendAddrsTimer_(const_cast<boost::asio::io_service&>(io)),
 		ioService_(io),
 		bUpnp_(false)
 {
@@ -361,6 +362,18 @@ void XmaxNetPluginImpl::_CheckConnection()
 	}
 
 	_ConnectionTimer();
+}
+
+void XmaxNetPluginImpl::_SendAddrsTimer()
+{
+	TimeMicroseconds time(30000000);
+	sendAddrsTimer_.expires_from_now(boost::posix_time::microseconds(time.GetValue()));
+	sendAddrsTimer_.async_wait(std::bind(&XmaxNetPluginImpl::_SendAddrs, this));
+}
+
+void XmaxNetPluginImpl::_SendAddrs()
+{
+
 }
 
 void XmaxNetPluginImpl::_Disconnect(std::shared_ptr<XMX_Connection> pc)

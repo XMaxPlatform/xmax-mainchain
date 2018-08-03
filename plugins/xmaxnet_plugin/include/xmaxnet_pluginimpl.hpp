@@ -61,6 +61,10 @@ protected:
 
 	void _CheckConnection();
 
+	void _SendAddrsTimer();
+
+	void _SendAddrs();
+
 	void _Disconnect(std::shared_ptr<XMX_Connection> pc);
 
 	void _DetectExternalAddr();
@@ -84,6 +88,7 @@ private:
 
 	const boost::asio::io_service&							ioService_;
 	boost::asio::deadline_timer								connectionTimer_;
+	boost::asio::deadline_timer								sendAddrsTimer_;
 };
 
 
