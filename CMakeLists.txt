@@ -81,6 +81,7 @@ set(xmax_builder_lib_name blockbuilder_plugin)
 set(xmax_net_lib_name xmaxnet_plugin)
 set(xmax_mongo_lib_name mongodb_plugin)
 set(contract_util_lib_name contractutil_plugin)
+set(xmax_apirpc_lib_name apirpc_plugin)
 
 # Add build directories
 add_subdirectory(libraries)
