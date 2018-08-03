@@ -71,7 +71,7 @@ namespace xmax {
 
 		void ScriptMoudle::ExitContext()
 		{
-
+			ExitJsContext(ScriptGlobalMoudle::GetInstance().GetIsolate(), current_context_);
 		}
 
 		void ScriptMoudle::StoreInstrunction(int ins)
