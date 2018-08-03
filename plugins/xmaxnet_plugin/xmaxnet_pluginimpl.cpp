@@ -373,7 +373,13 @@ void XmaxNetPluginImpl::_SendAddrsTimer()
 
 void XmaxNetPluginImpl::_SendAddrs()
 {
-
+	for (auto con : connections_)
+	{
+		if (con->IsInBound())
+		{
+			con->SendAddrsToPeer();
+		}
+	}
 }
 
 void XmaxNetPluginImpl::_Disconnect(std::shared_ptr<XMX_Connection> pc)

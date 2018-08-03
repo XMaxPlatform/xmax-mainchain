@@ -143,4 +143,9 @@ void XMX_Connection::SendGetAddrMsg()
 	PushMsg(msg);
 }
 
+void XMX_Connection::SendAddrsToPeer()
+{
+
+}
+
 }

@@ -80,6 +80,7 @@ public:
 
 	 void AddAddrToSend(const std::string& addr);
 	 const std::set<std::string>& GetAddrToSendList() const;
+	 void SendAddrsToPeer();
 
 	 void SendVersionMsg();
 	 void SendVerAckMsg();
