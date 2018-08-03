@@ -11,6 +11,7 @@ namespace xmax
 {
 	using xmaxapp::OptionsDesc;
 	using xmaxapp::VarsMap;
+	class XmaxNetPluginImpl;
 
 	/**
 	 * This plugin is responsible for the peer to peer communications. Besides it
@@ -31,6 +32,6 @@ namespace xmax
 		static void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
 
 	private:
-		std::unique_ptr<class XmaxNetPluginImpl> impl_;
+		std::shared_ptr<XmaxNetPluginImpl> impl_;
 	};
 }

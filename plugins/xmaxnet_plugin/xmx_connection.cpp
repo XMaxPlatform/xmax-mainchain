@@ -136,6 +136,11 @@ void XMX_Connection::SendVerAckMsg()
 	PushMsg(msg);
 }
 
-
+void XMX_Connection::SendGetAddrMsg()
+{
+	GetAddrMsg getaddr;
+	NetMessage msg(getaddr);
+	PushMsg(msg);
+}
 
 }

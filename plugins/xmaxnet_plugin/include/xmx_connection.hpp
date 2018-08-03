@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <queue>
+#include <set>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/host_name.hpp>
 
@@ -77,8 +78,12 @@ public:
 
 	 void PushMsg(const NetMessage& msg);
 
+	 void AddAddrToSend(const std::string& addr);
+	 const std::set<std::string>& GetAddrToSendList() const;
+
 	 void SendVersionMsg();
 	 void SendVerAckMsg();
+	 void SendGetAddrMsg();
 
 protected:
 
@@ -92,7 +97,7 @@ private:
 
 	MessagePoolBuffer*							pMsgBuffer_;
 	std::queue< std::pair<char*, size_t> >		messeageQueue_;
-
+	std::set<std::string>						addrToSendList_;
 	bool										bInBound_;
 };
 
@@ -134,6 +139,16 @@ inline void XMX_Connection::SetInBound(bool b)
 inline bool XMX_Connection::IsInBound() const
 {
 	return bInBound_;
+}
+
+inline void XMX_Connection::AddAddrToSend(const std::string& addr)
+{
+	addrToSendList_.insert(addr);
+}
+
+inline const std::set<std::string>& XMX_Connection::GetAddrToSendList() const
+{
+	return addrToSendList_;
 }
 
 }
