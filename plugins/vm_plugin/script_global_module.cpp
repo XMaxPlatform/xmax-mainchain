@@ -44,9 +44,9 @@ namespace xmax {
 			}
 		}
 
-		void ScriptGlobalMoudle::SetCurrentModule(ScriptMoudle* pModule)
+		void ScriptGlobalMoudle::SetCurrentModule(ScriptMoudle* module)
 		{
-			script_module_ = pModule;
+			script_module_ = module;
 		}
 
 	}
