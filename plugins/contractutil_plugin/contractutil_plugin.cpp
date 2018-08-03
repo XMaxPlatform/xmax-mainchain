@@ -61,4 +61,7 @@ namespace xmax {
 		PluginFace::Shutdown();
 	}
 
+	//--------------------------------------------------
+	void ContractUtilPlugin::test() {
+	}
 }
