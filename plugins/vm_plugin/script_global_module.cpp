@@ -36,9 +36,9 @@ namespace xmax {
 			v8::V8::ShutdownPlatform();
 		}
 
-		void ScriptGlobalMoudle::V8SetupGlobalObjTemplate(v8::Local<v8::ObjectTemplate>* pGlobalTemp)
+		void ScriptGlobalMoudle::V8SetupGlobalObjTemplate(v8::Local<v8::ObjectTemplate>* global_templ)
 		{
-			global_obj_template_ = pGlobalTemp;
+			global_obj_template_ = global_templ;
 			{
 				BindJsFoos(isolate_, *global_obj_template_, FooBind::GetBindFoos(isolate_));
 			}
