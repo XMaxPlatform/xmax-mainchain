@@ -1,4 +1,5 @@
 #include "script_global_module.hpp"
+#include "script_module.hpp"
 #include <libplatform/libplatform.h>
 namespace xmax {
 
@@ -46,7 +47,12 @@ namespace xmax {
 
 		void ScriptGlobalMoudle::SetCurrentModule(ScriptMoudle* module)
 		{
+			if (script_module_!=nullptr)
+			{
+				script_module_->ExitContext();
+			}
 			script_module_ = module;
+			script_module_->EnterContext();
 		}
 
 	}
