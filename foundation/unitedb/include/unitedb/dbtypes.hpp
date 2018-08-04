@@ -13,11 +13,13 @@ namespace unitedb
 	using mapped_file = inpr::managed_mapped_file;
 	using segment_manager = inpr::managed_mapped_file::segment_manager;
 
+
+
 	template<typename T>
 	using DBAlloc = inpr::allocator<T, segment_manager>;
 
 
-	using DefAlloc = inpr::allocator<char, segment_manager>;
+	using DefAlloc = DBAlloc<char>;
 
 	using MappedString = std::basic_string< char, std::char_traits< char >, DBAlloc< char > >;
 
