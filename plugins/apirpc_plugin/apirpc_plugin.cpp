@@ -1,5 +1,7 @@
 #include "apirpc_plugin.hpp"
 
+using namespace std;
+
 namespace xmax {
 
 	/*!
@@ -9,6 +11,8 @@ namespace xmax {
 	 *
 	 */
 	class ApiRpcPluginImpl {
+	public:
+
 		ApiRpcPluginImpl();
 		~ApiRpcPluginImpl();
 
@@ -37,6 +41,12 @@ namespace xmax {
 	//--------------------------------------------------
 	void ApiRpcPlugin::InitOptions(OptionsDesc& cli, OptionsDesc& cfg)
 	{
+		cfg.add_options()
+			("http-api-address", xpo::value<std::string>()->default_value("127.0.0.1:8081"), "default api rpc http address(ip:port)");
+
+		cfg.add_options()
+			("api-allow-cross-origin", xpo::value<std::string>()->default_value("*"), "default api rpc http address(ip:port)");
+
 
 	}
 
