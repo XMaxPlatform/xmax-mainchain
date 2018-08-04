@@ -21,6 +21,7 @@ namespace xmax {
 
 
 		string allow_cross_origin;
+		string http_api_address;
 	};
 
 	//--------------------------------------------------
@@ -61,6 +62,10 @@ namespace xmax {
 
 		if (options.count(kAllowCrossOriginOp)) {
 			impl_->allow_cross_origin = options.at(kAllowCrossOriginOp).as<string>();
+		}
+
+		if (options.count(kHttpApiAddressOp)) {
+			impl_->http_api_address = options.at(kHttpApiAddressOp).as<string>();
 		}
 	}
 
