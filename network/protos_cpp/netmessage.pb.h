@@ -36,7 +36,7 @@ namespace protobuf_netmessage_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[3];
+  static const ::google::protobuf::internal::ParseTable schema[5];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -48,14 +48,26 @@ void InitDefaultsVersionMsgImpl();
 void InitDefaultsVersionMsg();
 void InitDefaultsVerAckMsgImpl();
 void InitDefaultsVerAckMsg();
+void InitDefaultsAddrMsgImpl();
+void InitDefaultsAddrMsg();
+void InitDefaultsGetAddrMsgImpl();
+void InitDefaultsGetAddrMsg();
 inline void InitDefaults() {
   InitDefaultsHelloMsg();
   InitDefaultsVersionMsg();
   InitDefaultsVerAckMsg();
+  InitDefaultsAddrMsg();
+  InitDefaultsGetAddrMsg();
 }
 }  // namespace protobuf_netmessage_2eproto
 namespace google {
 namespace protobuf {
+class AddrMsg;
+class AddrMsgDefaultTypeInternal;
+extern AddrMsgDefaultTypeInternal _AddrMsg_default_instance_;
+class GetAddrMsg;
+class GetAddrMsgDefaultTypeInternal;
+extern GetAddrMsgDefaultTypeInternal _GetAddrMsg_default_instance_;
 class HelloMsg;
 class HelloMsgDefaultTypeInternal;
 extern HelloMsgDefaultTypeInternal _HelloMsg_default_instance_;
@@ -361,6 +373,213 @@ class VerAckMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
   friend struct ::protobuf_netmessage_2eproto::TableStruct;
   friend void ::protobuf_netmessage_2eproto::InitDefaultsVerAckMsgImpl();
 };
+// -------------------------------------------------------------------
+
+class AddrMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:google.protobuf.AddrMsg) */ {
+ public:
+  AddrMsg();
+  virtual ~AddrMsg();
+
+  AddrMsg(const AddrMsg& from);
+
+  inline AddrMsg& operator=(const AddrMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  AddrMsg(AddrMsg&& from) noexcept
+    : AddrMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline AddrMsg& operator=(AddrMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AddrMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AddrMsg* internal_default_instance() {
+    return reinterpret_cast<const AddrMsg*>(
+               &_AddrMsg_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    3;
+
+  void Swap(AddrMsg* other);
+  friend void swap(AddrMsg& a, AddrMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AddrMsg* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  AddrMsg* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const AddrMsg& from);
+  void MergeFrom(const AddrMsg& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(AddrMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated string addrList = 1;
+  int addrlist_size() const;
+  void clear_addrlist();
+  static const int kAddrListFieldNumber = 1;
+  const ::std::string& addrlist(int index) const;
+  ::std::string* mutable_addrlist(int index);
+  void set_addrlist(int index, const ::std::string& value);
+  #if LANG_CXX11
+  void set_addrlist(int index, ::std::string&& value);
+  #endif
+  void set_addrlist(int index, const char* value);
+  void set_addrlist(int index, const char* value, size_t size);
+  ::std::string* add_addrlist();
+  void add_addrlist(const ::std::string& value);
+  #if LANG_CXX11
+  void add_addrlist(::std::string&& value);
+  #endif
+  void add_addrlist(const char* value);
+  void add_addrlist(const char* value, size_t size);
+  const ::google::protobuf::RepeatedPtrField< ::std::string>& addrlist() const;
+  ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_addrlist();
+
+  // @@protoc_insertion_point(class_scope:google.protobuf.AddrMsg)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> addrlist_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_netmessage_2eproto::TableStruct;
+  friend void ::protobuf_netmessage_2eproto::InitDefaultsAddrMsgImpl();
+};
+// -------------------------------------------------------------------
+
+class GetAddrMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:google.protobuf.GetAddrMsg) */ {
+ public:
+  GetAddrMsg();
+  virtual ~GetAddrMsg();
+
+  GetAddrMsg(const GetAddrMsg& from);
+
+  inline GetAddrMsg& operator=(const GetAddrMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetAddrMsg(GetAddrMsg&& from) noexcept
+    : GetAddrMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline GetAddrMsg& operator=(GetAddrMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetAddrMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetAddrMsg* internal_default_instance() {
+    return reinterpret_cast<const GetAddrMsg*>(
+               &_GetAddrMsg_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    4;
+
+  void Swap(GetAddrMsg* other);
+  friend void swap(GetAddrMsg& a, GetAddrMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetAddrMsg* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  GetAddrMsg* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetAddrMsg& from);
+  void MergeFrom(const GetAddrMsg& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetAddrMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:google.protobuf.GetAddrMsg)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_netmessage_2eproto::TableStruct;
+  friend void ::protobuf_netmessage_2eproto::InitDefaultsGetAddrMsgImpl();
+};
 // ===================================================================
 
 
@@ -433,9 +652,90 @@ inline void HelloMsg::set_allocated_msg(::std::string* msg) {
 
 // VerAckMsg
 
+// -------------------------------------------------------------------
+
+// AddrMsg
+
+// repeated string addrList = 1;
+inline int AddrMsg::addrlist_size() const {
+  return addrlist_.size();
+}
+inline void AddrMsg::clear_addrlist() {
+  addrlist_.Clear();
+}
+inline const ::std::string& AddrMsg::addrlist(int index) const {
+  // @@protoc_insertion_point(field_get:google.protobuf.AddrMsg.addrList)
+  return addrlist_.Get(index);
+}
+inline ::std::string* AddrMsg::mutable_addrlist(int index) {
+  // @@protoc_insertion_point(field_mutable:google.protobuf.AddrMsg.addrList)
+  return addrlist_.Mutable(index);
+}
+inline void AddrMsg::set_addrlist(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:google.protobuf.AddrMsg.addrList)
+  addrlist_.Mutable(index)->assign(value);
+}
+#if LANG_CXX11
+inline void AddrMsg::set_addrlist(int index, ::std::string&& value) {
+  // @@protoc_insertion_point(field_set:google.protobuf.AddrMsg.addrList)
+  addrlist_.Mutable(index)->assign(std::move(value));
+}
+#endif
+inline void AddrMsg::set_addrlist(int index, const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  addrlist_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:google.protobuf.AddrMsg.addrList)
+}
+inline void AddrMsg::set_addrlist(int index, const char* value, size_t size) {
+  addrlist_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:google.protobuf.AddrMsg.addrList)
+}
+inline ::std::string* AddrMsg::add_addrlist() {
+  // @@protoc_insertion_point(field_add_mutable:google.protobuf.AddrMsg.addrList)
+  return addrlist_.Add();
+}
+inline void AddrMsg::add_addrlist(const ::std::string& value) {
+  addrlist_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:google.protobuf.AddrMsg.addrList)
+}
+#if LANG_CXX11
+inline void AddrMsg::add_addrlist(::std::string&& value) {
+  addrlist_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:google.protobuf.AddrMsg.addrList)
+}
+#endif
+inline void AddrMsg::add_addrlist(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  addrlist_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:google.protobuf.AddrMsg.addrList)
+}
+inline void AddrMsg::add_addrlist(const char* value, size_t size) {
+  addrlist_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:google.protobuf.AddrMsg.addrList)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+AddrMsg::addrlist() const {
+  // @@protoc_insertion_point(field_list:google.protobuf.AddrMsg.addrList)
+  return addrlist_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+AddrMsg::mutable_addrlist() {
+  // @@protoc_insertion_point(field_mutable_list:google.protobuf.AddrMsg.addrList)
+  return &addrlist_;
+}
+
+// -------------------------------------------------------------------
+
+// GetAddrMsg
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
