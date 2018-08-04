@@ -65,7 +65,7 @@ namespace unitedb
 		DBRevision rev_ = InvalidRevision;
 	};
 
-	typedef MappedVector<TableUndoInfo> TableUndoInfos;
+	typedef MVector<TableUndoInfo> TableUndoInfos;
 
 	template<typename T>
 	class TableUndoStack

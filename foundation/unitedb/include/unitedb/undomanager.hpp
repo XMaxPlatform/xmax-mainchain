@@ -58,7 +58,7 @@ namespace unitedb
 		DBRevision rev_ = InvalidRevision;
 	};
 
-	typedef MappedVector<UndoRecord> UndoRecords;
+	typedef MVector<UndoRecord> UndoRecords;
 
 	class UndoOpStack
 	{

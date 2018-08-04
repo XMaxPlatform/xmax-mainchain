@@ -21,10 +21,10 @@ namespace unitedb
 
 	using DefAlloc = DBAlloc<char>;
 
-	using MString = std::basic_string< char, std::char_traits< char >, DBAlloc< char > >; //mapped string.
+	using MString = std::basic_string< char, std::char_traits< char >, DBAlloc< char > >; // mapped string.
 
 	template<typename T>
-	using MappedVector = std::vector<T, DBAlloc<T> >;
+	using MVector = std::vector<T, DBAlloc<T> >; // mapped vector.
 
 	constexpr DBRevision InvalidRevision = -1;
 
