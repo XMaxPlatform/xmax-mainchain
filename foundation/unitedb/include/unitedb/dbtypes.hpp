@@ -24,11 +24,6 @@ namespace unitedb
 	template<typename T>
 	using MappedVector = std::vector<T, DBAlloc<T> >;
 
-
-	using ObjIDCode = int64_t;
-	using ObjectTypeCode = uint16_t;
-	using DBRevision = int64_t;
-
 	constexpr DBRevision InvalidRevision = -1;
 
 
