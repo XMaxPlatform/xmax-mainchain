@@ -57,12 +57,12 @@ private:
 inline uint32_t MessagePoolBuffer::AvailableBytes() const
 {
 	size_t bytes = _TotalBytes() - (writeIndex_.bufferId * bufferSize_ + writeIndex_.bufferPtr);
-	return bytes;
+	return (uint32_t)bytes;
 }
 
 inline uint32_t MessagePoolBuffer::_TotalBytes() const
 {
-	return msgBuffers_.size() * bufferSize_;
+	return (uint32_t)msgBuffers_.size() * bufferSize_;
 }
 
 inline void MessagePoolBuffer::_IncrementIndexImpl(bufferIndex& bi, uint32_t bytes)

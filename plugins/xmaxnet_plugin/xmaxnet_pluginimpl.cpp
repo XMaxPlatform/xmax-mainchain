@@ -7,6 +7,7 @@
 #include "netutl.hpp"
 #include "netmsg_processing.h"
 #include "pro/log/log.hpp"
+#include "pro/utils/bloomfilter.hpp"
 
 #ifdef USE_UPNP
 #include "miniwget.h"
@@ -28,6 +29,8 @@ namespace xmax
 const char* XmaxNetPluginImpl::s_ServerAddress = "server-address";
 const char* XmaxNetPluginImpl::s_PeerAddress   = "peer-address";
 const char* XmaxNetPluginImpl::s_UPNP		   = "upnp";
+
+static bloom_parameters	g_BloomParam;
 
 XmaxNetPluginImpl::XmaxNetPluginImpl(const boost::asio::io_service& io)
 		: nMaxClients_(30),
@@ -63,6 +66,15 @@ XmaxNetPluginImpl::~XmaxNetPluginImpl()
 */
 void XmaxNetPluginImpl::Init(const VarsMap& options)
 {
+	// How many elements roughly do we expect to insert?
+	g_BloomParam.projected_element_count = 1000;
+
+	// Maximum tolerable false positive probability? (0,1)
+	g_BloomParam.false_positive_probability = 0.0001; // 1 in 10000
+
+	g_BloomParam.random_seed = 0xA5A5A5A5;
+	g_BloomParam.compute_optimal_parameters();
+
 	bUpnp_ = options.at(s_UPNP).as<bool>();
 
 	resolver_ = std::make_unique<tcp::resolver>(const_cast<boost::asio::io_service&>(ioService_));
@@ -120,7 +132,7 @@ void XmaxNetPluginImpl::StartListen()
 		{
 			if (nCurrClients_ < nMaxClients_)
 			{
-				std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(socket);
+				std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(socket, g_BloomParam);
 				connections_.push_back(pConnect);
 				tcp::no_delay nd(true);
 				pConnect->GetSocket()->set_option(nd);
@@ -261,7 +273,7 @@ void XmaxNetPluginImpl::ConnectImpl(const std::string& host)
 
 	std::shared_ptr<tcp::socket> s = std::make_shared<tcp::socket>(const_cast<boost::asio::io_service&>(ioService_));
 
-	std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(host, s);
+	std::shared_ptr<XMX_Connection> pConnect = std::make_shared<XMX_Connection>(host, s, g_BloomParam);
 	connections_.push_back(pConnect);
 
 	StartResolve(pConnect);

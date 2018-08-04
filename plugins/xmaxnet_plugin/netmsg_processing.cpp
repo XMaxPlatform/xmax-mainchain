@@ -59,6 +59,12 @@ void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, co
 void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const AddrMsg& msg)
 {
 	LogSprintf("recv addrmsg from peer(%s)\n", pConnect->GetPeerAddress().c_str());
+
+	for (std::string addr : msg.addrlist())
+	{
+
+	}
+
 }
 
 void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const GetAddrMsg& msg)
