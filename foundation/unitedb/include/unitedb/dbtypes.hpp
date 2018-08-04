@@ -21,7 +21,7 @@ namespace unitedb
 
 	using DefAlloc = DBAlloc<char>;
 
-	using MappedString = std::basic_string< char, std::char_traits< char >, DBAlloc< char > >;
+	using MString = std::basic_string< char, std::char_traits< char >, DBAlloc< char > >; //mapped string.
 
 	template<typename T>
 	using MappedVector = std::vector<T, DBAlloc<T> >;
