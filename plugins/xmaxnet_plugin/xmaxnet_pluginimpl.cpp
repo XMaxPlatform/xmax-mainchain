@@ -125,6 +125,7 @@ void XmaxNetPluginImpl::StartupImpl()
 		ConnectImpl(peer);
 	}
 
+	_SendAddrsTimer();
 }
 
 void XmaxNetPluginImpl::StartListen()
