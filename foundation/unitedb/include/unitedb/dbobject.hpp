@@ -92,7 +92,16 @@ namespace unitedb
 		}
 		explicit operator bool() const
 		{
+			return Valid();
+		}
+
+		bool Valid() const
+		{
 			return ptr_ != nullptr;
+		}
+		bool Empty() const
+		{
+			return ptr_ == nullptr;
 		}
 
 		const T& Get() const

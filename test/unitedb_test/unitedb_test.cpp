@@ -125,4 +125,48 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 	//tidxs.get<0>().emplace(TestDBObject());
 }
 
+
+BOOST_AUTO_TEST_CASE(db_op_test)
+{
+	std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::Discard));//);//
+
+	db->InitTable<TestTable>();
+
+	auto tbl = db->GetTable<TestTable>();
+
+	// test new object.
+	auto val1 = tbl->NewObject([&](TestDBObject& a)
+	{
+		a.tval = 123;
+	});
+
+	BOOST_CHECK(val1->tval == 123);
+
+	// test find object.
+	auto id1 = val1->GetID();
+
+	auto val1_a = tbl->FindObject<ByObjectID>(id1);
+
+	BOOST_CHECK(val1_a->tval == 123);
+
+	// test update object.
+	tbl->UpdateObject(val1_a, [&](TestTable::ObjectType& a)
+	{
+		a.tval = 456;
+	});
+
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1)->tval == 456);
+
+	// test delect object.
+
+	auto valdel = tbl->NewObject([&](TestDBObject& a)
+	{
+		a.tval = 789;
+	});
+	auto iddel = valdel->GetID();
+	tbl->DeleteObject(valdel);
+
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(iddel).Empty());
+}
+
 BOOST_AUTO_TEST_SUITE_END()
