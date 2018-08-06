@@ -31,10 +31,10 @@ namespace xmax {
 		}
 
 
-		PersistentCpyableContext CreateJsContext(v8::Isolate* pIsolate, v8::Local<v8::ObjectTemplate>& global)
+		PersistentCpyableContext CreateJsContext(v8::Isolate* isolate, v8::Local<v8::ObjectTemplate>& global)
 		{
-			Local<Context> context = Context::New(pIsolate, NULL, global);
-			PersistentCpyableContext ret(pIsolate, context);
+			Local<Context> context = Context::New(isolate, NULL, global);
+			PersistentCpyableContext ret(isolate, context);
 			return ret;
 		}
 

@@ -141,7 +141,6 @@ namespace unitedb
 
 		virtual void StartUndo(DBRevision revision) override
 		{
-			DB_ASSERT(stack_->infos_.back().rev_ + 1 == revision);
 			stack_->infos_.emplace_back( TableUndoInfo(stack_->cache_.Size(), revision) );
 		}
 
