@@ -63,5 +63,6 @@ namespace xmax {
 
 	//--------------------------------------------------
 	void ContractUtilPlugin::test() {
+		printf("");
 	}
 }
