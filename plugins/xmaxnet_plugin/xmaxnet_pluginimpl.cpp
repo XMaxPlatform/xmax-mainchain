@@ -113,6 +113,11 @@ void XmaxNetPluginImpl::StartupImpl()
 		Logf("start to listen incoming peers");
 
 		_DetectExternalAddr();
+
+		if (bUpnp_)
+		{
+			_MapPort();
+		}
 	}
 
 	for (const std::string& peer : peerAddressList_)
