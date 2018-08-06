@@ -1,4 +1,5 @@
 #include "script_global_module.hpp"
+#include "script_module.hpp"
 #include <libplatform/libplatform.h>
 namespace xmax {
 
@@ -36,17 +37,22 @@ namespace xmax {
 			v8::V8::ShutdownPlatform();
 		}
 
-		void ScriptGlobalMoudle::V8SetupGlobalObjTemplate(v8::Local<v8::ObjectTemplate>* pGlobalTemp)
+		void ScriptGlobalMoudle::V8SetupGlobalObjTemplate(v8::Local<v8::ObjectTemplate>* global_templ)
 		{
-			global_obj_template_ = pGlobalTemp;
+			global_obj_template_ = global_templ;
 			{
 				BindJsFoos(isolate_, *global_obj_template_, FooBind::GetBindFoos(isolate_));
 			}
 		}
 
-		void ScriptGlobalMoudle::SetCurrentModule(ScriptMoudle* pModule)
+		void ScriptGlobalMoudle::SetCurrentModule(ScriptMoudle* module)
 		{
-			script_module_ = pModule;
+			if (script_module_!=nullptr)
+			{
+				script_module_->ExitContext();
+			}
+			script_module_ = module;
+			script_module_->EnterContext();
 		}
 
 	}

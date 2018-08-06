@@ -24,7 +24,7 @@ namespace xmax {
 
 		void ScriptMoudle::EnterContext()
 		{
-
+			EnterJsContext(ScriptGlobalMoudle::GetInstance().GetIsolate(), current_context_);
 		}
 
 		v8::Object* CallBackCheck(int args_length, v8::Object** args_object, v8::Isolate* isolate) {
@@ -47,10 +47,7 @@ namespace xmax {
 			return result;
 		}
 
-		void ScriptMoudle::AstBlockCallbackInsert()
-		{
-
-		}
+	
 
 
 		void ScriptMoudle::LoadScript(const char* code)
@@ -71,7 +68,7 @@ namespace xmax {
 
 		void ScriptMoudle::ExitContext()
 		{
-
+			ExitJsContext(ScriptGlobalMoudle::GetInstance().GetIsolate(), current_context_);
 		}
 
 		void ScriptMoudle::StoreInstrunction(int ins)

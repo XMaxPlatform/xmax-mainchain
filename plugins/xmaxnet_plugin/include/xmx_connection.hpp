@@ -3,16 +3,19 @@
 #include <memory>
 #include <string>
 #include <queue>
+#include <set>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/host_name.hpp>
 
 #include "netmessage.hpp"
+#include "pro/utils/bloomfilter.hpp"
 
 namespace xmax
 {
 	using boost::asio::ip::tcp;
 	using boost::asio::ip::address_v4;
 	using boost::asio::ip::host_name;
+	using namespace pro;
 
 	enum ConnectionStatus
 	{
@@ -27,41 +30,13 @@ namespace xmax
 {
 public:
 
-	 XMX_Connection(const std::string& endpoint, const std::shared_ptr<tcp::socket>& s);
+	 XMX_Connection(const std::string& endpoint, const std::shared_ptr<tcp::socket>& s, const bloom_parameters& param);
 
-	 XMX_Connection(const std::shared_ptr<tcp::socket>& s);
+	 XMX_Connection(const std::shared_ptr<tcp::socket>& s, const bloom_parameters& param);
 
 	 ~XMX_Connection();
 
-	 /**
-	 * is network connectd and not connecting
-	 */
-	 bool Connected();
-	 /**
-	 * is network connectd and not syncing
-	 */
-	 bool Current();
-	 /**
-	 * reset state
-	 */
-	 void Reset();
-	 /**
-	 * close connection
-	 */
 	 void Close();
-	 /**
-	 * send handshake msg to sync states between peers
-	 */
-	 void SendHandShake();
-	 /**
-	 * send a block to sync the peer
-	 */
-	 void SendSignedBlock();
-	 /**
-	 * send blocks to sync the peer
-	 */
-	 void SendSignedBlockList();
-
 
 	 std::shared_ptr<tcp::socket> GetSocket() const;
 
@@ -77,8 +52,13 @@ public:
 
 	 void PushMsg(const NetMessage& msg);
 
+	 void AddAddrToSend(const std::string& addr);
+	 const std::set<std::string>& GetAddrToSendList() const;
+	 void SendAddrsToPeer();
+
 	 void SendVersionMsg();
 	 void SendVerAckMsg();
+	 void SendGetAddrMsg();
 
 protected:
 
@@ -92,8 +72,10 @@ private:
 
 	MessagePoolBuffer*							pMsgBuffer_;
 	std::queue< std::pair<char*, size_t> >		messeageQueue_;
-
+	std::set<std::string>						addrToSendList_;
 	bool										bInBound_;
+
+	bloom_filter								bloomFilter_;
 };
 
 inline std::shared_ptr<tcp::socket> XMX_Connection::GetSocket() const
@@ -134,6 +116,20 @@ inline void XMX_Connection::SetInBound(bool b)
 inline bool XMX_Connection::IsInBound() const
 {
 	return bInBound_;
+}
+
+inline void XMX_Connection::AddAddrToSend(const std::string& addr)
+{
+	if (!bloomFilter_.contains(addr))
+	{
+		bloomFilter_.insert(addr);
+		addrToSendList_.insert(addr);
+	}
+}
+
+inline const std::set<std::string>& XMX_Connection::GetAddrToSendList() const
+{
+	return addrToSendList_;
 }
 
 }

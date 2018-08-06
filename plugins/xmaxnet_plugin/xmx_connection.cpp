@@ -7,22 +7,25 @@
 namespace xmax
 {
 	using namespace google::protobuf;
+	using namespace pro;
 
-XMX_Connection::XMX_Connection(const std::string& endpoint, const std::shared_ptr<tcp::socket>& s)
+XMX_Connection::XMX_Connection(const std::string& endpoint, const std::shared_ptr<tcp::socket>& s, const bloom_parameters& param)
 	: peerAddr_(endpoint),
 	  socket_(s),
 	  conStatus_(CS_DISCONNECTED),
 	  pMsgBuffer_(new MessagePoolBuffer),
-	  bInBound_(false)
+	  bInBound_(false),
+	  bloomFilter_(param)
 {
 	
 }
 
-XMX_Connection::XMX_Connection(const std::shared_ptr<tcp::socket>& s)
+XMX_Connection::XMX_Connection(const std::shared_ptr<tcp::socket>& s, const bloom_parameters& param)
 	: socket_(s),
 	  conStatus_(CS_DISCONNECTED),
 	  pMsgBuffer_(new MessagePoolBuffer),
-	  bInBound_(false)
+	  bInBound_(false),
+	  bloomFilter_(param)
 {
 
 }
@@ -33,21 +36,6 @@ XMX_Connection::~XMX_Connection()
 	pMsgBuffer_ = nullptr;
 }
 
-bool XMX_Connection::Connected()
-{
-	return false;
-}
-
-bool XMX_Connection::Current()
-{
-	return false;
-}
-
-void XMX_Connection::Reset()
-{
-
-}
-
 void XMX_Connection::Close()
 {
 	conStatus_ = CS_DISCONNECTED;
@@ -55,21 +43,6 @@ void XMX_Connection::Close()
 	{
 		socket_->close();
 	}
-}
-
-void XMX_Connection::SendHandShake()
-{
-
-}
-
-void XMX_Connection::SendSignedBlock()
-{
-
-}
-
-void XMX_Connection::SendSignedBlockList()
-{
-
 }
 
 void XMX_Connection::PushMsg(const NetMessage& msg)
@@ -136,6 +109,28 @@ void XMX_Connection::SendVerAckMsg()
 	PushMsg(msg);
 }
 
+void XMX_Connection::SendGetAddrMsg()
+{
+	GetAddrMsg getaddr;
+	NetMessage msg(getaddr);
+	PushMsg(msg);
+}
 
+void XMX_Connection::SendAddrsToPeer()
+{
+	if (addrToSendList_.empty())
+	{
+		return;
+	}
+
+	AddrMsg addrMsg;
+	for (std::string toSendAddr : addrToSendList_)
+	{
+		addrMsg.add_addrlist(toSendAddr);
+	}
+	NetMessage msg(addrMsg);
+	PushMsg(msg);
+	addrToSendList_.clear();
+}
 
 }

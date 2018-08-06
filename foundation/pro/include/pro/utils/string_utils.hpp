@@ -13,13 +13,36 @@ namespace pro
 
 	namespace utils
 	{
-
+		/**
+		* format string.
+		* @param[out] formated string buff.
+		* @param[in] format of string.
+		* @param[in] ... args.
+		*/
 		void Sprintf(string& buff, const char* format, ...);
 
+		/**
+		* format string.
+		* @param[in] format of string.
+		* @param[in] ... args.
+		* @return format string.
+		*/
 		string Sprintf(const char* format, ...);
 
-		void StringFormat(string& buff, const string& format, const AnyObject& args);
 
+		/**
+		* format string.
+		* @param[out] formated string buff.
+		* @param[in] format of string.
+		* @param[in] args args.
+		*/
+		void StringFormat(string& buff, const string& format, const AnyObject& args);
+		/**
+		* format string.
+		* @param[in] format of string.
+		* @param[in] args args
+		* @return format string.
+		*/
 		string StringFormat(const string& format, const AnyObject& args);
 
 		template <typename T>

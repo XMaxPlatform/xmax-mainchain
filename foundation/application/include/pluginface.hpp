@@ -37,8 +37,8 @@ namespace xmaxapp
 		const string& GetName() const;
 		/**
 		* initialize options
-		* @param[in] OptionsDesc option desc
-		* @param[in] OptionsDesc option cfg
+		* @param[in] OptionsDesc program options which passed by program command line arguments
+		* @param[in] OptionsDesc configuration options which set in configuration file and also supported passing by program command line arguments
 		*/
 		void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
 

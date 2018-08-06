@@ -77,6 +77,17 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 	auto undoid1 = tbl->FindObject(id1);
 	BOOST_CHECK(undoid1->tval == 1024);
 
+	auto patch = db->StartUndo();
+
+
+	tbl->NewObject([&](TestDBObject& a)
+	{
+		a.tval = 345;
+	});
+
+	patch.Cancel();
+
+
 	const auto& ids = tbl->GetOrderIndex<ByObjectID>();
 	std::vector<TestDBObject> objs;
 	for (auto it : ids)

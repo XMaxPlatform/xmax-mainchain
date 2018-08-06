@@ -1,4 +1,5 @@
 #include "netmsg_processing.h"
+#include "xmaxnet_pluginimpl.hpp"
 #include "xmx_connection.hpp"
 #include <pro/log/log.hpp>
 
@@ -42,6 +43,10 @@ void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, co
 	pConnect->SendVerAckMsg();
 
 
+	if (!pConnect->IsInBound())
+	{
+		pConnect->SendGetAddrMsg();		
+	}
 }
 
 void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const VerAckMsg& msg)
@@ -54,11 +59,33 @@ void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, co
 void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const AddrMsg& msg)
 {
 	LogSprintf("recv addrmsg from peer(%s)\n", pConnect->GetPeerAddress().c_str());
+
+	for (std::string addr : msg.addrlist())
+	{
+
+	}
+
 }
 
 void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const GetAddrMsg& msg)
 {
 	LogSprintf("recv getaddrmsg from peer(%s)\n", pConnect->GetPeerAddress().c_str());
+
+	if (pConnect->IsInBound())
+	{
+		const auto& conList = pNetImpl_->GetAllConnections();
+		for (auto con : conList)
+		{
+			if (con->IsInBound() && pConnect != con)
+			{
+				const std::set<std::string>& addrList = con->GetAddrToSendList();
+				for (auto itr = addrList.begin(); itr != addrList.end(); ++itr)
+				{
+					pConnect->AddAddrToSend(*itr);
+				}
+			}
+		}
+	}
 }
 
 }
