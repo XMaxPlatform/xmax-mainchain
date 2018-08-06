@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 	undo.Undo();
 
 	auto undoid1 = tbl->FindObject(id1);
-	BOOST_CHECK(undoid1->tval == 1024);
+	BOOST_CHECK(undoid1->tval == 1025);
 
 	auto patch = db->StartUndo();
 
