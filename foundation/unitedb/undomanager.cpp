@@ -169,7 +169,7 @@ namespace unitedb
 
 		if (itr != getRecords().end())
 		{
-			DB_ASSERT(stack_->last_commit_ < itr->rev_ && itr->rev_ < stack_->top_revision_);
+			DB_ASSERT(stack_->last_commit_ < itr->rev_ && itr->rev_ <= stack_->top_revision_);
 		
 			int64_t rbegin = stack_->cache_.Size() - 1;
 			int64_t rend = itr->begin_ - 1;
@@ -189,7 +189,7 @@ namespace unitedb
 			auto& curr = records[i];
 			if (curr.id_ == id)// find undo info by id.
 			{
-				DB_ASSERT(stack_->last_commit_ < curr.rev_ && curr.rev_ < stack_->top_revision_);
+				DB_ASSERT(stack_->last_commit_ < curr.rev_ && curr.rev_ <= stack_->top_revision_);
 				if (0 == i)
 				{
 					// combine with self, do nothing.

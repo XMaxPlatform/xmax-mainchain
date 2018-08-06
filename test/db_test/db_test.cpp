@@ -1,8 +1,10 @@
 ﻿#define BOOST_TEST_MODULE db_test
 
+#ifdef MONGO_DB
 #include <mongocxx/client.hpp>
 #include <mongocxx/instance.hpp>
 #include <mongocxx/exception/exception.hpp>
+#endif
 
 #include <bsoncxx/builder/basic/kvp.hpp>
 #include <bsoncxx/builder/basic/document.hpp>
@@ -13,16 +15,19 @@
 #include <boost/test/included/unit_test.hpp>
 
 
+#ifdef MONGO_DB
 using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::close_document;
 using bsoncxx::builder::stream::document;
 using bsoncxx::builder::stream::finalize;
 using bsoncxx::builder::stream::open_array;
 using bsoncxx::builder::stream::open_document;
+#endif // _DEBUG
 using namespace std;
 
 
 BOOST_AUTO_TEST_SUITE(mongo_db_suite)
+#ifdef MONGO_DB
 
 const static std::string mongo_uri = "mongodb://localhost:27017";
 const static std::string mongo_uri_nonexist = "mongodb://localhost:27018";
@@ -214,6 +219,7 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_drop_col) {
 
 	
 }
+#endif // MONGO_DB
 
 
 

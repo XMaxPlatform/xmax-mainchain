@@ -35,10 +35,10 @@ namespace xmax {
 		{
 			void exportFoo(const FunctionCallbackInfo<v8::Value>& args);
 
-			inline JsFooBindMap GetBindFoos(Isolate* pIsolate)
+			inline JsFooBindMap GetBindFoos(Isolate* isolate)
 			{
 #define bindfoo(fooname)\
-ret.insert(std::pair<std::string, Local<FunctionTemplate>>(#fooname, v8::FunctionTemplate::New(pIsolate, fooname)))
+ret.insert(std::pair<std::string, Local<FunctionTemplate>>(#fooname, v8::FunctionTemplate::New(isolate, fooname)))
 
 				JsFooBindMap ret;
 				bindfoo(exportFoo);

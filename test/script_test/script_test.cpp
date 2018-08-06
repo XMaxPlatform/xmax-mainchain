@@ -22,6 +22,12 @@ BOOST_AUTO_TEST_SUITE(vm_plugin_test)
 BOOST_AUTO_TEST_CASE(bpt_1)
 {
  	xmax::scriptv8::ScriptGlobalMoudle::GetInstance().SetupV8Env();
+
+	v8::Isolate::Scope isolate_scope(xmax::scriptv8::ScriptGlobalMoudle::GetInstance().GetIsolate());
+	v8::HandleScope handle_scope(xmax::scriptv8::ScriptGlobalMoudle::GetInstance().GetIsolate());
+	
+	v8::Local<v8::ObjectTemplate> global = v8::ObjectTemplate::New(xmax::scriptv8::ScriptGlobalMoudle::GetInstance().GetIsolate());
+
 	xmax::scriptv8::ScriptMoudle module;
 	module.CleanInstrunction();
 	module.LoadScript("function LoopCheckTest() { int i = 10; while ( i > 0 ) { i--; }");

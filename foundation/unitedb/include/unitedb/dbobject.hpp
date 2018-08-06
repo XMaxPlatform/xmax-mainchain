@@ -86,40 +86,50 @@ namespace unitedb
 	class ObjPtr
 	{
 	public:
-		const T * operator ->() const
+		typedef T ObjType;
+		const ObjType * operator ->() const
 		{
 			return ptr_;
 		}
 		explicit operator bool() const
 		{
-			return ptr_ != nullptr;
+			return Valid();
 		}
 
-		const T& Get() const
+		bool Valid() const
+		{
+			return ptr_ != nullptr;
+		}
+		bool Empty() const
+		{
+			return ptr_ == nullptr;
+		}
+
+		const ObjType& Get() const
 		{
 			DB_ASSERT_MSG(ptr_ != nullptr, "empty obj.");
 			return *ptr_;
 		}
 
-		const T* Ptr() const
+		const ObjType* Ptr() const
 		{
 			return ptr_;
 		}
 
-		static ObjPtr<T> MakePtr(const T* p)
+		static ObjPtr<ObjType> MakePtr(const ObjType* p)
 		{
-			return ObjPtr<T>(p);
+			return ObjPtr<ObjType>(p);
 		}
 	private:
 
 		ObjPtr() = default;
 
-		ObjPtr(const T* p)
+		ObjPtr(const ObjType* p)
 			: ptr_(p)
 		{
 		}
 
-		const T * ptr_ = nullptr;
+		const ObjType * ptr_ = nullptr;
 	};
 
 

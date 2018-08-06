@@ -46,6 +46,11 @@ namespace pro
 			return val_;
 		}
 
+		
+		/**
+		* Traverse and visit the tree node recursively
+		* @param[in] Tree node visit method or function object
+		*/
 		template <class VisitorType>
 		void Traverse(VisitorType vistor) {
 			for (auto child : children_)
