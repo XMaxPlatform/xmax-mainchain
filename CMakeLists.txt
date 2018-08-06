@@ -59,6 +59,9 @@ ${BOOST_REUIQRED_COMPONENTS}
 
 
 find_package(MongoDB)
+if(MongoDB_FOUND)
+    add_definitions(-DMONGO_DB=1)
+endif()  
 
 
 set(BUILD_SHARED_LIBS OFF)
