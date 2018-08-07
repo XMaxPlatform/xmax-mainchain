@@ -4,16 +4,16 @@ namespace xmax
 {
 MessagePoolBuffer::MessagePoolBuffer()
 {
-	msgBuffers_.push_back(objectPool_.malloc());
+	msg_buffers_.push_back(objectPool_.malloc());
 }
 
 MessagePoolBuffer::~MessagePoolBuffer()
 {
-	for (size_t i = 0; i < msgBuffers_.size(); ++i)
+	for (size_t i = 0; i < msg_buffers_.size(); ++i)
 	{
-		objectPool_.destroy(msgBuffers_[i]);
+		objectPool_.destroy(msg_buffers_[i]);
 	}
-	msgBuffers_.clear();
+	msg_buffers_.clear();
 }
 
 std::vector<boost::asio::mutable_buffer> MessagePoolBuffer::GetAvailableBufferFromPool()
@@ -23,15 +23,15 @@ std::vector<boost::asio::mutable_buffer> MessagePoolBuffer::GetAvailableBufferFr
 	size_t currBufferId       = writeIndex_.bufferId;
 	size_t currRestBufferSize = bufferSize_ - writeIndex_.bufferPtr;
 
-	auto currBuffer = boost::asio::buffer(&msgBuffers_[currBufferId]->at(writeIndex_.bufferPtr),
+	auto currBuffer = boost::asio::buffer(&msg_buffers_[currBufferId]->at(writeIndex_.bufferPtr),
 						currRestBufferSize);
 
 	mbuffers.push_back(currBuffer);
 
 	//push rest buffers into
-	for (size_t i = currBufferId + 1; i < msgBuffers_.size(); ++i)
+	for (size_t i = currBufferId + 1; i < msg_buffers_.size(); ++i)
 	{
-		auto mbuf = boost::asio::buffer(&msgBuffers_[i]->begin(), bufferSize_);
+		auto mbuf = boost::asio::buffer(&msg_buffers_[i]->begin(), bufferSize_);
 		mbuffers.push_back(mbuf);
 	}
 
@@ -42,34 +42,34 @@ void MessagePoolBuffer::IncrementWriteIndex(uint32_t bytes)
 {
 	_IncrementIndexImpl(writeIndex_, bytes);
 
-	int nBuf = writeIndex_.bufferId + 1 - msgBuffers_.size();
+	int nBuf = writeIndex_.bufferId + 1 - msg_buffers_.size();
 	if (nBuf > 0)
 	{
 		for (size_t i = 0; i < nBuf; ++i)
 		{
 			auto pBuf = objectPool_.malloc();
-			msgBuffers_.push_back(pBuf);
+			msg_buffers_.push_back(pBuf);
 		}
 	}
 }
 
-bool MessagePoolBuffer::TryGetData(void* pData, uint32_t nBytes, bufferIndex readPtr)
+bool MessagePoolBuffer::TryGetData(void* data, uint32_t bytes, bufferIndex read_ptr)
 {
 	bool ret = false;
-	if (CanReadBytes() >= nBytes)
+	if (CanReadBytes() >= bytes)
 	{
-		char* pBuffer = &msgBuffers_[readPtr.bufferId]->at(readPtr.bufferPtr);
-		if (readPtr.bufferPtr + nBytes <= bufferSize_)
+		char* pBuffer = &msg_buffers_[read_ptr.bufferId]->at(read_ptr.bufferPtr);
+		if (read_ptr.bufferPtr + bytes <= bufferSize_)
 		{
-			memcpy(pData, pBuffer, nBytes);
+			memcpy(data, pBuffer, bytes);
 			ret = true;
 		}
 		else
 		{
-			uint32_t remainBytes = bufferSize_ - readPtr.bufferPtr;
-			memcpy(pData, pBuffer, remainBytes);
-			_IncrementIndexImpl(readPtr, nBytes);
-			ret |= TryGetData((char*)pData + remainBytes, nBytes - remainBytes, readPtr);
+			uint32_t remainBytes = bufferSize_ - read_ptr.bufferPtr;
+			memcpy(data, pBuffer, remainBytes);
+			_IncrementIndexImpl(read_ptr, bytes);
+			ret |= TryGetData((char*)data + remainBytes, bytes - remainBytes, read_ptr);
 
 		}
 		return ret;
@@ -85,7 +85,7 @@ bool MessagePoolBuffer::GetData(void* pData, uint32_t nBytes)
 	bool ret = false;
 	if (CanReadBytes() >= nBytes)
 	{
-		char* pBuffer = &msgBuffers_[readIndex_.bufferId]->at(readIndex_.bufferPtr);
+		char* pBuffer = &msg_buffers_[readIndex_.bufferId]->at(readIndex_.bufferPtr);
 		if (readIndex_.bufferPtr + nBytes <= bufferSize_)
 		{
 			memcpy(pData, pBuffer, nBytes);
@@ -113,7 +113,7 @@ void MessagePoolBuffer::Allocate(uint32_t nBytes)
 	for (size_t i = 0; i < nBuffers; ++i)
 	{
 		auto buffer = objectPool_.malloc();
-		msgBuffers_.push_back(buffer);
+		msg_buffers_.push_back(buffer);
 	}
 }
 
@@ -125,8 +125,8 @@ void MessagePoolBuffer::IncrementReadIndex(uint32_t bytes)
 	size_t nDelete = 0;
 	for (size_t i = 0; i < readIndex_.bufferId; ++i)
 	{
-		objectPool_.destroy(msgBuffers_.front());
-		msgBuffers_.pop_front();
+		objectPool_.destroy(msg_buffers_.front());
+		msg_buffers_.pop_front();
 		nDelete++;
 	}
 	readIndex_.bufferId  -= nDelete;

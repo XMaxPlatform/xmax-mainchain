@@ -121,7 +121,7 @@ namespace unitedb
 		{
 			if (obj)
 			{
-				PushUndo(UndoOp::Update, obj.Ptr());
+				PushUndo(UndoOp::Delete, obj.Ptr());
 				GetMapped().erase(GetMapped().iterator_to(obj.Get()));
 			}
 		}

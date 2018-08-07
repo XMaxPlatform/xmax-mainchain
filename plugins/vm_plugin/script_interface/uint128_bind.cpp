@@ -4,27 +4,23 @@ namespace xmax {
 
 	namespace scriptv8 {
 
-		xmax::scriptv8::V8ui128* NewV8ui128Function(const FunctionCallbackInfo<v8::Value>& args)
+
+		V8u128* V8u128::NewV8CppObj(const v8::FunctionCallbackInfo<v8::Value>& args)
 		{
 			return nullptr;
 		}
 
-		void V8ui128WeakExternalReferenceCallback(Persistent<v8::Value>, void* parameter)
+		void V8u128::RegisterWithV8(v8::Isolate* isolate, v8::Handle<v8::ObjectTemplate> global)
 		{
 
 		}
 
-		void V8ui128FunctionInvocationCallback(const FunctionCallbackInfo<v8::Value>& args)
+		void V8u128::ConstructV8Object(const v8::FunctionCallbackInfo<v8::Value>& args)
 		{
 
 		}
 
-		void SetupV8ui128ObjectToJs(Isolate* isolate, Handle<ObjectTemplate> global)
-		{
-
-		}
-
-		void GetBit(int i, const FunctionCallbackInfo<v8::Value>& args)
+		void V8u128::WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8u128>& data)
 		{
 
 		}

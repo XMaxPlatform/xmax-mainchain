@@ -142,6 +142,7 @@ namespace unitedb
 		virtual void StartUndo(DBRevision revision) override
 		{
 			stack_->infos_.emplace_back( TableUndoInfo(stack_->cache_.Size(), revision) );
+			no_undo_ = false;
 		}
 
 		virtual void Combine(DBRevision revision) override
@@ -202,13 +203,16 @@ namespace unitedb
 			case UndoOp::Create:
 			{
 				auto itr = GetMapped().find(op.id_);
+				DB_ASSERT(itr != GetMapped().end());
 				GetMapped().erase(itr);
 			}
 			break;
 			case UndoOp::Update:
 			{
 				auto itr = GetMapped().find(op.id_);
-				GetMapped().replace(itr, getBackObject());
+				DB_ASSERT(itr != GetMapped().end());
+				const auto& bak = getBackObject();
+				GetMapped().replace(itr, bak);
 				stack_->cache_.PopBack();
 			}
 			break;
