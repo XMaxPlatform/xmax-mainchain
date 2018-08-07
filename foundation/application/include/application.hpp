@@ -72,7 +72,13 @@ namespace xmaxapp
 
 	private:
 		void SetupApplicationOptions();
+		
+		/**
+		* Load all the options supported in the configuration file
+		* @param[out] option variable map storing the option values
+		*/
 		void LoadCfgOptions(bpo::variables_map& var_map);
+
 		void CreateDefaultCfgFile();
 
 	private:
