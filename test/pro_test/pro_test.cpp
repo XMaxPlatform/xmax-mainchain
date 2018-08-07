@@ -81,6 +81,11 @@ BOOST_AUTO_TEST_CASE(any_value)
 	BOOST_CHECK(b == true);
 }
 
+BOOST_AUTO_TEST_CASE(any_value_cast)
+{
+
+}
+
 bool checkformat(const string& checkstring, const string& fmt, const AnyObject& args)
 {
 	string fstring = utils::StringFormat(fmt, args);
