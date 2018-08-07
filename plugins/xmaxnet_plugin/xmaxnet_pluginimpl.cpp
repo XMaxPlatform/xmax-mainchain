@@ -501,4 +501,25 @@ void XmaxNetPluginImpl::_MapPort()
 #endif
 }
 
+bool XmaxNetPluginImpl::HasAddress(const std::string& addr) const
+{
+	for (auto con : connections_)
+	{
+		if (con->GetPeerAddress() == addr)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void XmaxNetPluginImpl::BroadCastAddr(const std::string& addr)
+{
+	for (auto con : connections_)
+	{
+		con->AddAddrToSend(addr);
+	}
+}
+
+
 }

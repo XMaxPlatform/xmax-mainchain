@@ -62,9 +62,10 @@ void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, co
 
 	for (std::string addr : msg.addrlist())
 	{
-		pNetImpl_->ConnectImpl(addr);
+		pNetImpl_->BroadCastAddr(addr);
 	}
 
+	
 }
 
 void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const GetAddrMsg& msg)
