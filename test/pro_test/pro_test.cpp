@@ -83,7 +83,9 @@ BOOST_AUTO_TEST_CASE(any_value)
 
 BOOST_AUTO_TEST_CASE(any_value_cast)
 {
-
+	pro::AnyValue anyint = 42;
+	pro::AnyValue anystr = "any";
+	pro::AnyValue anybool = true;
 }
 
 bool checkformat(const string& checkstring, const string& fmt, const AnyObject& args)
