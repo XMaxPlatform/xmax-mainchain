@@ -49,6 +49,7 @@ public:
 
 	bool HasAddress(const std::string& addr) const;
 
+	//send addr to peers
 	void BroadCastAddr(const std::string& addr);
 
 public:
