@@ -188,7 +188,7 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 	});
 
 	auto id1 = val1->GetID();
-	auto id2 = val1->GetID();
+	auto id2 = val2->GetID();
 
 	auto undo = db->StartUndo();
 
