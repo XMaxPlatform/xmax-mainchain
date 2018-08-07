@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(bpt_1)
 	v8::HandleScope handle_scope(xmax::scriptv8::ScriptGlobalMoudle::GetInstance().GetIsolate());
 	
 	v8::Local<v8::ObjectTemplate> global = v8::ObjectTemplate::New(xmax::scriptv8::ScriptGlobalMoudle::GetInstance().GetIsolate());
-
+	xmax::scriptv8::ScriptGlobalMoudle::GetInstance().V8SetupGlobalObjTemplate(&global);
 	xmax::scriptv8::ScriptMoudle module;
 	module.CleanInstrunction();
 	module.LoadScript("function LoopCheckTest() { int i = 10; while ( i > 0 ) { i--; }");
