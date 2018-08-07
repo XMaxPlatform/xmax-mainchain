@@ -49,55 +49,6 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 
 	auto tbl = db->GetTable<TestTable>();
 
-	auto val1 = tbl->NewObject([&](TestDBObject& a)
-	{
-		a.tval = 1024;
-	});
-
-	BOOST_CHECK(val1->tval == 1024);
-
-	auto id1 = val1->GetID();
-
-	auto val1_a = tbl->FindObject<ByObjectID>(id1);
-
-	BOOST_CHECK(val1_a->tval == 1024);
-
-	auto undo = db->StartUndo();
-
-	tbl->UpdateObject(val1_a, [&](TestTable::ObjectType& a)
-	{
-		a.tval = 1025;
-	});
-
-	auto newid1 = tbl->FindObject(id1);
-	BOOST_CHECK(newid1->tval == 1025);
-
-	undo.Undo();
-
-	auto undoid1 = tbl->FindObject(id1);
-	BOOST_CHECK(undoid1->tval == 1025);
-
-	auto patch = db->StartUndo();
-
-
-	tbl->NewObject([&](TestDBObject& a)
-	{
-		a.tval = 345;
-	});
-
-	patch.Cancel();
-
-
-	const auto& ids = tbl->GetOrderIndex<ByObjectID>();
-	std::vector<TestDBObject> objs;
-	for (auto it : ids)
-	{
-		objs.push_back(it);
-	}
-
-
-
-
 	//==========================================================
 
 	TestIdx tidxs(db->GetSegment());
