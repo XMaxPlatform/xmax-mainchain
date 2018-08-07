@@ -212,6 +212,12 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 	auto id3 = val3->GetID();
 
 	undo.Undo();
+	const auto& ids = tbl->GetOrderIndex<ByObjectID>();
+	std::vector<TestDBObject> objs;
+	for (auto it : ids)
+	{
+		objs.push_back(it);
+	}
 
 	// check undo.
 	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1).Valid());
