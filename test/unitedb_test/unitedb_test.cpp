@@ -169,4 +169,58 @@ BOOST_AUTO_TEST_CASE(db_op_test)
 	BOOST_CHECK(tbl->FindObject<ByObjectID>(iddel).Empty());
 }
 
+
+BOOST_AUTO_TEST_CASE(db_undo_test)
+{
+	std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::Discard));//);//
+
+	db->InitTable<TestTable>();
+
+	auto tbl = db->GetTable<TestTable>();
+
+	auto val1 = tbl->NewObject([&](TestDBObject& a)
+	{
+		a.tval = 111;
+	});
+	auto val2 = tbl->NewObject([&](TestDBObject& a)
+	{
+		a.tval = 222;
+	});
+
+	auto id1 = val1->GetID();
+	auto id2 = val1->GetID();
+
+	auto undo = db->StartUndo();
+
+	// update val1;
+	tbl->UpdateObject(val1, [&](TestTable::ObjectType& a)
+	{
+		a.tval = 112;
+	});
+	// delete val2;
+	auto fval2 = tbl->FindObject(id2);
+
+	tbl->DeleteObject(fval2);
+
+	// new val3
+
+	auto val3 = tbl->NewObject([&](TestDBObject& a)
+	{
+		a.tval = 333;
+	});
+
+	auto id3 = val3->GetID();
+
+	undo.Undo();
+
+	// check undo.
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1).Valid());
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id2).Valid());
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id3).Empty());
+
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1)->tval == 111);
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id2)->tval == 222);
+
+}
+
 BOOST_AUTO_TEST_SUITE_END()
