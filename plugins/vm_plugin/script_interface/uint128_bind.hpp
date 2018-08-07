@@ -1,46 +1,37 @@
-//uint ui28 decl
-#pragma  once
+#pragma once
 #include <functional>
 #include <map>
 #include <libplatform/libplatform.h>
 #include <v8.h>
-using namespace v8;
+#include "V8BindObject.hpp"
+#include "pro/types/generictypes.hpp"
 
 namespace xmax {
 	namespace scriptv8 {
-		/**
-		* implementation of int64
-		*/
-		class V8ui128
+		class V8u128 : public V8BindObject<V8u128>
 		{
 		public:
-			V8ui128(uint64_t)
-			{
+			V8u128(pro::uint128 value) :value_(value) {}
 
-			}
-			V8ui128()
-			{
+			V8u128() :value_(0) {}
 
+			operator pro::uint128() { return value_; }
+
+
+			//V8 bind
+			static constexpr inline const char* TypeName() {
+				return "V8u128";
 			}
-			V8ui128(int l1, int l2, int l3, int l4)
-			{
-				data[0] = l1;
-				data[1] = l2;
-				data[2] = l3;
-				data[3] = l4;
-			}
-			int data[4];
+
+			static V8u128* NewV8CppObj(const v8::FunctionCallbackInfo<v8::Value>& args);
+			static void RegisterWithV8(v8::Isolate* isolate, v8::Handle<v8::ObjectTemplate> global);
+			static void ConstructV8Object(const v8::FunctionCallbackInfo<v8::Value>& args);
+			static void WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8u128>& data);
+
+		private:
+			pro::uint128 value_;
 		};
 
-		V8ui128* NewV8ui128Function(const FunctionCallbackInfo<v8::Value>& args);
-
-		void V8ui128WeakExternalReferenceCallback(Persistent<v8::Value>, void* parameter);
-
-		void V8ui128FunctionInvocationCallback(const FunctionCallbackInfo<v8::Value>& args);
-
-		void SetupV8ui128ObjectToJs(Isolate* isolate, Handle<ObjectTemplate> global);
-
-		void GetBit(int i, const FunctionCallbackInfo<v8::Value>& args);
 
 	}
 }
