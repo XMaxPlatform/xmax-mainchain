@@ -53,23 +53,23 @@ void MessagePoolBuffer::IncrementWriteIndex(uint32_t bytes)
 	}
 }
 
-bool MessagePoolBuffer::TryGetData(void* pData, uint32_t nBytes, bufferIndex readPtr)
+bool MessagePoolBuffer::TryGetData(void* data, uint32_t bytes, bufferIndex read_ptr)
 {
 	bool ret = false;
-	if (CanReadBytes() >= nBytes)
+	if (CanReadBytes() >= bytes)
 	{
-		char* pBuffer = &msg_buffers_[readPtr.bufferId]->at(readPtr.bufferPtr);
-		if (readPtr.bufferPtr + nBytes <= bufferSize_)
+		char* pBuffer = &msg_buffers_[read_ptr.bufferId]->at(read_ptr.bufferPtr);
+		if (read_ptr.bufferPtr + bytes <= bufferSize_)
 		{
-			memcpy(pData, pBuffer, nBytes);
+			memcpy(data, pBuffer, bytes);
 			ret = true;
 		}
 		else
 		{
-			uint32_t remainBytes = bufferSize_ - readPtr.bufferPtr;
-			memcpy(pData, pBuffer, remainBytes);
-			_IncrementIndexImpl(readPtr, nBytes);
-			ret |= TryGetData((char*)pData + remainBytes, nBytes - remainBytes, readPtr);
+			uint32_t remainBytes = bufferSize_ - read_ptr.bufferPtr;
+			memcpy(data, pBuffer, remainBytes);
+			_IncrementIndexImpl(read_ptr, bytes);
+			ret |= TryGetData((char*)data + remainBytes, bytes - remainBytes, read_ptr);
 
 		}
 		return ret;
