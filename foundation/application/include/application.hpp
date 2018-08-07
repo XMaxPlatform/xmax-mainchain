@@ -3,7 +3,7 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <map>
+#include <unordered_map>
 #include <pro/io/file_system.hpp>
 #include <apps.hpp>
 #include <pluginface.hpp>
@@ -83,7 +83,7 @@ namespace xmaxapp
 
 	private:
 
-		std::map<string, std::unique_ptr<PluginFace>>	pluginmap_;
+		std::unordered_map<string, std::unique_ptr<PluginFace>>	pluginmap_;
 		std::vector<PluginFace*>						initialized_plugins_;
 		std::vector<PluginFace*>						startup_plugins_;
 
