@@ -62,7 +62,7 @@ void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, co
 
 	for (std::string addr : msg.addrlist())
 	{
-
+		pNetImpl_->ConnectImpl(addr);
 	}
 
 }
@@ -78,11 +78,8 @@ void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, co
 		{
 			if (con->IsInBound() && pConnect != con)
 			{
-				const std::set<std::string>& addrList = con->GetAddrToSendList();
-				for (auto itr = addrList.begin(); itr != addrList.end(); ++itr)
-				{
-					pConnect->AddAddrToSend(*itr);
-				}
+				const std::string& peerAddr = pConnect->GetPeerAddress();
+				pConnect->AddAddrToSend(peerAddr);
 			}
 		}
 	}

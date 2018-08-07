@@ -50,7 +50,7 @@ private:
 	bufferIndex											writeIndex_;
 	bufferIndex											readIndex_;
 
-	std::deque< std::array<char, bufferSize_>* >		msgBuffers_;
+	std::deque< std::array<char, bufferSize_>* >		msg_buffers_;
 
 };
 
@@ -62,7 +62,7 @@ inline uint32_t MessagePoolBuffer::AvailableBytes() const
 
 inline uint32_t MessagePoolBuffer::_TotalBytes() const
 {
-	return (uint32_t)msgBuffers_.size() * bufferSize_;
+	return (uint32_t)msg_buffers_.size() * bufferSize_;
 }
 
 inline void MessagePoolBuffer::_IncrementIndexImpl(bufferIndex& bi, uint32_t bytes)

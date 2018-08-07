@@ -76,7 +76,7 @@ namespace unitedb
 	}
 
 	template<typename Func, typename ArrayType, typename IndexType>
-	static void reverseForEach(const ArrayType& data, IndexType rbeg, IndexType rend, Func f)
+	static void ReverseForEach(const ArrayType& data, IndexType rbeg, IndexType rend, Func f)
 	{
 		for (IndexType i = rbeg; i > rend; --i)
 		{
@@ -213,7 +213,7 @@ namespace unitedb
 	{
 		if (rbegin > rend)
 		{
-			reverseForEach(stack_->cache_.data_, rbegin, rend, [&](const UndoOp& op) {
+			ReverseForEach(stack_->cache_.data_, rbegin, rend, [&](const UndoOp& op) {
 
 				ITable* table = owner_->GetTable(op.table_);
 				table->Undo(op);

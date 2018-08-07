@@ -98,19 +98,7 @@ namespace xmaxapp
 
 	bool Application::Initialize(int argc, char** argv)
 	{
-		//// create plugin objects.
-		//for (auto& item : pluginmap_)
-		//{
-		//	if (PluginFace* plugin = PluginFactory::NewPlugin(item.first, this))
-		//	{
-		//		pluginmap_[item.first].reset(plugin);
-		//		initialized_plugins_.push_back(plugin);
-		//	}
-		//}
-
 		
-
-
 		SetupApplicationOptions();
 
 		// parse options.
@@ -127,9 +115,6 @@ namespace xmaxapp
 
 		LoadCfgOptions(option_vars);
 
-
-		//options::store(options::parse_config_file<char>(config_file_name.make_preferred().string().c_str(),
-		//	cfg_options, true), option_vars);
 		std::unordered_map<string, PluginFace*> added_plugins;
 
 		auto add_plugin_visitor = [&added_plugins, this](auto& plugin_name) {
