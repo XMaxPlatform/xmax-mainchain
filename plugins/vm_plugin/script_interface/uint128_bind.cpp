@@ -47,7 +47,12 @@ namespace xmax {
 				NewV8CppObj(args);
 			}
 
-		
+			if (!cpp_object)
+				return;
+
+			Handle<Object> object = args.This();
+			Wrap(args.GetIsolate(), cpp_object, object);
+			args.GetReturnValue().Set(object);
 		}
 
 		void V8u128::WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8u128>& data)
