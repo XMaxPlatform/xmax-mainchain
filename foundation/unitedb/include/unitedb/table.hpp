@@ -81,6 +81,12 @@ namespace unitedb
 
 		}
 
+		void Reset()
+		{
+			cache_.Clear();
+			infos_.clear();
+		}
+
 		UndoCacheType cache_;
 
 		TableUndoInfos infos_;
@@ -157,6 +163,43 @@ namespace unitedb
 					break;
 				}
 			}
+		}
+
+		virtual void Commit(DBRevision revision) override
+		{
+			int idx = -1;
+			for (int i = 0; i < stack_->infos_.size(); ++i)
+			{
+				if (stack_->infos_[i].rev_ == revision)
+				{
+					idx = i;
+					break;
+				}
+			}
+			if (idx == -1) // never be true.
+			{
+				stack_->Reset();
+				return;
+			}
+			// remove cache data.
+
+			const TableUndoInfo& revinfo = stack_->infos_[idx];
+
+			const int remcount = revinfo.begin_;
+
+			stack_->cache_.Remove(0, remcount);
+
+			// remove info data.
+			int fixcount = idx + 1;
+			auto remend = stack_->infos_.begin() + fixcount;
+
+			stack_->infos_.erase(stack_->infos_.begin(), remend);
+
+			for (auto& itr : stack_->infos_)
+			{
+				itr.begin_ -= fixcount;
+			}
+
 		}
 
 		virtual void Undo(const UndoOp& op) override
