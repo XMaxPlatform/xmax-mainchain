@@ -1,4 +1,5 @@
 #include "apirpc_plugin.hpp"
+#include "boost/asio/io_context.hpp"
 
 using namespace std;
 
@@ -20,8 +21,13 @@ namespace xmax {
 		~ApiRpcPluginImpl();
 
 
+		void Start();
+
+	public:
+		//Configurations
 		string allow_cross_origin;
 		string http_api_address;
+
 	};
 
 	//--------------------------------------------------
@@ -36,6 +42,12 @@ namespace xmax {
 
 	}
 
+
+	//--------------------------------------------------
+	void ApiRpcPluginImpl::Start()
+	{
+
+	}
 
 	/*!
 	* \class ApiRpcPlugin
@@ -78,7 +90,7 @@ namespace xmax {
 	//--------------------------------------------------
 	void ApiRpcPlugin::Startup()
 	{
-
+		impl_->Start();
 	}
 
 }
