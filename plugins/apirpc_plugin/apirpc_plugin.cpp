@@ -1,5 +1,6 @@
 #include "apirpc_plugin.hpp"
 #include "boost/asio/io_context.hpp"
+#include "pro/log/log.hpp"
 
 using namespace std;
 
@@ -20,7 +21,9 @@ namespace xmax {
 		ApiRpcPluginImpl();
 		~ApiRpcPluginImpl();
 
-
+		/*
+		* Start the io service to listen to the http request		
+		*/
 		void Start();
 
 	public:
@@ -39,14 +42,14 @@ namespace xmax {
 	//--------------------------------------------------
 	ApiRpcPluginImpl::~ApiRpcPluginImpl()
 	{
-
+		
 	}
 
 
 	//--------------------------------------------------
 	void ApiRpcPluginImpl::Start()
 	{
-
+		LogSprintf("Start API RPC service.");
 	}
 
 	/*!
