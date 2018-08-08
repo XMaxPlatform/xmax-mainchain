@@ -165,7 +165,15 @@ BOOST_AUTO_TEST_CASE(test_any_testis) {
 	BOOST_CHECK(message.any_value().Is<google::protobuf::Any>());
 }
 
+BOOST_AUTO_TEST_CASE(test_any_reflection_typename) {
+	protobuf_unittest::TestAny submessage;
+	std::string type_name = submessage.GetTypeName();
+	BOOST_CHECK(type_name == "protobuf_unittest.TestAny");
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()
+
 
 
 
