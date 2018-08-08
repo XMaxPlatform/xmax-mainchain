@@ -79,6 +79,8 @@ set(xmax_app_lib_name application)
 set(xmax_run_exe_name xmaxrun)
 set(xmax_db_name unitedb)
 
+set(xmax_chain_lib_name xmaxchain)
+
 set(xmax_bcp_lib_name blockchain_plugin)
 set(xmax_builder_lib_name blockbuilder_plugin)
 set(xmax_net_lib_name xmaxnet_plugin)
@@ -93,4 +95,5 @@ add_subdirectory(plugins)
 add_subdirectory(launch)
 add_subdirectory(network)
 add_subdirectory(test)
+add_subdirectory(blockchain)
 
