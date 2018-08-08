@@ -15,6 +15,7 @@
 #include <boost/test/included/unit_test.hpp>
 
 
+
 #ifdef MONGO_DB
 using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::close_document;
@@ -157,6 +158,18 @@ BOOST_AUTO_TEST_CASE(test_mongo_db_update_col) {
 	}
 }
 
+BOOST_AUTO_TEST_CASE(test_mongo_db_find_record) {
+	CONNECT_TO_TEST_COLLECTION(col);
+	
+	using bsoncxx::builder::basic::make_document;
+	using bsoncxx::builder::basic::kvp;
+
+	auto op_result = col.find_one(make_document(kvp("name", "doc01")));
+	BOOST_ASSERT(op_result);
+
+	BOOST_CHECK(op_result->view()["tokens"].get_int32() == 654321);
+
+}
 
 BOOST_AUTO_TEST_CASE(test_mongo_db_read_col) {
 	try
