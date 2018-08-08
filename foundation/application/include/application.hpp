@@ -79,6 +79,9 @@ namespace xmaxapp
 		*/
 		void LoadCfgOptions(bpo::variables_map& var_map);
 
+		/**
+		*	Create default configuration file
+		*/
 		void CreateDefaultCfgFile();
 
 	private:
