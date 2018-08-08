@@ -1,5 +1,7 @@
 //send for vm_plugin 
 #include "uint128_bind.hpp"
+
+using namespace v8;
 namespace xmax {
 
 	namespace scriptv8 {
