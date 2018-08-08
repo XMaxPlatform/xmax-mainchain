@@ -47,6 +47,11 @@ public:
 
 	const std::vector<std::shared_ptr<XMX_Connection> >& GetAllConnections() const;
 
+	bool HasAddress(const std::string& addr) const;
+
+	//send addr to peers
+	void BroadCastAddr(const std::string& addr);
+
 public:
 
 	static const char* s_ServerAddress;

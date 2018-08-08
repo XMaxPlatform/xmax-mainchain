@@ -60,11 +60,18 @@ void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, co
 {
 	LogSprintf("recv addrmsg from peer(%s)\n", pConnect->GetPeerAddress().c_str());
 
-	for (std::string addr : msg.addrlist())
+	for (const std::string& addr : msg.addrlist())
 	{
-		pNetImpl_->ConnectImpl(addr);
+		pNetImpl_->BroadCastAddr(addr);
 	}
 
+	for (const std::string& addr : msg.addrlist())
+	{
+		if (!pNetImpl_->HasAddress(addr))
+		{
+			pNetImpl_->ConnectImpl(addr);
+		}
+	}
 }
 
 void NetMsgProcessing::_OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const GetAddrMsg& msg)

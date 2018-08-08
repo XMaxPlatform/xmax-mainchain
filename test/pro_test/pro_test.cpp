@@ -81,6 +81,16 @@ BOOST_AUTO_TEST_CASE(any_value)
 	BOOST_CHECK(b == true);
 }
 
+BOOST_AUTO_TEST_CASE(any_value_cast)
+{
+	pro::AnyValue anyint = 42;
+	pro::AnyValue anystr = "any";
+	pro::AnyValue anybool = true;
+
+	BOOST_CHECK("42" == anyint.CastTo<string>());
+	BOOST_CHECK("true" == anybool.CastTo<string>());
+}
+
 bool checkformat(const string& checkstring, const string& fmt, const AnyObject& args)
 {
 	string fstring = utils::StringFormat(fmt, args);

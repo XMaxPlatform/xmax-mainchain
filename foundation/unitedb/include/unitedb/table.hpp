@@ -159,6 +159,11 @@ namespace unitedb
 			}
 		}
 
+		virtual void Commit(DBRevision revision) override
+		{
+
+		}
+
 		virtual void Undo(const UndoOp& op) override
 		{
 			undoImpl(op);
