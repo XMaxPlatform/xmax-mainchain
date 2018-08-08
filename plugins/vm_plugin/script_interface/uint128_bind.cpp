@@ -32,7 +32,10 @@ namespace xmax {
 
 		void V8u128::ConstructV8Object(const v8::FunctionCallbackInfo<v8::Value>& args)
 		{
+			if (!args.IsConstructCall())
+				return args.GetReturnValue().Set(Undefined(args.GetIsolate()));
 
+			
 		}
 
 		void V8u128::WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8u128>& data)
