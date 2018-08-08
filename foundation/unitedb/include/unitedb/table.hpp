@@ -81,6 +81,12 @@ namespace unitedb
 
 		}
 
+		void Reset()
+		{
+			cache_.Clear();
+			infos_.clear();
+		}
+
 		UndoCacheType cache_;
 
 		TableUndoInfos infos_;
@@ -161,6 +167,21 @@ namespace unitedb
 
 		virtual void Commit(DBRevision revision) override
 		{
+			int idx = -1;
+			for (int i = 0; i < stack_->infos_.size(); ++i)
+			{
+				if (stack_->infos_[i].rev_ == revision)
+				{
+					idx = i;
+					break;
+				}
+			}
+			if (idx == -1) // never be true.
+			{
+				stack_->Reset();
+				return;
+			}
+
 
 		}
 
