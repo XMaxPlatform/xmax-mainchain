@@ -14,6 +14,7 @@ namespace xmax {
 
 		void V8u128::RegisterWithV8(v8::Isolate* isolate, v8::Handle<v8::ObjectTemplate> global)
 		{
+			Handle<FunctionTemplate> func_template = FunctionTemplate::New(isolate, &ConstructV8Object);
 
 		}
 
