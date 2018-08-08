@@ -159,6 +159,8 @@ namespace unitedb
 			{
 				itr.begin_ -= count;
 			}
+
+			owner_->OnCommmit(rev);
 		}
 		return false;
 	}

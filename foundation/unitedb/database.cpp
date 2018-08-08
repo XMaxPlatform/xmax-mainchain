@@ -131,6 +131,14 @@ namespace unitedb
 			}
 		}
 
+		virtual void OnCommmit(DBRevision revision) override
+		{
+			for (auto it : table_insts_)
+			{
+				it->Commit(revision);
+			}
+		}
+
 		virtual ITable* GetTable(ObjectTypeCode code) override 
 		{
 			DB_ASSERT(code < tablemap_.size());

@@ -17,6 +17,8 @@ namespace unitedb
 
 		virtual void Combine(DBRevision revision) = 0;
 
+		virtual void Commit(DBRevision revision) = 0;
+
 		virtual void Undo(const UndoOp& op) = 0;
 	};
 
@@ -38,6 +40,8 @@ namespace unitedb
 		virtual void OnStartUndo(DBRevision revision) = 0;
 
 		virtual void OnCombine(DBRevision revision) = 0;
+
+		virtual void OnCommmit(DBRevision revision) = 0;
 
 		virtual ITable* GetTable(ObjectTypeCode code) = 0;
 
