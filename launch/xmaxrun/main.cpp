@@ -8,6 +8,7 @@
 #include <blockbuilder_plugin.hpp>
 #include <mongodb_plugin.hpp>
 #include <xmaxnet_plugin.hpp>
+#include <apirpc_plugin.hpp>
 #include <pro/protypes.hpp>
 
 
@@ -22,6 +23,7 @@ namespace xmax
 		BlockBuilderPlugin::RegistSelf();
 		MongoDBPlugin::RegistSelf();
 		XmaxNetPlugin::RegistSelf();
+		ApiRpcPlugin::RegistSelf();
 	}
 
 	void InitPlugins(Application& app) {
@@ -29,6 +31,7 @@ namespace xmax
 		app.PluginToInit("BlockBuilderPlugin");
 		app.PluginToInit("MongoDBPlugin");
 		app.PluginToInit("XmaxNetPlugin");
+		app.PluginToInit("ApiRpcPlugin");
 	}
 
 	void Run(int argc, char** argv)
