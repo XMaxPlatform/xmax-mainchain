@@ -181,7 +181,24 @@ namespace unitedb
 				stack_->Reset();
 				return;
 			}
+			// remove cache data.
 
+			const TableUndoInfo& revinfo = stack_->infos_[idx];
+
+			const int remcount = revinfo.begin_;
+
+			stack_->cache_.Remove(0, remcount);
+
+			// remove info data.
+			int fixcount = idx + 1;
+			auto remend = stack_->infos_.begin() + fixcount;
+
+			stack_->infos_.erase(stack_->infos_.begin(), remend);
+
+			for (auto& itr : stack_->infos_)
+			{
+				itr.begin_ -= fixcount;
+			}
 
 		}
 
