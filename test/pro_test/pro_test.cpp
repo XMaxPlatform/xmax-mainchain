@@ -8,6 +8,7 @@
 #include <pro/utils/string_utils.hpp>
 #include <pro/scode/shortname.hpp>
 #include <pro/types/tree.hpp>
+#include <pro/utils/sha256.hpp>
 
 using namespace pro;
 
@@ -181,6 +182,47 @@ BOOST_AUTO_TEST_CASE(test_boost_tree) {
 	});
 
 	BOOST_CHECK(output.compare("c3 c4 c1 c7 c8 c5 c6 c2 rt ") == 0);
+}
+
+class Test2
+{
+public:
+	Test2() {}
+	Test2(int x) : a(x) {}
+	int a;
+
+private:
+	friend class cereal::access;
+
+	template<class Archive>
+	void save(Archive & ar) const
+	{
+		ar(a);
+	}
+
+	template<class Archive>
+	void load(Archive & ar)
+	{
+		ar(a);
+	}
+};
+
+BOOST_AUTO_TEST_CASE(test_sha256)
+{
+	CSHA256 csha;
+	Test2 tt(10);
+	csha.Hash(tt);
+	const std::string& hexstr = csha.GetHex();
+
+	int a = 10;
+	char* p = new char[4];
+	memcpy(p, &a, 4);
+	std::vector<char> hash(picosha2::k_digest_size);
+	picosha2::hash256(p, p+4, hash.begin(), hash.end());
+	std::string hexstr2 = picosha2::bytes_to_hex_string(hash.begin(), hash.end());
+
+	BOOST_CHECK(hexstr == hexstr2);
+	delete[] p;
 }
 
 

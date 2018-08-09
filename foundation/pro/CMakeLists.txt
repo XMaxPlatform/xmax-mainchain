@@ -83,6 +83,8 @@ list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" scode)
 add_library( ${current_lib_name} ${S_FILES} ${H_FILES} )
 target_link_libraries( ${current_lib_name} 	${Boost_LIBRARIES})
 target_include_directories( ${current_lib_name} PUBLIC "include" "${Boost_INCLUDE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" )
+target_include_directories( ${current_lib_name}  
+	PUBLIC "include" ${CMAKE_CURRENT_SOURCE_DIR}/../../libraries/cereal/include ${CMAKE_CURRENT_SOURCE_DIR}/../../libraries/picosha2)
 set_target_properties( ${current_lib_name} PROPERTIES PUBLIC_HEADER "${H_FILES}" FOLDER "1.Foundation")
 
 

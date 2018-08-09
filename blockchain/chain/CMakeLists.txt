@@ -9,9 +9,10 @@ add_library( xmaxchain ${SOURCE_FILES} ${HEADERS}  )
 target_link_libraries(
         xmaxchain 
         ${Boost_LIBRARIES} ${PLATFORM_LIBRARIES} )
-target_include_directories(
-        xmaxchain PUBLIC "include"
+target_include_directories(${current_lib_name}
+        xmaxchain PUBLIC "include" "${CMAKE_CURRENT_SOURCE_DIR}"
         ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../libraries/picosha2
         
 )
 
