@@ -64,7 +64,7 @@ namespace xmax {
 	}
 
 	//--------------------------------------------------
-	void ContractUtilPlugin::Test() {
+	void ContractUtilPlugin::Test(const char* log) {
 		printf("test log");
 	}
 }
