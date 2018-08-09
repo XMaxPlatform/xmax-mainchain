@@ -43,6 +43,16 @@ namespace xmaxapp
 		void PluginToInit(const string& plugin_name);
 
 		/**
+		* Register plugin to the application
+		* @template param: plugin class
+		*/
+		template <class PluginType>
+		void RegisterPlugin() {
+			PluginType::RegistSelf();
+			PluginToInit(PluginType::PluginName());
+		}
+
+		/**
 		* Init a concrete plugin
 		* @param[in] argc number of args
 		* @param[in] argv the content of params

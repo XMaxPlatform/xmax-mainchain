@@ -8,6 +8,23 @@ namespace xmax {
 
 	static const char* const kHttpApiAddressOp = "http-api-address";
 	static const char* const kAllowCrossOriginOp = "api-allow-cross-origin";
+	
+	namespace {
+		/*
+		* Extract IP and port pair from ip address with format like "127.0.0.1:1234"
+		*/
+		static std::tuple<std::string, unsigned short> ParseIPAddress(const std::string& addr_str) {
+			auto colon_idx = addr_str.find_last_of(":");
+			assert(colon_idx != std::string::npos);			
+			std::string port_str = addr_str.substr(colon_idx + 1);
+			std::stringstream ss;
+			ss << port_str;
+			unsigned short port = 0;
+			ss >> port;
+			std::string ip_str = addr_str.substr(0, colon_idx);
+			return std::make_tuple(ip_str, port);
+		}
+	}
 
 	/*!
 	 * \class ApiRpcPluginImpl
@@ -21,6 +38,8 @@ namespace xmax {
 		ApiRpcPluginImpl();
 		~ApiRpcPluginImpl();
 
+		void Initialization();
+
 		/*
 		* Start the io service to listen to the http request		
 		*/
@@ -30,6 +49,9 @@ namespace xmax {
 		//Configurations
 		string allow_cross_origin;
 		string http_api_address;
+
+		//IO
+		boost::asio::io_context ioc;
 
 	};
 
@@ -47,9 +69,21 @@ namespace xmax {
 
 
 	//--------------------------------------------------
+	void ApiRpcPluginImpl::Initialization()
+	{
+		using namespace boost::asio;
+
+		auto addr = ip::address::from_string(http_api_address);
+
+		auto[ip_str, port] = ParseIPAddress(http_api_address);		
+	}
+
+	//--------------------------------------------------
 	void ApiRpcPluginImpl::Start()
 	{
 		LogSprintf("Start API RPC service.");
+	
+		
 	}
 
 	/*!
@@ -70,6 +104,20 @@ namespace xmax {
 
 	}
 
+
+	//--------------------------------------------------
+	ApiRpcPlugin::ApiRpcPlugin()
+	{
+
+	}
+
+
+	//--------------------------------------------------
+	ApiRpcPlugin::~ApiRpcPlugin()
+	{
+
+	}
+
 	//--------------------------------------------------
 	void ApiRpcPlugin::Initialize(const VarsMap& options)
 	{
@@ -82,6 +130,8 @@ namespace xmax {
 		if (options.count(kHttpApiAddressOp)) {
 			impl_->http_api_address = options.at(kHttpApiAddressOp).as<string>();
 		}
+
+		impl_->Initialization();
 	}
 
 	//--------------------------------------------------

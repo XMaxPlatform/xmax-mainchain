@@ -32,12 +32,35 @@ namespace xmax {
 
 		void V8u128::ConstructV8Object(const v8::FunctionCallbackInfo<v8::Value>& args)
 		{
+			if (!args.IsConstructCall())
+				return args.GetReturnValue().Set(Undefined(args.GetIsolate()));
 
+			V8u128* cpp_object = nullptr;
+			if (args.Length() == 1)
+			{
+				Local<Object> self = args.Holder();
+				Local<External> wrap = Local<External>::Cast(args[0]);
+				cpp_object = (V8u128*)wrap->Value();
+			}
+			else
+			{
+				NewV8CppObj(args);
+			}
+
+			if (!cpp_object)
+				return;
+
+			Handle<Object> object = args.This();
+			Wrap(args.GetIsolate(), cpp_object, object);
+			args.GetReturnValue().Set(object);
 		}
 
 		void V8u128::WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8u128>& data)
 		{
-
+			if (V8u128* cpp_object = data.GetParameter())
+			{
+				delete cpp_object;
+			}
 		}
 
 	}

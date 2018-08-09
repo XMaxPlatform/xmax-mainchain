@@ -25,7 +25,8 @@ namespace xmax
 		virtual void Shutdown() override;
 
 	private:
-		void Test();
+		// add a param for log
+		void Test(const char* log);
 
 	private:
 		std::unique_ptr<class ContractUtilPluginImpl> impl_;
