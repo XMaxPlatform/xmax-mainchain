@@ -43,6 +43,12 @@ namespace xmaxapp
 		void PluginToInit(const string& plugin_name);
 
 		/**
+		* Register plugin to the application
+		* @template param: plugin class
+		*/
+		template <class PluginType>
+		void RegisterPlugin();
+		/**
 		* Init a concrete plugin
 		* @param[in] argc number of args
 		* @param[in] argv the content of params
@@ -99,6 +105,14 @@ namespace xmaxapp
 
 		std::unique_ptr<AppService>  service_face_;	
 	};
+
+	//--------------------------------------------------
+	template <class PluginType>
+	void xmaxapp::Application::RegisterPlugin()
+	{
+		PluginType::RegistSelf();
+		PluginToInit(PluginType::PluginName());
+	}
 
 
 }
