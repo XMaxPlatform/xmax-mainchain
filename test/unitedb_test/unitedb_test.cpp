@@ -218,8 +218,13 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 	// check undo_c
 	undo_c.Cancel();
 
-	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1)->tval != tval_1_c);
-	BOOST_CHECK(tbl->FindObject<ByObjectID>(id2)->tval != tval_2_c);
+	// cancel do nothing, so check again.
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1).Valid());
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id2).Valid());
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id3).Empty());
+
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1)->tval == tval_1_u);
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id2)->tval == tval_2_u);
 
 	const auto& ids = tbl->GetOrderIndex<ByObjectID>();
 	std::vector<TestDBObject> objs;
