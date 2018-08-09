@@ -129,19 +129,42 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 
 	auto tbl = db->GetTable<TestTable>();
 
+
+	const int tval_1_c = 100;
+	const int tval_2_c = 200;
+
+	const int tval_1_u = 110;
+	const int tval_2_u = 210;
+
+
 	auto val1 = tbl->NewObject([&](TestDBObject& a)
 	{
-		a.tval = 111;
+		a.tval = tval_1_c;
 	});
 	auto val2 = tbl->NewObject([&](TestDBObject& a)
 	{
-		a.tval = 222;
+		a.tval = tval_2_c;
 	});
 
 	auto id1 = val1->GetID();
 	auto id2 = val2->GetID();
 
-	auto undo = db->StartUndo();
+
+	auto undo_c = db->StartUndo(); // for cancel.
+
+
+
+	tbl->UpdateObject(val1, [&](TestTable::ObjectType& a)
+	{
+		a.tval = tval_1_u;
+	});
+
+	tbl->UpdateObject(val2, [&](TestTable::ObjectType& a)
+	{
+		a.tval = tval_2_u;
+	});
+
+	auto undo_u = db->StartUndo(); // for undo.
 
 	// update val1;
 	tbl->UpdateObject(val1, [&](TestTable::ObjectType& a)
@@ -159,24 +182,49 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 	{
 		a.tval = 333;
 	});
-
 	auto id3 = val3->GetID();
 
-	undo.Undo();
+	// update val1;
+	tbl->UpdateObject(val1, [&](TestTable::ObjectType& a)
+	{
+		a.tval = 11244;
+	});
+
+	// update val3;
+	tbl->UpdateObject(val3, [&](TestTable::ObjectType& a)
+	{
+		a.tval = 33344;
+	});
+
+	// new val4
+	auto val4 = tbl->NewObject([&](TestDBObject& a)
+	{
+		a.tval = 444;
+	});
+
+	// delect v3
+	tbl->DeleteObject(val3);
+
+	// check undo_u.
+	undo_u.Undo();
+
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1).Valid());
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id2).Valid());
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id3).Empty());
+
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1)->tval == tval_1_c);
+	BOOST_CHECK(tbl->FindObject<ByObjectID>(id2)->tval == tval_2_c);
+
+
+	// check undo_c
+	undo_c.Cancel();
+
 	const auto& ids = tbl->GetOrderIndex<ByObjectID>();
 	std::vector<TestDBObject> objs;
 	for (auto it : ids)
 	{
 		objs.push_back(it);
 	}
-
-	// check undo.
-	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1).Valid());
-	BOOST_CHECK(tbl->FindObject<ByObjectID>(id2).Valid());
-	BOOST_CHECK(tbl->FindObject<ByObjectID>(id3).Empty());
-
-	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1)->tval == 111);
-	BOOST_CHECK(tbl->FindObject<ByObjectID>(id2)->tval == 222);
 
 }
 
