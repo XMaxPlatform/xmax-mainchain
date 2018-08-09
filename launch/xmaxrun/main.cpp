@@ -18,12 +18,12 @@ namespace xmax
 
 	///
 	//registration function plugin  modules 
-	void RegisterPlugins() {
-		BlockChainPlugin::RegistSelf();
-		BlockBuilderPlugin::RegistSelf();
-		MongoDBPlugin::RegistSelf();
-		XmaxNetPlugin::RegistSelf();
-		ApiRpcPlugin::RegistSelf();
+	void RegisterPlugins(Application& app) {
+		app.RegisterPlugin<BlockChainPlugin>();
+		app.RegisterPlugin<BlockBuilderPlugin>();
+		app.RegisterPlugin<MongoDBPlugin>();
+		app.RegisterPlugin<XmaxNetPlugin>();
+		app.RegisterPlugin<ApiRpcPlugin>();
 	}
 
 	void InitPlugins(Application& app) {
@@ -45,7 +45,7 @@ namespace xmax
 			Application app;
 			app.SetDefaultConfigFilePath(fs::current_path() / "config" / "config.ini");
 
-			RegisterPlugins();
+			RegisterPlugins(app);
 			InitPlugins(app);
 
 			if (!app.Initialize(argc, argv)) {
