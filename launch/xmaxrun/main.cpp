@@ -18,7 +18,7 @@ namespace xmax
 
 	///
 	//registration function plugin  modules 
-	void RegisterPlugins(Application& app) {
+	static void RegisterPlugins(Application& app) {
 		app.RegisterPlugin<BlockChainPlugin>();
 		app.RegisterPlugin<BlockBuilderPlugin>();
 		app.RegisterPlugin<MongoDBPlugin>();
@@ -26,15 +26,7 @@ namespace xmax
 		app.RegisterPlugin<ApiRpcPlugin>();
 	}
 
-	void InitPlugins(Application& app) {
-		app.PluginToInit("BlockChainPlugin");
-		app.PluginToInit("BlockBuilderPlugin");
-		app.PluginToInit("MongoDBPlugin");
-		app.PluginToInit("XmaxNetPlugin");
-		app.PluginToInit("ApiRpcPlugin");
-	}
-
-	void Run(int argc, char** argv)
+	static void Run(int argc, char** argv)
 	{
 		
 		// TODO : Add ContractUtilPlugin
@@ -46,7 +38,6 @@ namespace xmax
 			app.SetDefaultConfigFilePath(fs::current_path() / "config" / "config.ini");
 
 			RegisterPlugins(app);
-			InitPlugins(app);
 
 			if (!app.Initialize(argc, argv)) {
 				//Logf("Application initialize return false, exit directly.");
