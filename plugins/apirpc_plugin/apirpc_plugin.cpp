@@ -10,15 +10,19 @@ namespace xmax {
 	static const char* const kAllowCrossOriginOp = "api-allow-cross-origin";
 	
 	namespace {
-		static unsigned int GetPortFromIPAddress(const std::string& addr_str) {
+		/*
+		* Extract IP and port pair from ip address with format like "127.0.0.1:1234"
+		*/
+		static std::tuple<std::string, unsigned short> ParseIPAddress(const std::string& addr_str) {
 			auto colon_idx = addr_str.find_last_of(":");
 			assert(colon_idx != std::string::npos);			
 			std::string port_str = addr_str.substr(colon_idx + 1);
 			std::stringstream ss;
 			ss << port_str;
-			unsigned int port = 0;
+			unsigned short port = 0;
 			ss >> port;
-			return port;
+			std::string ip_str = addr_str.substr(0, colon_idx);
+			return std::make_tuple(ip_str, port);
 		}
 	}
 
@@ -70,7 +74,8 @@ namespace xmax {
 		using namespace boost::asio;
 
 		auto addr = ip::address::from_string(http_api_address);
-		unsigned int port = GetPortFromIPAddress(http_api_address);
+
+		auto[ip_str, port] = ParseIPAddress(http_api_address);		
 	}
 
 	//--------------------------------------------------
