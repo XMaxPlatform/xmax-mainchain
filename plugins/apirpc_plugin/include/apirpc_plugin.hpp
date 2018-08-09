@@ -22,6 +22,8 @@ namespace xmax
 		GENERATED_PLUGIN(ApiRpcPlugin, xmaxapp::PluginFace, &InitOptions)
 	public:
 		ApiRpcPlugin();
+		virtual ~ApiRpcPlugin();
+
 		// xmaxapp::PluginFace interface ----------------------------------
 		virtual void Initialize(const VarsMap& options) override;
 		virtual void Startup() override;

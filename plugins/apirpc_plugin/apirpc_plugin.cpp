@@ -21,6 +21,8 @@ namespace xmax {
 		ApiRpcPluginImpl();
 		~ApiRpcPluginImpl();
 
+		void Initialization();
+
 		/*
 		* Start the io service to listen to the http request		
 		*/
@@ -30,6 +32,9 @@ namespace xmax {
 		//Configurations
 		string allow_cross_origin;
 		string http_api_address;
+
+		//IO
+		boost::asio::io_context ioc;
 
 	};
 
@@ -47,9 +52,17 @@ namespace xmax {
 
 
 	//--------------------------------------------------
+	void ApiRpcPluginImpl::Initialization()
+	{
+		auto addr = boost::asio::ip::address::from_string(http_api_address);		
+	}
+
+	//--------------------------------------------------
 	void ApiRpcPluginImpl::Start()
 	{
 		LogSprintf("Start API RPC service.");
+	
+		
 	}
 
 	/*!
@@ -70,6 +83,20 @@ namespace xmax {
 
 	}
 
+
+	//--------------------------------------------------
+	ApiRpcPlugin::ApiRpcPlugin()
+	{
+
+	}
+
+
+	//--------------------------------------------------
+	ApiRpcPlugin::~ApiRpcPlugin()
+	{
+
+	}
+
 	//--------------------------------------------------
 	void ApiRpcPlugin::Initialize(const VarsMap& options)
 	{
@@ -82,6 +109,8 @@ namespace xmax {
 		if (options.count(kHttpApiAddressOp)) {
 			impl_->http_api_address = options.at(kHttpApiAddressOp).as<string>();
 		}
+
+		impl_->Initialization();
 	}
 
 	//--------------------------------------------------
