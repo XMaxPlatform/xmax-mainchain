@@ -8,6 +8,19 @@ namespace xmax {
 
 	static const char* const kHttpApiAddressOp = "http-api-address";
 	static const char* const kAllowCrossOriginOp = "api-allow-cross-origin";
+	
+	namespace {
+		static unsigned int GetPortFromIPAddress(const std::string& addr_str) {
+			auto colon_idx = addr_str.find_last_of(":");
+			assert(colon_idx != std::string::npos);			
+			std::string port_str = addr_str.substr(colon_idx + 1);
+			std::stringstream ss;
+			ss << port_str;
+			unsigned int port = 0;
+			ss >> port;
+			return port;
+		}
+	}
 
 	/*!
 	 * \class ApiRpcPluginImpl
@@ -54,7 +67,10 @@ namespace xmax {
 	//--------------------------------------------------
 	void ApiRpcPluginImpl::Initialization()
 	{
-		auto addr = boost::asio::ip::address::from_string(http_api_address);		
+		using namespace boost::asio;
+
+		auto addr = ip::address::from_string(http_api_address);
+		unsigned int port = GetPortFromIPAddress(http_api_address);
 	}
 
 	//--------------------------------------------------
