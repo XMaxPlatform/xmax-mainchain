@@ -38,6 +38,11 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 	TestSingleton& s1 = TestSingleton::GetInstance();
 	TestSingleton::GetInstance().SetA(12345);
 	BOOST_CHECK(s1.GetA() == 12345);
+
+	TestSingleton& s2 = TestSingleton::GetInstance();
+	s2.SetA(2333);
+	BOOST_CHECK(s1.GetA() == 2333);
+	BOOST_CHECK(TestSingleton::GetInstance().GetA() == 2333);
 }
 
 BOOST_AUTO_TEST_CASE(pro_time_1)

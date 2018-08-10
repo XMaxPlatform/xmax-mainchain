@@ -24,9 +24,11 @@ namespace xmax
 		virtual void Startup() override;
 		virtual void Shutdown() override;
 
+
 	private:
-		// add a param for log
-		void Test(const char* log);
+		// output logs
+		void Test(const char* strlog);
+		// TODO : clean 
 
 	private:
 		std::unique_ptr<class ContractUtilPluginImpl> impl_;
