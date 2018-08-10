@@ -18,7 +18,7 @@ namespace unitedb
 		UndoObject(const AllocType& cc)
 			: Super(cc)
 			, revision(0)
-			, opcode(UndoOp::None)
+			, opcode_(UndoOp::None)
 		{
 
 		}
@@ -27,7 +27,7 @@ namespace unitedb
 		{
 			*static_cast<Super*>(this) = data;
 			revision = v;
-			opcode = c;
+			opcode_ = c;
 		}
 
 		const ObjectType& Object() const
@@ -38,7 +38,7 @@ namespace unitedb
 
 		inline UndoOp::UndoCode GetUndoCode() const
 		{
-			return opcode;
+			return opcode_;
 		}
 		inline ObjIDCode ObjID() const
 		{
@@ -46,7 +46,7 @@ namespace unitedb
 		}
 
 	protected:
-		UndoOp::UndoCode opcode;
+		UndoOp::UndoCode opcode_;
 		DBRevision revision;
 	};
 
