@@ -9,6 +9,7 @@
 #include <pro/scode/shortname.hpp>
 #include <pro/types/tree.hpp>
 #include <pro/utils/sha256.hpp>
+#include <pro/utils/reflect.hpp>
 
 using namespace pro;
 
@@ -192,33 +193,24 @@ class Test2
 {
 public:
 	Test2() {}
-	Test2(int x) : a(x) {}
+	Test2(int x, int y, int z) : a(x), b(y), c(z) {}
+	
 	int a;
-
+	int b;
+	int c;
 private:
-	friend class cereal::access;
-
-	template<class Archive>
-	void save(Archive & ar) const
-	{
-		ar(a);
-	}
-
-	template<class Archive>
-	void load(Archive & ar)
-	{
-		ar(a);
-	}
+	
+	REFLECT_MEMBER_SERIALIZATION((a) (b) (c));
 };
 
 BOOST_AUTO_TEST_CASE(test_sha256)
 {
 	CSHA256 csha;
-	Test2 tt(10);
+	Test2 tt(10, 11, 12);
 	csha.Hash(tt);
 	const std::string& hexstr = csha.GetHex();
 
-	int a = 10;
+	/*int a = 10;
 	char* p = new char[4];
 	memcpy(p, &a, 4);
 	std::vector<char> hash(picosha2::k_digest_size);
@@ -226,7 +218,8 @@ BOOST_AUTO_TEST_CASE(test_sha256)
 	std::string hexstr2 = picosha2::bytes_to_hex_string(hash.begin(), hash.end());
 
 	BOOST_CHECK(hexstr == hexstr2);
-	delete[] p;
+	delete[] p;*/
+	
 }
 
 
