@@ -26,7 +26,7 @@ namespace xmax
 
 	private:
 		// add a param for log
-		void Test(const char* log);
+		void Test(const char* strlog);
 
 	private:
 		std::unique_ptr<class ContractUtilPluginImpl> impl_;
