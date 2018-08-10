@@ -10,16 +10,23 @@ namespace pro
 {
 public:
 
-template<typename T>
-	void Hash(const T& src);
+	CSHA256();
+
+	~CSHA256();
+
+	template<typename T> void Hash(const T& src);
 
 	const std::string& GetHex() const;
+
+	const char*	Data() const;
+
 private:
 	
-	std::string			hexHashStr_;
+	mutable std::string		hexHashStr_;
+	std::vector<char>		hash_;
 };
 
-template<typename T> 
+template<typename T>
 void CSHA256::Hash(const T& src)
 {
 	std::stringbuf sbuf;
@@ -32,15 +39,23 @@ void CSHA256::Hash(const T& src)
 	std::vector<char> vec(nSize);
 	sbuf.sgetn(&vec[0], nSize);
 
-	std::vector<char> hash(picosha2::k_digest_size);
-	picosha2::hash256(vec.begin(), vec.end(), hash.begin(), hash.end());
+	picosha2::hash256(vec.begin(), vec.end(), hash_.begin(), hash_.end());
 
-	hexHashStr_ = picosha2::bytes_to_hex_string(hash.begin(), hash.end());
 }
 
 inline const std::string& CSHA256::GetHex() const
 {
+	if (hexHashStr_.empty())
+	{
+		hexHashStr_ = picosha2::bytes_to_hex_string(hash_.begin(), hash_.end());
+	}
+
 	return hexHashStr_;
+}
+
+inline const char* CSHA256::Data() const
+{
+	return &hash_[0];
 }
 
 }
