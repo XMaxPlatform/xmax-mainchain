@@ -1,8 +1,12 @@
 #include "apirpc_plugin.hpp"
-#include "boost/asio/io_context.hpp"
+#include <boost/asio/io_context.hpp>
+#include <boost/asio/ip/tcp.hpp>
 #include "pro/log/log.hpp"
 
 using namespace std;
+
+namespace bio = boost::asio;
+using tcp = bio::ip::tcp;
 
 namespace xmax {
 
@@ -25,6 +29,20 @@ namespace xmax {
 			return std::make_tuple(ip_str, port);
 		}
 	}
+
+	class http_listener: public std::enable_shared_from_this<http_listener> {
+	public:
+		http_listener(bio::io_context& ioc, tcp::endpoint endpoint):
+			acceptor_(ioc),
+			socket_(ioc)
+		{
+
+		}
+
+	private:
+		tcp::acceptor acceptor_;
+		tcp::socket socket_;
+	};
 
 	/*!
 	 * \class ApiRpcPluginImpl
