@@ -28,6 +28,9 @@ namespace xmax {
 			std::string ip_str = addr_str.substr(0, colon_idx);
 			return std::make_tuple(ip_str, port);
 		}
+
+		
+
 	}
 
 	class http_listener: public std::enable_shared_from_this<http_listener> {
@@ -39,10 +42,31 @@ namespace xmax {
 
 		}
 
+		void Run();
+		void DoAccept();
+
 	private:
 		tcp::acceptor acceptor_;
 		tcp::socket socket_;
 	};
+
+	//--------------------------------------------------
+	void http_listener::Run()
+	{
+		if (!acceptor_.is_open())
+		{
+			return;
+		}
+
+		DoAccept();
+	}
+
+
+	//--------------------------------------------------
+	void http_listener::DoAccept()
+	{
+	
+	}
 
 	/*!
 	 * \class ApiRpcPluginImpl
