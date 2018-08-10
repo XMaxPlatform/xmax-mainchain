@@ -235,4 +235,10 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 
 }
 
+BOOST_AUTO_TEST_CASE(db_cmmit_test)
+{
+
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()
