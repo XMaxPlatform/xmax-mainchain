@@ -237,6 +237,11 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 
 BOOST_AUTO_TEST_CASE(db_cmmit_test)
 {
+	std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::Discard));//);//
+
+	db->InitTable<TestTable>();
+
+	auto tbl = db->GetTable<TestTable>();
 
 }
 
