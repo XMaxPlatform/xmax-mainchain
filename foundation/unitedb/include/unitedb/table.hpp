@@ -17,7 +17,7 @@ namespace unitedb
 
 		UndoObject(const AllocType& cc)
 			: Super(cc)
-			, revision(0)
+			, revision_(0)
 			, opcode_(UndoOp::None)
 		{
 
@@ -26,7 +26,7 @@ namespace unitedb
 		void Set(const ObjectType& data, DBRevision v, UndoOp::UndoCode c)
 		{
 			*static_cast<Super*>(this) = data;
-			revision = v;
+			revision_ = v;
 			opcode_ = c;
 		}
 
@@ -47,7 +47,7 @@ namespace unitedb
 
 	protected:
 		UndoOp::UndoCode opcode_;
-		DBRevision revision;
+		DBRevision revision_;
 	};
 
 	struct TableUndoInfo
