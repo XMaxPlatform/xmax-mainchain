@@ -25,7 +25,7 @@ namespace xmax
 		virtual void Shutdown() override;
 
 	private:
-		// add a param for log
+		// output logs
 		void Test(const char* strlog);
 
 	private:
