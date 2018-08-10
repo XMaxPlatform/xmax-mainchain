@@ -70,6 +70,9 @@ namespace xmax {
 
 		//IO
 		boost::asio::io_context ioc;
+		std::shared_ptr<http_listener> listener;
+		unsigned short http_port;
+		bio::ip::address http_address;
 
 	};
 
@@ -82,7 +85,7 @@ namespace xmax {
 	//--------------------------------------------------
 	ApiRpcPluginImpl::~ApiRpcPluginImpl()
 	{
-		
+		listener.reset();
 	}
 
 
@@ -94,6 +97,9 @@ namespace xmax {
 		auto addr = ip::address::from_string(http_api_address);
 
 		auto[ip_str, port] = ParseIPAddress(http_api_address);		
+
+		http_address = bio::ip::make_address(ip_str);
+		http_port = port;
 	}
 
 	//--------------------------------------------------
@@ -101,7 +107,7 @@ namespace xmax {
 	{
 		LogSprintf("Start API RPC service.");
 	
-		
+		listener = std::make_shared<http_listener>(ioc, tcp::endpoint{ http_address, http_port});
 	}
 
 	/*!
