@@ -39,7 +39,15 @@ namespace xmax {
 			acceptor_(ioc),
 			socket_(ioc)
 		{
+			boost::system::error_code ec;
 
+			// Open the acceptor
+			acceptor_.open(endpoint.protocol(), ec);
+			if (ec)
+			{
+				ErrorSprintf("Open http acceptor failed with error message:%s", ec.message().c_str());
+				return;
+			}
 		}
 
 		void Run();
@@ -53,6 +61,8 @@ namespace xmax {
 	//--------------------------------------------------
 	void http_listener::Run()
 	{
+		
+
 		if (!acceptor_.is_open())
 		{
 			return;
@@ -131,7 +141,8 @@ namespace xmax {
 	{
 		LogSprintf("Start API RPC service.");
 	
-		listener = std::make_shared<http_listener>(ioc, tcp::endpoint{ http_address, http_port});
+		//listener = std::make_shared<http_listener>(ioc, tcp::endpoint{ http_address, http_port});
+		//listener->Run();
 	}
 
 	/*!
