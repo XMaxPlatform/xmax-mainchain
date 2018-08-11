@@ -138,3 +138,4 @@ namespace unitedb
 
 #define DBOBJ_CLASS(_objname, _typecode )\
 class _objname : public unitedb::DBObject<_objname, _typecode>
+

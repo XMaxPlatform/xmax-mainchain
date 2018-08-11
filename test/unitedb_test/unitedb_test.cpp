@@ -16,7 +16,7 @@ DBOBJ_CLASS(DBTestA, OBJ_TestA)
 {		
 public:
 	template<typename C, typename T>
-	DBTestA( C&& c, DBAlloc<T>)
+	DBTestA(C&& c, DBAlloc<T>)
 	{
 		c(*this);
 	}
@@ -27,6 +27,7 @@ public:
 	}
 
 	int tval = 5;
+
 };
 
 struct by_id;
@@ -35,10 +36,40 @@ typedef DBTableDeclaration<
 	boost::multi_index::indexed_by<
 	INDEXED_BY_OBJECT_ID
 	>
-> TestIdx;
+> TestAIdx;
 
-typedef DBTable<TestIdx> TestATable;
 
+typedef DBTable<TestAIdx> TestATable;
+
+
+DBOBJ_CLASS(DBTestB, OBJ_TestB)
+{
+public:
+
+	template<typename C, typename T>
+	DBTestB(C&& c, DBAlloc<T>)
+	{
+		c(*this);
+	}
+	template<typename T>
+	DBTestB(DBAlloc<T>)
+	{
+
+	}
+
+	int tval = 5;
+
+};
+
+struct by_id;
+typedef DBTableDeclaration<
+	DBTestB,
+	boost::multi_index::indexed_by<
+	INDEXED_BY_OBJECT_ID
+	>
+> TestBIdx;
+
+typedef DBTable<TestBIdx> TestBTable;
 
 BOOST_AUTO_TEST_SUITE(unitedb_suite)
 
@@ -52,13 +83,20 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 
 	//==========================================================
 
-	TestIdx tidxs(db->GetSegment());
+	TestAIdx tidxs(db->GetSegment());
 
-	TestIdx::index<ByObjectID>::type& tp = tidxs.get<ByObjectID>();
+	TestAIdx::index<ByObjectID>::type& tp = tidxs.get<ByObjectID>();
 
 	tidxs.emplace([&](TestATable::ObjectType& a)
 	{
 	}, TestATable::AllocType(db->GetSegment()));
+
+
+	TestBIdx tidxsb(db->GetSegment());
+	tidxsb.emplace([&](TestBTable::ObjectType& a)
+	{
+	}, TestBTable::AllocType(db->GetSegment()));
+
 
 	auto& idx = tidxs.get<ByObjectID>();
 
