@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(pro_time_1)
 {
 	// base value for test
 	TimeMilliseconds baseMillisecs(2500ll);
-
+	// convert to mircoseconds and millionsecondes from base time
 	TimeMicroseconds toMicrosecs = baseMillisecs.ToTime<TimeMicroseconds>();
 	TimeMilliseconds backMircosecs = toMicrosecs.ToTime<TimeMilliseconds>();
 
