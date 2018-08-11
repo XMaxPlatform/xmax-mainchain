@@ -8,19 +8,20 @@ using namespace unitedb;
 
 enum EOBJType
 {
-	OBJType_testa = 0,
+	OBJ_TestA = 0,
+	OBJ_TestB
 };
 
-DBOBJ_CLASS(TestDBObject, OBJType_testa)
+DBOBJ_CLASS(DBTestA, OBJ_TestA)
 {		
 public:
 	template<typename C, typename T>
-	TestDBObject( C&& c, DBAlloc<T>)
+	DBTestA( C&& c, DBAlloc<T>)
 	{
 		c(*this);
 	}
 	template<typename T>
-	TestDBObject(DBAlloc<T>)
+	DBTestA(DBAlloc<T>)
 	{
 
 	}
@@ -30,13 +31,13 @@ public:
 
 struct by_id;
 typedef DBTableDeclaration<
-	TestDBObject,
+	DBTestA,
 	boost::multi_index::indexed_by<
 	INDEXED_BY_OBJECT_ID
 	>
 > TestIdx;
 
-typedef DBTable<TestIdx> TestTable;
+typedef DBTable<TestIdx> TestATable;
 
 
 BOOST_AUTO_TEST_SUITE(unitedb_suite)
@@ -45,9 +46,9 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 {
 	std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::Discard));//);//
 
-	db->InitTable<TestTable>();
+	db->InitTable<TestATable>();
 
-	auto tbl = db->GetTable<TestTable>();
+	auto tbl = db->GetTable<TestATable>();
 
 	//==========================================================
 
@@ -55,9 +56,9 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 
 	TestIdx::index<ByObjectID>::type& tp = tidxs.get<ByObjectID>();
 
-	tidxs.emplace([&](TestTable::ObjectType& a)
+	tidxs.emplace([&](TestATable::ObjectType& a)
 	{
-	}, TestTable::AllocType(db->GetSegment()));
+	}, TestATable::AllocType(db->GetSegment()));
 
 	auto& idx = tidxs.get<ByObjectID>();
 
@@ -65,7 +66,7 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 
 	idx.iterator_to(*ff);
 
-	tidxs.modify(ff, [&](TestTable::ObjectType& a)
+	tidxs.modify(ff, [&](TestATable::ObjectType& a)
 	{
 	});
 	
@@ -81,12 +82,12 @@ BOOST_AUTO_TEST_CASE(db_op_test)
 {
 	std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::Discard));//);//
 
-	db->InitTable<TestTable>();
+	db->InitTable<TestATable>();
 
-	auto tbl = db->GetTable<TestTable>();
+	auto tbl = db->GetTable<TestATable>();
 
 	// test new object.
-	auto val1 = tbl->NewObject([&](TestDBObject& a)
+	auto val1 = tbl->NewObject([&](DBTestA& a)
 	{
 		a.tval = 123;
 	});
@@ -101,7 +102,7 @@ BOOST_AUTO_TEST_CASE(db_op_test)
 	BOOST_CHECK(val1_a->tval == 123);
 
 	// test update object.
-	tbl->UpdateObject(val1_a, [&](TestTable::ObjectType& a)
+	tbl->UpdateObject(val1_a, [&](TestATable::ObjectType& a)
 	{
 		a.tval = 456;
 	});
@@ -110,7 +111,7 @@ BOOST_AUTO_TEST_CASE(db_op_test)
 
 	// test delect object.
 
-	auto valdel = tbl->NewObject([&](TestDBObject& a)
+	auto valdel = tbl->NewObject([&](DBTestA& a)
 	{
 		a.tval = 789;
 	});
@@ -125,9 +126,9 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 {
 	std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::Discard));//);//
 
-	db->InitTable<TestTable>();
+	db->InitTable<TestATable>();
 
-	auto tbl = db->GetTable<TestTable>();
+	auto tbl = db->GetTable<TestATable>();
 
 
 	const int tval_1_c = 100;
@@ -137,11 +138,11 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 	const int tval_2_u = 210;
 
 
-	auto val1 = tbl->NewObject([&](TestDBObject& a)
+	auto val1 = tbl->NewObject([&](DBTestA& a)
 	{
 		a.tval = tval_1_c;
 	});
-	auto val2 = tbl->NewObject([&](TestDBObject& a)
+	auto val2 = tbl->NewObject([&](DBTestA& a)
 	{
 		a.tval = tval_2_c;
 	});
@@ -153,12 +154,12 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 	auto undo_c = db->StartUndo(); // for cancel.
 
 
-	tbl->UpdateObject(val1, [&](TestTable::ObjectType& a)
+	tbl->UpdateObject(val1, [&](TestATable::ObjectType& a)
 	{
 		a.tval = tval_1_u;
 	});
 
-	tbl->UpdateObject(val2, [&](TestTable::ObjectType& a)
+	tbl->UpdateObject(val2, [&](TestATable::ObjectType& a)
 	{
 		a.tval = tval_2_u;
 	});
@@ -166,7 +167,7 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 	auto undo_u = db->StartUndo(); // for undo.
 
 	// update val1;
-	tbl->UpdateObject(val1, [&](TestTable::ObjectType& a)
+	tbl->UpdateObject(val1, [&](TestATable::ObjectType& a)
 	{
 		a.tval = 112;
 	});
@@ -177,26 +178,26 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 
 	// new val3
 
-	auto val3 = tbl->NewObject([&](TestDBObject& a)
+	auto val3 = tbl->NewObject([&](DBTestA& a)
 	{
 		a.tval = 333;
 	});
 	auto id3 = val3->GetID();
 
 	// update val1;
-	tbl->UpdateObject(val1, [&](TestTable::ObjectType& a)
+	tbl->UpdateObject(val1, [&](TestATable::ObjectType& a)
 	{
 		a.tval = 11244;
 	});
 
 	// update val3;
-	tbl->UpdateObject(val3, [&](TestTable::ObjectType& a)
+	tbl->UpdateObject(val3, [&](TestATable::ObjectType& a)
 	{
 		a.tval = 33344;
 	});
 
 	// new val4
-	auto val4 = tbl->NewObject([&](TestDBObject& a)
+	auto val4 = tbl->NewObject([&](DBTestA& a)
 	{
 		a.tval = 444;
 	});
@@ -227,7 +228,7 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 	BOOST_CHECK(tbl->FindObject<ByObjectID>(id2)->tval == tval_2_u);
 
 	const auto& ids = tbl->GetOrderIndex<ByObjectID>();
-	std::vector<TestDBObject> objs;
+	std::vector<DBTestA> objs;
 	for (auto it : ids)
 	{
 		objs.push_back(it);
@@ -239,9 +240,9 @@ BOOST_AUTO_TEST_CASE(db_commit_test)
 {
 	std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::Discard));//);//
 
-	db->InitTable<TestTable>();
+	db->InitTable<TestATable>();
 
-	auto tbl = db->GetTable<TestTable>();
+	auto tbl = db->GetTable<TestATable>();
 
 }
 
