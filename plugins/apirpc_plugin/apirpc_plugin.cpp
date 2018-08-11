@@ -48,6 +48,14 @@ namespace xmax {
 				ErrorSprintf("Open http acceptor failed with error message:%s", ec.message().c_str());
 				return;
 			}
+
+			// Allow address reuse
+			acceptor_.set_option(boost::asio::socket_base::reuse_address(true));
+			if (ec)
+			{
+				ErrorSprintf("Http acceptor set_option failed with error message:%s", ec.message().c_str());
+				return;
+			}
 		}
 
 		void Run();
