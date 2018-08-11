@@ -53,6 +53,7 @@ public:
 
 	 MessagePoolBuffer*		GetMsgBuffer() const;
 
+	 //send msg to peer
 	 void PushMsg(const NetMessage& msg);
 
 	 void AddAddrToSend(const std::string& addr);
