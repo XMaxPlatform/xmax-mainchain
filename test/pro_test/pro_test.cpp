@@ -47,6 +47,7 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 
 BOOST_AUTO_TEST_CASE(pro_time_1)
 {
+	// base value for test
 	TimeMilliseconds baseMillisecs(2500ll);
 
 	TimeMicroseconds toMicrosecs = baseMillisecs.ToTime<TimeMicroseconds>();
