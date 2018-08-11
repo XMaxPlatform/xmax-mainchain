@@ -45,6 +45,9 @@ public:
 	 void	SetConStatus(ConnectionStatus cs);
 	 ConnectionStatus GetConStatus() const;
 
+	 /* Inbound means recv a connection from a peer,
+	  * Outbound means connecting to a peer
+	 */
 	 void   SetInBound(bool b);
 	 bool   IsInBound() const;
 
