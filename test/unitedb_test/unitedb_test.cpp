@@ -8,10 +8,10 @@ using namespace unitedb;
 
 enum EOBJType
 {
-	OBJType_test = 0,
+	OBJType_testa = 0,
 };
 
-DBOBJECT_CLASS(TestDBObject, OBJType_test)
+DBOBJ_CLASS(TestDBObject, OBJType_testa)
 {		
 public:
 	template<typename C, typename T>
