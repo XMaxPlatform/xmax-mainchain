@@ -56,6 +56,15 @@ namespace xmax {
 				ErrorSprintf("Http acceptor set_option failed with error message:%s", ec.message().c_str());
 				return;
 			}
+
+			// Bind to the server address
+			acceptor_.bind(endpoint, ec);
+			if (ec)
+			{
+				ErrorSprintf("Http acceptor bind endpoint failed with error message:%s", ec.message().c_str());
+				return;
+			}
+
 		}
 
 		void Run();
