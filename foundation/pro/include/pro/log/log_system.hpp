@@ -24,7 +24,7 @@ namespace pro
 		* @param[in]	loglevel	level of log
 		* @param[in]	string		content of log
 		*/
-		void LogMessage(loglevel level, const string& msg);
+		void LogMessage(LogLevel level, const string& msg);
 
 
 		void Append(LoggerPtr logger);

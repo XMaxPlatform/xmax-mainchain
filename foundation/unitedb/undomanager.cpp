@@ -42,6 +42,11 @@ namespace unitedb
 		}
 	}
 
+	bool FUndo::Valid() const
+	{
+		return valid_;
+	}
+
 
 
 	void UndoManager::Init()
@@ -186,6 +191,7 @@ namespace unitedb
 	{
 		auto id = undo->GetID();
 		auto& records = getRecords();
+
 		for (int64_t i = records.size() - 1; i >= 0; --i)
 		{
 			auto& curr = records[i];
@@ -199,10 +205,11 @@ namespace unitedb
 				}
 
 				records.erase(records.begin() + i);
-
 				owner_->OnCombine(curr.rev_);
 			}
 		}
+
+		stack_->top_revision_ = records.back().rev_;
 	}
 
 	void UndoManager::OnCancel(FUndo* undo)

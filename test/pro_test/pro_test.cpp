@@ -47,11 +47,12 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 
 BOOST_AUTO_TEST_CASE(pro_time_1)
 {
+	// base value for test
 	TimeMilliseconds baseMillisecs(2500ll);
-
+	// convert to mircoseconds and millionsecondes from base time
 	TimeMicroseconds toMicrosecs = baseMillisecs.ToTime<TimeMicroseconds>();
 	TimeMilliseconds backMircosecs = toMicrosecs.ToTime<TimeMilliseconds>();
-
+	// compare the processed result with meta claculate results
 	BOOST_CHECK(baseMillisecs.GetValue() == 2500ll);
 	BOOST_CHECK(toMicrosecs.GetValue() == 2500ll * 1000ll);
 	BOOST_CHECK(backMircosecs.GetValue() == 2500ll);
@@ -94,12 +95,15 @@ BOOST_AUTO_TEST_CASE(any_value_cast)
 	pro::AnyValue anyintstr = "42";
 	pro::AnyValue anybool = true;
 	pro::AnyValue anyboolstr = "true";
+	pro::AnyValue anydouble = 2333.2333;
 
 	BOOST_CHECK("42" == anyint.CastTo<string>());
 	BOOST_CHECK("true" == anybool.CastTo<string>());
+	BOOST_CHECK("2333.2333" == anydouble.CastTo<string>());
 
 	BOOST_CHECK(42 == anyintstr.CastTo<int>());
 	BOOST_CHECK(true == anyboolstr.CastTo<bool>());
+	BOOST_CHECK(2333 == anydouble.CastTo<int>());
 }
 
 bool checkformat(const string& checkstring, const string& fmt, const AnyObject& args)

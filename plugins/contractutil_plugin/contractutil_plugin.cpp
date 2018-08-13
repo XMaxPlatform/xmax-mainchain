@@ -44,7 +44,7 @@ namespace xmax {
 		impl_.reset(new ContractUtilPluginImpl());
 
 		// test initialize code 
-		Test();
+		Test("init");
 	}
 
 	//--------------------------------------------------
@@ -65,6 +65,6 @@ namespace xmax {
 
 	//--------------------------------------------------
 	void ContractUtilPlugin::Test(const char* log) {
-		printf("test log");
+		printf("test a log");
 	}
 }

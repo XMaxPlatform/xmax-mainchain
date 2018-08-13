@@ -10,7 +10,7 @@
 
 namespace pro
 {
-	void ConsoleLogger::LogMessage(loglevel level, const string& msg)
+	void ConsoleLogger::LogMessage(LogLevel level, const string& msg)
 	{
 		std::cout << msg << std::endl;
 

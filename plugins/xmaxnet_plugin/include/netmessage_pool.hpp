@@ -17,6 +17,7 @@ namespace xmax
 		{}
 	};
 
+	// message buffer for tcp msg
 	class MessagePoolBuffer
 {
 public:

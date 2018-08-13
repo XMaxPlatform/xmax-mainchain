@@ -87,6 +87,21 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize_array)
 	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
 }
 
+BOOST_AUTO_TEST_CASE(proto_debug_string)
+{
+	Person person_msg;
+	FillTestDataSimple(person_msg);
+
+	string debug_msg = person_msg.DebugString();	
+
+	bool c1 = debug_msg.find("id") != string::npos;
+	bool c2 = debug_msg.find("name") != string::npos;
+	bool c3 = debug_msg.find("email") != string::npos;
+
+	BOOST_CHECK(c1 && c2 && c3);
+}
+
+
 BOOST_AUTO_TEST_CASE(proto_simple_testclear)
 {
 	using namespace google::protobuf::io;

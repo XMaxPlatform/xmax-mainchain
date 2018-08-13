@@ -1,8 +1,12 @@
 #include "apirpc_plugin.hpp"
-#include "boost/asio/io_context.hpp"
+#include <boost/asio/io_context.hpp>
+#include <boost/asio/ip/tcp.hpp>
 #include "pro/log/log.hpp"
 
 using namespace std;
+
+namespace bio = boost::asio;
+using tcp = bio::ip::tcp;
 
 namespace xmax {
 
@@ -24,6 +28,99 @@ namespace xmax {
 			std::string ip_str = addr_str.substr(0, colon_idx);
 			return std::make_tuple(ip_str, port);
 		}
+
+		
+
+	}
+
+	class HttpListener: public std::enable_shared_from_this<HttpListener> {
+	public:
+		HttpListener(bio::io_context& ioc, tcp::endpoint endpoint);
+
+		//Public interfaces
+		void Run();
+		void DoAccept();
+
+		//Events
+		void OnAccept(boost::system::error_code ec);
+
+	private:
+		tcp::acceptor acceptor_;
+		tcp::socket socket_;
+	};
+
+	HttpListener::HttpListener(bio::io_context& ioc, tcp::endpoint endpoint) :
+		acceptor_(ioc),
+		socket_(ioc)
+	{
+		boost::system::error_code ec;
+
+		// Open the acceptor
+		acceptor_.open(endpoint.protocol(), ec);
+		if (ec)
+		{
+			ErrorSprintf("Open http acceptor failed with error message:%s", ec.message().c_str());
+			return;
+		}
+
+		// Allow address reuse
+		acceptor_.set_option(boost::asio::socket_base::reuse_address(true));
+		if (ec)
+		{
+			ErrorSprintf("Http acceptor set_option failed with error message:%s", ec.message().c_str());
+			return;
+		}
+
+		// Bind to the server address
+		acceptor_.bind(endpoint, ec);
+		if (ec)
+		{
+			ErrorSprintf("Http acceptor bind endpoint failed with error message:%s", ec.message().c_str());
+			return;
+		}
+
+	}
+
+	//--------------------------------------------------
+	void HttpListener::Run()
+	{
+		
+
+		if (!acceptor_.is_open())
+		{
+			return;
+		}
+
+		DoAccept();
+	}
+
+
+	//--------------------------------------------------
+	void HttpListener::DoAccept()
+	{
+		acceptor_.async_accept(
+			socket_,
+			std::bind(
+				&HttpListener::OnAccept,
+				shared_from_this(),
+				std::placeholders::_1));
+	
+	}
+
+
+	//--------------------------------------------------
+	void HttpListener::OnAccept(boost::system::error_code ec)
+	{
+		if (ec) {
+			ErrorSprintf("HttpListener OnAccpet occurs a error message:%s", ec.message().c_str());
+			return;
+		}
+		else {
+			//TODO: Run sesson
+
+		}
+
+		DoAccept();
 	}
 
 	/*!
@@ -52,6 +149,9 @@ namespace xmax {
 
 		//IO
 		boost::asio::io_context ioc;
+		std::shared_ptr<HttpListener> listener;
+		unsigned short http_port;
+		bio::ip::address http_address;
 
 	};
 
@@ -64,7 +164,7 @@ namespace xmax {
 	//--------------------------------------------------
 	ApiRpcPluginImpl::~ApiRpcPluginImpl()
 	{
-		
+		listener.reset();
 	}
 
 
@@ -76,6 +176,9 @@ namespace xmax {
 		auto addr = ip::address::from_string(http_api_address);
 
 		auto[ip_str, port] = ParseIPAddress(http_api_address);		
+
+		http_address = bio::ip::make_address(ip_str);
+		http_port = port;
 	}
 
 	//--------------------------------------------------
@@ -83,7 +186,8 @@ namespace xmax {
 	{
 		LogSprintf("Start API RPC service.");
 	
-		
+		//listener = std::make_shared<http_listener>(ioc, tcp::endpoint{ http_address, http_port});
+		//listener->Run();
 	}
 
 	/*!

@@ -136,5 +136,6 @@ namespace unitedb
 }
 
 
-#define DBOBJECT_CLASS(_objname, _typecode )\
+#define DBOBJ_CLASS(_objname, _typecode )\
 class _objname : public unitedb::DBObject<_objname, _typecode>
+

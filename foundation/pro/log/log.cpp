@@ -10,7 +10,7 @@
 
 namespace pro
 {
-	void LogMessage(loglevel level, const string& msg)
+	void LogMessage(LogLevel level, const string& msg)
 	{
 		LogSystem::GetInstance().LogMessage(level, msg);
 	}

@@ -14,7 +14,7 @@ namespace unitedb
 		virtual void Undo() = 0;
 		virtual void Cancel() = 0;
 		virtual void Combine() = 0;
-
+		virtual bool Valid() const = 0;
 		virtual DBRevision GetRevision() const = 0;
 	};
 
@@ -24,6 +24,8 @@ namespace unitedb
 
 		void Undo();
 		void Cancel();
+		void Combine();
+		bool Valid() const;
 		DBRevision GetRevision() const;
 		~UndoPatch();
 		
@@ -37,5 +39,10 @@ namespace unitedb
 
 		std::unique_ptr<IGenericUndo> undo_;
 	};
+
+	inline bool UndoPatch::Valid() const
+	{
+		return bool(undo_) && undo_->Valid();
+	}
 
 }
