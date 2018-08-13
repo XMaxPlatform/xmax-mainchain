@@ -25,6 +25,7 @@ namespace unitedb
 		void Undo();
 		void Cancel();
 		void Combine();
+		bool Valid() const;
 		DBRevision GetRevision() const;
 		~UndoPatch();
 		
@@ -38,5 +39,10 @@ namespace unitedb
 
 		std::unique_ptr<IGenericUndo> undo_;
 	};
+
+	inline bool UndoPatch::Valid() const
+	{
+		return bool(undo_);
+	}
 
 }
