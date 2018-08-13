@@ -44,7 +44,7 @@ namespace xmax {
 		impl_.reset(new ContractUtilPluginImpl());
 
 		// test initialize code 
-		Test();
+		Test("");
 	}
 
 	//--------------------------------------------------
