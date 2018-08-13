@@ -35,45 +35,51 @@ namespace xmax {
 
 	class HttpListener: public std::enable_shared_from_this<HttpListener> {
 	public:
-		HttpListener(bio::io_context& ioc, tcp::endpoint endpoint):
-			acceptor_(ioc),
-			socket_(ioc)
-		{
-			boost::system::error_code ec;
+		HttpListener(bio::io_context& ioc, tcp::endpoint endpoint);
 
-			// Open the acceptor
-			acceptor_.open(endpoint.protocol(), ec);
-			if (ec)
-			{
-				ErrorSprintf("Open http acceptor failed with error message:%s", ec.message().c_str());
-				return;
-			}
-
-			// Allow address reuse
-			acceptor_.set_option(boost::asio::socket_base::reuse_address(true));
-			if (ec)
-			{
-				ErrorSprintf("Http acceptor set_option failed with error message:%s", ec.message().c_str());
-				return;
-			}
-
-			// Bind to the server address
-			acceptor_.bind(endpoint, ec);
-			if (ec)
-			{
-				ErrorSprintf("Http acceptor bind endpoint failed with error message:%s", ec.message().c_str());
-				return;
-			}
-
-		}
-
+		//Public interfaces
 		void Run();
 		void DoAccept();
+
+		//Events
+		void OnAccept(boost::system::error_code ec);
 
 	private:
 		tcp::acceptor acceptor_;
 		tcp::socket socket_;
 	};
+
+	HttpListener::HttpListener(bio::io_context& ioc, tcp::endpoint endpoint) :
+		acceptor_(ioc),
+		socket_(ioc)
+	{
+		boost::system::error_code ec;
+
+		// Open the acceptor
+		acceptor_.open(endpoint.protocol(), ec);
+		if (ec)
+		{
+			ErrorSprintf("Open http acceptor failed with error message:%s", ec.message().c_str());
+			return;
+		}
+
+		// Allow address reuse
+		acceptor_.set_option(boost::asio::socket_base::reuse_address(true));
+		if (ec)
+		{
+			ErrorSprintf("Http acceptor set_option failed with error message:%s", ec.message().c_str());
+			return;
+		}
+
+		// Bind to the server address
+		acceptor_.bind(endpoint, ec);
+		if (ec)
+		{
+			ErrorSprintf("Http acceptor bind endpoint failed with error message:%s", ec.message().c_str());
+			return;
+		}
+
+	}
 
 	//--------------------------------------------------
 	void HttpListener::Run()
@@ -92,6 +98,20 @@ namespace xmax {
 	//--------------------------------------------------
 	void HttpListener::DoAccept()
 	{
+		acceptor_.async_accept(
+			socket_,
+			std::bind(
+				&HttpListener::OnAccept,
+				shared_from_this(),
+				std::placeholders::_1));
+	
+	}
+
+
+	//--------------------------------------------------
+	void HttpListener::OnAccept(boost::system::error_code ec)
+	{
+
 	}
 
 	/*!
