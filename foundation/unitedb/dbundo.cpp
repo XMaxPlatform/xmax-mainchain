@@ -24,6 +24,15 @@ namespace unitedb
 			undo_->Cancel();
 		}
 	}
+
+	void UndoPatch::Combine()
+	{
+		if (undo_)
+		{
+			undo_->Combine();
+		}
+	}
+
 	DBRevision UndoPatch::GetRevision() const
 	{
 		if (undo_)

@@ -24,6 +24,7 @@ namespace unitedb
 
 		void Undo();
 		void Cancel();
+		void Combine();
 		DBRevision GetRevision() const;
 		~UndoPatch();
 		
