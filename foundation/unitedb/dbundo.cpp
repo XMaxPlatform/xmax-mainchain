@@ -10,7 +10,7 @@ namespace unitedb
 
 	void UndoPatch::Undo()
 	{
-		if (Valid())
+		if (undo_)
 		{
 			undo_->Undo();
 		}
@@ -19,7 +19,7 @@ namespace unitedb
 
 	void UndoPatch::Cancel()
 	{
-		if (Valid())
+		if (undo_)
 		{
 			undo_->Cancel();
 		}
@@ -27,7 +27,7 @@ namespace unitedb
 
 	void UndoPatch::Combine()
 	{
-		if (Valid())
+		if (undo_)
 		{
 			undo_->Combine();
 		}
@@ -35,7 +35,7 @@ namespace unitedb
 
 	DBRevision UndoPatch::GetRevision() const
 	{
-		if (Valid())
+		if (undo_)
 		{
 			return undo_->GetRevision();
 		}

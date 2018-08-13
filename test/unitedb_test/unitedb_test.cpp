@@ -313,7 +313,7 @@ BOOST_AUTO_TEST_CASE(db_commit_test)
 	BOOST_CHECK(db->GetTopRevision() == 0);
 
 	auto undo_c = db->StartUndo(); //
-	DBRevision revc = undo_b.GetRevision();
+	DBRevision revc = undo_c.GetRevision();
 	DBRevision revdbc = db->GetTopRevision();
 	BOOST_CHECK(revc == 1 && revdbc == 1);
 
@@ -322,7 +322,7 @@ BOOST_AUTO_TEST_CASE(db_commit_test)
 		a.tval = cvalc;
 	});
 
-	BOOST_CHECK(db->GetLastCommit() == 0);
+	BOOST_CHECK(db->GetLastCommit() == InvalidRevision);
 	db->Commit(revdba);
 	undo_c.Undo();
 

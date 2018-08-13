@@ -22,7 +22,7 @@ namespace unitedb
 		virtual void Undo() override;
 		virtual void Cancel() override;
 		virtual void Combine() override;
-
+		virtual bool Valid() const override;
 		virtual DBRevision GetRevision() const override
 		{
 			return revision_;
