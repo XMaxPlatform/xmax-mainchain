@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(pro_time_1)
 	// convert to seconds then convert back
 	TimeSeconds toSecs = baseMillisecs.ToTime<TimeSeconds>();
 	TimeSeconds backSecs = toSecs.ToTime<TimeSeconds>();
-
+	// compare the processed result with meta claculate results
 	BOOST_CHECK(baseMillisecs.GetValue() == 2500ll);
 	BOOST_CHECK(toSecs.GetValue() == 2ll);
 	BOOST_CHECK(backSecs.GetValue() == 2ll * 1000ll);
