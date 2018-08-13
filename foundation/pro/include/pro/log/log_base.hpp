@@ -12,7 +12,7 @@ namespace pro
 	/**
 	* log level enum
 	*/
-	enum loglevel : int
+	enum LogLevel : int
 	{
 		Info = 0,/*!< Info level. */  
 		Warnning = 100,/*!< Warnning level. */  
@@ -28,7 +28,7 @@ namespace pro
 		* @param[in] level log level type.
 		* @param[in] msg the message.
 		*/
-		virtual void LogMessage(loglevel level, const string& msg) = 0;
+		virtual void LogMessage(LogLevel level, const string& msg) = 0;
 
 
 		~ILogger() {}

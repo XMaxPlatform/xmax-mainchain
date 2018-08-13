@@ -12,6 +12,6 @@ namespace pro
 	class ConsoleLogger : public ILogger
 	{
 	public:
-		virtual void LogMessage(loglevel level, const string& msg) override;
+		virtual void LogMessage(LogLevel level, const string& msg) override;
 	};
 }

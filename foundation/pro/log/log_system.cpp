@@ -56,22 +56,22 @@ namespace pro
 			return Find(logger) != loggers_.end();
 		}
 
-		void LogMessage(loglevel level, const string& msg)
+		void LogMessage(LogLevel level, const string& msg)
 		{
 			string u8;
 			switch (level)
 			{
-			case loglevel::Info:
+			case LogLevel::Info:
 			{
 				u8 = string_log;
 				break;
 			}
-			case loglevel::Warnning:
+			case LogLevel::Warnning:
 			{
 				u8 = string_warning;
 				break;
 			}
-			case loglevel::Error:
+			case LogLevel::Error:
 			{
 				u8 = string_error;
 				break;
@@ -114,7 +114,7 @@ namespace pro
 		impl_->Remove(logger);
 	}
 
-	void LogSystem::LogMessage(loglevel level, const string& msg)
+	void LogSystem::LogMessage(LogLevel level, const string& msg)
 	{
 		impl_->LogMessage(level, msg);
 	}

@@ -15,7 +15,7 @@ namespace pro
 	* @param[in]	loglevel	level of log
 	* @param[in]	string		content of log
 	*/
-	void LogMessage(loglevel level, const string& msg);
+	void LogMessage(LogLevel level, const string& msg);
 
 	/**
 	* save the log to a file
@@ -30,18 +30,18 @@ namespace pro
 /**
 * format warn log.
 */
-#define WarnSprintf(fmt, ...) pro::LogMessage(pro::loglevel(pro::loglevel::Warnning), pro::utils::Sprintf(fmt, __VA_ARGS__))
+#define WarnSprintf(fmt, ...) pro::LogMessage(pro::LogLevel(pro::LogLevel::Warnning), pro::utils::Sprintf(fmt, __VA_ARGS__))
 /**
 * format info log.
 */
-#define LogSprintf(fmt, ...) pro::LogMessage(pro::loglevel(pro::loglevel::Info), pro::utils::Sprintf(fmt, __VA_ARGS__))
+#define LogSprintf(fmt, ...) pro::LogMessage(pro::LogLevel(pro::LogLevel::Info), pro::utils::Sprintf(fmt, __VA_ARGS__))
 /**
 * format error log.
 */
 #define ErrorSprintf(fmt, ...) \
 {\
 	const pro::string desc = pro::utils::Sprintf(fmt, __VA_ARGS__);\
-	pro::LogMessage(pro::loglevel(pro::loglevel::Error), desc);\
+	pro::LogMessage(pro::LogLevel(pro::LogLevel::Error), desc);\
 	EXCEPT_LOG_ERROR(desc); \
 }
 
@@ -50,11 +50,11 @@ namespace pro
 /**
 * warn log.
 */
-#define Warnf(fmt, ...) pro::LogMessage(pro::loglevel(pro::loglevel::Warnning), STRING_FORMAT(fmt, __VA_ARGS__))
+#define Warnf(fmt, ...) pro::LogMessage(pro::LogLevel(pro::LogLevel::Warnning), STRING_FORMAT(fmt, __VA_ARGS__))
 /**
 * info log.
 */
-#define Logf(fmt, ...) pro::LogMessage(pro::loglevel(pro::loglevel::Info), STRING_FORMAT(fmt, __VA_ARGS__))
+#define Logf(fmt, ...) pro::LogMessage(pro::LogLevel(pro::LogLevel::Info), STRING_FORMAT(fmt, __VA_ARGS__))
 
 /**
 * error log.
@@ -62,7 +62,7 @@ namespace pro
 #define Errorf(fmt, ...) \
 {\
 	const pro::string desc = STRING_FORMAT(fmt, __VA_ARGS__);\
-	pro::LogMessage(pro::loglevel(pro::loglevel::Error), desc);\
+	pro::LogMessage(pro::LogLevel(pro::LogLevel::Error), desc);\
 	EXCEPT_LOG_ERROR(desc);\
 }
 
