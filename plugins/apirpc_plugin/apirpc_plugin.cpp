@@ -33,9 +33,9 @@ namespace xmax {
 
 	}
 
-	class http_listener: public std::enable_shared_from_this<http_listener> {
+	class HttpListener: public std::enable_shared_from_this<HttpListener> {
 	public:
-		http_listener(bio::io_context& ioc, tcp::endpoint endpoint):
+		HttpListener(bio::io_context& ioc, tcp::endpoint endpoint):
 			acceptor_(ioc),
 			socket_(ioc)
 		{
@@ -76,7 +76,7 @@ namespace xmax {
 	};
 
 	//--------------------------------------------------
-	void http_listener::Run()
+	void HttpListener::Run()
 	{
 		
 
@@ -90,9 +90,8 @@ namespace xmax {
 
 
 	//--------------------------------------------------
-	void http_listener::DoAccept()
+	void HttpListener::DoAccept()
 	{
-	
 	}
 
 	/*!
@@ -121,7 +120,7 @@ namespace xmax {
 
 		//IO
 		boost::asio::io_context ioc;
-		std::shared_ptr<http_listener> listener;
+		std::shared_ptr<HttpListener> listener;
 		unsigned short http_port;
 		bio::ip::address http_address;
 
