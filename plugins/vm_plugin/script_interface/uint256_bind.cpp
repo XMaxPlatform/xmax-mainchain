@@ -18,5 +18,10 @@ namespace xmax {
 
 		}
 
+		void V8u256::WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8u256>& data)
+		{
+
+		}
+
 	}
 }
