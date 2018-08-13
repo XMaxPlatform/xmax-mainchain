@@ -282,6 +282,34 @@ BOOST_AUTO_TEST_CASE(db_commit_test)
 
 	auto tbl = db->GetTable<TestATable>();
 
+	static const int cvala = 1000;
+	static const int cvalb = 2000;
+	static const int cvalc = 3000;
+
+	auto undo_1 = db->StartUndo(); //
+	DBRevision rev1 = undo_1.GetRevision();
+	DBRevision revdb1 = db->GetTopRevision();
+	BOOST_CHECK(rev1 == 0 && revdb1 == 0);
+
+	auto val1 = tbl->NewObject([&](DBTestA& a)
+	{
+		a.tval = cvala;
+	});
+
+	auto id1 = val1->GetID();
+
+	auto undo_2 = db->StartUndo(); //
+	DBRevision rev2 = undo_2.GetRevision();
+	DBRevision revdb2 = db->GetTopRevision();
+	BOOST_CHECK(rev2 == 1 && revdb2 == 1);
+
+	tbl->UpdateObject(val1, [&](DBTestA& a)
+	{
+		a.tval = cvalb;
+	});
+	undo_2.Combine();
+
+
 }
 
 
