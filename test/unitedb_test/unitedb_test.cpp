@@ -286,30 +286,48 @@ BOOST_AUTO_TEST_CASE(db_commit_test)
 	static const int cvalb = 2000;
 	static const int cvalc = 3000;
 
-	auto undo_1 = db->StartUndo(); //
-	DBRevision rev1 = undo_1.GetRevision();
-	DBRevision revdb1 = db->GetTopRevision();
-	BOOST_CHECK(rev1 == 0 && revdb1 == 0);
+	auto undo_a = db->StartUndo(); //
+	DBRevision reva = undo_a.GetRevision();
+	DBRevision revdba = db->GetTopRevision();
+	BOOST_CHECK(reva == 0 && revdba == 0);
 
-	auto val1 = tbl->NewObject([&](DBTestA& a)
+	auto tval = tbl->NewObject([&](DBTestA& a)
 	{
 		a.tval = cvala;
 	});
 
-	auto id1 = val1->GetID();
+	auto tid = tval->GetID();
 
-	auto undo_2 = db->StartUndo(); //
-	DBRevision rev2 = undo_2.GetRevision();
-	DBRevision revdb2 = db->GetTopRevision();
-	BOOST_CHECK(rev2 == 1 && revdb2 == 1);
+	auto undo_b = db->StartUndo(); //
+	DBRevision revb = undo_b.GetRevision();
+	DBRevision revdbb = db->GetTopRevision();
+	BOOST_CHECK(revb == 1 && revdbb == 1);
 
-	tbl->UpdateObject(val1, [&](DBTestA& a)
+	tbl->UpdateObject(tval, [&](DBTestA& a)
 	{
 		a.tval = cvalb;
 	});
-	undo_2.Combine();
 
+	undo_b.Combine();
+	BOOST_CHECK(!undo_b.Valid());
+	BOOST_CHECK(db->GetTopRevision() == 0);
 
+	auto undo_c = db->StartUndo(); //
+	DBRevision revc = undo_b.GetRevision();
+	DBRevision revdbc = db->GetTopRevision();
+	BOOST_CHECK(revc == 1 && revdbc == 1);
+
+	tbl->UpdateObject(tval, [&](DBTestA& a)
+	{
+		a.tval = cvalc;
+	});
+
+	BOOST_CHECK(db->GetLastCommit() == 0);
+	db->Commit(revdba);
+	undo_c.Undo();
+
+	BOOST_CHECK(db->GetLastCommit() == revdba);
+	BOOST_CHECK(tbl->FindObject(tid)->tval == cvalb);
 }
 
 
