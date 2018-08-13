@@ -111,7 +111,16 @@ namespace xmax {
 	//--------------------------------------------------
 	void HttpListener::OnAccept(boost::system::error_code ec)
 	{
+		if (ec) {
+			ErrorSprintf("HttpListener OnAccpet occurs a error message:%s", ec.message().c_str());
+			return;
+		}
+		else {
+			//TODO: Run sesson
 
+		}
+
+		DoAccept();
 	}
 
 	/*!
