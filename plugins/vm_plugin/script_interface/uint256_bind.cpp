@@ -5,7 +5,7 @@ namespace xmax {
 
 		V8u256* V8u256::NewV8CppObj(const v8::FunctionCallbackInfo<v8::Value>& args)
 		{
-
+			return nullptr;
 		}
 
 		void V8u256::RegisterWithV8(v8::Isolate* isolate, v8::Handle<v8::ObjectTemplate> global)
