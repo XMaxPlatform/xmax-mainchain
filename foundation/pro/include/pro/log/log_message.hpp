@@ -10,8 +10,12 @@ namespace pro {
 
 	class LogMessage {
 	public:
-		LogMessage() {}
+		LogMessage(const std::string& msg_content);
 		~LogMessage() {}
+
+		std::string GetMessage() const {
+			return msg_content_;
+		}
 
 	private:
 		std::string msg_content_;
