@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(pro_time_1)
 	BOOST_CHECK(baseMillisecs.GetValue() == 2500ll);
 	BOOST_CHECK(toSecs.GetValue() == 2ll);
 	BOOST_CHECK(backSecs.GetValue() == 2ll * 1000ll);
-
+	// convert to seconds from mircoseconds
 	TimeSeconds microsecsToSecs = toMicrosecs.ToTime<TimeSeconds>();
 	TimeMicroseconds secsToMicrosecs = toSecs.ToTime<TimeMicroseconds>();
 
