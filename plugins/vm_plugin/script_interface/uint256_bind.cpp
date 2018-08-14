@@ -22,7 +22,7 @@ namespace xmax {
 		{
 			if (V8u256* cpp_object = data.GetParameter())
 			{
-				
+				delete cpp_object;
 			}
 		}
 
