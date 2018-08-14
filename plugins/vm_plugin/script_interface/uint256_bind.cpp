@@ -19,7 +19,23 @@ namespace xmax {
 			if (!args.IsConstructCall())
 				return args.GetReturnValue().Set(Undefined(args.GetIsolate()));
 			V8u256* cpp_object = nullptr;
-			
+			if (args.Length() == 1)
+			{
+				Local<Object> self = args.Holder();
+				Local<External> wrap = Local<External>::Cast(args[0]);
+				cpp_object = (V8u256*)wrap->Value();
+			}
+			else
+			{
+				NewV8CppObj(args);
+			}
+
+			if (!cpp_object)
+				return;
+
+			Local<Object> object = args.This();
+			Wrap(args.GetIsolate(), cpp_object, object);
+			args.GetReturnValue().Set(object);
 		
 		}
 
