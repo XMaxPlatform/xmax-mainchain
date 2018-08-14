@@ -21,6 +21,7 @@ namespace xmax
 
 		// initialize function
 		virtual void Initialize(const xmaxapp::VarsMap& options) override;
+		//
 		virtual void Startup() override;
 		virtual void Shutdown() override;
 
