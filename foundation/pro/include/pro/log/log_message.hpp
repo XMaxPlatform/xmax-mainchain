@@ -17,6 +17,11 @@ namespace pro {
 		~LogContext();
 
 
+		LogLevel GetLogLevel() const { return log_level_; }
+		const std::string& GetFile() const { return file_; }
+		unsigned int GetLine() const { return line_; }
+		const std::string& GetMethod() const { return method_; }
+
 	private:
 		LogLevel log_level_{LogLevel::Info};
 		std::string file_;
