@@ -1,9 +1,12 @@
 #include "apirpc_plugin.hpp"
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/beast/core.hpp>
+#include <boost/beast/http.hpp>
 #include "pro/log/log.hpp"
 
 using namespace std;
+using namespace boost::beast;
 
 namespace bio = boost::asio;
 using tcp = bio::ip::tcp;
@@ -40,19 +43,53 @@ namespace xmax {
 	class HttpSession : public std::enable_shared_from_this<HttpSession> {
 
 	public:
-		explicit HttpSession(tcp::socket socket):socket_(std::move(socket)) {}
+		explicit HttpSession(tcp::socket socket);
 
 		void Run();
+		void DoRead();
+
+		//Events
+		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);
 
 	private:
 		tcp::socket socket_;
+		http::request<http::string_body> request_;
+		boost::beast::flat_buffer buffer_;
+		boost::asio::strand<boost::asio::io_context::executor_type> strand_;
 	};
 
+
+	//--------------------------------------------------
+	HttpSession::HttpSession(tcp::socket socket):
+		socket_(std::move(socket)),
+		strand_(socket.get_executor())
+	{
+
+	}
 
 	//--------------------------------------------------
 	void HttpSession::Run()
 	{
 		LogSprintf("Http session run.");
+	}
+
+
+	//--------------------------------------------------
+	void HttpSession::DoRead()
+	{
+		http::async_read(socket_, buffer_, request_,
+			bio::bind_executor(strand_,
+				std::bind(&HttpSession::OnRead, shared_from_this(),
+					std::placeholders::_1,
+					std::placeholders::_2)));
+	}
+
+
+	//--------------------------------------------------
+	void HttpSession::OnRead(boost::system::error_code ec,
+		std::size_t bytes_transferred)
+	{
+
 	}
 
 	/*
