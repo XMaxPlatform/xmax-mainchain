@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE(pro_time_1)
 	TimeSeconds microsecsToSecs = toMicrosecs.ToTime<TimeSeconds>();
 	// convert to mircoseconds from seconds
 	TimeMicroseconds secsToMicrosecs = toSecs.ToTime<TimeMicroseconds>();
-
+	// compare the processed result with meta claculate results
 	BOOST_CHECK(microsecsToSecs.GetValue() == 2ll);
 	BOOST_CHECK(secsToMicrosecs.GetValue() == 2ll * 1000ll * 1000ll);
 }
