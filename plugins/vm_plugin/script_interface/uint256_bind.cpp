@@ -18,7 +18,8 @@ namespace xmax {
 		{
 			if (!args.IsConstructCall())
 				return args.GetReturnValue().Set(Undefined(args.GetIsolate()));
-
+			V8u256* cpp_object = nullptr;
+			
 		
 		}
 
