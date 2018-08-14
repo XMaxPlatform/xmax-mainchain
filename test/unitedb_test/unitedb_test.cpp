@@ -15,18 +15,10 @@ enum EOBJType
 DBOBJ_CLASS(DBTestA, OBJ_TestA)
 {		
 public:
-	template<typename C, typename T>
-	DBTestA(C&& c, DBAlloc<T>)
-	{
-		c(*this);
-	}
-	template<typename T>
-	DBTestA(DBAlloc<T>)
-	{
 
-	}
-
-	int tval = 5;
+	DBOBJ_BODY(DBTestA,
+		(DB_FIELD(int, tval, 5))
+	)
 
 };
 
@@ -41,25 +33,15 @@ typedef DBTableDeclaration<
 
 typedef DBTable<TestAIdx> TestATable;
 
-
 DBOBJ_CLASS(DBTestB, OBJ_TestB)
 {
-public:
-
-	template<typename C, typename T>
-	DBTestB(C&& c, DBAlloc<T>)
-	{
-		c(*this);
-	}
-	template<typename T>
-	DBTestB(DBAlloc<T>)
-	{
-
-	}
-
-	int tval = 5;
+	DBOBJ_BODY(DBTestB,
+		(DB_FIELD(int, xx, 5))
+		(DB_MFIELD(MVector<int>, arr))
+	)
 
 };
+
 
 struct by_id;
 typedef DBTableDeclaration<
@@ -93,8 +75,10 @@ BOOST_AUTO_TEST_CASE(db_develop_test)
 
 
 	TestBIdx tidxsb(db->GetSegment());
-	tidxsb.emplace([&](TestBTable::ObjectType& a)
+	auto& xx = tidxsb.emplace([&](TestBTable::ObjectType& a)
 	{
+		a.xx = 3;
+		a.arr.push_back(10);
 	}, TestBTable::AllocType(db->GetSegment()));
 
 

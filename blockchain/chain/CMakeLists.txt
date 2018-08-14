@@ -1,7 +1,18 @@
 file(GLOB HEADERS "include/*.hpp" "include/objects/*.hpp")
 file (GLOB SOURCE_FILES "*.cpp" "objects/*.cpp")
 
+source_group( 
+	include
+	FILES 
+	${HEADERS}
+)
 
+source_group( 
+	src
+	FILES 
+	${SOURCE_FILES}
+	"CMakeLists.txt"
+)
 
 add_library( xmaxchain ${SOURCE_FILES} ${HEADERS}  )
 
