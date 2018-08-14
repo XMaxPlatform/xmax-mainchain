@@ -23,8 +23,18 @@ public:
 
 	void ECC_Stop();
 
+	secp256k1_context* GetSecpContext() const;
+
 protected:
 	
 private:
+
+	secp256k1_context*		secp256k1_context_sign_;
 };
+
+inline secp256k1_context* Secp256Context::GetSecpContext() const
+{
+	return secp256k1_context_sign_;
+}
+
 }
