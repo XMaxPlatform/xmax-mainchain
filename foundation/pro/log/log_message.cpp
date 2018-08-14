@@ -4,8 +4,9 @@
 namespace pro {
 
 	//--------------------------------------------------
-	LogMessage::LogMessage(const std::string& msg_content):
-		msg_content_(msg_content)
+	LogMessage::LogMessage(const std::string& msg_content, LogLevel level):
+		msg_content_(msg_content),
+		log_level_(level)
 	{
 
 	}
