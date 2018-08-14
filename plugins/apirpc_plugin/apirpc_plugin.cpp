@@ -33,6 +33,26 @@ namespace xmax {
 
 	}
 
+
+	/*
+	* Http session
+	*/
+	class HttpSession : public std::enable_shared_from_this<HttpSession> {
+
+	public:
+		explicit HttpSession(tcp::socket socket):socket_(std::move(socket)) {}
+
+
+	private:
+		tcp::socket socket_;
+	};
+
+
+
+
+	/*
+	* Http listener class
+	*/
 	class HttpListener: public std::enable_shared_from_this<HttpListener> {
 	public:
 		HttpListener(bio::io_context& ioc, tcp::endpoint endpoint);
