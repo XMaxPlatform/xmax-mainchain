@@ -30,7 +30,7 @@ namespace xmax {
 		}
 
 		
-
+		
 	}
 
 
@@ -42,13 +42,18 @@ namespace xmax {
 	public:
 		explicit HttpSession(tcp::socket socket):socket_(std::move(socket)) {}
 
+		void Run();
 
 	private:
 		tcp::socket socket_;
 	};
 
 
-
+	//--------------------------------------------------
+	void HttpSession::Run()
+	{
+		LogSprintf("Http session run.");
+	}
 
 	/*
 	* Http listener class
@@ -137,7 +142,7 @@ namespace xmax {
 		}
 		else {
 			//TODO: Run sesson
-
+			std::make_shared<HttpSession>(std::move(socket_))->Run();
 		}
 
 		DoAccept();
