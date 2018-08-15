@@ -139,10 +139,10 @@ namespace unitedb
 }
 
 
-
+// macros for DB_FIELD 
 #define BODY_DB_FIELD(_t, _v, _def) _t _v = _def;
 #define CONSTR_DB_FIELD(_t, _v, _def) // empty.
-
+// macros for DB_MFIELD 
 #define BODY_DB_MFIELD(_t, _v) _t _v;
 #define CONSTR_DB_MFIELD(_t, _v) , _v(al)
 
