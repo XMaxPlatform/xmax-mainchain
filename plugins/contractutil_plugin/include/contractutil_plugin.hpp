@@ -23,6 +23,7 @@ namespace xmax
 		virtual void Initialize(const xmaxapp::VarsMap& options) override;
 		//start up 3rd libarary
 		virtual void Startup() override;
+		//
 		virtual void Shutdown() override;
 
 
