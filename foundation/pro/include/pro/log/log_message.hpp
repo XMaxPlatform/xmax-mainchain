@@ -22,6 +22,8 @@ namespace pro {
 		unsigned int GetLine() const { return line_; }
 		const std::string& GetMethod() const { return method_; }
 
+		std::string ToString() const;
+
 	private:
 		LogLevel log_level_{LogLevel::Info};
 		std::string file_;
@@ -38,6 +40,7 @@ namespace pro {
 		std::string GetMessage() const {
 			return msg_content_;
 		}
+
 
 	private:
 		std::string msg_content_;		

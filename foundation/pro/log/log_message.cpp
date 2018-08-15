@@ -35,6 +35,13 @@ namespace pro {
 
 	}
 
+
+	//--------------------------------------------------
+	std::string LogContext::ToString() const
+	{		
+		return file_ + ":" + std::to_string(line_) + " " + method_;
+	}
+
 	/*
 	* LogMessage class implementation
 	*/
@@ -46,7 +53,6 @@ namespace pro {
 
 	}
 
-
-	
+		
 
 }
