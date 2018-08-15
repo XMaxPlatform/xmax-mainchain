@@ -40,8 +40,7 @@ namespace pro {
 		}
 
 	private:
-		std::string msg_content_;
-		LogLevel log_level_{ LogLevel::Info };
+		std::string msg_content_;		
 		LogContext log_context_;
 
 
