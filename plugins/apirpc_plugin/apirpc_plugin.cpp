@@ -47,9 +47,10 @@ namespace xmax {
 
 		void Run();
 		void DoRead();
+		void Close();
 
 		//Events
-		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);
+		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);		
 
 	private:
 		tcp::socket socket_;
@@ -84,6 +85,15 @@ namespace xmax {
 					std::placeholders::_2)));
 	}
 
+
+	//--------------------------------------------------
+	void HttpSession::Close()
+	{
+		// Send a TCP shutdown
+		boost::system::error_code ec;
+		socket_.shutdown(tcp::socket::shutdown_send, ec);
+
+	}
 
 	//--------------------------------------------------
 	void HttpSession::OnRead(boost::system::error_code ec,
