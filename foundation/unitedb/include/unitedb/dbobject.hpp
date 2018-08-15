@@ -153,10 +153,12 @@ namespace unitedb
 // : _name##_Super() BOOST_PP_SEQ_FOR_EACH(DB_MACRO_CAT, CONSTR_, _args)
 
 #define _DBOBJ_CONSTR_(_name, _args)\
-template<typename T> _name(DBAlloc<T> al) {}\
+template<typename T> _name(DBAlloc<T> al)\
+: _name##_Super() BOOST_PP_SEQ_FOR_EACH(DB_MACRO_CAT, CONSTR_, _args) {}\
 template<typename C, typename T> _name(C&& c, DBAlloc<T> al)\
 : _name##_Super() BOOST_PP_SEQ_FOR_EACH(DB_MACRO_CAT, CONSTR_, _args)\
 { c(*this); }
+
 
 #define _DBOBJ_DEF_(_args) BOOST_PP_SEQ_FOR_EACH(DB_MACRO_CAT, BODY_, _args)
 
