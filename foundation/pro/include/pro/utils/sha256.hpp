@@ -86,6 +86,7 @@ inline const std::vector<unsigned char>& CSHA256::GetDataVec() const
 	return hash_;
 }
 
+//a helper class for double sha256
 class DoubleSHA256
 {
 public:
