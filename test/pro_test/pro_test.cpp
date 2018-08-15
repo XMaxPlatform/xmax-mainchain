@@ -92,6 +92,7 @@ BOOST_AUTO_TEST_CASE(any_value)
 
 BOOST_AUTO_TEST_CASE(any_value_cast)
 {
+	// base values for testing
 	pro::AnyValue anyint = 42;
 	pro::AnyValue anyintstr = "42";
 	pro::AnyValue anybool = true;
