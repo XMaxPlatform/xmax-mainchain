@@ -6,6 +6,7 @@
 
 namespace pro
 {
+	//a sha256 class that encapsulates picosha lib 
 	class CSHA256
 {
 public:
