@@ -7,6 +7,7 @@
 
 namespace pro
 {
+	//helper class for secp256k1
 	class Secp256Context : public Singleton<Secp256Context>
 {
 public:
