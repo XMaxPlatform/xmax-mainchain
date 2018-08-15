@@ -24,7 +24,7 @@ namespace xmax {
 				NewStringType::kNormal).ToLocalChecked(), func_template);
 
 
-			
+			Handle<ObjectTemplate> proto_template = func_template->PrototypeTemplate();
 		}
 
 		void V8u256::ConstructV8Object(const v8::FunctionCallbackInfo<v8::Value>& args)
