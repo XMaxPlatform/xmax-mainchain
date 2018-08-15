@@ -89,7 +89,11 @@ namespace xmax {
 	void HttpSession::OnRead(boost::system::error_code ec,
 		std::size_t bytes_transferred)
 	{
-
+		if (ec)
+		{
+			ErrorSprintf("Http session OnRead failed with error message:%s", ec.message().c_str());
+			return;
+		}
 	}
 
 	/*
