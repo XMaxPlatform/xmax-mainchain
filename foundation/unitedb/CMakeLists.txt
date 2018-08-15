@@ -45,7 +45,7 @@ add_library( ${current_lib_name} ${S_FILES} ${H_FILES} )
 
 target_link_libraries( ${current_lib_name} 
 	${Boost_LIBRARIES} 
-	${xmax_core_lib_name}
+	#${xmax_core_lib_name}
 )
 
 target_include_directories( ${current_lib_name} PUBLIC "include" "${Boost_INCLUDE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" )

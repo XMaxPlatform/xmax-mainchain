@@ -3,7 +3,8 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <pro/types/generictypes.hpp>
+
+#include <cstdint>
 namespace unitedb
 {
 	class IDBTable

@@ -4,11 +4,12 @@
 */
 #pragma once
 #include <unitedb/unitedef.hpp>
-#include <pro/io/file_system.hpp>
 #include <boost/interprocess/managed_mapped_file.hpp>
+#include <filesystem>
+
 namespace unitedb
 {
-	namespace fs = pro::fs;
+	namespace fs = std::filesystem;
 	namespace inpr = boost::interprocess;
 	using mapped_file = inpr::managed_mapped_file;
 	using segment_manager = inpr::managed_mapped_file::segment_manager;

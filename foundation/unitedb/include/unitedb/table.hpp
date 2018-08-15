@@ -52,7 +52,7 @@ namespace unitedb
 
 	struct TableUndoInfo
 	{
-		typedef int32_t IndexType;
+		typedef int64_t IndexType;
 
 		TableUndoInfo(IndexType beg, DBRevision rev)
 			: begin_(beg)
