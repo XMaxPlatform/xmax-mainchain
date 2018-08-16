@@ -106,7 +106,9 @@ BOOST_AUTO_TEST_CASE(any_value_cast)
 	BOOST_CHECK("2333.2333" == anydouble.CastTo<string>());
 	// cast to int
 	BOOST_CHECK(42 == anyintstr.CastTo<int>());
+	// cast to bool
 	BOOST_CHECK(true == anyboolstr.CastTo<bool>());
+	// cast to int
 	BOOST_CHECK(2333 == anydouble.CastTo<int>());
 }
 
