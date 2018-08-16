@@ -42,6 +42,15 @@ namespace xmax {
 	*/
 	class HttpSession : public std::enable_shared_from_this<HttpSession> {
 
+		class Queue {
+		public:
+			explicit Queue(HttpSession& s) :session_{ s } {}
+
+
+		private:
+			HttpSession& session_;
+		};
+
 	public:
 		explicit HttpSession(tcp::socket socket);
 
