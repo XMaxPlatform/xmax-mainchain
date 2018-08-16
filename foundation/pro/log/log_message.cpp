@@ -35,6 +35,20 @@ namespace pro {
 
 	}
 
+	class LogMessageImpl {
+	public:
+		LogMessageImpl(const std::string& content, const LogContext& context) :
+			msg_content(content),
+			log_context(context)
+		{
+
+		}
+
+
+
+		std::string msg_content;
+		LogContext log_context;
+	};
 
 	//--------------------------------------------------
 	std::string LogContext::ToString() const
