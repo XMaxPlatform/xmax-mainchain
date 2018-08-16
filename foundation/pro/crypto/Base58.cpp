@@ -1,7 +1,9 @@
 #include "pro/crypto/Base58.hpp"
 #include "pro/types/generictypes.hpp"
 #include "pro/utils/sha256.hpp"
-#include "pro/crypto/Base58String.hpp"
+#include "pro/crypto/Base58.hpp"
+
+#include <cassert>
 
 namespace pro
 {

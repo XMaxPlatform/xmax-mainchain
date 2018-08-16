@@ -1,5 +1,5 @@
 #include "pro/crypto/privatekey.hpp"
-#include "pro/crypto/Base58String.hpp"
+#include "pro/crypto/Base58.hpp"
 #include "pro/crypto/secp256_util.hpp"
 #include "pro/utils/sha256.hpp"
 
