@@ -43,9 +43,17 @@ namespace xmax {
 	class HttpSession : public std::enable_shared_from_this<HttpSession> {
 
 		class Queue {
+			enum {
+				kQueueLimit = 10
+			};
+
 		public:
 			explicit Queue(HttpSession& s) :session_{ s } {}
 
+			template<bool isRequest, class Body, class Fields>
+			void operator()(http::message<isRequest, Body, Fields>&& msg) {
+				static_assert(kQueueLimit > 0, "Http session queue limit need above 0.");
+			}
 
 		private:
 			HttpSession& session_;
