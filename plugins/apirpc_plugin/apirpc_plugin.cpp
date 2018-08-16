@@ -48,6 +48,7 @@ namespace xmax {
 		void Run();
 		void DoRead();
 		void Close();
+		void HandleRequest();
 
 		//Events
 		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);		
@@ -95,6 +96,13 @@ namespace xmax {
 
 	}
 
+
+	//--------------------------------------------------
+	void HttpSession::HandleRequest()
+	{
+
+	}
+
 	//--------------------------------------------------
 	void HttpSession::OnRead(boost::system::error_code ec,
 		std::size_t bytes_transferred)
@@ -116,6 +124,8 @@ namespace xmax {
 			ErrorSprintf("Http session on read failed with error message:%s", ec.message().c_str());
 			return;
 		}
+
+		HandleRequest();
 		
 	}
 
