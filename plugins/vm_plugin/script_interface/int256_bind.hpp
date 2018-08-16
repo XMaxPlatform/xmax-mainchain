@@ -10,7 +10,8 @@ namespace xmax {
 	namespace scriptv8 {
 		class V8i256 : public V8BindObject<V8i256>
 		{
-
+		public:
+		private:
 		};
 
 
