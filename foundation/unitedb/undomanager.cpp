@@ -63,7 +63,7 @@ namespace unitedb
 		owner_->OnStartUndo(revision);
 		FUndo* undo = new FUndo(this, revision);
 		
-		getRecords().emplace_back(UndoRecord(undo, (UndoRecord::IndexType)stack_->cache_.Size()));
+		getRecords().emplace_back(UndoRecord(undo, stack_->cache_.Size()));
 		return undo;
 	}
 
@@ -178,8 +178,8 @@ namespace unitedb
 		{
 			DB_ASSERT(stack_->last_commit_ < itr->rev_ && itr->rev_ <= stack_->top_revision_);
 		
-			int64_t rbegin = stack_->cache_.Size() - 1;
-			int64_t rend = itr->begin_ - 1;
+			IndexType rbegin = stack_->cache_.Size() - 1;
+			IndexType rend = itr->begin_ - 1;
 
 			undoImpl(rbegin, rend);
 			popExpiredRecords(getRecords(), itr->rev_);
@@ -192,7 +192,7 @@ namespace unitedb
 		auto id = undo->GetID();
 		auto& records = getRecords();
 
-		for (int64_t i = records.size() - 1; i >= 0; --i)
+		for (IndexType i = records.size() - 1; i >= 0; --i)
 		{
 			auto& curr = records[i];
 			if (curr.id_ == id)// find undo info by id.
@@ -218,7 +218,7 @@ namespace unitedb
 	}
 
 
-	void UndoManager::undoImpl(int64_t rbegin, int64_t rend)
+	void UndoManager::undoImpl(IndexType rbegin, IndexType rend)
 	{
 		if (rbegin > rend)
 		{

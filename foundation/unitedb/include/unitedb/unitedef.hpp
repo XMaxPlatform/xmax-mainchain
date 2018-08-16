@@ -18,4 +18,6 @@ namespace unitedb
 	using ObjectTypeCode = uint16_t;
 	using DBRevision = int64_t;
 
+	using IndexType = int64_t; // must be signed.
+
 }

@@ -52,8 +52,6 @@ namespace unitedb
 
 	struct TableUndoInfo
 	{
-		typedef int64_t IndexType;
-
 		TableUndoInfo(IndexType beg, DBRevision rev)
 			: begin_(beg)
 			, rev_(rev)
@@ -155,7 +153,7 @@ namespace unitedb
 		{
 			// note, when combine with self, do nothing.so "i > 0".
 
-			for (int64_t i = stack_->infos_.size() - 1; i > 0; --i)
+			for (IndexType i = stack_->infos_.size() - 1; i > 0; --i)
 			{
 				if (stack_->infos_[i].rev_ == revision)
 				{
@@ -167,7 +165,7 @@ namespace unitedb
 
 		virtual void Commit(DBRevision revision) override
 		{
-			int64_t idx = -1;
+			IndexType idx = -1;
 			for (int i = 0; i < stack_->infos_.size(); ++i)
 			{
 				if (stack_->infos_[i].rev_ == revision)
@@ -185,12 +183,12 @@ namespace unitedb
 
 			const TableUndoInfo& revinfo = stack_->infos_[idx];
 
-			const int64_t remcount = revinfo.begin_;
+			const IndexType remcount = revinfo.begin_;
 
 			stack_->cache_.Remove(0, remcount);
 
 			// remove info data.
-			int64_t fixcount = idx + 1;
+			IndexType fixcount = idx + 1;
 			auto remend = stack_->infos_.begin() + fixcount;
 
 			stack_->infos_.erase(stack_->infos_.begin(), remend);

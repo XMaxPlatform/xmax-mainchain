@@ -45,7 +45,6 @@ namespace unitedb
 
 	struct UndoRecord
 	{
-		typedef int32_t IndexType;
 		UndoRecord(FUndo* undo, IndexType beg)
 		{
 			id_ = undo->GetID();
@@ -121,7 +120,7 @@ namespace unitedb
 		{
 			return stack_->records_;
 		}
-		void undoImpl(int64_t rbegin, int64_t rend);
+		void undoImpl(IndexType rbegin, IndexType rend);
 		IDatabase* owner_ = nullptr;
 		UndoOpStack* stack_ = nullptr;
 	};
