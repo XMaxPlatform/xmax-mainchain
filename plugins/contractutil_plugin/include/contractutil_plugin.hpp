@@ -31,6 +31,7 @@ namespace xmax
 		// output logs
 		void Test(const char* strlog);
 		// TODO : clean 
+		void Clean();
 
 	private:
 		std::unique_ptr<class ContractUtilPluginImpl> impl_;
