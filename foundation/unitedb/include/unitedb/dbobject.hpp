@@ -142,6 +142,11 @@ namespace unitedb
 // macros for DB_FIELD 
 #define _DBBODY_FIELD_(_t, _v, _def) _t _v = _def;
 #define _DBCONSTR_FIELD_(_t, _v, _def) // empty.
+
+// macros for DB_SFIELD 
+#define _DBBODY_SFIELD_(_t, _v, _def) _t _v;
+#define _DBCONSTR_SFIELD_(_t, _v, _def) // empty.
+
 // macros for DB_MFIELD 
 #define _DBBODY_MFIELD_(_t, _v) _t _v;
 #define _DBCONSTR_MFIELD_(_t, _v) , _v(al)
@@ -178,6 +183,10 @@ class _objname : public unitedb::DBObject<_objname, _typecode>
 
 #define DBOBJ_BODY(_name, _args) _DBOBJ_BODY_(_name, _args)
 
-#define DB_FIELD(_t, _v, _def) _FIELD_(_t, _v, _def)
-#define DB_MFIELD(_t, _v) _MFIELD_(_t, _v)
+// define field of simple value. e.g. int.
+#define DB_FIELD(_type, _name, _default_value) _FIELD_(_type, _name, _default_value) 
+// define field of simple value width out default value. e.g. int.
+#define DB_SFIELD(_type, _name) _FIELD_(_type, _name)
+// define field of mapped class . e.g. MVector.
+#define DB_MFIELD(_type, _name) _MFIELD_(_type, _name)
 
