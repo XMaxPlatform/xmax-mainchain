@@ -32,19 +32,18 @@ namespace pro {
 	};
 
 
+	class LogMessageImpl;
+
 	class LogMessage {
 	public:
 		LogMessage(const std::string& msg_content, LogLevel level = LogLevel::Info);
 		~LogMessage() {}
 
-		std::string GetMessage() const {
-			return msg_content_;
-		}
+		std::string GetMessage() const;
 
 
 	private:
-		std::string msg_content_;		
-		LogContext log_context_;
+		std::shared_ptr<LogMessageImpl> impl_;
 
 
 	};
