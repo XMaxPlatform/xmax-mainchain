@@ -17,7 +17,6 @@ target_include_directories( ${current_lib_name} PUBLIC
                             ${Boost_INCLUDE_DIR})
 
 target_link_libraries( ${current_lib_name} 
-                   ${xmax_core_lib_name} 
 					${xmax_db_name}
                    ${Boost_LIBRARIES})
 
