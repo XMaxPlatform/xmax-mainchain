@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(any_value_cast)
 	pro::AnyValue anybool = true;
 	pro::AnyValue anyboolstr = "true";
 	pro::AnyValue anydouble = 2333.2333;
-	// cast to string
+	// cast to string from int, bool, double
 	BOOST_CHECK("42" == anyint.CastTo<string>());
 	BOOST_CHECK("true" == anybool.CastTo<string>());
 	BOOST_CHECK("2333.2333" == anydouble.CastTo<string>());
