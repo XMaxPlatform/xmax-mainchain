@@ -37,6 +37,7 @@ namespace pro {
 	class LogMessage {
 	public:
 		LogMessage(const std::string& msg_content, LogLevel level = LogLevel::Info);
+		LogMessage(const std::string& msg_contet, LogContext context);
 		~LogMessage() {}
 
 		std::string GetMessage() const;

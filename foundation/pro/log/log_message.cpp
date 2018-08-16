@@ -68,6 +68,13 @@ namespace pro {
 		
 
 	//--------------------------------------------------
+	LogMessage::LogMessage(const std::string& msg_contet, LogContext context):
+		impl_(std::make_shared<LogMessageImpl>(msg_contet, context))
+	{
+
+	}
+
+	//--------------------------------------------------
 	std::string LogMessage::GetMessage() const
 	{
 
