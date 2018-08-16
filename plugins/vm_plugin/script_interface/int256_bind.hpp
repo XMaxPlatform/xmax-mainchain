@@ -12,7 +12,7 @@ namespace xmax {
 		{
 		public:
 			V8i256() {}
-
+			~V8i256() {}
 		private:
 		};
 
