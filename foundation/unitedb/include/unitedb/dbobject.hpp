@@ -140,33 +140,34 @@ namespace unitedb
 
 
 // macros for DB_FIELD 
-#define BODY_DB_FIELD(_t, _v, _def) _t _v = _def;
-#define CONSTR_DB_FIELD(_t, _v, _def) // empty.
+#define _DBBODY_FIELD_(_t, _v, _def) _t _v = _def;
+#define _DBCONSTR_FIELD_(_t, _v, _def) // empty.
 // macros for DB_MFIELD 
-#define BODY_DB_MFIELD(_t, _v) _t _v;
-#define CONSTR_DB_MFIELD(_t, _v) , _v(al)
+#define _DBBODY_MFIELD_(_t, _v) _t _v;
+#define _DBCONSTR_MFIELD_(_t, _v) , _v(al)
 
 
-#define DB_MACRO_CAT(r, data, elem) BOOST_PP_CAT(data, elem)
+#define _DB_MACRO_CAT_(r, data, elem) BOOST_PP_CAT(data, elem)
 
 
 // : _name##_Super() BOOST_PP_SEQ_FOR_EACH(DB_MACRO_CAT, CONSTR_, _args)
 
 #define _DBOBJ_CONSTR_(_name, _args)\
 template<typename T> _name(DBAlloc<T> al)\
-: _name##_Super() BOOST_PP_SEQ_FOR_EACH(DB_MACRO_CAT, CONSTR_, _args) {}\
+: _name##_Super() BOOST_PP_SEQ_FOR_EACH(_DB_MACRO_CAT_, _DBCONSTR, _args) {}\
 template<typename C, typename T> _name(C&& c, DBAlloc<T> al)\
-: _name##_Super() BOOST_PP_SEQ_FOR_EACH(DB_MACRO_CAT, CONSTR_, _args)\
+: _name##_Super() BOOST_PP_SEQ_FOR_EACH(_DB_MACRO_CAT_, _DBCONSTR, _args)\
 { c(*this); }
 
 
-#define _DBOBJ_DEF_(_args) BOOST_PP_SEQ_FOR_EACH(DB_MACRO_CAT, BODY_, _args)
+#define _DBOBJ_DEF_(_args) BOOST_PP_SEQ_FOR_EACH(_DB_MACRO_CAT_, _DBBODY, _args)
 
 
 #define _DBOBJ_BODY_(_name, _args)  \
 public:\
 _DBOBJ_CONSTR_(_name, _args)\
-_DBOBJ_DEF_(_args)
+_DBOBJ_DEF_(_args)\
+private:
 
 
 
@@ -175,8 +176,8 @@ class _objname;\
 using _objname##_Super = unitedb::DBObject<_objname, _typecode>;\
 class _objname : public unitedb::DBObject<_objname, _typecode>
 
-#define DBOBJ_BODY(_name, _args)  _DBOBJ_BODY_(_name, _args)
+#define DBOBJ_BODY(_name, _args) _DBOBJ_BODY_(_name, _args)
 
-//DB_FIELD(_t, _v, _def) _t _v = _def;
-//DB_MFIELD(_t, _v) _t _v;
+#define DB_FIELD(_t, _v, _def) _FIELD_(_t, _v, _def)
+#define DB_MFIELD(_t, _v) _MFIELD_(_t, _v)
 
