@@ -65,6 +65,7 @@ namespace unitedb
 		typedef typename MappedIndex::ContainerType MultiIndexType;
 		typedef typename MappedIndex::ObjectType ObjectType;
 		typedef typename MappedIndex::AllocType AllocType;
+		typedef typename ObjectType::ObjectID ObjectID;
 
 		static std::string TableName()
 		{
@@ -75,13 +76,13 @@ namespace unitedb
 
 
 		template<typename OrderedTag, typename T2>
-		ObjPtr<ObjectType> FindObject(const ObjectID<T2>& k) const
+		ObjPtr<ObjectType> FindObject(const TObjectID<T2>& k) const
 		{
 			return FindObject<OrderedTag>(k.GetValue());
 		}
 
 		template<typename T2>
-		ObjPtr<ObjectType> FindObject(const ObjectID<T2>& k) const
+		ObjPtr<ObjectType> FindObject(const TObjectID<T2>& k) const
 		{
 			return FindObjectImpl<ByObjectID>(k.GetValue());
 		}

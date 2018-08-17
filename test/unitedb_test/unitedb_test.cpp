@@ -313,6 +313,48 @@ BOOST_AUTO_TEST_CASE(db_commit_test)
 	BOOST_CHECK(db->GetLastCommit() == revdba);
 	BOOST_CHECK(tbl->FindObject(tid)->tval == cvalb);
 }
+BOOST_AUTO_TEST_CASE(db_reload_test)
+{
+	TestBTable::ObjectID id;
 
+	const int cval = 12;
+	const std::vector<int> arr = { 1, 2, 3 };
+	{
+		std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::Discard));//);//
+
+		db->InitTable<TestBTable>();
+
+		auto tbl = db->GetTable<TestBTable>();
+
+		auto val = tbl->NewObject([&](DBTestB& b)
+		{
+			b.xx = 12;
+			b.arr.assign(arr.begin(), arr.end());
+		});
+
+		id = val->GetID();
+
+		db->Close();
+	}
+
+	{
+
+		std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::NoFlag));//);//
+
+		db->InitTable<TestBTable>();
+
+		auto tbl = db->GetTable<TestBTable>();
+
+		auto val = tbl->FindObject(id);
+
+		std::vector<int> oldarr;
+		oldarr.assign(val->arr.begin(), val->arr.end());
+
+		BOOST_CHECK(val->xx == cval);
+
+		BOOST_CHECK(oldarr == arr);
+	}
+
+}
 
 BOOST_AUTO_TEST_SUITE_END()

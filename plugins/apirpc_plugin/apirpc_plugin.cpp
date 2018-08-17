@@ -3,6 +3,7 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
+#include <boost/beast/version.hpp>
 #include "pro/log/log.hpp"
 
 using namespace std;
@@ -42,12 +43,30 @@ namespace xmax {
 	*/
 	class HttpSession : public std::enable_shared_from_this<HttpSession> {
 
+		class Queue {
+			enum {
+				kQueueLimit = 10
+			};
+
+		public:
+			explicit Queue(HttpSession& s) :session_{ s } {}
+
+			template<bool isRequest, class Body, class Fields>
+			void operator()(http::message<isRequest, Body, Fields>&& msg) {
+				static_assert(kQueueLimit > 0, "Http session queue limit need above 0.");
+			}
+
+		private:
+			HttpSession& session_;
+		};
+
 	public:
 		explicit HttpSession(tcp::socket socket);
 
 		void Run();
 		void DoRead();
 		void Close();
+		void HandleRequest();
 
 		//Events
 		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);		
@@ -95,6 +114,39 @@ namespace xmax {
 
 	}
 
+
+	//--------------------------------------------------
+	void HttpSession::HandleRequest()
+	{
+		auto& req = request_;
+
+		// Returns a bad request response
+		auto const bad_request =
+			[&req](boost::beast::string_view why)
+		{
+			http::response<http::string_body> res{ http::status::bad_request, req.version() };
+			res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+			res.set(http::field::content_type, "text/html");
+			res.keep_alive(req.keep_alive());
+			res.body() = why.to_string();
+			res.prepare_payload();
+			return res;
+		};
+
+		// Returns a not found response
+		auto const not_found =
+			[&req](boost::beast::string_view target)
+		{
+			http::response<http::string_body> res{ http::status::not_found, req.version() };
+			res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+			res.set(http::field::content_type, "text/html");
+			res.keep_alive(req.keep_alive());
+			res.body() = "The resource '" + target.to_string() + "' was not found.";
+			res.prepare_payload();
+			return res;
+		};
+	}
+
 	//--------------------------------------------------
 	void HttpSession::OnRead(boost::system::error_code ec,
 		std::size_t bytes_transferred)
@@ -116,6 +168,8 @@ namespace xmax {
 			ErrorSprintf("Http session on read failed with error message:%s", ec.message().c_str());
 			return;
 		}
+
+		HandleRequest();
 		
 	}
 

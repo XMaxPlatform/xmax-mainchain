@@ -10,24 +10,28 @@ namespace pro
 {
 	#define BASE_EXCEPT(desc, src) throw Exception(desc, __FILE__, __LINE__)
 
+	enum ExceptionType : int
+	{
+		EXT_UNDEF_TYPE = 0,
+		EXT_ASSERT_ERROR = 1,
+		EXT_SERIALIZE_ERROR = 100,
+		EXT_FORMAT_ERROR = 200,
+		EXT_MEMORY_ERROR = 300,
+
+		//EXT_FILE_READ_FALSE,
+		//EXT_FILE_WRITE_FALSE,
+		//EXT_FILE_NOT_FOUND,
+		//EXT_ITEM_NOT_FOUND,
+		//EXT_SYSTEM_ERROR,
+		EXT_CUSTOM_BEGIN = 1000,
+	};
+
+	class ExceptionImpl;
+
 	class Exception : public std::exception
 	{
 	public:
-		enum ExceptionType
-		{
-			EXT_UNDEF_TYPE = 0,
-			EXT_ASSERT_ERROR = 1,
-			EXT_SERIALIZE_ERROR = 100,
-			EXT_FORMAT_ERROR = 200,
-			EXT_MEMORY_ERROR = 300,
-			
-			//EXT_FILE_READ_FALSE,
-			//EXT_FILE_WRITE_FALSE,
-			//EXT_FILE_NOT_FOUND,
-			//EXT_ITEM_NOT_FOUND,
-			//EXT_SYSTEM_ERROR,
-			EXT_CUSTOM_BEGIN = 1000,
-		};
+		
 
 		/** Default constructor.
         */
@@ -98,5 +102,7 @@ namespace pro
 		string source_;
 		string file_;
 		mutable string full_desc_;
+
+		std::shared_ptr<ExceptionImpl> impl_;
 	};
 }

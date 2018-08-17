@@ -35,6 +35,20 @@ namespace pro {
 
 	}
 
+	class LogMessageImpl {
+	public:
+		LogMessageImpl(const std::string& content, const LogContext& context) :
+			msg_content(content),
+			log_context(context)
+		{
+
+		}
+
+
+
+		std::string msg_content;
+		LogContext log_context;
+	};
 
 	//--------------------------------------------------
 	std::string LogContext::ToString() const
@@ -46,13 +60,26 @@ namespace pro {
 	* LogMessage class implementation
 	*/
 	//--------------------------------------------------
-	LogMessage::LogMessage(const std::string& msg_content, LogLevel level):
-		msg_content_(msg_content),
-		log_context_(level)
+	LogMessage::LogMessage(const std::string& msg_content, LogLevel level)
+	{
+		impl_ = std::make_shared<LogMessageImpl>(msg_content, LogContext{level});
+	}
+
+		
+
+	//--------------------------------------------------
+	LogMessage::LogMessage(const std::string& msg_contet, LogContext context):
+		impl_(std::make_shared<LogMessageImpl>(msg_contet, context))
 	{
 
 	}
 
-		
+	//--------------------------------------------------
+	std::string LogMessage::GetMessage() const
+	{
+
+		return impl_->msg_content;
+
+	}
 
 }

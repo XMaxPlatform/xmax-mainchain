@@ -60,6 +60,8 @@ namespace unitedb
 
 		virtual void Flush() = 0;
 
+		virtual void Close() = 0;
+
 		virtual bool Commit(DBRevision rev) = 0;
 
 		virtual DBRevision GetTopRevision() const = 0;

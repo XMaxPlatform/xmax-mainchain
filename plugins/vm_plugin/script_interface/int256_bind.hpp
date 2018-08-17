@@ -1,18 +1,27 @@
-//uint ui28 decl
+#pragma once
+#include <functional>
+#include <map>
 #include <libplatform/libplatform.h>
 #include <v8.h>
-using namespace v8;
+#include "V8BindObject.hpp"
+#include "pro/types/generictypes.hpp"
+
 namespace xmax {
 	namespace scriptv8 {
-		class V8i256
+		class V8i256 : public V8BindObject<V8i256>
 		{
 		public:
-			V8i256()
-			{
+			V8i256():value_(){}
+			~V8i256() {}
+			static V8i256* NewV8CppObj(const v8::FunctionCallbackInfo<v8::Value>& args);
+			static void RegisterWithV8(v8::Isolate* isolate, v8::Handle<v8::ObjectTemplate> global);
+			static void ConstructV8Object(const v8::FunctionCallbackInfo<v8::Value>& args);
+			static void WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8i256>& data);
 
-			}
-			
-			int data[8];
+		private:
+			pro::int256 value_;
 		};
+
+
 	}
 }

@@ -93,18 +93,25 @@ BOOST_AUTO_TEST_CASE(any_value)
 BOOST_AUTO_TEST_CASE(any_value_cast)
 {
 	// base values for testing
+	// int to/from string group
 	pro::AnyValue anyint = 42;
 	pro::AnyValue anyintstr = "42";
+	// bool to/from string group
 	pro::AnyValue anybool = true;
 	pro::AnyValue anyboolstr = "true";
 	pro::AnyValue anydouble = 2333.2333;
-	// cast to string
+	// cast to string from int, bool, double
 	BOOST_CHECK("42" == anyint.CastTo<string>());
 	BOOST_CHECK("true" == anybool.CastTo<string>());
 	BOOST_CHECK("2333.2333" == anydouble.CastTo<string>());
-	// cast to int
+	// string cast to int
+	// compare with meta
 	BOOST_CHECK(42 == anyintstr.CastTo<int>());
+	// string cast to bool
+	// compare with meta
 	BOOST_CHECK(true == anyboolstr.CastTo<bool>());
+	// double cast to int
+	// compare with meta
 	BOOST_CHECK(2333 == anydouble.CastTo<int>());
 }
 
