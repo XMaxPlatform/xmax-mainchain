@@ -105,10 +105,13 @@ BOOST_AUTO_TEST_CASE(any_value_cast)
 	BOOST_CHECK("true" == anybool.CastTo<string>());
 	BOOST_CHECK("2333.2333" == anydouble.CastTo<string>());
 	// string cast to int
+	// compare with meta
 	BOOST_CHECK(42 == anyintstr.CastTo<int>());
 	// string cast to bool
+	// compare with meta
 	BOOST_CHECK(true == anyboolstr.CastTo<bool>());
 	// double cast to int
+	// compare with meta
 	BOOST_CHECK(2333 == anydouble.CastTo<int>());
 }
 
