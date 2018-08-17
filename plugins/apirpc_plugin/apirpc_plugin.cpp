@@ -118,14 +118,16 @@ namespace xmax {
 	//--------------------------------------------------
 	void HttpSession::HandleRequest()
 	{
+		auto& req = request_;
+
 		// Returns a bad request response
 		auto const bad_request =
-			[this](boost::beast::string_view why)
+			[&req](boost::beast::string_view why)
 		{
-			http::response<http::string_body> res{ http::status::bad_request, request_.version() };
+			http::response<http::string_body> res{ http::status::bad_request, req.version() };
 			res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
 			res.set(http::field::content_type, "text/html");
-			res.keep_alive(request_.keep_alive());
+			res.keep_alive(req.keep_alive());
 			res.body() = why.to_string();
 			res.prepare_payload();
 			return res;
@@ -133,12 +135,12 @@ namespace xmax {
 
 		// Returns a not found response
 		auto const not_found =
-			[this](boost::beast::string_view target)
+			[&req](boost::beast::string_view target)
 		{
-			http::response<http::string_body> res{ http::status::not_found, request_.version() };
+			http::response<http::string_body> res{ http::status::not_found, req.version() };
 			res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
 			res.set(http::field::content_type, "text/html");
-			res.keep_alive(request_.keep_alive());
+			res.keep_alive(req.keep_alive());
 			res.body() = "The resource '" + target.to_string() + "' was not found.";
 			res.prepare_payload();
 			return res;
