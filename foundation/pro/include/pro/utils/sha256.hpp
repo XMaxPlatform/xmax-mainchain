@@ -14,7 +14,7 @@ public:
 	CSHA256();
 
 	~CSHA256();
-
+	//calculate hash value for a non pod type
 	template<typename T> void Hash(const T& src);
 
 	void Hash(const std::vector<unsigned char>& src);
