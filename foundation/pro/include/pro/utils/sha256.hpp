@@ -21,9 +21,9 @@ public:
 	// calculate hash value from a iterator
 	void Hash(std::vector<unsigned char>::iterator start, std::vector<unsigned char>::iterator end);
 	void Hash(std::vector<unsigned char>::const_iterator cstart, std::vector<unsigned char>::const_iterator cend);
-
+	// get hex string of the hash
 	const std::string& GetHex() const;
-
+	// get hash data
 	const unsigned char* Data() const;
 
 	const std::vector<unsigned char>& GetDataVec() const;
