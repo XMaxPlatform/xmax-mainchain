@@ -63,7 +63,7 @@ namespace unitedb
 	class DBObject : public DBObjBase
 	{
 	public:
-		typedef TObjectID<_Obj> TypeID;
+		typedef TObjectID<_Obj> ObjectID;
 		DBObject() = default;
 		template<typename T>
 		DBObject(DBAlloc<T>)
@@ -71,9 +71,9 @@ namespace unitedb
 
 		}
 
-		TypeID GetID() const
+		ObjectID GetID() const
 		{
-			return TypeID(getCode());
+			return ObjectID(getCode());
 		}
 
 		ObjectTypeCode GetTypeCode() const
