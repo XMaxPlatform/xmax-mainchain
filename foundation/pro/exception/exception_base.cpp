@@ -4,6 +4,16 @@
 
 namespace pro
 {
+	class ExceptionImpl {
+		long line{ 0 };
+		ExceptionType type{ EXT_UNDEF_TYPE };
+		string title;
+		string description;
+		string source;
+		string file;
+		string full_desc;
+	};
+
 	Exception::~Exception() throw()
 	{
 
