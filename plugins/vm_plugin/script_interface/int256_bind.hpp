@@ -15,7 +15,8 @@ namespace xmax {
 			~V8i256() {}
 			static V8i256* NewV8CppObj(const v8::FunctionCallbackInfo<v8::Value>& args);
 			static void RegisterWithV8(v8::Isolate* isolate, v8::Handle<v8::ObjectTemplate> global);
-			
+			static void ConstructV8Object(const v8::FunctionCallbackInfo<v8::Value>& args);
+	
 
 		private:
 		};
