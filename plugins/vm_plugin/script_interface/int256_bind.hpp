@@ -19,6 +19,7 @@ namespace xmax {
 			static void WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8i256>& data);
 
 		private:
+			pro::int256 value_;
 		};
 
 
