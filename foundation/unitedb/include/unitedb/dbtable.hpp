@@ -65,7 +65,7 @@ namespace unitedb
 		typedef typename MappedIndex::ContainerType MultiIndexType;
 		typedef typename MappedIndex::ObjectType ObjectType;
 		typedef typename MappedIndex::AllocType AllocType;
-		//typedef typename ObjectType::TypeID TObjectID;
+		typedef typename ObjectType::ObjectID ObjectID;
 
 		static std::string TableName()
 		{
