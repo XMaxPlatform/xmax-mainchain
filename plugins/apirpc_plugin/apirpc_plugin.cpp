@@ -130,6 +130,19 @@ namespace xmax {
 			res.prepare_payload();
 			return res;
 		};
+
+		// Returns a not found response
+		auto const not_found =
+			[this](boost::beast::string_view target)
+		{
+			http::response<http::string_body> res{ http::status::not_found, request_.version() };
+			res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+			res.set(http::field::content_type, "text/html");
+			res.keep_alive(request_.keep_alive());
+			res.body() = "The resource '" + target.to_string() + "' was not found.";
+			res.prepare_payload();
+			return res;
+		};
 	}
 
 	//--------------------------------------------------
