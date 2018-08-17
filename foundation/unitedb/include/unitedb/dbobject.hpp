@@ -32,23 +32,23 @@ namespace unitedb
 	};
 
 	template<typename _Obj>
-	class ObjectID
+	class TObjectID
 	{
 	public:
-		ObjectID(ObjIDCode i = 0) :val_(i) {}
+		TObjectID(ObjIDCode i = 0) :val_(i) {}
 
-		ObjectID& operator++() 
+		TObjectID& operator++() 
 		{ 
 			++val_; 
 			return *this; 
 		}
 
-		friend bool operator < (const ObjectID& a, const ObjectID& b) { return a.val_ < b.val_; }
-		friend bool operator > (const ObjectID& a, const ObjectID& b) { return a.val_ > b.val_; }
-		friend bool operator == (const ObjectID& a, const ObjectID& b) { return a.val_ == b.val_; }
-		friend bool operator != (const ObjectID& a, const ObjectID& b) { return a.val_ != b.val_; }
-		friend std::ostream& operator<<(std::ostream& s, const ObjectID& id) {
-			s << boost::core::demangle(typeid(ObjectID<T>).name()) << '(' << id.val_ << ')'; return s;
+		friend bool operator < (const TObjectID& a, const TObjectID& b) { return a.val_ < b.val_; }
+		friend bool operator > (const TObjectID& a, const TObjectID& b) { return a.val_ > b.val_; }
+		friend bool operator == (const TObjectID& a, const TObjectID& b) { return a.val_ == b.val_; }
+		friend bool operator != (const TObjectID& a, const TObjectID& b) { return a.val_ != b.val_; }
+		friend std::ostream& operator<<(std::ostream& s, const TObjectID& id) {
+			s << boost::core::demangle(typeid(TObjectID<T>).name()) << '(' << id.val_ << ')'; return s;
 		}
 
 		const ObjIDCode& GetValue() const
@@ -63,7 +63,7 @@ namespace unitedb
 	class DBObject : public DBObjBase
 	{
 	public:
-		typedef ObjectID<_Obj> TypeID;
+		typedef TObjectID<_Obj> TypeID;
 		DBObject() = default;
 		template<typename T>
 		DBObject(DBAlloc<T>)

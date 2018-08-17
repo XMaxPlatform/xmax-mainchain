@@ -77,6 +77,14 @@ namespace unitedb
 			}
 		}
 
+		virtual void Close() override
+		{
+			if (db_file_)
+			{
+				db_file_.reset();
+			}
+		}
+
 		virtual bool Commit(DBRevision rev) override
 		{
 			return UndoMgr->Commit(rev);
