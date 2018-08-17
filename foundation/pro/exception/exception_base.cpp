@@ -155,6 +155,8 @@ namespace pro
 		source_ = rhs.source_;
 		file_ = rhs.file_;
 
+		impl_ = rhs.impl_;
+
 		return *this;
 	}
 
@@ -167,6 +169,8 @@ namespace pro
 		description_ = std::forward<string>(rhs.description_);
 		source_ = std::forward<string>(rhs.source_);
 		file_ = std::forward<string>(rhs.file_);
+
+		impl_ = rhs.impl_;
 
 		return *this;
 	}
