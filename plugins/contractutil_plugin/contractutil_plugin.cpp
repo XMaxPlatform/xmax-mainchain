@@ -68,7 +68,7 @@ namespace xmax {
 		printf("test a log");
 	}
 	//-------------------------------------------------------
-	void Clean()
+	void ContractUtilPlugin::Clean()
 	{
 		// todo
 	}
