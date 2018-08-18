@@ -90,11 +90,11 @@ inline const std::vector<unsigned char>& CSHA256::GetDataVec() const
 class DoubleSHA256
 {
 public:
-
+	// calculate hash value from a vector
 	void Hash(const std::vector<unsigned char>& src);
-
+	// calculate hash value from a iterator
 	void Hash(std::vector<unsigned char>::iterator start, std::vector<unsigned char>::iterator end);
-
+	// get hash data
 	const unsigned char* Data() const;
 
 protected:
