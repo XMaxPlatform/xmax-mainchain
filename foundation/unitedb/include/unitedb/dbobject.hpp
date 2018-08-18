@@ -60,13 +60,13 @@ namespace unitedb
 	};
 
 	template<typename _Obj, ObjectTypeCode _Type>
-	class DBObject : public DBObjBase
+	class TDBObject : public DBObjBase
 	{
 	public:
 		typedef TObjectID<_Obj> ObjectID;
-		DBObject() = default;
+		TDBObject() = default;
 		template<typename T>
-		DBObject(DBAlloc<T>)
+		TDBObject(DBAlloc<T>)
 		{
 
 		}
@@ -178,8 +178,8 @@ private:
 
 #define DBOBJ_CLASS(_objname, _typecode )  \
 class _objname;\
-using _objname##_Super = unitedb::DBObject<_objname, _typecode>;\
-class _objname : public unitedb::DBObject<_objname, _typecode>
+using _objname##_Super = unitedb::TDBObject<_objname, _typecode>;\
+class _objname : public unitedb::TDBObject<_objname, _typecode>
 
 #define DBOBJ_BODY(_name, _args) _DBOBJ_BODY_(_name, _args)
 
