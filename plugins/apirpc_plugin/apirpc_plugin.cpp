@@ -72,6 +72,11 @@ namespace xmax {
 		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);		
 
 	private:
+		bool IsValidRequestVerb(http::verb& req_method) const {
+			return req_method == http::verb::get || req_method == http::verb::head || req_method == http::verb::post;
+		}
+
+	private:
 		tcp::socket socket_;
 		http::request<http::string_body> request_;
 		boost::beast::flat_buffer buffer_;
@@ -158,6 +163,7 @@ namespace xmax {
 			res.prepare_payload();
 			return res;
 		};
+		
 	}
 
 	//--------------------------------------------------
