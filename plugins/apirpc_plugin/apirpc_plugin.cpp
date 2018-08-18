@@ -81,13 +81,15 @@ namespace xmax {
 		http::request<http::string_body> request_;
 		boost::beast::flat_buffer buffer_;
 		boost::asio::strand<boost::asio::io_context::executor_type> strand_;
+		Queue queue_;
 	};
 
 
 	//--------------------------------------------------
 	HttpSession::HttpSession(tcp::socket socket):
 		socket_(std::move(socket)),
-		strand_(socket.get_executor())
+		strand_(socket.get_executor()),
+		queue_(*this)
 	{
 
 	}
