@@ -145,6 +145,19 @@ namespace xmax {
 			res.prepare_payload();
 			return res;
 		};
+
+		// Returns a server error response
+		auto const server_error =
+			[&req](boost::beast::string_view what)
+		{
+			http::response<http::string_body> res{ http::status::internal_server_error, req.version() };
+			res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+			res.set(http::field::content_type, "text/html");
+			res.keep_alive(req.keep_alive());
+			res.body() = "An error occurred: '" + what.to_string() + "'";
+			res.prepare_payload();
+			return res;
+		};
 	}
 
 	//--------------------------------------------------
