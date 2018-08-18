@@ -19,9 +19,9 @@ public:
 	int Check(const unsigned char *vch);
 
 	bool ECC_InitSanityCheck();
-
+	// init secp256
 	void ECC_Start();
-
+	// close secp256
 	void ECC_Stop();
 
 	secp256k1_context* GetSecpContext() const;
