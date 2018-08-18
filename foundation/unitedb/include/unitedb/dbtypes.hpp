@@ -29,9 +29,16 @@ namespace unitedb
 
 	constexpr DBRevision InvalidRevision = -1;
 
+	class IDBTable
+	{
+	public:
+		virtual ~IDBTable() {}
+	};
+
+
+
+}
 
 #define DB_ASSERT(expr) BOOST_ASSERT(expr)
 
 #define DB_ASSERT_MSG(expr, msg) BOOST_ASSERT_MSG(expr, msg)
-
-}
