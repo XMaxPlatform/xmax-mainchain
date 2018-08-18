@@ -11,9 +11,9 @@ namespace pro
 	class Secp256Context : public Singleton<Secp256Context>
 {
 public:
-
+	//import private key
 	int EC_PrivateKey_Import(const secp256k1_context* ctx, unsigned char *out32, const unsigned char *privkey, size_t privkeylen);
-
+	//export private key
 	int EC_PrivateKey_Export(const secp256k1_context* ctx, unsigned char* privkey, size_t* privkeylen, const unsigned char* key32, int compressed);
 
 	int Check(const unsigned char *vch);
