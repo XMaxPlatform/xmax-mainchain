@@ -43,6 +43,11 @@ namespace pro
 		, description_(std::forward<string>(_description))
 		, source_(std::forward<string>(_source))
 	{
+		impl_->line = 0;
+		impl_->type = EXT_UNDEF_TYPE;
+		impl_->title = "Exception";
+		impl_->description = _description;
+		impl_->source = _source;
 	}
 	Exception::Exception(const string& _description, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }
