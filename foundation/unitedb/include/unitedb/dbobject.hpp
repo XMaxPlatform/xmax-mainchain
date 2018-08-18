@@ -14,12 +14,12 @@
 namespace unitedb
 {
 
-	class DBObjBase
+	class DBObjectBase
 	{
 	public:
 		ObjIDCode __objid = 0;
 
-		static inline ObjIDCode __getObjidcode(const DBObjBase& base)
+		static inline ObjIDCode __getObjidcode(const DBObjectBase& base)
 		{
 			return base.getCode();
 		}
@@ -60,7 +60,7 @@ namespace unitedb
 	};
 
 	template<typename _Obj, ObjectTypeCode _Type>
-	class TDBObject : public DBObjBase
+	class TDBObject : public DBObjectBase
 	{
 	public:
 		typedef TObjectID<_Obj> ObjectID;

@@ -179,12 +179,12 @@ namespace unitedb
 			auto result = GetMapped().modify(GetMapped().iterator_to(obj), update);
 			if (!result)
 			{
-				LastUpdateFailure(DBObjBase::__getObjidcode(obj));
+				LastUpdateFailure(DBObjectBase::__getObjidcode(obj));
 				BOOST_THROW_EXCEPTION(std::logic_error("Could not Update object, most likely a uniqueness constraint was violated."));
 			}	
 		}
 
-		virtual void PushUndo(UndoOp::UndoCode code, const DBObjBase* undo)
+		virtual void PushUndo(UndoOp::UndoCode code, const DBObjectBase* undo)
 		{
 
 		}
@@ -207,7 +207,7 @@ namespace unitedb
 
 	struct ByObjectID;
 
-	#define INDEXED_BY_OBJECT_ID boost::multi_index::ordered_unique<boost::multi_index::tag<ByObjectID>, boost::multi_index::member<DBObjBase, ObjIDCode, &DBObjBase::__objid>>
+	#define INDEXED_BY_OBJECT_ID boost::multi_index::ordered_unique<boost::multi_index::tag<ByObjectID>, boost::multi_index::member<DBObjectBase, ObjIDCode, &DBObjectBase::__objid>>
 
 	template<typename _Object, typename... _Args>
 	using DBTableDeclaration = boost::multi_index_container<_Object, _Args..., DBAlloc<_Object> >;

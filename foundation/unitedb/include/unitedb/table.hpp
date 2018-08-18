@@ -42,7 +42,7 @@ namespace unitedb
 		}
 		inline ObjIDCode ObjID() const
 		{
-			return DBObjBase::__getObjidcode(*this);
+			return DBObjectBase::__getObjidcode(*this);
 		}
 
 	protected:
@@ -114,7 +114,7 @@ namespace unitedb
 			stack_ = owner_->GetMappdFile()->find_or_construct< UndoStackType >(type_name.c_str()) (DefAlloc(owner_->GetSegmentManager()));
 		}
 
-		inline const ObjectType* AsObject(const DBObjBase* base)
+		inline const ObjectType* AsObject(const DBObjectBase* base)
 		{
 			return static_cast<const ObjectType*>(base);
 		}
@@ -124,7 +124,7 @@ namespace unitedb
 			return const_cast<SelfType*>(this);
 		}
 
-		virtual void PushUndo(UndoOp::UndoCode code, const DBObjBase* undo) override
+		virtual void PushUndo(UndoOp::UndoCode code, const DBObjectBase* undo) override
 		{
 			pushUndoImpl(code, undo);
 		}
@@ -212,7 +212,7 @@ namespace unitedb
 			return no_undo_;
 		}
 
-		void pushUndoImpl(UndoOp::UndoCode code, const DBObjBase* undo)
+		void pushUndoImpl(UndoOp::UndoCode code, const DBObjectBase* undo)
 		{
 			if (noUndo())
 			{
@@ -223,14 +223,14 @@ namespace unitedb
 			{
 			case unitedb::UndoOp::Create:
 			{
-				owner_->PushUndo(UndoOpArg(code, DBObjBase::__getObjidcode(*undo), ObjectType::TypeCode));
+				owner_->PushUndo(UndoOpArg(code, DBObjectBase::__getObjidcode(*undo), ObjectType::TypeCode));
 			}
 			break;
 			case unitedb::UndoOp::Update:
 			case unitedb::UndoOp::Delete:
 			{
 				pushUndoObject(undo, owner_->TopRevision(), code);
-				owner_->PushUndo(UndoOpArg(code, DBObjBase::__getObjidcode(*undo), ObjectType::TypeCode));
+				owner_->PushUndo(UndoOpArg(code, DBObjectBase::__getObjidcode(*undo), ObjectType::TypeCode));
 			}
 			break;
 			default:
@@ -269,7 +269,7 @@ namespace unitedb
 			}
 		}
 
-		void pushUndoObject(const DBObjBase* undo, DBRevision v, UndoOp::UndoCode c)
+		void pushUndoObject(const DBObjectBase* undo, DBRevision v, UndoOp::UndoCode c)
 		{
 			stack_->cache_.EmplaceBack().Set(*AsObject(undo), v, c);
 		}
