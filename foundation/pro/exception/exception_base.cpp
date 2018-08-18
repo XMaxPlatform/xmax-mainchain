@@ -28,7 +28,13 @@ namespace pro
 		, description_(_description)
 		, source_(_source)
 	{
+		impl_->line = 0;
+		impl_->type = EXT_UNDEF_TYPE;
+		impl_->title = "Exception";
+		impl_->description = _description;
+		impl_->source = _source;
 	}
+
 	Exception::Exception(string&& _description, string&& _source)
 		: impl_{ new ExceptionImpl() }
 		, line_(0)
