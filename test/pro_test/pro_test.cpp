@@ -16,6 +16,7 @@ using namespace pro;
 BOOST_AUTO_TEST_SUITE(pro_utils_suite)
 
 namespace {
+	// inherit singleton for test
 	class TestSingleton : public pro::Singleton<TestSingleton> {
 		DECLARE_USE_SINGLETON(TestSingleton);
 
@@ -35,7 +36,9 @@ namespace {
 }
 
 BOOST_AUTO_TEST_CASE(test_singleton) {
+	// 
 	TestSingleton& s1 = TestSingleton::GetInstance();
+
 	TestSingleton::GetInstance().SetA(12345);
 	BOOST_CHECK(s1.GetA() == 12345);
 
