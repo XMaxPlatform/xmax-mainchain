@@ -52,7 +52,7 @@ struct byxx;
 
 typedef DBIndexedBy<
 	DBTestB,
-	boost::multi_index::ordered_unique<boost::multi_index::tag<byxx>, boost::multi_index::member<DBTestB, int, &DBTestB::xx>>
+	multi_index::ordered_unique<multi_index::tag<byxx>, multi_index::member<DBTestB, int, &DBTestB::xx>>
 > TestBIdx;
 
 typedef DBTable<TestBIdx> TestBTable;

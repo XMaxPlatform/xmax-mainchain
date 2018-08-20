@@ -21,7 +21,7 @@ namespace unitedb
 	template<typename _Object, typename... _Args>
 	using DBIndexedBy = boost::multi_index_container<
 		_Object,
-		boost::multi_index::indexed_by<
+		multi_index::indexed_by<
 		INDEXED_BY_OBJECT_ID,
 		_Args...
 		>,
