@@ -97,6 +97,8 @@ public:
 	// get hash data
 	const unsigned char* Data() const;
 
+	const CSHA256& GetSHA() const;
+
 protected:
 private:
 
@@ -122,6 +124,11 @@ inline void DoubleSHA256::Hash(std::vector<unsigned char>::iterator start, std::
 inline const unsigned char* DoubleSHA256::Data() const
 {
 	return sha256_.Data();
+}
+
+inline const CSHA256& DoubleSHA256::GetSHA() const
+{
+	return sha256_;
 }
 
 }

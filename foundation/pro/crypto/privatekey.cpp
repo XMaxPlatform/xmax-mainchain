@@ -54,10 +54,10 @@ PublicKey PrivateKey::GetPubKey() const
 	secp256k1_pubkey pubkey;
 	size_t clen = 65;
 	PublicKey result;
-	int ret = secp256k1_ec_pubkey_create(Secp256Context::GetInstance().GetSecpContext(), &pubkey, Begin());
+	int ret = secp256k1_ec_pubkey_create(Secp256Context::GetInstance().GetSignContext(), &pubkey, Begin());
 
 	secp256k1_ec_pubkey_serialize(
-		Secp256Context::GetInstance().GetSecpContext(),
+		Secp256Context::GetInstance().GetSignContext(),
 		(unsigned char*)result.Begin(),
 		&clen,
 		&pubkey,
@@ -75,10 +75,10 @@ bool PrivateKey::Sign(const CSHA256& hash, std::vector<unsigned char>& vchSig) c
 	size_t nSigLen = 72;
 	
 	secp256k1_ecdsa_signature sig;
-	int ret = secp256k1_ecdsa_sign(Secp256Context::GetInstance().GetSecpContext(), &sig, hash.Data(), Begin(), 
+	int ret = secp256k1_ecdsa_sign(Secp256Context::GetInstance().GetSignContext(), &sig, hash.Data(), Begin(),
 								   secp256k1_nonce_function_rfc6979, NULL);
 	
-	secp256k1_ecdsa_signature_serialize_der(Secp256Context::GetInstance().GetSecpContext(), (unsigned char*)&vchSig[0], &nSigLen, &sig);
+	secp256k1_ecdsa_signature_serialize_der(Secp256Context::GetInstance().GetSignContext(), (unsigned char*)&vchSig[0], &nSigLen, &sig);
 	vchSig.resize(nSigLen);
 	return true;
 }
@@ -110,17 +110,17 @@ bool PrivateKey::SignCompact(const CSHA256& hash, std::vector<unsigned char>& vc
 	vchSig.resize(65);
 	int rec = -1;
 	secp256k1_ecdsa_recoverable_signature sig;
-	int ret = secp256k1_ecdsa_sign_recoverable(Secp256Context::GetInstance().GetSecpContext(), &sig, 
+	int ret = secp256k1_ecdsa_sign_recoverable(Secp256Context::GetInstance().GetSignContext(), &sig,
 											   hash.Data(), Begin(), secp256k1_nonce_function_rfc6979, NULL);
 	
-	secp256k1_ecdsa_recoverable_signature_serialize_compact(Secp256Context::GetInstance().GetSecpContext(), (unsigned char*)&vchSig[1], &rec, &sig);
+	secp256k1_ecdsa_recoverable_signature_serialize_compact(Secp256Context::GetInstance().GetSignContext(), (unsigned char*)&vchSig[1], &rec, &sig);
 	vchSig[0] = 27 + rec + (bCompressed_ ? 4 : 0);
 	return true;
 }
 
 bool PrivateKey::Load(std::vector<unsigned char>& privkey, PublicKey& vchPubKey, bool bSkipCheck)
 {
-	if (!Secp256Context::GetInstance().EC_PrivateKey_Import(Secp256Context::GetInstance().GetSecpContext(), (unsigned char*)Begin(), &privkey[0], privkey.size()))
+	if (!Secp256Context::GetInstance().EC_PrivateKey_Import(Secp256Context::GetInstance().GetSignContext(), (unsigned char*)Begin(), &privkey[0], privkey.size()))
 		return false;
 	bCompressed_ = vchPubKey.IsCompressed();
 	bValid_ = true;

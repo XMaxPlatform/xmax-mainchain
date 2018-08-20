@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pro/types/generictypes.hpp"
+#include "pro/utils/sha256.hpp"
 
 namespace pro
 {
@@ -61,6 +61,15 @@ namespace pro
 				(a.vch_[0] == b.vch_[0] && memcmp(a.vch_, b.vch_, a.Size()) < 0);
 		}
 
+		CSHA256 GetPublicKeyHash() const
+		{
+			DoubleSHA256 ds;
+			std::vector<unsigned char> vec;
+			vec.assign(vch_, vch_ + Size());
+			ds.Hash(vec.begin(), vec.end());
+			return ds.GetSHA();
+		}
+
 		bool IsValid() const
 		{
 			return Size() > 0;
@@ -87,7 +96,7 @@ namespace pro
 		static bool CheckLowS(const std::vector<unsigned char>& vchSig);
 
 		//! Recover a public key from a compact signature.
-		bool RecoverCompact(const uint256& hash, const std::vector<unsigned char>& vchSig);
+		bool RecoverCompact(const CSHA256& hash, const std::vector<unsigned char>& vchSig);
 
 		//! Turn this public key into an uncompressed public key.
 		bool Decompress();

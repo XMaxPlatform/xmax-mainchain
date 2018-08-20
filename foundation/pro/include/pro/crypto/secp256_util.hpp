@@ -23,19 +23,30 @@ public:
 	void ECC_Start();
 	// close secp256
 	void ECC_Stop();
+	void ECC_Verify_Start();
+	void ECC_Verify_End();
 
-	secp256k1_context* GetSecpContext() const;
+	secp256k1_context* GetSignContext() const;
+	secp256k1_context* GetVerifyContext() const;
+
+	int ecdsa_signature_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_signature* sig, const unsigned char *input, size_t inputlen);
 
 protected:
 	
 private:
 
 	secp256k1_context*		secp256k1_context_sign_;
+	secp256k1_context*		secp256k1_context_verify_;
 };
 
-inline secp256k1_context* Secp256Context::GetSecpContext() const
+inline secp256k1_context* Secp256Context::GetSignContext() const
 {
 	return secp256k1_context_sign_;
+}
+
+inline secp256k1_context* Secp256Context::GetVerifyContext() const
+{
+	return secp256k1_context_verify_;
 }
 
 }

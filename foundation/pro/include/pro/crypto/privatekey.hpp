@@ -5,8 +5,7 @@
 
 namespace pro
 {
-	using Base58String = std::string;
-	//class Base58String;
+	class Base58String;
 	class CSHA256;
 	class PrivateKey
 {

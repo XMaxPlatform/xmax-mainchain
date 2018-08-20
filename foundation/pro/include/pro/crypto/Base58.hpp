@@ -46,9 +46,8 @@ namespace pro
 	*/
 	inline bool DecodeBase58Check(const std::string& str, std::vector<unsigned char>& vchRet);
 
-	using Base58String = std::string;
 	class PrivateKey;
-
+	class Base58String;
 	class Base58Data
 	{
 	public:
