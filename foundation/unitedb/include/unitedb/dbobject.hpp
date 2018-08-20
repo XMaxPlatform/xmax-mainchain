@@ -3,34 +3,16 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <unitedb/dbtypes.hpp>
-#include <boost/multi_index_container.hpp> 
-#include <boost/multi_index/ordered_index.hpp> 
-#include <boost/multi_index/member.hpp>
 
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 
+#include <unitedb/dbtypes.hpp>
+#include <unitedb/dbindexed.hpp>
+
+
 namespace unitedb
 {
-
-	class DBObjectBase
-	{
-	public:
-		ObjIDCode __objid = 0;
-
-		static inline ObjIDCode __getObjidcode(const DBObjectBase& base)
-		{
-			return base.getCode();
-		}
-
-	protected:
-		inline ObjIDCode getCode() const
-		{
-			return __objid;
-		}
-	};
-
 	template<typename _Obj>
 	class TObjectID
 	{
