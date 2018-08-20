@@ -11,7 +11,7 @@ namespace xmax {
 
 
 
-		xmax::scriptv8::V8i256::V8i256* V8i256::NewV8CppObj(const v8::FunctionCallbackInfo<v8::Value>& args)
+		V8i256* V8i256::NewV8CppObj(const v8::FunctionCallbackInfo<v8::Value>& args)
 		{
 
 		}
