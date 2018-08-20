@@ -48,6 +48,11 @@ namespace xmax {
 				kQueueLimit = 10
 			};
 
+			struct Work {
+				virtual ~Work();
+				virtual void operator()() = 0;
+			};
+
 		public:
 			explicit Queue(HttpSession& s) :session_{ s } {}
 
