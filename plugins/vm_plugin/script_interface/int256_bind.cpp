@@ -16,5 +16,12 @@ namespace xmax {
 
 		}
 
+		void V8i256::RegisterWithV8(v8::Isolate* isolate, v8::Handle<v8::ObjectTemplate> global)
+		{
+
+		}
+
+
+
 	}
 }
