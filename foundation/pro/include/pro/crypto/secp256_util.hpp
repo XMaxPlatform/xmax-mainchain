@@ -23,6 +23,8 @@ public:
 	void ECC_Start();
 	// close secp256
 	void ECC_Stop();
+
+	// context for verify
 	void ECC_Verify_Start();
 	void ECC_Verify_End();
 
