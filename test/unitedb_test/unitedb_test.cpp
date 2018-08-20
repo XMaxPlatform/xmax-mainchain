@@ -44,11 +44,18 @@ DBOBJ_CLASS(DBTestB, OBJ_TestB)
 
 
 
-typedef DBTableDeclaration<
+//typedef DBTableDeclaration<
+//	DBTestB,
+//	boost::multi_index::indexed_by<
+//	INDEXED_BY_OBJECT_ID
+//	>
+//> TestBIdx;
+
+struct byxx;
+
+typedef DBIndexedBy<
 	DBTestB,
-	boost::multi_index::indexed_by<
-	INDEXED_BY_OBJECT_ID
-	>
+	boost::multi_index::ordered_unique<boost::multi_index::tag<byxx>, boost::multi_index::member<DBTestB, int, &DBTestB::xx>>
 > TestBIdx;
 
 typedef DBTable<TestBIdx> TestBTable;
