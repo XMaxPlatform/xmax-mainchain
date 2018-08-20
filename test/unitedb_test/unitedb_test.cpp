@@ -23,11 +23,8 @@ public:
 };
 
 
-typedef DBTableDeclaration<
-	DBTestA,
-	boost::multi_index::indexed_by<
-	INDEXED_BY_OBJECT_ID
-	>
+typedef DBIndexedBy<
+	DBTestA
 > TestAIdx;
 
 
