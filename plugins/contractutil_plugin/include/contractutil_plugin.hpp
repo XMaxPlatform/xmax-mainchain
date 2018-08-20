@@ -18,7 +18,7 @@ namespace xmax
 	public:
 		 // default initialize
 		ContractUtilPlugin();
-		//
+		// de construction
 		virtual ~ContractUtilPlugin();
 
 		// initialize function
