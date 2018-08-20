@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 	TestSingleton::GetInstance().SetA(12345);
 	// get previously setted value via reference compare with meta value
 	BOOST_CHECK(s1.GetA() == 12345);
-
+	// get another reference via GetInstance()
 	TestSingleton& s2 = TestSingleton::GetInstance();
 	s2.SetA(2333);
 	BOOST_CHECK(s1.GetA() == 2333);
