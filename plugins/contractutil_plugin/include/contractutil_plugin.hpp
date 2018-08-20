@@ -16,6 +16,7 @@ namespace xmax
 	class ContractUtilPlugin : public xmaxapp::PluginFace {	
 		GENERATED_PLUGIN(ContractUtilPlugin, xmaxapp::PluginFace, nullptr)
 	public:
+		 // default initialize
 		ContractUtilPlugin();
 		virtual ~ContractUtilPlugin();
 
