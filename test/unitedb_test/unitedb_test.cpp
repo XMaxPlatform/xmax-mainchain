@@ -22,7 +22,7 @@ public:
 
 };
 
-struct by_id;
+
 typedef DBTableDeclaration<
 	DBTestA,
 	boost::multi_index::indexed_by<
@@ -43,7 +43,7 @@ DBOBJ_CLASS(DBTestB, OBJ_TestB)
 };
 
 
-struct by_id;
+
 typedef DBTableDeclaration<
 	DBTestB,
 	boost::multi_index::indexed_by<
