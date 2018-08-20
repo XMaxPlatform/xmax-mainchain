@@ -40,6 +40,7 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 	TestSingleton& s1 = TestSingleton::GetInstance();
 	// set value via GetInstance()
 	TestSingleton::GetInstance().SetA(12345);
+	// get previously setted value via reference
 	BOOST_CHECK(s1.GetA() == 12345);
 
 	TestSingleton& s2 = TestSingleton::GetInstance();
