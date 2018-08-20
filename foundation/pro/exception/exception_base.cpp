@@ -75,6 +75,11 @@ namespace pro
 		, line_(_line)
 
 	{
+		impl_->type = EXT_UNDEF_TYPE;
+		impl_->title = "Exception";
+		impl_->description = std::forward<string>(_description);
+		impl_->file = _file;
+		impl_->line = _line;
 	}
 	Exception::Exception(const string& _description, const string& _source, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }
@@ -86,6 +91,12 @@ namespace pro
 		,line_(_line)
 		
 	{
+		impl_->type = EXT_UNDEF_TYPE;
+		impl_->title = "Exception";
+		impl_->description = _description;
+		impl_->source = _source;
+		impl_->file = _file;
+		impl_->line = _line;
 	}
 	Exception::Exception(string&& _description, string&& _source, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }
@@ -97,6 +108,12 @@ namespace pro
 		, line_(_line)
 
 	{
+		impl_->type = EXT_UNDEF_TYPE;
+		impl_->title = "Exception";
+		impl_->description = std::forward<string>(_description);
+		impl_->source = std::forward<string>(_source);
+		impl_->file = _file;
+		impl_->line = _line;
 	}
 	Exception::Exception(int type_, const string& _description, const string& _source, const char* tile_, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }
