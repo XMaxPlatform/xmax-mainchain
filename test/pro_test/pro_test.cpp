@@ -36,7 +36,7 @@ namespace {
 }
 
 BOOST_AUTO_TEST_CASE(test_singleton) {
-	// get refernece via GetInstance()
+	// get reference via GetInstance()
 	TestSingleton& s1 = TestSingleton::GetInstance();
 	// set value via GetInstance()
 	TestSingleton::GetInstance().SetA(12345);
