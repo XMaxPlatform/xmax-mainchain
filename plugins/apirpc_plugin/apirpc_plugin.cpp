@@ -37,6 +37,15 @@ namespace xmax {
 		
 	}
 
+	//--------------------------------------------------
+	template<bool isRequest, class Body, class Fields>
+	void xmax::HttpSession::Queue::operator()(http::message<isRequest, Body, Fields>&& msg)
+	{
+		
+		static_assert(kQueueLimit > 0, "Http session queue limit need above 0.");
+		
+	}
+
 
 	/*
 	* Http session
@@ -49,7 +58,7 @@ namespace xmax {
 			};
 
 			struct Work {
-				virtual ~Work();
+				virtual ~Work() = default;
 				virtual void operator()() = 0;
 			};
 
@@ -57,9 +66,7 @@ namespace xmax {
 			explicit Queue(HttpSession& s) :session_{ s } {}
 
 			template<bool isRequest, class Body, class Fields>
-			void operator()(http::message<isRequest, Body, Fields>&& msg) {
-				static_assert(kQueueLimit > 0, "Http session queue limit need above 0.");
-			}
+			void operator()(http::message<isRequest, Body, Fields>&& msg);
 
 		private:
 			HttpSession& session_;
