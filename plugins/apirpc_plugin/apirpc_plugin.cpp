@@ -66,7 +66,9 @@ namespace xmax {
 		void Run();
 		void DoRead();
 		void Close();
-		void HandleRequest();
+
+		template <class Send>
+		void HandleRequest(Send&& send);
 
 		//Events
 		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);		
@@ -123,7 +125,8 @@ namespace xmax {
 
 
 	//--------------------------------------------------
-	void HttpSession::HandleRequest()
+	template <class Send>
+	void HttpSession::HandleRequest(Send&& send)
 	{
 		auto& req = request_;
 
@@ -190,7 +193,7 @@ namespace xmax {
 			return;
 		}
 
-		HandleRequest();
+		HandleRequest(queue_);
 		
 	}
 
