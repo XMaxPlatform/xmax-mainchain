@@ -8,8 +8,6 @@
 #include <unitedb/typebase.hpp>
 #include <unitedb/table.hpp>
 #include <unitedb/dbundo.hpp>
-#include <boost/interprocess/managed_mapped_file.hpp>
-#include <memory>
 
 namespace unitedb
 {
