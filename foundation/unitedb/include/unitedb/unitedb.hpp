@@ -4,6 +4,7 @@
 */
 #pragma once
 #include <unitedb/dbtypes.hpp>
+#include <unitedb/dbtable.hpp>
 #include <unitedb/database.hpp>
 namespace unitedb 
 {

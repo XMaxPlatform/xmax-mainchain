@@ -3,10 +3,11 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <unitedb/dbtable.hpp>
 #include <unitedb/undo.hpp>
 namespace unitedb
 {
+	class DBObjectBase;
+
 	template<typename T>
 	struct UndoObject : protected T
 	{
