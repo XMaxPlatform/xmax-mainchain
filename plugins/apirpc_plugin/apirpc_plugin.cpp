@@ -37,14 +37,7 @@ namespace xmax {
 		
 	}
 
-	//--------------------------------------------------
-	template<bool isRequest, class Body, class Fields>
-	void xmax::HttpSession::Queue::operator()(http::message<isRequest, Body, Fields>&& msg)
-	{
-		
-		static_assert(kQueueLimit > 0, "Http session queue limit need above 0.");
-		
-	}
+	
 
 
 	/*
@@ -66,7 +59,11 @@ namespace xmax {
 			explicit Queue(HttpSession& s) :session_{ s } {}
 
 			template<bool isRequest, class Body, class Fields>
-			void operator()(http::message<isRequest, Body, Fields>&& msg);
+			void operator()(http::message<isRequest, Body, Fields>&& msg) {
+				static_assert(kQueueLimit > 0, "Http session queue limit need above 0.");
+
+				
+			}
 
 		private:
 			HttpSession& session_;
@@ -86,7 +83,7 @@ namespace xmax {
 		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);		
 
 	private:
-		bool IsValidRequestVerb(http::verb& req_method) const {
+		bool IsValidRequestVerb(const http::verb& req_method) const {
 			return req_method == http::verb::get || req_method == http::verb::head || req_method == http::verb::post;
 		}
 
@@ -135,7 +132,6 @@ namespace xmax {
 
 	}
 
-
 	//--------------------------------------------------
 	template <class Send>
 	void HttpSession::HandleRequest(Send&& send)
@@ -181,6 +177,9 @@ namespace xmax {
 			return res;
 		};
 		
+		if (!IsValidRequestVerb(req.method())) {
+			send(bad_request("Invalid http method."));
+		}
 	}
 
 	//--------------------------------------------------
