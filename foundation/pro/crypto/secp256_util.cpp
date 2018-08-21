@@ -272,30 +272,37 @@ int Secp256Context::ecdsa_signature_parse_der_lax(const secp256k1_context* ctx, 
 		rpos++;
 	}
 	/* Copy R value */
-	if (rlen > 32) {
+	if (rlen > 32) 
+	{
 		overflow = 1;
 	}
-	else {
+	else 
+	{
 		memcpy(tmpsig + 32 - rlen, input + rpos, rlen);
 	}
 
 	/* Ignore leading zeroes in S */
-	while (slen > 0 && input[spos] == 0) {
+	while (slen > 0 && input[spos] == 0) 
+	{
 		slen--;
 		spos++;
 	}
 	/* Copy S value */
-	if (slen > 32) {
+	if (slen > 32) 
+	{
 		overflow = 1;
 	}
-	else {
+	else 
+	{
 		memcpy(tmpsig + 64 - slen, input + spos, slen);
 	}
 
-	if (!overflow) {
+	if (!overflow) 
+	{
 		overflow = !secp256k1_ecdsa_signature_parse_compact(ctx, sig, tmpsig);
 	}
-	if (overflow) {
+	if (overflow) 
+	{
 		/* Overwrite the result again with a correctly-parsed but invalid
 		signature if parsing failed. */
 		memset(tmpsig, 0, 64);
