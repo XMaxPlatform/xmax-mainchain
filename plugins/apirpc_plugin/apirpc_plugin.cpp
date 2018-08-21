@@ -64,9 +64,16 @@ namespace xmax {
 
 				struct WorkImpl : Work {
 
-					HttpSession& session;
-					http::message<isRequest, Body, Fields> msg;
+					HttpSession& session_;
+					http::message<isRequest, Body, Fields> msg_;
+					
+					WorkImpl(HttpSession& session, http::message<isRequest, Body, Fields>&& msg) :
+						session_(session), msg_(std::move(msg)) {
 
+					}
+
+
+					
 				};
 			}
 
