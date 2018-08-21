@@ -62,7 +62,12 @@ namespace xmax {
 			void operator()(http::message<isRequest, Body, Fields>&& msg) {
 				static_assert(kQueueLimit > 0, "Http session queue limit need above 0.");
 
-				
+				struct WorkImpl : Work {
+
+					HttpSession& session;
+					http::message<isRequest, Body, Fields> msg;
+
+				};
 			}
 
 		private:
