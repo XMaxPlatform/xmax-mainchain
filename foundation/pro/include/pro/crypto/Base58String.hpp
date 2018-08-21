@@ -16,7 +16,7 @@ public:
 	const char* c_str() const;
 	size_t length() const;
 
-	int CompareTo(const Base58String& str) const { return string_.compare(str.string_); }
+	int CompareTo(const Base58String& str) const;
 	bool operator==(const Base58String& str) const { return CompareTo(str) == 0; }
 	bool operator<=(const Base58String& str) const { return CompareTo(str) <= 0; }
 	bool operator>=(const Base58String& str) const { return CompareTo(str) >= 0; }
@@ -37,6 +37,11 @@ inline const char* Base58String::c_str() const
 inline size_t Base58String::length() const
 {
 	return string_.length();
+}
+
+inline int Base58String::CompareTo(const Base58String& str) const
+{
+	return string_.compare(str.string_);
 }
 
 }
