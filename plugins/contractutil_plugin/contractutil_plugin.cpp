@@ -71,7 +71,7 @@ namespace xmax {
 	//-------------------------------------------------------
 	void ContractUtilPlugin::Clean()
 	{
-		// todo
+		// 
 		printf("");
 	}
 }
