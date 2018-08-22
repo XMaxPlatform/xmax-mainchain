@@ -187,7 +187,13 @@ namespace pro
 		source_(rhs.source_), 
 		file_(rhs.file_)
 	{
+		impl_->line = rhs.line_;
+		impl_->type = static_cast<ExceptionType>(rhs.type_);
+		impl_->title = rhs.title_;
+		impl_->description = rhs.description_;
+		impl_->file = rhs.file_;
 	}
+
 	Exception::Exception(Exception&& rhs)
 		: impl_{ new ExceptionImpl() }
 		, line_(rhs.line_),
