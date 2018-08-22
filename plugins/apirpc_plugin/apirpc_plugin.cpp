@@ -242,7 +242,10 @@ namespace xmax {
 		if (ec == boost::asio::error::operation_aborted)
 			return;
 
-
+		if (ec) {
+			ErrorSprintf("Http session on write failed with error message:%s", ec.message().c_str());
+			return;
+		}
 	}
 
 	/*
