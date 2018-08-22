@@ -4,6 +4,7 @@
 
 namespace pro
 {
+	//helper class for base58
 	class Base58String
 {
 public:
