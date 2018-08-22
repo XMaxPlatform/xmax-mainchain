@@ -1,3 +1,7 @@
+set(current_lib_name xmaxchain)
+
+
+
 file(GLOB HEADERS "include/*.hpp" "include/objects/*.hpp")
 file (GLOB SOURCE_FILES "*.cpp" "objects/*.cpp")
 
@@ -14,14 +18,14 @@ source_group(
 	"CMakeLists.txt"
 )
 
-add_library( xmaxchain ${SOURCE_FILES} ${HEADERS}  )
+add_library( ${current_lib_name} ${SOURCE_FILES} ${HEADERS}  )
 
 
 target_link_libraries(
-        xmaxchain 
+        ${current_lib_name} 
         ${Boost_LIBRARIES} ${PLATFORM_LIBRARIES} )
 target_include_directories(${current_lib_name}
-        xmaxchain PUBLIC "include" "${CMAKE_CURRENT_SOURCE_DIR}"
+        ${current_lib_name} PUBLIC "include" "${CMAKE_CURRENT_SOURCE_DIR}"
         ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../../libraries/picosha2
         
@@ -29,4 +33,4 @@ target_include_directories(${current_lib_name}
 
 
 
-set_target_properties( xmaxchain PROPERTIES PUBLIC_HEADER "${HEADERS}" FOLDER "4.BlockChain")
+set_target_properties( ${current_lib_name} PROPERTIES PUBLIC_HEADER "${HEADERS}" FOLDER "4.BlockChain")
