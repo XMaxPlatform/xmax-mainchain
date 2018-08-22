@@ -1,4 +1,4 @@
-set(current_lib_name xmaxchain)
+set(current_lib_name chain)
 
 
 
