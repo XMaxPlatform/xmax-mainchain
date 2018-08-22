@@ -1,30 +1,85 @@
 set(current_lib_name chain)
 
+set(H_FILES)
+set(S_FILES)
+
+function(list_root ref_hpps ref_cpps hpps cpps)
+
+	if( WIN32 )
+		set(hscope "include")
+		set(sscope "src")
+	else()
+		set(hscope "include")
+		set(sscope "src")
+	endif()
 
 
-file(GLOB HEADERS "include/*.hpp" "include/objects/*.hpp")
-file (GLOB SOURCE_FILES "*.cpp" "objects/*.cpp")
+	file(GLOB hfiles "include/*.hpp")
+	file(GLOB sfiles "*.cpp")
 
-source_group( 
-	include
-	FILES 
-	${HEADERS}
-)
+	source_group( 
+		${hscope}
+		FILES 
+		${hfiles}
+	)
+	
+	source_group( 
+		${sscope}
+		FILES 
+		${sfiles}
+	)
+	set(newhpp "${hpps};${hfiles}")
+	set(${ref_hpps} ${newhpp} PARENT_SCOPE)
 
-source_group( 
-	src
-	FILES 
-	${SOURCE_FILES}
-	"CMakeLists.txt"
-)
+	set(newcpp "${cpps};${sfiles}")
+	set(${ref_cpps} ${newcpp} PARENT_SCOPE)
 
-add_library( ${current_lib_name} ${SOURCE_FILES} ${HEADERS}  )
+endfunction(list_root)
+
+
+function(list_source ref_hpps ref_cpps hpps cpps code_scope)
+
+	if( WIN32 )
+		set(hscope "include\\${code_scope}")
+		set(sscope "src\\${code_scope}")
+	else()
+		set(hscope "include/${code_scope}")
+		set(sscope "src/${code_scope}")
+	endif()
+
+
+	file(GLOB hfiles "include/${code_scope}/*.hpp")
+	file(GLOB sfiles "${code_scope}/*.cpp")
+
+	source_group( 
+		${hscope}
+		FILES 
+		${hfiles}
+	)
+	
+	source_group( 
+		${sscope}
+		FILES 
+		${sfiles}
+	)
+	set(newhpp "${hpps};${hfiles}")
+	set(${ref_hpps} ${newhpp} PARENT_SCOPE)
+
+	set(newcpp "${cpps};${sfiles}")
+	set(${ref_cpps} ${newcpp} PARENT_SCOPE)
+
+endfunction(list_source)
+
+list_root(H_FILES S_FILES "${H_FILES}" "${S_FILES}")
+list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" objects)
+
+add_library( ${current_lib_name} ${S_FILES} ${H_FILES}  )
 
 
 target_link_libraries(
         ${current_lib_name} 
         ${Boost_LIBRARIES} ${PLATFORM_LIBRARIES} )
-target_include_directories(${current_lib_name}
+target_include_directories(
         ${current_lib_name} PUBLIC "include" "${CMAKE_CURRENT_SOURCE_DIR}"
         ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../../libraries/picosha2
@@ -33,4 +88,4 @@ target_include_directories(${current_lib_name}
 
 
 
-set_target_properties( ${current_lib_name} PROPERTIES PUBLIC_HEADER "${HEADERS}" FOLDER "4.BlockChain")
+set_target_properties( ${current_lib_name} PROPERTIES PUBLIC_HEADER "${H_FILES}" FOLDER "4.BlockChain")
