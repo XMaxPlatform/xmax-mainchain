@@ -187,7 +187,13 @@ namespace pro
 		source_(rhs.source_), 
 		file_(rhs.file_)
 	{
+		impl_->line = rhs.line_;
+		impl_->type = static_cast<ExceptionType>(rhs.type_);
+		impl_->title = rhs.title_;
+		impl_->description = rhs.description_;
+		impl_->file = rhs.file_;
 	}
+
 	Exception::Exception(Exception&& rhs)
 		: impl_{ new ExceptionImpl() }
 		, line_(rhs.line_),
@@ -197,6 +203,12 @@ namespace pro
 		source_(std::forward<string>(rhs.source_)),
 		file_(std::forward<string>(rhs.file_))
 	{
+		impl_->line = rhs.line_;
+		impl_->type = static_cast<ExceptionType>(rhs.type_);
+		impl_->title = std::forward<string>(rhs.title_);
+		impl_->description = std::forward<string>(rhs.description_);
+		impl_->source = std::forward<string>(rhs.source_);
+		impl_->file = std::forward<string>(rhs.file_);
 	}
 
 	Exception& Exception::operator = (const Exception& rhs)
