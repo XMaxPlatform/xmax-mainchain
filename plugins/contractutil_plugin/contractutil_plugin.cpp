@@ -69,6 +69,6 @@ namespace xmax {
 	//-------------------------------------------------------
 	void ContractUtilPlugin::Clean()
 	{
-		printf("");
+		printf("clean");
 	}
 }
