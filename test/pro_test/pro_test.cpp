@@ -44,6 +44,7 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 	BOOST_CHECK(s1.GetA() == 12345);
 	// get another reference via GetInstance()
 	TestSingleton& s2 = TestSingleton::GetInstance();
+	// set value via second refrence
 	s2.SetA(2333);
 	BOOST_CHECK(s1.GetA() == 2333);
 	BOOST_CHECK(TestSingleton::GetInstance().GetA() == 2333);
