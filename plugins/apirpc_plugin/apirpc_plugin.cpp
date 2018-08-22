@@ -72,6 +72,19 @@ namespace xmax {
 
 					}
 
+					void operator()() {
+						http::async_write(
+							session_.socket_,
+							msg_,
+							boost::asio::bind_executor(
+								session_.strand_,
+								std::bind(
+									&HttpSession::OnWrite,
+									session_.shared_from_this(),
+									std::placeholders::_1,
+									msg_.need_eof())));
+					}
+
 
 					
 				};
@@ -92,7 +105,8 @@ namespace xmax {
 		void HandleRequest(Send&& send);
 
 		//Events
-		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);		
+		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);	
+		void OnWrite(boost::system::error_code ec, bool close);
 
 	private:
 		bool IsValidRequestVerb(const http::verb& req_method) const {
@@ -218,6 +232,13 @@ namespace xmax {
 
 		HandleRequest(queue_);
 		
+	}
+
+
+	//--------------------------------------------------
+	void HttpSession::OnWrite(boost::system::error_code ec, bool close)
+	{
+
 	}
 
 	/*
