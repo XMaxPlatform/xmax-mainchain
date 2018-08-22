@@ -21,7 +21,6 @@ namespace xmax {
 	{
 	}
 
-
 	/**
 	*  Implementations of ContractUtilPlugin interfaces
 	*
@@ -53,7 +52,6 @@ namespace xmax {
 		
 		//printf("start up contract util plugin");
 	}
-
 
 	//--------------------------------------------------
 	void ContractUtilPlugin::Shutdown() {
