@@ -57,7 +57,6 @@ namespace xmax {
 	void ContractUtilPlugin::Shutdown() {
 		impl_.reset();
 
-
 		PluginFace::Shutdown();
 	}
 
