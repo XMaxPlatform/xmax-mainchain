@@ -170,7 +170,11 @@ namespace pro
 		, description_(std::forward<string>(_description))
 		, file_(_file)
 	{
-
+		impl_->line = _line;
+		impl_->type = static_cast<ExceptionType>(type_);
+		impl_->title = tile_;
+		impl_->description = std::forward<string>(_description);
+		impl_->file = _file;
 	}
 
 
