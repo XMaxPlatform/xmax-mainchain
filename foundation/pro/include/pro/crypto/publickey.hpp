@@ -5,6 +5,7 @@
 namespace pro
 {
 	class CSHA256;
+	//public key from bitcoin impl
 	class PublicKey
 	{
 	public:
