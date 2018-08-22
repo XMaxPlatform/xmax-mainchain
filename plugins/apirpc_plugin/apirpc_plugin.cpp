@@ -238,6 +238,10 @@ namespace xmax {
 	//--------------------------------------------------
 	void HttpSession::OnWrite(boost::system::error_code ec, bool close)
 	{
+		// Happens when the timer closes the socket
+		if (ec == boost::asio::error::operation_aborted)
+			return;
+
 
 	}
 
