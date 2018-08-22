@@ -27,7 +27,9 @@ namespace xmax {
 		void V8i256::WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8i256>& data)
 		{
 			if (V8i256* cpp_object = data.GetParameter())
-		
+			{
+				delete cpp_object;
+			}
 		}
 
 	}
