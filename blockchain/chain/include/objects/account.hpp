@@ -15,7 +15,7 @@ namespace chain
 	};
 
 	struct ByName;
-	using AccountIdx = db::DBIndexedBy<Account,
+	using AccountIdx = IndexedBy<Account,
 		indexed::ordered_unique<indexed::tag<ByName>, indexed::member<Account, AccountName, &Account::name>>
 
 	>;

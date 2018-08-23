@@ -11,6 +11,9 @@ namespace chain
 
 	namespace indexed = db::multi_index;
 
+	template<typename _Object, typename... _Args>
+	using IndexedBy = db::DBIndexedBy<_Object, _Args...>;
+
 	class ObjectType
 	{
 	public:
