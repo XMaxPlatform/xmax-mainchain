@@ -7,6 +7,8 @@ namespace pro
 {
 	class Base58String;
 	class CSHA256;
+
+	// private key impl from bitcoin
 	class PrivateKey
 {
 public:
