@@ -37,7 +37,7 @@ public:
 	* This is expensive.
 	*/
 	std::vector<unsigned char> GetOpenSSLKey() const;
-
+	//get publickey
 	PublicKey GetPubKey() const;
 
 	/**
