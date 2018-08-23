@@ -20,12 +20,12 @@ namespace pro
 		{
 			Set(pbegin, pend);
 		}
-
+		//construct from vec
 		PublicKey(const std::vector<unsigned char>& _vch)
 		{
 			Set(_vch.begin(), _vch.end());
 		}
-
+		//set content from ptr
 		template <typename T>
 		void Set(const T pbegin, const T pend)
 		{
@@ -61,7 +61,7 @@ namespace pro
 			return a.vch_[0] < b.vch_[0] ||
 				(a.vch_[0] == b.vch_[0] && memcmp(a.vch_, b.vch_, a.Size()) < 0);
 		}
-
+		// get hash
 		CSHA256 GetPublicKeyHash() const
 		{
 			DoubleSHA256 ds;
