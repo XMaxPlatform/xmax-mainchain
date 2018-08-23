@@ -20,5 +20,5 @@ namespace chain
 
 	>;
 
-	using AccountTable = db::DBTable<AccountIdx>;
+	using AccountTable = Table<AccountIdx>;
 }
