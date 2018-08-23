@@ -49,6 +49,8 @@ namespace xmax {
 	//--------------------------------------------------
 	void ContractUtilPlugin::Startup() {
 		PluginFace::Startup();
+		
+		//
 	}
 
 	//--------------------------------------------------
