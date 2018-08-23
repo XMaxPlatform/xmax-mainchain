@@ -39,7 +39,8 @@ namespace xmax {
 				return;
 
 			Local<Object> object = args.This();
-			
+			Wrap(args.GetIsolate(), cpp_object, object);
+			args.GetReturnValue().Set(object);
 		}
 
 		void V8i256::WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8i256>& data)
