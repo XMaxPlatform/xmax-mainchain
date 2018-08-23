@@ -278,7 +278,7 @@ namespace pro
 
     int Exception::GetType(void) const throw()
 	{
-		return type_;
+		return impl_->type;
 	}
 
     const string &Exception::GetSource() const 
