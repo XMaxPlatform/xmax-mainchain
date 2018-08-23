@@ -168,7 +168,7 @@ class _objname : public unitedb::TDBObject<_objname, _typecode>
 // define field of simple value. e.g. int.
 #define DB_FIELD(_type, _name, _default_value) _FIELD_(_type, _name, _default_value) 
 // define field of simple value width out default value. e.g. int.
-#define DB_SFIELD(_type, _name) _FIELD_(_type, _name)
+#define DB_SFIELD(_type, _name) _SFIELD_(_type, _name)
 // define field of mapped class . e.g. MVector.
 #define DB_MFIELD(_type, _name) _MFIELD_(_type, _name)
 

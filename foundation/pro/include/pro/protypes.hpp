@@ -14,5 +14,5 @@
 
 namespace pro
 {
-	using sname = ShortName;
+	using fname = ShortName;
 }
