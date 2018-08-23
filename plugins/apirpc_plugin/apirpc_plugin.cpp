@@ -113,6 +113,8 @@ namespace xmax {
 			return req_method == http::verb::get || req_method == http::verb::head || req_method == http::verb::post;
 		}
 
+		void DoClose();
+
 	private:
 		tcp::socket socket_;
 		http::request<http::string_body> request_;
@@ -246,6 +248,19 @@ namespace xmax {
 			ErrorSprintf("Http session on write failed with error message:%s", ec.message().c_str());
 			return;
 		}
+
+		if (close)
+		{
+			DoClose();
+		}
+	}
+
+
+	//--------------------------------------------------
+	void HttpSession::DoClose()
+	{
+		boost::system::error_code ec;
+		socket_.shutdown(tcp::socket::shutdown_send, ec);
 	}
 
 	/*
