@@ -283,7 +283,7 @@ namespace pro
 
     const string &Exception::GetSource() const 
 	{ 
-		return source_;
+		return impl_->source;
 	}
 
     const string &Exception::GetFile() const 
