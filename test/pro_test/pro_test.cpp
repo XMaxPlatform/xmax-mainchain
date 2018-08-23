@@ -181,7 +181,7 @@ BOOST_AUTO_TEST_CASE(scode)
 
 
 BOOST_AUTO_TEST_CASE(test_boost_tree) {
-
+	// declare tree nodes
 	pro::Tree<std::string> root("rt");
 	pro::Tree<std::string> c1("c1");
 	pro::Tree<std::string> c2("c2");
