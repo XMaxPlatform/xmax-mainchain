@@ -64,9 +64,9 @@ namespace unitedb
 
 		// Database API 
 
-		virtual UndoPatch StartUndo() override
+		virtual DBUndoPatch StartUndo() override
 		{
-			return UndoPatch(UndoMgr->StartUndo());
+			return DBUndoPatch(UndoMgr->StartUndo());
 		}
 
 		virtual void Flush() override

@@ -48,6 +48,7 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 	s2.SetA(2333);
 	// get value via first reference, then compare with meta value
 	BOOST_CHECK(s1.GetA() == 2333);
+	// get value via GetInstance(), then compare with meta value
 	BOOST_CHECK(TestSingleton::GetInstance().GetA() == 2333);
 }
 
@@ -180,7 +181,7 @@ BOOST_AUTO_TEST_CASE(scode)
 
 
 BOOST_AUTO_TEST_CASE(test_boost_tree) {
-
+	// declare tree nodes
 	pro::Tree<std::string> root("rt");
 	pro::Tree<std::string> c1("c1");
 	pro::Tree<std::string> c2("c2");

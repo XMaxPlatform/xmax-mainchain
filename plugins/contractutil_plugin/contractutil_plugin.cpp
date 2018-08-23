@@ -50,7 +50,7 @@ namespace xmax {
 	void ContractUtilPlugin::Startup() {
 		PluginFace::Startup();
 		
-		//printf("start up contract util plugin");
+		//
 	}
 
 	//--------------------------------------------------
@@ -65,7 +65,7 @@ namespace xmax {
 		printf("test a log");
 	}
 
-	//-------------------------------------------------------
+	//--------------------------------------------------
 	void ContractUtilPlugin::Clean()
 	{
 		printf("clean");

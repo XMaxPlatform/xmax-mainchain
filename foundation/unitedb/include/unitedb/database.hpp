@@ -54,7 +54,7 @@ namespace unitedb
 			return static_cast<TableType*>(getTableInternal(TableType::ObjectType::TypeCode)->GetDBTable());
 		}
 
-		virtual UndoPatch StartUndo() = 0;
+		virtual DBUndoPatch StartUndo() = 0;
 
 		virtual void Flush() = 0;
 

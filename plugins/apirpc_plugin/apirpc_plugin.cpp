@@ -90,8 +90,14 @@ namespace xmax {
 				};
 			}
 
+			// Called when a message finishes sending
+			// Returns `true` if the caller should initiate a read
+			bool OnWrite() {
+				return true;
+			}
 		private:
 			HttpSession& session_;
+			std::vector<std::unique_ptr<Work>> items_;
 		};
 
 	public:
@@ -112,6 +118,8 @@ namespace xmax {
 		bool IsValidRequestVerb(const http::verb& req_method) const {
 			return req_method == http::verb::get || req_method == http::verb::head || req_method == http::verb::post;
 		}
+
+		void DoClose();
 
 	private:
 		tcp::socket socket_;
@@ -246,6 +254,24 @@ namespace xmax {
 			ErrorSprintf("Http session on write failed with error message:%s", ec.message().c_str());
 			return;
 		}
+
+		if (close)
+		{
+			DoClose();
+		}
+
+		if (queue_.OnWrite())
+		{
+
+		}
+	}
+
+
+	//--------------------------------------------------
+	void HttpSession::DoClose()
+	{
+		boost::system::error_code ec;
+		socket_.shutdown(tcp::socket::shutdown_send, ec);
 	}
 
 	/*
