@@ -250,12 +250,12 @@ namespace pro
 				if (source_.size())
 				{
 					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\" in %s at '%s(line, %d)'",
-						type_, title_.c_str(), description_.c_str(), source_.c_str(), file_.c_str(), line_);
+						impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->source.c_str(), impl_->file.c_str(), impl_->line);
 				}
 				else
 				{
 					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\" at '%s(line, %d)'",
-						type_, title_.c_str(), description_.c_str(), file_.c_str(), line_);
+						impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->file.c_str(), impl_->line);
 				}
 			
 			}
@@ -263,11 +263,11 @@ namespace pro
 			{
 				if (source_.size())
 				{
-					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\" in %s", type_, title_.c_str(), description_.c_str(), source_.c_str());
+					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\" in %s", impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->source.c_str());
 				}
 				else
 				{
-					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\".", type_, title_.c_str(), description_.c_str());
+					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\".", impl_->type, impl_->title.c_str(), impl_->description.c_str());
 				}
 
 			}
