@@ -90,6 +90,11 @@ namespace xmax {
 				};
 			}
 
+			// Called when a message finishes sending
+			// Returns `true` if the caller should initiate a read
+			bool OnWrite() {
+				
+			}
 		private:
 			HttpSession& session_;
 		};
@@ -252,6 +257,11 @@ namespace xmax {
 		if (close)
 		{
 			DoClose();
+		}
+
+		if (queue_.OnWrite())
+		{
+
 		}
 	}
 
