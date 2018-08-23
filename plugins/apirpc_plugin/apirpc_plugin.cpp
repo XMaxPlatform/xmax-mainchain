@@ -93,10 +93,11 @@ namespace xmax {
 			// Called when a message finishes sending
 			// Returns `true` if the caller should initiate a read
 			bool OnWrite() {
-				
+				return true;
 			}
 		private:
 			HttpSession& session_;
+			std::vector<std::unique_ptr<Work>> items_;
 		};
 
 	public:
