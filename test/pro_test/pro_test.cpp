@@ -48,6 +48,7 @@ BOOST_AUTO_TEST_CASE(test_singleton) {
 	s2.SetA(2333);
 	// get value via first reference, then compare with meta value
 	BOOST_CHECK(s1.GetA() == 2333);
+	// get value via GetInstance()
 	BOOST_CHECK(TestSingleton::GetInstance().GetA() == 2333);
 }
 
