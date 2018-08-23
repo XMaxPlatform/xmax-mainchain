@@ -38,6 +38,7 @@ namespace xmax {
 			if (!cpp_object)
 				return;
 
+			Local<Object> object = args.This();
 			
 		}
 
