@@ -35,7 +35,10 @@ namespace xmax {
 				NewV8CppObj(args);
 			}
 
-		
+			if (!cpp_object)
+				return;
+
+			
 		}
 
 		void V8i256::WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8i256>& data)
