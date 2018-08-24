@@ -93,8 +93,16 @@ namespace xmax {
 			// Called when a message finishes sending
 			// Returns `true` if the caller should initiate a read
 			bool OnWrite() {
+				assert(!items_.empty());
+
 				return true;
 			}
+
+			bool IsFull() const
+			{
+				return items_.size() >= kQueueLimit;
+			}
+
 		private:
 			HttpSession& session_;
 			std::vector<std::unique_ptr<Work>> items_;
