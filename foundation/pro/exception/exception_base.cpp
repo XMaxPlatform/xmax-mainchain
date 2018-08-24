@@ -288,7 +288,7 @@ namespace pro
 
     const string &Exception::GetFile() const 
 	{ 
-		return file_; 
+		return impl_->file;
 	}
 
     long Exception::GetLine() const 
