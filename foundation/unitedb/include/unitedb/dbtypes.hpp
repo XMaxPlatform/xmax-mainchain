@@ -42,3 +42,5 @@ namespace unitedb
 #define DB_ASSERT(expr) BOOST_ASSERT(expr)
 
 #define DB_ASSERT_MSG(expr, msg) BOOST_ASSERT_MSG(expr, msg)
+
+#define DB_THROW(expr) BOOST_THROW_EXCEPTION(expr)
