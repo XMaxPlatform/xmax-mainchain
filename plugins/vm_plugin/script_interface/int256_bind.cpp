@@ -18,6 +18,10 @@ namespace xmax {
 		{
 			Handle<FunctionTemplate> func_template = FunctionTemplate::New(isolate, &ConstructV8Object);
 
+			func_template->SetClassName(String::NewFromUtf8(
+				isolate,
+				TypeName(),
+				NewStringType::kNormal).ToLocalChecked());
 		
 		}
 
