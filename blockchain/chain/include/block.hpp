@@ -1,12 +1,22 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <optional>
+
+#include "pro/utils/sha256.hpp"
+#include "pro/utils/reflect.hpp"
 
 namespace chain
 {
 	class block_header
 	{
 	public:
+
+		REFLECT_MEMBER_SERIALIZATION( (previous_)(trxs_mroot_))
+
+		CSHA256			previous_;
+		CSHA256			trxs_mroot_;
+		//std::optional<>
 	};
 
 	class signed_block_header : public block_header
