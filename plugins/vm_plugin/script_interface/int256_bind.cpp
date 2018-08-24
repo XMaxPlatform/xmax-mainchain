@@ -23,6 +23,12 @@ namespace xmax {
 				TypeName(),
 				NewStringType::kNormal).ToLocalChecked());
 			func_template->InstanceTemplate()->SetInternalFieldCount(1);
+			global->Set(String::NewFromUtf8(
+				isolate,
+				TypeName(),
+				NewStringType::kNormal).ToLocalChecked(), func_template);
+
+
 			
 		}
 
