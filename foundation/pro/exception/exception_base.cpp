@@ -298,7 +298,7 @@ namespace pro
 
 	const string &Exception::GetDescription(void) const 
 	{ 
-		return description_; 
+		return impl_->description; 
 	}
 
 	const char* Exception::what() const throw() 
