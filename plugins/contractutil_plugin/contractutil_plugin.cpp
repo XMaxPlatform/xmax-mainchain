@@ -32,7 +32,7 @@ namespace xmax {
 
 	//--------------------------------------------------
 	ContractUtilPlugin::~ContractUtilPlugin() {
-
+		Clean();
 	}
 
 	//--------------------------------------------------
@@ -50,7 +50,7 @@ namespace xmax {
 	void ContractUtilPlugin::Startup() {
 		PluginFace::Startup();
 		
-		//
+		// TODO : setup all 
 	}
 
 	//--------------------------------------------------

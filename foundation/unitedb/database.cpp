@@ -15,7 +15,7 @@ namespace unitedb
 			if (mapped_file_size > file_size)
 			{
 				if (!mapped_file::grow(filepath.generic_string().c_str(), mapped_file_size - mapped_file_size))
-					BOOST_THROW_EXCEPTION(std::runtime_error("could not grow mapped file to requested size."));
+					DB_THROW(std::runtime_error("could not grow mapped file to requested size."));
 			}
 
 			return new mapped_file(inpr::open_only, filepath.generic_string().c_str());

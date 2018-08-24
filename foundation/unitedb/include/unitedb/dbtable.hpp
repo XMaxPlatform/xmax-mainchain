@@ -30,7 +30,7 @@ namespace unitedb
 		{
 			if (sizeof(*this) != this_size || sizeof(typename ContainerType::node_type) != idxs_size)
 			{
-				BOOST_THROW_EXCEPTION(std::runtime_error("content of memory does not match data expected by executable"));
+				DB_THROW(std::runtime_error("content of memory does not match data expected by executable"));
 			}
 		}
 
@@ -106,7 +106,7 @@ namespace unitedb
 			auto result = GetMapped().emplace(constructor, GetMapped().get_allocator());
 
 			if (!result.second) {
-				BOOST_THROW_EXCEPTION(std::logic_error("Could not insert object, most likely a uniqueness constraint was violated"));
+				DB_THROW(std::logic_error("Could not insert object, most likely a uniqueness constraint was violated"));
 			}
 			const ObjectType* ptr = result.first.operator->();
 			PushUndo(UndoOp::Create, ptr);
@@ -128,11 +128,6 @@ namespace unitedb
 			}
 		}
 
-		//template<typename OrderedTag>
-		//const typename MultiIndexType::index<OrderedTag>::type& GetOrderIndex() const
-		//{
-		//	return indices_.get<OrderedTag>();
-		//}
 		template<typename OrderedTag>
 		auto GetOrderIndex() const -> decltype( ((const MultiIndexType*)(nullptr))->template get<OrderedTag>() )
 		{
@@ -181,7 +176,7 @@ namespace unitedb
 			if (!result)
 			{
 				LastUpdateFailure(DBObjectBase::__getObjidcode(obj));
-				BOOST_THROW_EXCEPTION(std::logic_error("Could not Update object, most likely a uniqueness constraint was violated."));
+				DB_THROW(std::logic_error("Could not Update object, most likely a uniqueness constraint was violated."));
 			}	
 		}
 

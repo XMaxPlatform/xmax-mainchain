@@ -37,7 +37,7 @@ namespace unitedb
 
 
 			if (tableUsed(typeCode)) {
-				BOOST_THROW_EXCEPTION(std::logic_error(tableName + "::TypeCode is already in use"));
+				DB_THROW(std::logic_error(tableName + "::TypeCode is already in use"));
 			}
 			TableType::MappedPtr ptr = getMappdFile()->find_or_construct< TableType::MappedIndex >(tableName.c_str()) ( TableType::AllocType(getMappdFile()->get_segment_manager()) );
 

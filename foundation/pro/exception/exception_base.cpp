@@ -288,17 +288,17 @@ namespace pro
 
     const string &Exception::GetFile() const 
 	{ 
-		return file_; 
+		return impl_->file;
 	}
 
     long Exception::GetLine() const 
 	{ 
-		return line_; 
+		return impl_->line; 
 	}
 
 	const string &Exception::GetDescription(void) const 
 	{ 
-		return description_; 
+		return impl_->description; 
 	}
 
 	const char* Exception::what() const throw() 

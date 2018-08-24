@@ -1,5 +1,5 @@
 set(current_lib_name ${xmax_chain_lib_name})
-
+set(src_dir_name ${current_lib_name})
 set(H_FILES)
 set(S_FILES)
 
@@ -7,10 +7,10 @@ function(list_root ref_hpps ref_cpps hpps cpps)
 
 	if( WIN32 )
 		set(hscope "include")
-		set(sscope "src")
+		set(sscope ${src_dir_name})
 	else()
 		set(hscope "include")
-		set(sscope "src")
+		set(sscope ${src_dir_name})
 	endif()
 
 
@@ -41,10 +41,10 @@ function(list_source ref_hpps ref_cpps hpps cpps code_scope)
 
 	if( WIN32 )
 		set(hscope "include\\${code_scope}")
-		set(sscope "src\\${code_scope}")
+		set(sscope "${src_dir_name}\\${code_scope}")
 	else()
 		set(hscope "include/${code_scope}")
-		set(sscope "src/${code_scope}")
+		set(sscope "${src_dir_name}/${code_scope}")
 	endif()
 
 
