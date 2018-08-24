@@ -192,7 +192,7 @@ BOOST_AUTO_TEST_CASE(test_boost_tree) {
 	pro::Tree<std::string> c7("c7");
 	pro::Tree<std::string> c8("c8");
 
-
+	// add nodes as children nodes
 	c5.AddChild(c7);
 	c5.AddChild(c8);
 	c2.AddChild(c5);
