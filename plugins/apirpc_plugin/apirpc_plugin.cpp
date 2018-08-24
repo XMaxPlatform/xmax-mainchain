@@ -95,6 +95,11 @@ namespace xmax {
 			bool OnWrite() {
 				assert(!items_.empty());
 
+				items_.erase(items_.begin());
+				if (!items_.empty())
+					(*items_.front())();
+
+
 				return true;
 			}
 
