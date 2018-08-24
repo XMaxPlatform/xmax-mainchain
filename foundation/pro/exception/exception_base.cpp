@@ -293,7 +293,7 @@ namespace pro
 
     long Exception::GetLine() const 
 	{ 
-		return line_; 
+		return impl_->line; 
 	}
 
 	const string &Exception::GetDescription(void) const 
