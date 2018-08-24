@@ -133,11 +133,7 @@ namespace unitedb
 #define _DBBODY_MFIELD_(_t, _v) _t _v;
 #define _DBCONSTR_MFIELD_(_t, _v) , _v(al)
 
-
 #define _DB_MACRO_CAT_(r, data, elem) BOOST_PP_CAT(data, elem)
-
-
-// : _name##_Super() BOOST_PP_SEQ_FOR_EACH(DB_MACRO_CAT, CONSTR_, _args)
 
 #define _DBOBJ_CONSTR_(_name, _args)\
 template<typename T> _name(DBAlloc<T> al)\

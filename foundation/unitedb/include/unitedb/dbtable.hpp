@@ -128,11 +128,6 @@ namespace unitedb
 			}
 		}
 
-		//template<typename OrderedTag>
-		//const typename MultiIndexType::index<OrderedTag>::type& GetOrderIndex() const
-		//{
-		//	return indices_.get<OrderedTag>();
-		//}
 		template<typename OrderedTag>
 		auto GetOrderIndex() const -> decltype( ((const MultiIndexType*)(nullptr))->template get<OrderedTag>() )
 		{
