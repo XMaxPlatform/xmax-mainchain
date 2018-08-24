@@ -197,10 +197,10 @@ BOOST_AUTO_TEST_CASE(test_boost_tree) {
 	c5.AddChild(c8);
 	c2.AddChild(c5);
 	c2.AddChild(c6);
-	// add nodes as children nodes of root node
+	// add nodes as children nodes of child node
 	c1.AddChild(c3);
 	c1.AddChild(c4);
-
+	// add nodes as children nodes of root node
 	root.AddChild(c1);
 	root.AddChild(c2);
 	
