@@ -22,7 +22,8 @@ namespace xmax {
 				isolate,
 				TypeName(),
 				NewStringType::kNormal).ToLocalChecked());
-		
+			func_template->InstanceTemplate()->SetInternalFieldCount(1);
+			
 		}
 
 		void V8i256::ConstructV8Object(const v8::FunctionCallbackInfo<v8::Value>& args)
