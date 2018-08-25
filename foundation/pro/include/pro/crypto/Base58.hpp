@@ -48,6 +48,7 @@ namespace pro
 
 	class PrivateKey;
 	class Base58String;
+	// base58data from bitcoin
 	class Base58Data
 	{
 	public:
