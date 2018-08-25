@@ -28,7 +28,9 @@ public:
 	void ECC_Verify_Start();
 	void ECC_Verify_End();
 
+	//get context for sign
 	secp256k1_context* GetSignContext() const;
+	//get context for verify
 	secp256k1_context* GetVerifyContext() const;
 
 	int ecdsa_signature_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_signature* sig, const unsigned char *input, size_t inputlen);
