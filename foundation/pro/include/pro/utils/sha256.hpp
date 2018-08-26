@@ -47,7 +47,7 @@ void CSHA256::Hash(const T& src)
 
 	size_t nSize = sbuf.pubseekoff(0, std::ios_base::end);
 	sbuf.pubseekoff(0, std::ios_base::beg);
-	std::vector<unsigned char> vec(nSize);
+	std::vector<char> vec(nSize);
 	sbuf.sgetn(&vec[0], nSize);
 
 	picosha2::hash256(vec.begin(), vec.end(), hash_.begin(), hash_.end());
