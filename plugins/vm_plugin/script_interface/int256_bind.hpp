@@ -18,6 +18,9 @@ namespace xmax {
 			static void ConstructV8Object(const v8::FunctionCallbackInfo<v8::Value>& args);
 			static void WeakExternalReferenceCallback(const v8::WeakCallbackInfo<V8i256>& data);
 
+			static constexpr const char* TypeName() {
+				return "V8i256";
+			}
 		private:
 			pro::int256 value_;
 		};
