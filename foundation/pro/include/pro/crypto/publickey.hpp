@@ -102,6 +102,8 @@ namespace pro
 		//! Turn this public key into an uncompressed public key.
 		bool Decompress();
 
+		static PublicKey	emptyKey_;
+
 	protected:
 
 		unsigned int static _GetLen(unsigned char chHeader);

@@ -3,6 +3,7 @@
 
 namespace pro
 {
+	PublicKey PublicKey::emptyKey_;
 
 bool PublicKey::Verify(const CSHA256& hash, const std::vector<unsigned char>& vchSig) const
 {
