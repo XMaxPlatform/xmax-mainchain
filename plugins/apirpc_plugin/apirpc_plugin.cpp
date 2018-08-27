@@ -90,9 +90,12 @@ namespace xmax {
 					
 				};
 
-				// Allocate and store the work
+				// Queue the message
 				items_.push_back(boost::make_unique<WorkImpl>(session_, std::move(msg)));
 
+				// Execute the front work
+				if (items_.size() == 1)
+					(*items_.front())();
 
 			}
 
