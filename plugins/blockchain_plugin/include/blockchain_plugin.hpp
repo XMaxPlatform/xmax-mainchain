@@ -5,6 +5,10 @@
 #pragma once
 #include <pluginface.hpp>
 
+namespace chain
+{
+	class IChainContext;
+}
 
 namespace xmax
 {
@@ -15,7 +19,12 @@ namespace xmax
 		GENERATED_PLUGIN(BlockChainPlugin, xmaxapp::PluginFace, &InitOptions)
 	public:
 
+		virtual void Startup() override;
+
 	protected:
 		static void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
+
+	protected:
+		std::unique_ptr<chain::IChainContext> context_;
 	};
 }
