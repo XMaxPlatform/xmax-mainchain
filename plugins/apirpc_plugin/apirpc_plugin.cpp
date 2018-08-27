@@ -56,7 +56,10 @@ namespace xmax {
 			};
 
 		public:
-			explicit Queue(HttpSession& s) :session_{ s } {}
+			explicit Queue(HttpSession& s) :session_{ s } {
+				static_assert(kQueueLimit > 0, "Http session queue limit need above 0.");
+				items_.reserve(kQueueLimit);
+			}
 
 			template<bool isRequest, class Body, class Fields>
 			void operator()(http::message<isRequest, Body, Fields>&& msg) {
