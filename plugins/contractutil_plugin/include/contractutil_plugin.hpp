@@ -36,7 +36,7 @@ namespace xmax
 		void Clean();
 
 	private:
-		//
+		// code implement
 		std::unique_ptr<class ContractUtilPluginImpl> impl_;
 	};
 }
