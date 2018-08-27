@@ -12,7 +12,7 @@ namespace chain
 		ShortName		builder_name;
 		PublicKey		block_signing_key;
 
-		builder_info(const ShortName& name, const public_key_type& key)
+		builder_info(const ShortName& name, const PublicKey& key)
 			: builder_name(name)
 			, block_signing_key(key)
 		{
@@ -49,7 +49,7 @@ namespace chain
 			version = 0;
 		}
 
-		inline int number() const
+		inline size_t number() const
 		{
 			return builders.size();
 		}
@@ -57,6 +57,18 @@ namespace chain
 		inline bool is_empty() const
 		{
 			return builders.size() <= 0;
+		}
+
+		PublicKey get_sign_key(const ShortName& name) const
+		{
+			for (const auto& it : builders)
+			{
+				if (it.builder_name == name)
+				{
+					return it.block_signing_key;
+				}
+			}
+			return PublicKey::emptyKey_;
 		}
 	};
 }
