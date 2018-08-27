@@ -87,10 +87,13 @@ namespace xmax {
 									std::placeholders::_1,
 									msg_.need_eof())));
 					}
-
-
 					
 				};
+
+				// Allocate and store the work
+				items_.push_back(boost::make_unique<WorkImpl>(session_, std::move(msg)));
+
+
 			}
 
 			// Called when a message finishes sending
