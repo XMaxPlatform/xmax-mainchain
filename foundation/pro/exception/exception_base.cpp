@@ -21,12 +21,7 @@ namespace pro
 	}
 
 	Exception::Exception(const string& _description, const string& _source)
-		: impl_{new ExceptionImpl()}
-		, line_(0)
-		, type_(EXT_UNDEF_TYPE)
-		, title_("Exception")
-		, description_(_description)
-		, source_(_source)
+		: impl_{new ExceptionImpl()}		
 	{
 		impl_->line = 0;
 		impl_->type = EXT_UNDEF_TYPE;
