@@ -40,6 +40,12 @@ namespace pro
 		{
 			return namecode_ != rf.namecode_;
 		}
+
+		friend bool operator != (const ShortName& lhs, const ShortName& rhs)
+		{
+			return lhs.namecode_ != rhs.namecode_;
+		}
+
 		inline bool operator > (const ShortName& rf)
 		{
 			return namecode_ > rf.namecode_;
