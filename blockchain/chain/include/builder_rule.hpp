@@ -2,6 +2,7 @@
 #include "pro/scode/shortname.hpp"
 #include "pro/crypto/publickey.hpp"
 
+#include "blockchain_types.hpp"
 
 namespace chain
 {
@@ -95,4 +96,14 @@ namespace chain
 	{
 		return !(a == b);
 	}
+
+	struct  mapped_builder_rule
+	{
+		mapped_builder_rule(const chain::allocator<char>& alloc)
+			: builders_(alloc) {}
+
+
+		uint32_t                                        version_ = 0; ///< sequentially incrementing version number
+		chain::mapped_vector<builder_info>				builders_;
+	};
 }
