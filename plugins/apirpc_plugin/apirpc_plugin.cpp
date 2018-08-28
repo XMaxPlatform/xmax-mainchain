@@ -143,6 +143,12 @@ namespace xmax {
 			return req_method == http::verb::get || req_method == http::verb::head || req_method == http::verb::post;
 		}
 
+		bool IsValidRequestTarget(boost::beast::string_view request_target) {
+			return !(request_target.empty() ||
+				request_target[0] != '/' ||
+				request_target.find("..") != boost::beast::string_view::npos);
+		}
+
 		void DoClose();
 
 	private:
@@ -238,6 +244,8 @@ namespace xmax {
 		if (!IsValidRequestVerb(req.method())) {
 			send(bad_request("Invalid http method."));
 		}
+
+		
 	}
 
 	//--------------------------------------------------
