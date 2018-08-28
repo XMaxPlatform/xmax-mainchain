@@ -242,10 +242,12 @@ namespace xmax {
 		};
 		
 		if (!IsValidRequestVerb(req.method())) {
-			send(bad_request("Invalid http method."));
+			return send(bad_request("Invalid http method."));
 		}
 
-		
+		// Request path must be absolute and not contain "..".
+		if (!IsValidRequestTarget(req.target()))
+			return send(bad_request("Invalid request target."));
 	}
 
 	//--------------------------------------------------
