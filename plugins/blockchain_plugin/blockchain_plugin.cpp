@@ -21,4 +21,10 @@ namespace xmax
 		IChainContext* c = IChainContext::InitContext(ChainConfig());
 		context_.reset(c);
 	}
+
+
+	IChainContext* BlockChainPlugin::GetChain() const
+	{
+		return context_.get();
+	}
 }
