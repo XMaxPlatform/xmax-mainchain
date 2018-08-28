@@ -24,6 +24,16 @@ namespace chain
 		}
 	};
 
+	inline bool operator == (const builder_info& lh, const builder_info& rh)
+	{
+		return (lh.builder_name == rh.builder_name) && (lh.block_signing_key == rh.block_signing_key);
+	}
+
+	inline bool operator != (const builder_info& lh, const builder_info& rh)
+	{
+		return (lh.builder_name != rh.builder_name) || (lh.block_signing_key != rh.block_signing_key);
+	}
+
 	typedef std::vector<builder_info> xmax_builder_infos;
 
 	struct builder_rule
@@ -71,4 +81,18 @@ namespace chain
 			return PublicKey::emptyKey_;
 		}
 	};
+
+	inline bool operator == (const builder_rule& a, const builder_rule& b)
+	{
+		if (a.version != b.version) return false;
+		if (a.builders.size() != b.builders.size()) return false;
+		for (uint32_t i = 0; i < a.builders.size(); ++i)
+			if (a.builders[i] != b.builders[i]) return false;
+		return true;
+	}
+
+	inline bool operator != (const builder_rule& a, const builder_rule& b)
+	{
+		return !(a == b);
+	}
 }
