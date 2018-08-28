@@ -37,7 +37,7 @@ namespace xmax
 		/**
 		* next time interval of build a new block
 		*/
-		void BlockBuilderImpl::NextBlock() 
+		void NextBlock() 
 		{
 
 			TimeMicroseconds time(1000000);
@@ -48,11 +48,12 @@ namespace xmax
 		/**
 		* generate a new block data
 		*/
-		void BlockBuilderImpl::BuildBlock()
+		void BuildBlock()
 		{
 			Logf("building block.");
 			NextBlock();
 		}
+
 	};
 
 	BlockBuilderPlugin::BlockBuilderPlugin()
