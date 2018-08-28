@@ -22,7 +22,7 @@ namespace xmax
 		virtual void Startup() override;
 
 
-		IChainContext* GetChain() const;
+		chain::IChainContext* GetChain() const;
 	protected:
 		static void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
 
