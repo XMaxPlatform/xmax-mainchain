@@ -34,6 +34,7 @@ namespace xmax
 		void Test(const char* strlog);
 		// TODO : clean 
 		void Clean();
+		//
 
 	private:
 		// contract code implement
