@@ -4,11 +4,8 @@
 */
 #pragma once
 #include <pluginface.hpp>
+#include <chain.hpp>
 
-namespace chain
-{
-	class IChainContext;
-}
 
 namespace xmax
 {
