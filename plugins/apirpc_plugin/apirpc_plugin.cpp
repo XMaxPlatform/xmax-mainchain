@@ -11,6 +11,7 @@ using namespace boost::beast;
 
 namespace bio = boost::asio;
 using tcp = bio::ip::tcp;
+using HttpHandlerFunc = std::function<std::optional<http::response<http::string_body>>(http::request<http::string_body>& req)>;
 
 namespace xmax {
 
@@ -122,6 +123,7 @@ namespace xmax {
 		private:
 			HttpSession& session_;
 			std::vector<std::unique_ptr<Work>> items_;
+			HttpHandlerFunc http_handler_;
 		};
 
 	public:
