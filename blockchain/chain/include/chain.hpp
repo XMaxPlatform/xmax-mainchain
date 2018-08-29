@@ -12,7 +12,7 @@ namespace chain
 	class ChainConfig
 	{
 	public:
-		const fs::path& DBDir;
+		fs::path DBDir;
 		uint64_t DBFileSize = MB(256);
 	};
 
