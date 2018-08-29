@@ -37,19 +37,25 @@ namespace xmaxapp
 		virtual fs::path GetDataDir() const override;
 
 		/**
-		* Init a concrete plugin
-		* @param[in] plugin_name the plugin name.
-		*/
-		void PluginToInit(const string& plugin_name);
-
-		/**
 		* Register plugin to the application
 		* @template param: plugin class
 		*/
 		template <class PluginType>
-		void RegisterPlugin() {
+		void RegisterPlugin(bool inital = false) {
 			PluginType::RegistSelf();
 			PluginToInit(PluginType::PluginName());
+			if (inital)
+			{
+				InitalPlugin<PluginType>();
+			}
+		}
+
+
+		void InitalPlugin(const string& plugin_name);
+
+		template <class PluginType>
+		void InitalPlugin() {
+			InitalPlugin(PluginType::PluginName());
 		}
 
 		/**
@@ -81,6 +87,9 @@ namespace xmaxapp
 		void SetDefaultConfigFilePath(const fs::path& path) { cfg_file_path_ = path; }
 
 	private:
+
+		void PluginToInit(const string& plugin_name);
+
 		void SetupApplicationOptions();
 		
 		/**
@@ -95,7 +104,7 @@ namespace xmaxapp
 		void CreateDefaultCfgFile();
 
 	private:
-
+		std::set<std::string> initalplugins_;
 		std::unordered_map<string, std::unique_ptr<PluginFace>>	pluginmap_;
 		std::vector<PluginFace*>						initialized_plugins_;
 		std::vector<PluginFace*>						startup_plugins_;
