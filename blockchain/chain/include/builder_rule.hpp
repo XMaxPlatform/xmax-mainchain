@@ -120,6 +120,31 @@ namespace chain
 			return result;
 		}
 
+		void set_builders(const xmax_builder_infos& list, uint32_t vers)
+		{
+			builders_.clear();
+			builders_.assign(list.begin(), list.end());
+			version_ = vers;
+		}
+		void set_builders(const mapped_vector<builder_info>& list, uint32_t vers)
+		{
+			builders_ = list;
+			version_ = vers;
+		}		void reset()
+		{
+			builders_.clear();
+			version_ = 0;
+		}
+		inline int number() const
+		{
+			return builders_.size();
+		}
+
+		inline bool is_empty() const
+		{
+			return builders_.size() <= 0;
+		}
+
 		uint32_t                                        version_ = 0; ///< sequentially incrementing version number
 		chain::mapped_vector<builder_info>				builders_;
 	};
