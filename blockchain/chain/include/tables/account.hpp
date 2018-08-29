@@ -3,7 +3,7 @@
 *  @copyright defined in xmax/LICENSE
 */
 #pragma once
-#include <objects/objectbase.hpp>
+#include <tables/tablebase.hpp>
 
 namespace chain
 {
