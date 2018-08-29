@@ -1,7 +1,7 @@
 #pragma once
 #include "pro/scode/shortname.hpp"
 #include "pro/crypto/publickey.hpp"
-
+#include "pro/utils/reflect.hpp"
 #include "blockchain_types.hpp"
 
 namespace chain
@@ -23,6 +23,8 @@ namespace chain
 		{
 
 		}
+
+		REFLECT_MEMBER_SERIALIZATION( (builder_name) (block_signing_key) )
 	};
 
 	inline bool operator == (const builder_info& lh, const builder_info& rh)
@@ -42,6 +44,8 @@ namespace chain
 	public:
 		uint32_t			version;   ///< sequentially incrementing version number
 		xmax_builder_infos  builders;
+
+		REFLECT_MEMBER_SERIALIZATION((version)(builders))
 
 		inline builder_rule()
 		{
