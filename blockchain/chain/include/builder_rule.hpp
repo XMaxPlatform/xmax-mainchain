@@ -2,6 +2,7 @@
 #include "pro/scode/shortname.hpp"
 #include "pro/crypto/publickey.hpp"
 
+#include "blockchain_types.hpp"
 
 namespace chain
 {
@@ -23,6 +24,16 @@ namespace chain
 
 		}
 	};
+
+	inline bool operator == (const builder_info& lh, const builder_info& rh)
+	{
+		return (lh.builder_name == rh.builder_name) && (lh.block_signing_key == rh.block_signing_key);
+	}
+
+	inline bool operator != (const builder_info& lh, const builder_info& rh)
+	{
+		return (lh.builder_name != rh.builder_name) || (lh.block_signing_key != rh.block_signing_key);
+	}
 
 	typedef std::vector<builder_info> xmax_builder_infos;
 
@@ -70,5 +81,29 @@ namespace chain
 			}
 			return PublicKey::emptyKey_;
 		}
+	};
+
+	inline bool operator == (const builder_rule& a, const builder_rule& b)
+	{
+		if (a.version != b.version) return false;
+		if (a.builders.size() != b.builders.size()) return false;
+		for (uint32_t i = 0; i < a.builders.size(); ++i)
+			if (a.builders[i] != b.builders[i]) return false;
+		return true;
+	}
+
+	inline bool operator != (const builder_rule& a, const builder_rule& b)
+	{
+		return !(a == b);
+	}
+
+	struct  mapped_builder_rule
+	{
+		mapped_builder_rule(const chain::allocator<char>& alloc)
+			: builders_(alloc) {}
+
+
+		uint32_t                                        version_ = 0; ///< sequentially incrementing version number
+		chain::mapped_vector<builder_info>				builders_;
 	};
 }
