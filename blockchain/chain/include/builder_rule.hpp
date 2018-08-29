@@ -102,6 +102,23 @@ namespace chain
 		mapped_builder_rule(const chain::allocator<char>& alloc)
 			: builders_(alloc) {}
 
+		mapped_builder_rule& operator=(const builder_rule& a) {
+			version_ = a.version;
+			builders_.clear();
+			builders_.reserve(a.builders.size());
+			for (const auto& p : a.builders)
+				builders_.push_back(p);
+			return *this;
+		}
+
+		operator builder_rule() const {
+			builder_rule result;
+			result.version = version_;
+			result.builders.reserve(builders_.size());
+			for (const auto& p : builders_)
+				result.builders.push_back(p);
+			return result;
+		}
 
 		uint32_t                                        version_ = 0; ///< sequentially incrementing version number
 		chain::mapped_vector<builder_info>				builders_;
