@@ -4,13 +4,10 @@
 */
 #pragma once
 #include <chaintypes.hpp>
+#include <chain_db.hpp>
 #include <unitedb/dbtable.hpp>
 namespace chain
 {
-	namespace db = unitedb;
-
-	namespace indexed = db::multi_index;
-
 	template<typename _Object, typename... _Args>
 	using IndexedBy = db::DBIndexedBy<_Object, _Args...>;
 
