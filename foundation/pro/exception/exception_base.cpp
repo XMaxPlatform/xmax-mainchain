@@ -90,13 +90,7 @@ namespace pro
 		impl_->line = _line;
 	}
 	Exception::Exception(int type_, const string& _description, const string& _source, const char* tile_, const char* _file, long _line)
-		:impl_{ new ExceptionImpl() }
-		, line_(_line)
-		,type_(type_)
-		,title_(tile_)
-		,description_(_description)
-		,source_(_source)
-		,file_(_file)
+		:impl_{ new ExceptionImpl() }	
 	{
 		impl_->line = _line;
 		impl_->type = static_cast<ExceptionType>(type_);
