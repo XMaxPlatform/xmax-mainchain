@@ -10,17 +10,23 @@
 namespace xmax
 {
 	using xmaxapp::OptionsDesc;
+	using xmaxapp::VarsMap;
 
 	class BlockChainPlugin : public xmaxapp::PluginFace
 	{
 		GENERATED_PLUGIN(BlockChainPlugin, xmaxapp::PluginFace, &InitOptions)
 	public:
 
+		// xmaxapp::PluginFace interface ----------------------------------
+		virtual void Initialize(const VarsMap& options) override;
 		virtual void Startup() override;
+
+		// ----------------------------------------------------------------
 
 
 		chain::IChainContext* GetChain() const;
 	protected:
+
 		static void InitOptions(OptionsDesc& cli, OptionsDesc& cfg);
 
 	protected:

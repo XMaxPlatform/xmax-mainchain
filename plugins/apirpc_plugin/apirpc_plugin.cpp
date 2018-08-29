@@ -11,6 +11,7 @@ using namespace boost::beast;
 
 namespace bio = boost::asio;
 using tcp = bio::ip::tcp;
+using HttpHandlerFunc = std::function<std::optional<http::response<http::string_body>>(http::request<http::string_body>& req)>;
 
 namespace xmax {
 
@@ -122,6 +123,7 @@ namespace xmax {
 		private:
 			HttpSession& session_;
 			std::vector<std::unique_ptr<Work>> items_;
+			HttpHandlerFunc http_handler_;
 		};
 
 	public:
@@ -146,7 +148,8 @@ namespace xmax {
 		bool IsValidRequestTarget(boost::beast::string_view request_target) {
 			return !(request_target.empty() ||
 				request_target[0] != '/' ||
-				request_target.find("..") != boost::beast::string_view::npos);
+				request_target.find("..") != boost::beast::string_view::npos ||
+				request_target.back() == '/');
 		}
 
 		void DoClose();
@@ -420,6 +423,9 @@ namespace xmax {
 		*/
 		void Start();
 
+		//Http handler callback
+		std::optional<http::response<http::string_body>> HttpHandler(http::request<http::string_body>& req);
+
 	public:
 		//Configurations
 		string allow_cross_origin;
@@ -466,6 +472,16 @@ namespace xmax {
 	
 		//listener = std::make_shared<http_listener>(ioc, tcp::endpoint{ http_address, http_port});
 		//listener->Run();
+	}
+
+
+	//--------------------------------------------------
+	std::optional<http::response<http::string_body>> ApiRpcPluginImpl::HttpHandler(http::request<http::string_body>& req)
+	{
+		
+
+
+		return {};
 	}
 
 	/*!

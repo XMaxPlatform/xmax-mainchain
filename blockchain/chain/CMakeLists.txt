@@ -71,7 +71,7 @@ function(list_source ref_hpps ref_cpps hpps cpps code_scope)
 endfunction(list_source)
 
 list_root(H_FILES S_FILES "${H_FILES}" "${S_FILES}")
-list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" objects)
+list_source(H_FILES S_FILES "${H_FILES}" "${S_FILES}" tables)
 
 add_library( ${current_lib_name} ${S_FILES} ${H_FILES}  )
 

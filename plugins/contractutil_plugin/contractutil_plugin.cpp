@@ -70,4 +70,10 @@ namespace xmax {
 	{
 		printf("clean");
 	}
+
+	//-------------------------------------------------
+	void ContractUtilPlugin::CreateContract()
+	{
+
+	}
 }

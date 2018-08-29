@@ -126,8 +126,8 @@ namespace unitedb
 #define _DBCONSTR_FIELD_(_t, _v, _def) // empty.
 
 // macros for DB_SFIELD 
-#define _DBBODY_SFIELD_(_t, _v, _def) _t _v;
-#define _DBCONSTR_SFIELD_(_t, _v, _def) // empty.
+#define _DBBODY_SFIELD_(_t, _v) _t _v;
+#define _DBCONSTR_SFIELD_(_t, _v) // empty.
 
 // macros for DB_MFIELD 
 #define _DBBODY_MFIELD_(_t, _v) _t _v;
@@ -136,9 +136,9 @@ namespace unitedb
 #define _DB_MACRO_CAT_(r, data, elem) BOOST_PP_CAT(data, elem)
 
 #define _DBOBJ_CONSTR_(_name, _args)\
-template<typename T> _name(DBAlloc<T> al)\
+template<typename T> _name(unitedb::DBAlloc<T> al)\
 : _name##_Super() BOOST_PP_SEQ_FOR_EACH(_DB_MACRO_CAT_, _DBCONSTR, _args) {}\
-template<typename C, typename T> _name(C&& c, DBAlloc<T> al)\
+template<typename C, typename T> _name(C&& c, unitedb::DBAlloc<T> al)\
 : _name##_Super() BOOST_PP_SEQ_FOR_EACH(_DB_MACRO_CAT_, _DBCONSTR, _args)\
 { c(*this); }
 

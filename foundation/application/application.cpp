@@ -52,6 +52,10 @@ namespace xmaxapp
 		}
 
 	}
+	void Application::InitalPlugin(const string& plugin_name)
+	{
+		initalplugins_.insert(plugin_name);
+	}
 
 	//--------------------------------------------------
 	void Application::SetupApplicationOptions()
@@ -129,18 +133,22 @@ namespace xmaxapp
 
 		if (option_vars.count("plugin")) {
 			auto plugin_ops = option_vars.at("plugin").as<std::vector<std::string>>();
-			for (auto& plugin_name : plugin_ops) {
-				auto it = pluginmap_.find(plugin_name);
-				if (it != pluginmap_.end()) {		
-					auto factory = PluginFactory::GetPluginFactory(plugin_name);
-					assert(factory);
-					factory->VisitDependentPluginsRecursively(add_plugin_visitor);
-					add_plugin_visitor(plugin_name);
-				}
+
+			for (const auto& plugin_name : plugin_ops) {
+				initalplugins_.insert(plugin_name);
 			}
 		}
 
-		
+		for (const auto& plugin_name : initalplugins_) {
+			auto it = pluginmap_.find(plugin_name);
+			if (it != pluginmap_.end()) {
+				auto factory = PluginFactory::GetPluginFactory(plugin_name);
+				assert(factory);
+				factory->VisitDependentPluginsRecursively(add_plugin_visitor);
+				add_plugin_visitor(plugin_name);
+			}
+		}
+	
 
 
 		if (option_vars.count("data-dir")) {

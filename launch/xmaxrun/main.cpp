@@ -19,8 +19,9 @@ namespace xmax
 	///
 	//registration function plugin  modules 
 	static void RegisterPlugins(Application& app) {
-		app.RegisterPlugin<BlockChainPlugin>();
-		app.RegisterPlugin<BlockBuilderPlugin>();
+
+		app.RegisterPlugin<BlockChainPlugin>(true);
+		app.RegisterPlugin<BlockBuilderPlugin>(true);
 		app.RegisterPlugin<MongoDBPlugin>();
 		app.RegisterPlugin<XmaxNetPlugin>();
 		app.RegisterPlugin<ApiRpcPlugin>();

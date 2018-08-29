@@ -54,4 +54,6 @@ namespace pro
 	using uint256 = boost::multiprecision::uint256_t;
 }
 
-#define SIZE_MB (1024 * 1024)
+#define MB_SIZE (1024 * 1024)
+
+#define MB(v) (v * MB_SIZE)
