@@ -421,6 +421,9 @@ namespace xmax {
 		*/
 		void Start();
 
+		//Http handler callback
+		std::optional<http::response<http::string_body>> HttpHandler(http::request<http::string_body>& req);
+
 	public:
 		//Configurations
 		string allow_cross_origin;
@@ -467,6 +470,16 @@ namespace xmax {
 	
 		//listener = std::make_shared<http_listener>(ioc, tcp::endpoint{ http_address, http_port});
 		//listener->Run();
+	}
+
+
+	//--------------------------------------------------
+	std::optional<http::response<http::string_body>> ApiRpcPluginImpl::HttpHandler(http::request<http::string_body>& req)
+	{
+		
+
+
+		return {};
 	}
 
 	/*!
