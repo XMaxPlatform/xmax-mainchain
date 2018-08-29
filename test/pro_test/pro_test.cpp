@@ -204,8 +204,7 @@ BOOST_AUTO_TEST_CASE(test_boost_tree) {
 	root.AddChild(c1);
 	root.AddChild(c2);
 	
-	
-
+	// traverse and visit the tree node recursively
 	std::string output;
 	root.Traverse([&output](pro::Tree<std::string>* tn) {
 		output += tn->value() + " ";
