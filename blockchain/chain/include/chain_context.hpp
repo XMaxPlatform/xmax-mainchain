@@ -6,6 +6,7 @@
 
 #include <chaintypes.hpp>
 #include <chain.hpp>
+#include <unitedb/database.hpp>
 
 namespace chain
 {
@@ -13,5 +14,7 @@ namespace chain
 	{
 	public:
 		ChainContext(const ChainConfig& config);
+
+	protected:
 	};
 }
