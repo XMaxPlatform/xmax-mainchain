@@ -146,7 +146,8 @@ namespace xmax {
 		bool IsValidRequestTarget(boost::beast::string_view request_target) {
 			return !(request_target.empty() ||
 				request_target[0] != '/' ||
-				request_target.find("..") != boost::beast::string_view::npos);
+				request_target.find("..") != boost::beast::string_view::npos ||
+				request_target.back() == '/');
 		}
 
 		void DoClose();
