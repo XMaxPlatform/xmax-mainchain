@@ -52,12 +52,7 @@ namespace pro
 	}
 
 	Exception::Exception(string&& _description, const char* _file, long _line)
-		:impl_{ new ExceptionImpl() }
-		, type_(EXT_UNDEF_TYPE)
-		, title_("Exception")
-		, description_(std::forward<string>(_description))
-		, file_(_file)
-		, line_(_line)
+		:impl_{ new ExceptionImpl() }		
 
 	{
 		impl_->type = EXT_UNDEF_TYPE;
