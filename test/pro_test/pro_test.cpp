@@ -209,7 +209,7 @@ BOOST_AUTO_TEST_CASE(test_boost_tree) {
 	root.Traverse([&output](pro::Tree<std::string>* tn) {
 		output += tn->value() + " ";
 	});
-
+	// compare the output with predicted result
 	BOOST_CHECK(output.compare("c3 c4 c1 c7 c8 c5 c6 c2 rt ") == 0);
 }
 
