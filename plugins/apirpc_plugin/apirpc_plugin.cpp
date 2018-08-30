@@ -255,6 +255,9 @@ namespace xmax {
 		if (http_handler_)
 		{
 			auto res = http_handler_(req);
+			if (res) {
+				return send(std::move(*res));
+			}
 		}
 	}
 
