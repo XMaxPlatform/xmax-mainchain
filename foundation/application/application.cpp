@@ -78,7 +78,6 @@ namespace xmaxapp
 			}
 		}
 
-
 		OptionsDesc app_cfg_opts("Application Config Options");
 		OptionsDesc app_cmd_opts("Application Command Line Options");
 
@@ -89,14 +88,9 @@ namespace xmaxapp
 		app_cfg_opts.add_options()			
 			("plugin", options::value< std::vector<string> >()->composing(), "Plugin(s) to startup.");
 
-		
-
-
 		cfg_options_.add(app_cfg_opts);
 		app_options_.add(app_cfg_opts);
-		app_options_.add(app_cmd_opts);
-
-		
+		app_options_.add(app_cmd_opts);	
 	}
 
 
@@ -130,7 +124,7 @@ namespace xmaxapp
 				added_plugins[plugin_name] = plugin;
 			}
 		};
-
+		// merge inital plugin.
 		if (option_vars.count("plugin")) {
 			auto plugin_ops = option_vars.at("plugin").as<std::vector<std::string>>();
 
@@ -178,7 +172,6 @@ namespace xmaxapp
 		{
 			if (item)
 			{
-
 				item->Startup();
 				startup_plugins_.push_back(item);
 				Logf("Plugin '${name}' startup. ", ("name", item->GetName()) );
