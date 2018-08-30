@@ -4,6 +4,7 @@
 */
 #pragma once
 #include <pro/scode/shortcode.hpp>
+#include <pro/utils/reflect.hpp>
 
 namespace pro
 {
@@ -20,6 +21,8 @@ namespace pro
 	{
 	public:
 		ShortName();
+
+		REFLECT_MEMBER_SERIALIZATION( (namecode_))
 
 		inline NameCode Code() const
 		{
