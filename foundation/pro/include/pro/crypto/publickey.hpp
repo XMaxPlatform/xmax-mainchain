@@ -1,6 +1,7 @@
 #pragma once
 
 #include "pro/utils/sha256.hpp"
+#include "pro/utils/reflect.hpp"
 
 namespace pro
 {
@@ -9,6 +10,8 @@ namespace pro
 	class PublicKey
 	{
 	public:
+
+		REFLECT_MEMBER_SERIALIZATION( (vch_) )
 
 		PublicKey()
 		{
