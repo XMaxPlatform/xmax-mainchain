@@ -74,6 +74,7 @@ namespace xmax {
 	//-------------------------------------------------
 	void ContractUtilPlugin::CreateContract()
 	{
-
+		// create contract
+		printf("create contract {}");
 	}
 }

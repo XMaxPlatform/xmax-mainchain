@@ -7,7 +7,7 @@
 
 namespace chain
 {
-	DBOBJ_CLASS(Account, ObjectType::AccountObject)
+	DBOBJ_CLASS(Account, ChainObject::AccountObject)
 	{
 		DBOBJ_BODY(Account,
 			(DB_SFIELD(AccountName, name))
@@ -15,10 +15,10 @@ namespace chain
 	};
 
 	struct ByName;
-	using AccountIdx = IndexedBy<Account,
+	using AccountIndex = IndexedBy<Account,
 		indexed::ordered_unique<indexed::tag<ByName>, indexed::member<Account, AccountName, &Account::name>>
 
 	>;
 
-	using AccountTable = Table<AccountIdx>;
+	using AccountTable = Table<AccountIndex>;
 }

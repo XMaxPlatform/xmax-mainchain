@@ -122,8 +122,7 @@ namespace xmax {
 
 		private:
 			HttpSession& session_;
-			std::vector<std::unique_ptr<Work>> items_;
-			HttpHandlerFunc http_handler_;
+			std::vector<std::unique_ptr<Work>> items_;			
 		};
 
 	public:
@@ -160,6 +159,7 @@ namespace xmax {
 		boost::beast::flat_buffer buffer_;
 		boost::asio::strand<boost::asio::io_context::executor_type> strand_;
 		Queue queue_;
+		HttpHandlerFunc http_handler_;
 	};
 
 
@@ -251,6 +251,17 @@ namespace xmax {
 		// Request path must be absolute and not contain "..".
 		if (!IsValidRequestTarget(req.target()))
 			return send(bad_request("Invalid request target."));
+
+		if (http_handler_)
+		{
+			auto res = http_handler_(req);
+			if (res) {
+				return send(std::move(*res));
+			}
+		}
+
+		
+		return send(not_found(req.target()));
 	}
 
 	//--------------------------------------------------

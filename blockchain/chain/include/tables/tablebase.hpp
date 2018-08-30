@@ -14,7 +14,7 @@ namespace chain
 	template<typename _multi_index>
 	using Table = db::DBTable<_multi_index>;
 
-	class ObjectType
+	class ChainObject
 	{
 	public:
 		enum Code

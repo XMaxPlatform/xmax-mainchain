@@ -50,9 +50,16 @@ namespace xmaxapp
 			}
 		}
 
-
+		/**
+		* Set inital plugin.
+		* @param[in] plugin_name plugin name.
+		*/
 		void InitalPlugin(const string& plugin_name);
 
+		/**
+		* Set inital plugin.
+		* @param[in] PluginType plugin type.
+		*/
 		template <class PluginType>
 		void InitalPlugin() {
 			InitalPlugin(PluginType::PluginName());
