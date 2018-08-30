@@ -74,6 +74,6 @@ namespace xmax {
 	//-------------------------------------------------
 	void ContractUtilPlugin::CreateContract()
 	{
-		//
+		// create contract
 	}
 }
