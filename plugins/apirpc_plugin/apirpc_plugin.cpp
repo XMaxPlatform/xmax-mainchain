@@ -259,6 +259,9 @@ namespace xmax {
 				return send(std::move(*res));
 			}
 		}
+
+		
+		return send(not_found(req.target()));
 	}
 
 	//--------------------------------------------------
