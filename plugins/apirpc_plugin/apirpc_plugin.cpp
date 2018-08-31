@@ -327,7 +327,7 @@ namespace xmax {
 	*/
 	class HttpListener: public std::enable_shared_from_this<HttpListener> {
 	public:
-		HttpListener(bio::io_context& ioc, tcp::endpoint endpoint);
+		HttpListener(bio::io_context& ioc, tcp::endpoint endpoint, HttpHandlerFunc http_handler);
 
 		//Public interfaces
 		void Run();
@@ -342,9 +342,10 @@ namespace xmax {
 		HttpHandlerFunc http_handler_;
 	};
 
-	HttpListener::HttpListener(bio::io_context& ioc, tcp::endpoint endpoint) :
+	HttpListener::HttpListener(bio::io_context& ioc, tcp::endpoint endpoint, HttpHandlerFunc http_handler) :
 		acceptor_(ioc),
-		socket_(ioc)
+		socket_(ioc),
+		http_handler_(http_handler)
 	{
 		boost::system::error_code ec;
 
