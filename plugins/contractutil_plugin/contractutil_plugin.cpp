@@ -35,6 +35,9 @@ namespace xmax {
 		Clean();
 	}
 
+	/*
+		initialize the contract
+	*/
 	//--------------------------------------------------
 	void ContractUtilPlugin::Initialize(const xmaxapp::VarsMap& options) {
 
