@@ -1,3 +1,5 @@
+//@file
+//@copyright defined in xmax/LICENSE
 #include "int256_bind.hpp"
 using namespace v8;
 namespace xmax {
