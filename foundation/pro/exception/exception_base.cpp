@@ -130,19 +130,9 @@ namespace pro
 
 
 	Exception::Exception(const Exception& rhs)
-		: impl_{ new ExceptionImpl() }
-		, line_(rhs.line_),
-		type_(rhs.type_), 
-		title_(rhs.title_), 
-		description_(rhs.description_), 
-		source_(rhs.source_), 
-		file_(rhs.file_)
+		: impl_{ new ExceptionImpl() }	
 	{
-		impl_->line = rhs.line_;
-		impl_->type = static_cast<ExceptionType>(rhs.type_);
-		impl_->title = rhs.title_;
-		impl_->description = rhs.description_;
-		impl_->file = rhs.file_;
+		impl_ = rhs.impl_;
 	}
 
 	Exception::Exception(Exception&& rhs)
