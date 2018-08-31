@@ -14,7 +14,7 @@ namespace chain
 	{
 	public:
 
-		REFLECT_MEMBER_SERIALIZATION((previous_)(trxs_mroot_));
+		REFLECT_MEMBER_SERIALIZATION((previous_)(trxs_mroot_)(builder_)(next_builders_));
 
 		CSHA256							Digest() const;
 		uint32_t						Block_num() const;

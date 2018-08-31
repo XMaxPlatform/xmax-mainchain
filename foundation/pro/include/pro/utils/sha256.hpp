@@ -1,8 +1,7 @@
 #pragma once
 
 #include <picosha2.h>
-#include <cereal/cereal.hpp>
-#include <cereal/archives/binary.hpp>
+#include "pro/utils/reflect.hpp"
 
 namespace pro
 {
@@ -11,11 +10,13 @@ namespace pro
 {
 public:
 
-	CSHA256()
-	{}
+	REFLECT_MEMBER_SERIALIZATION((hash_));
 
-	~CSHA256()
-	{}
+	CSHA256();
+
+
+	~CSHA256();
+
 
 	//calculate hash value for a non pod type
 	template<typename T> void Hash(const T& src);
