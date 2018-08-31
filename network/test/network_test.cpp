@@ -16,7 +16,7 @@ namespace {
 		person.set_name("12345");
 		person.set_id(12345);
 	}
-	// utility function compares data for testing
+	// utility function compares data for checking
 	static inline bool CompareSimpleTestData(const Person& lhs, const Person& rhs) {
 		return (lhs.email() == rhs.email()) &&
 			(lhs.id() == rhs.id()) &&
