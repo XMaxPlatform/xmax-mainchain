@@ -10,7 +10,7 @@ using namespace tutorial;
 using namespace google::protobuf;
 
 namespace {
-	
+	// utility function generate data for testing
 	static inline void FillTestDataSimple(Person& person) {
 		person.set_email("12345@gmail.com");
 		person.set_name("12345");
