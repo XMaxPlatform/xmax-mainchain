@@ -55,6 +55,10 @@ namespace pro
 		{
 			str = v;
 		}
+		static void ToString(string& str, string&& v)
+		{
+			str = std::forward<string>(v);
+		}
 
 		template <typename T>
 		static string ToString(const T& v)
