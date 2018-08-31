@@ -36,19 +36,6 @@ namespace xmax {
 			return args_object[0];
 		}
 
-		v8::Handle<v8::Value> ScriptMoudle::DoworkInContext(const v8::HandleScope& scope, const v8::Local<ObjectTemplate>& global, const v8::Local<Context>& context, const v8::Context::Scope& ctxScope)
-		{
-			V8_ParseWithPlugin();
-			CompileJsCode(ScriptGlobalMoudle::GetInstance().GetIsolate(), context, current_code_.c_str() );
-			CleanInstrunction();
-			v8::Handle<v8::Value> result =  CallJsFoo(ScriptGlobalMoudle::GetInstance().GetIsolate(), context, main_foo_.c_str() , 0, NULL);
-			V8_ParseWithOutPlugin();
-			int test = result->Int32Value();
-			return result;
-		}
-
-	
-
 
 		void ScriptMoudle::LoadScript(const char* code)
 		{
