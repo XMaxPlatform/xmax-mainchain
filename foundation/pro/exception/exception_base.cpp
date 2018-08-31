@@ -136,20 +136,9 @@ namespace pro
 	}
 
 	Exception::Exception(Exception&& rhs)
-		: impl_{ new ExceptionImpl() }
-		, line_(rhs.line_),
-		type_(rhs.type_),
-		title_(std::forward<string>(rhs.title_)),
-		description_(std::forward<string>(rhs.description_)),
-		source_(std::forward<string>(rhs.source_)),
-		file_(std::forward<string>(rhs.file_))
+		: impl_{ new ExceptionImpl() }	
 	{
-		impl_->line = rhs.line_;
-		impl_->type = static_cast<ExceptionType>(rhs.type_);
-		impl_->title = std::forward<string>(rhs.title_);
-		impl_->description = std::forward<string>(rhs.description_);
-		impl_->source = std::forward<string>(rhs.source_);
-		impl_->file = std::forward<string>(rhs.file_);
+		impl_ = std::move(rhs.impl_);
 	}
 
 	Exception& Exception::operator = (const Exception& rhs)
