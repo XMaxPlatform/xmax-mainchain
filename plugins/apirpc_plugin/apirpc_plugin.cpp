@@ -339,6 +339,7 @@ namespace xmax {
 	private:
 		tcp::acceptor acceptor_;
 		tcp::socket socket_;
+		HttpHandlerFunc http_handler_;
 	};
 
 	HttpListener::HttpListener(bio::io_context& ioc, tcp::endpoint endpoint) :
