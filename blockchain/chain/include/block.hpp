@@ -33,6 +33,14 @@ namespace chain
 	class transaction_receipt_header
 	{
 	public:
+
+		enum result_code : uint8_t
+		{
+			applied = 0,
+			failure = 1,
+		};
+
+		uint64_t								receipt_idx;
 	};
 
 	class transaction_receipt : public transaction_receipt_header
@@ -58,6 +66,10 @@ namespace chain
 	{
 	public:
 
+		CSHA256				block_id_;
+		ShortName			verifier_;
+
+		CSHA256				Digest() const;
 	};
 
 	class block_confirmation : public block_confirmation_header
