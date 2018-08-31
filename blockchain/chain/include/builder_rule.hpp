@@ -2,7 +2,7 @@
 #include "pro/scode/shortname.hpp"
 #include "pro/crypto/publickey.hpp"
 #include "pro/utils/reflect.hpp"
-#include "blockchain_types.hpp"
+#include <chain_types.hpp>
 
 namespace chain
 {

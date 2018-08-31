@@ -5,6 +5,7 @@
 
 #include "pro/utils/sha256.hpp"
 #include "pro/utils/reflect.hpp"
+#include <blockchain_types.hpp>
 
 namespace chain
 {
