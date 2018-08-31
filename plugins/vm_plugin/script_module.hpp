@@ -34,7 +34,7 @@ namespace xmax {
 
 		private:
 		
-			void AstBlockCallbackInsert();
+			
 
 			int instruction_count_;
 			std::list<int> last_intruction_;
