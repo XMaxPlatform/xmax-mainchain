@@ -27,7 +27,7 @@ namespace xmax {
 	*/
 	//--------------------------------------------------
 	ContractUtilPlugin::ContractUtilPlugin() {
-		// TODO : initialize members
+		//  : initialize members
 	}
 
 	//--------------------------------------------------
