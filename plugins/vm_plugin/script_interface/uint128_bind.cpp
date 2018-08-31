@@ -1,4 +1,5 @@
-//send for vm_plugin 
+//@file
+//@copyright defined in xmax/LICENSE
 #include "uint128_bind.hpp"
 
 using namespace v8;
