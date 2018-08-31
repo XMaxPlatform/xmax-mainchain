@@ -3,21 +3,26 @@
 #include <memory>
 #include <optional>
 
-#include "pro/utils/sha256.hpp"
-#include "pro/utils/reflect.hpp"
+#include "builder_rule.hpp"
 #include <chain_types.hpp>
 
 namespace chain
 {
+	using namespace pro;
+
 	class block_header
 	{
 	public:
 
-		REFLECT_MEMBER_SERIALIZATION( (previous_)(trxs_mroot_))
+		REFLECT_MEMBER_SERIALIZATION((previous_)(trxs_mroot_));
 
-		CSHA256			previous_;
-		CSHA256			trxs_mroot_;
-		//std::optional<>
+		CSHA256							Digest() const;
+		uint32_t						Block_num() const;
+
+		CSHA256							previous_;
+		CSHA256							trxs_mroot_;
+		ShortName						builder_;
+		std::optional<builder_rule>		next_builders_;
 	};
 
 	class signed_block_header : public block_header
