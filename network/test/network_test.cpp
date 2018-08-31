@@ -10,13 +10,13 @@ using namespace tutorial;
 using namespace google::protobuf;
 
 namespace {
-	// utility function generate data for testing
+	// utility function generates data for testing
 	static inline void FillTestDataSimple(Person& person) {
 		person.set_email("12345@gmail.com");
 		person.set_name("12345");
 		person.set_id(12345);
 	}
-
+	// utility function compares data for testing
 	static inline bool CompareSimpleTestData(const Person& lhs, const Person& rhs) {
 		return (lhs.email() == rhs.email()) &&
 			(lhs.id() == rhs.id()) &&
