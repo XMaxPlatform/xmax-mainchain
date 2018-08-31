@@ -310,7 +310,7 @@ namespace xmax {
 
 		if (queue_.OnWrite())
 		{
-
+			DoRead();
 		}
 	}
 
