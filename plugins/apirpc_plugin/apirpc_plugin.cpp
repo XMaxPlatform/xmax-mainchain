@@ -126,7 +126,7 @@ namespace xmax {
 		};
 
 	public:
-		explicit HttpSession(tcp::socket socket);
+		explicit HttpSession(tcp::socket socket, HttpHandlerFunc http_handler);
 
 		void Run();
 		void DoRead();
@@ -164,10 +164,11 @@ namespace xmax {
 
 
 	//--------------------------------------------------
-	HttpSession::HttpSession(tcp::socket socket):
+	HttpSession::HttpSession(tcp::socket socket, HttpHandlerFunc http_handler):
 		socket_(std::move(socket)),
 		strand_(socket.get_executor()),
-		queue_(*this)
+		queue_(*this),
+		http_handler_(http_handler)
 	{
 
 	}
@@ -411,7 +412,7 @@ namespace xmax {
 		}
 		else {
 			//TODO: Run sesson
-			std::make_shared<HttpSession>(std::move(socket_))->Run();
+			std::make_shared<HttpSession>(std::move(socket_), http_handler_)->Run();
 		}
 
 		DoAccept();
