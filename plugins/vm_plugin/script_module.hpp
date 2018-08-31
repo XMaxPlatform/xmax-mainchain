@@ -33,8 +33,7 @@ namespace xmax {
 			void CleanInstrunction();
 
 		private:
-			v8::Handle<v8::Value> DoworkInContext(const HandleScope& scope, const Local<ObjectTemplate>& global, const Local<Context>& context, const Context::Scope& ctxScope);
-
+		
 			void AstBlockCallbackInsert();
 
 			int instruction_count_;
