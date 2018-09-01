@@ -522,21 +522,20 @@ namespace xmax {
 	//--------------------------------------------------
 	ApiRpcPlugin::ApiRpcPlugin()
 	{
-
+		impl_ = std::make_unique<ApiRpcPluginImpl>();
 	}
 
 
 	//--------------------------------------------------
 	ApiRpcPlugin::~ApiRpcPlugin()
 	{
-
+		impl_.reset();
 	}
 
 	//--------------------------------------------------
 	void ApiRpcPlugin::Initialize(const VarsMap& options)
 	{
-		impl_ = std::make_unique<ApiRpcPluginImpl>();
-
+		
 		if (options.count(kAllowCrossOriginOp)) {
 			impl_->allow_cross_origin = options.at(kAllowCrossOriginOp).as<string>();
 		}
@@ -551,7 +550,7 @@ namespace xmax {
 	//--------------------------------------------------
 	void ApiRpcPlugin::Shutdown()
 	{
-		impl_.reset();
+		
 	}
 
 	//--------------------------------------------------
