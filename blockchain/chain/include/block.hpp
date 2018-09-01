@@ -4,6 +4,7 @@
 #include <optional>
 
 #include "builder_rule.hpp"
+#include "pro/crypto/privatekey.hpp"
 #include <chain_types.hpp>
 
 namespace chain
@@ -28,6 +29,13 @@ namespace chain
 	class signed_block_header : public block_header
 	{
 	public:
+
+		CSHA256			Id() const;
+		PublicKey		Get_signer_key() const;
+		void			Sign(const PrivateKey& signer);
+		bool			Is_signer_valid(const PublicKey& signer_key) const;
+
+		std::array<unsigned char, 65>	builder_signature_;
 	};
 
 	class transaction_receipt_header
