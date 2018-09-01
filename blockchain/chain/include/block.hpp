@@ -54,6 +54,8 @@ namespace chain
 	class transaction_receipt : public transaction_receipt_header
 	{
 	public:
+
+		CSHA256		Cal_Digest() const;
 	};
 
 	class signed_block : public signed_block_header
@@ -82,6 +84,13 @@ namespace chain
 
 	class block_confirmation : public block_confirmation_header
 	{
+	public:
 
+		std::array<unsigned char, 65>		builder_signature_;
+		PublicKey							Get_Signer_Key() const;
+		void								Sign(const PrivateKey& signer);
+		bool								Is_Signer_Valid(const PublicKey &signer_key) const;
+
+		static block_confirmation Make_Conf(const CSHA256& id, const ShortName& account, const PrivateKey& validate_private_key);
 	};
 }
