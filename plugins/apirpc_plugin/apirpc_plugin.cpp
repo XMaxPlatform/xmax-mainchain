@@ -5,6 +5,7 @@
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
 #include "pro/log/log.hpp"
+#include <functional>
 
 using namespace std;
 using namespace boost::beast;
@@ -203,7 +204,7 @@ namespace xmax {
 	//--------------------------------------------------
 	template <class Send>
 	void HttpSession::HandleRequest(Send&& send)
-	{
+		{
 		auto& req = request_;
 
 		// Returns a bad request response
@@ -482,9 +483,10 @@ namespace xmax {
 	//--------------------------------------------------
 	void ApiRpcPluginImpl::Start()
 	{
+		using namespace std::placeholders;
 		LogSprintf("Start API RPC service.");
 	
-		//listener = std::make_shared<http_listener>(ioc, tcp::endpoint{ http_address, http_port});
+		listener = std::make_shared<HttpListener>(ioc, tcp::endpoint{ http_address, http_port}, std::bind(&ApiRpcPluginImpl::HttpHandler, this, _1));
 		//listener->Run();
 	}
 
