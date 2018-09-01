@@ -13,6 +13,9 @@ namespace xmax
 	
 	class ApiRpcPluginImpl;
 
+	using UrlHandlerResult = std::optional<std::tuple<int /*status*/, std::string /*body*/>>;
+	
+
 /*!
  * \class ApiRPCPlugin
  * \brief The builder plugin use for build logic.
@@ -20,6 +23,7 @@ namespace xmax
 	class ApiRpcPlugin : public xmaxapp::PluginFace
 	{
 		GENERATED_PLUGIN(ApiRpcPlugin, xmaxapp::PluginFace, &InitOptions)
+
 	public:
 		ApiRpcPlugin();
 		virtual ~ApiRpcPlugin();
@@ -30,6 +34,8 @@ namespace xmax
 		virtual void Shutdown() override;
 			
 		// ----------------------------------------------------------------
+
+
 	protected:
 
 
