@@ -13,23 +13,26 @@ namespace chain
 
 	class block_header
 	{
+		RF_BODY(
+			(RF_SFIELD(CSHA256, previous_))
+			(RF_SFIELD(CSHA256, trxs_mroot_))
+			(RF_SFIELD(ShortName, builder_))
+			(RF_SFIELD(std::optional<builder_rule>, next_builders_))
+		)
 	public:
 
 		//REFLECT_MEMBER_SERIALIZATION((previous_)(trxs_mroot_)(builder_)(next_builders_));
 
 		CSHA256							Digest() const;
 		uint32_t						Block_num() const;
-
-		RF_BODY(
-			(RF_SFIELD(CSHA256, previous_))
-			(RF_SFIELD(CSHA256, trxs_mroot_))
-			(RF_SFIELD(ShortName, builder_))
-			(RF_SFIELD(std::optional<builder_rule>, next_builders_))
-		)			
+		
 	};
 
 	class signed_block_header : public block_header
 	{
+		RF_BODY_INHERIT(block_header,
+			(RF_SFIELD(Signature, builder_signature_))
+		)
 	public:
 
 		CSHA256			Id() const;
@@ -37,7 +40,8 @@ namespace chain
 		void			Sign(const PrivateKey& signer);
 		bool			Is_signer_valid(const PublicKey& signer_key) const;
 
-		std::array<unsigned char, 65>	builder_signature_;
+
+		
 	};
 
 	class transaction_receipt_header

@@ -62,22 +62,36 @@ void Deserialize(const T& t)
 
 #define _REFLECT_DEF_(_args) BOOST_PP_SEQ_FOR_EACH(_REFLECT_MACRO_CAT_, _REFLECT_BODY, _args)
 
-#define _REFLECT_SERIALIZATION_(_args)\
+#define _REFLECT_SZ_(_args)\
 	friend class cereal::access; \
 	template<class Archive> \
 	void serialize(Archive & ar) { \
 		BOOST_PP_SEQ_FOR_EACH(_REFLECT_MACRO_CAT_, _REFLECT_SZ, _args) {}\
 	}	
-// \
+
+#define _REFLECT_SZ_INHERIT(_super, _args)\
+	friend class cereal::access; \
+	template<class Archive> \
+	void serialize(Archive & ar) { \
+		_super::serialize(ar);\
+		BOOST_PP_SEQ_FOR_EACH(_REFLECT_MACRO_CAT_, _REFLECT_SZ, _args) {}\
+	}	
 
 #define _REFLECT_BODY_(_args)  \
 public:\
 _REFLECT_DEF_(_args)\
-_REFLECT_SERIALIZATION_(_args)\
+_REFLECT_SZ_(_args)\
 private:
 
+#define _REFLECT_BODY_INHERIT(_super, _args)  \
+public:\
+_REFLECT_DEF_(_args)\
+_REFLECT_SZ_INHERIT(_super, _args)\
+private:
 
 #define RF_BODY(_args) _REFLECT_BODY_(_args)
+
+#define RF_BODY_INHERIT(_super, _args) _REFLECT_BODY_INHERIT(_super, _args)
 
 // define field of simple value. e.g. int.
 #define RF_FIELD(_type, _name, _default_value) _FIELD_(_type, _name, _default_value) 
