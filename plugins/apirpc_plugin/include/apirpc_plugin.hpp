@@ -14,6 +14,7 @@ namespace xmax
 	class ApiRpcPluginImpl;
 
 	using UrlHandlerResult = std::optional<std::tuple<int /*status*/, std::string /*body*/>>;
+	using UrlHandler = std::function<UrlHandlerResult(std::string_view /*url*/, std::string_view /*req*/)>;
 	
 
 /*!
