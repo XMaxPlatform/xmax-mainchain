@@ -48,7 +48,9 @@ namespace xmax {
 		// test initialize code 
 		Test("init");
 	}
-
+	
+	/*
+	*/
 	//--------------------------------------------------
 	void ContractUtilPlugin::Startup() {
 		PluginFace::Startup();
