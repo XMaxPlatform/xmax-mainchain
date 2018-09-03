@@ -427,6 +427,8 @@ namespace xmax {
 	 */
 	class ApiRpcPluginImpl {
 	public:
+		using UrlHandlers = std::unordered_map<std::string, UrlHandler>;
+	public:
 
 		ApiRpcPluginImpl();
 		~ApiRpcPluginImpl();
@@ -452,6 +454,8 @@ namespace xmax {
 		unsigned short http_port;
 		bio::ip::address http_address;
 
+		//Other
+		UrlHandlers url_handlers_;
 	};
 
 	//--------------------------------------------------
@@ -551,6 +555,13 @@ namespace xmax {
 	void ApiRpcPlugin::Shutdown()
 	{
 		
+	}
+
+
+	//--------------------------------------------------
+	void ApiRpcPlugin::AddUrlHandler(std::string_view url, UrlHandler handler)
+	{
+
 	}
 
 	//--------------------------------------------------
