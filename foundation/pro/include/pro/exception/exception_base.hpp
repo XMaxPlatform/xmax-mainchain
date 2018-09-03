@@ -103,6 +103,7 @@ namespace pro
 		string file_;
 		mutable string full_desc_;
 
+		//Shared implementation ptr
 		std::shared_ptr<ExceptionImpl> impl_;
 	};
 }
