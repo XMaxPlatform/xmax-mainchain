@@ -150,13 +150,6 @@ namespace pro
 
 	Exception& Exception::operator = (Exception&& rhs)
 	{
-		line_ = rhs.line_;
-		type_ = rhs.type_;
-
-		title_ = std::forward<string>(rhs.title_);
-		description_ = std::forward<string>(rhs.description_);
-		source_ = std::forward<string>(rhs.source_);
-		file_ = std::forward<string>(rhs.file_);
 
 		impl_ = rhs.impl_;
 
