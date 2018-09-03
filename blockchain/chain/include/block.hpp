@@ -15,15 +15,17 @@ namespace chain
 	{
 	public:
 
-		REFLECT_MEMBER_SERIALIZATION((previous_)(trxs_mroot_)(builder_)(next_builders_));
+		//REFLECT_MEMBER_SERIALIZATION((previous_)(trxs_mroot_)(builder_)(next_builders_));
 
 		CSHA256							Digest() const;
 		uint32_t						Block_num() const;
 
-		CSHA256							previous_;
-		CSHA256							trxs_mroot_;
-		ShortName						builder_;
-		std::optional<builder_rule>		next_builders_;
+		RF_BODY(
+			(RF_SFIELD(CSHA256, previous_))
+			(RF_SFIELD(CSHA256, trxs_mroot_))
+			(RF_SFIELD(ShortName, builder_))
+			(RF_SFIELD(std::optional<builder_rule>, next_builders_))
+		)			
 	};
 
 	class signed_block_header : public block_header
