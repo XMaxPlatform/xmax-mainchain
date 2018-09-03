@@ -35,7 +35,7 @@ namespace xmax
 		virtual void Shutdown() override;
 			
 		// ----------------------------------------------------------------
-
+		void AddUrlHandler(std::string_view url, UrlHandler handler);
 
 	protected:
 
