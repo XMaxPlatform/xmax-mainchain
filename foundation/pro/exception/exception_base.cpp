@@ -143,14 +143,6 @@ namespace pro
 
 	Exception& Exception::operator = (const Exception& rhs)
 	{
-		line_ = rhs.line_;
-		type_ = rhs.type_;
-
-		title_ = rhs.title_;
-		description_ = rhs.description_;
-		source_ = rhs.source_;
-		file_ = rhs.file_;
-
 		impl_ = rhs.impl_;
 
 		return *this;
