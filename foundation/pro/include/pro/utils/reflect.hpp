@@ -45,3 +45,41 @@ void Deserialize(const T& t)
 	cereal::BinaryInputArchive archive(os);
 	archive(CEREAL_NVP(t));
 }
+
+
+
+
+// macros for DB_FIELD 
+#define _REFLECT_BODY_FIELD_(_t, _v, _def) _t _v = _def;
+#define _REFLECT_SZ_FIELD_(_t, _v, _def) ar(CEREAL_NVP((_v)));
+
+// macros for DB_SFIELD 
+#define _REFLECT_BODY_SFIELD_(_t, _v) _t _v;
+#define _REFLECT_SZ_SFIELD_(_t, _v) ar(CEREAL_NVP((_v)));
+
+#define _REFLECT_MACRO_CAT_(r, data, elem) BOOST_PP_CAT(data, elem)
+
+
+#define _REFLECT_DEF_(_args) BOOST_PP_SEQ_FOR_EACH(_REFLECT_MACRO_CAT_, _REFLECT_BODY, _args)
+
+#define _REFLECT_SERIALIZATION_(_args)\
+	friend class cereal::access; \
+	template<class Archive> \
+	void serialize(Archive & ar) { \
+		BOOST_PP_SEQ_FOR_EACH(_REFLECT_MACRO_CAT_, _REFLECT_SZ, _args) {}\
+	}	
+// \
+
+#define _REFLECT_BODY_(_args)  \
+public:\
+_REFLECT_DEF_(_args)\
+_REFLECT_SERIALIZATION_(_args)\
+private:
+
+
+#define RF_BODY(_args) _REFLECT_BODY_(_args)
+
+// define field of simple value. e.g. int.
+#define RF_FIELD(_type, _name, _default_value) _FIELD_(_type, _name, _default_value) 
+// define field of simple value width out default value. e.g. int.
+#define RF_SFIELD(_type, _name) _SFIELD_(_type, _name)
