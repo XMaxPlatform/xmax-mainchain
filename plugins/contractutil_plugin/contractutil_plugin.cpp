@@ -51,6 +51,7 @@ namespace xmax {
 	
 	/*
 	*  startup a contract util plugin
+	* 
 	*/
 	//--------------------------------------------------
 	void ContractUtilPlugin::Startup() {
