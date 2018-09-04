@@ -40,8 +40,8 @@ BOOST_AUTO_TEST_CASE(proto_set_string_field)
 {
 	// set and check email
 	Person person_msg;
-	person_msg.set_email("12345");	
-	BOOST_CHECK(person_msg.email() == "12345");
+	person_msg.set_email("example@example.com");	
+	BOOST_CHECK(person_msg.email() == "example@example.com");
 }
 
 
