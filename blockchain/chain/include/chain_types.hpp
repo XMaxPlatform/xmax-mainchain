@@ -15,7 +15,17 @@ namespace chain
 	template<typename T>
 	using mapped_vector = boost::interprocess::vector<T, allocator<T>>;
 
-
-
 	using Signature = std::array<unsigned char, 65>;
+
+	using PublicKey = pro::PublicKey;
+
+	using PrivateKey = pro::PrivateKey;
+
+	using Name = pro::ShortName;
+
+	using HashDigest = pro::CSHA256;
+
+	using HashID = pro::CSHA256;
+
+	using BlockID = HashID;
 }
