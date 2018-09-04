@@ -178,6 +178,8 @@ namespace xmax {
 	void HttpSession::Run()
 	{
 		LogSprintf("Http session run.");
+
+		DoRead();
 	}
 
 
@@ -504,9 +506,7 @@ namespace xmax {
 	//--------------------------------------------------
 	std::optional<http::response<http::string_body>> ApiRpcPluginImpl::HttpHandler(http::request<http::string_body>& req)
 	{
-		
-
-
+	
 		return {};
 	}
 
