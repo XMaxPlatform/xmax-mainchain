@@ -30,6 +30,9 @@ namespace xmax {
 		//  : initialize members
 	}
 
+	/*
+	* 
+	*/
 	//--------------------------------------------------
 	ContractUtilPlugin::~ContractUtilPlugin() {
 		Clean();
