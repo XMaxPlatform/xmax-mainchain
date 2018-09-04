@@ -114,12 +114,7 @@ namespace pro
 		impl_->file = _file;
 	}
 	Exception::Exception(int type_, string&& _description, const char* tile_, const char* _file, long _line)
-		:impl_{ new ExceptionImpl() }
-		, line_(_line)
-		, type_(type_)
-		, title_(tile_)
-		, description_(std::forward<string>(_description))
-		, file_(_file)
+		:impl_{ new ExceptionImpl() }		
 	{
 		impl_->line = _line;
 		impl_->type = static_cast<ExceptionType>(type_);
