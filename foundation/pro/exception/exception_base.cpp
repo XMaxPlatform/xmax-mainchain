@@ -155,7 +155,7 @@ namespace pro
 	{
 		if (0 == full_desc_.size())
 		{	
-			if( line_ > 0 )
+			if( impl_->line > 0 )
 			{
 				if (source_.size())
 				{
