@@ -8,6 +8,12 @@ CSHA256::CSHA256()
 
 }
 
+CSHA256::CSHA256(const std::vector<unsigned char>& hash)
+	: hash_(hash)
+{
+
+}
+
 CSHA256::~CSHA256()
 {
 

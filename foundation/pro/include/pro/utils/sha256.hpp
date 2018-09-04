@@ -14,6 +14,8 @@ public:
 
 	CSHA256();
 
+	CSHA256(const std::vector<unsigned char>& hash);
+
 
 	~CSHA256();
 
@@ -31,6 +33,7 @@ public:
 	const unsigned char* Data() const;
 
 	const std::vector<unsigned char>& GetDataVec() const;
+	std::vector<unsigned char>&	GetDataVec();
 
 private:
 	
@@ -86,6 +89,11 @@ inline const unsigned char* CSHA256::Data() const
 }
 
 inline const std::vector<unsigned char>& CSHA256::GetDataVec() const
+{
+	return hash_;
+}
+
+inline std::vector<unsigned char>& CSHA256::GetDataVec()
 {
 	return hash_;
 }
