@@ -6,14 +6,12 @@
 
 namespace chain
 {
-	using namespace pro;
-
 	struct builder_info
 	{
-		ShortName		builder_name;
+		Name			builder_name;
 		PublicKey		block_signing_key;
 
-		builder_info(const ShortName& name, const PublicKey& key)
+		builder_info(const Name& name, const PublicKey& key)
 			: builder_name(name)
 			, block_signing_key(key)
 		{
@@ -74,7 +72,7 @@ namespace chain
 			return builders.size() <= 0;
 		}
 
-		PublicKey get_sign_key(const ShortName& name) const
+		PublicKey get_sign_key(const Name& name) const
 		{
 			for (const auto& it : builders)
 			{

@@ -9,22 +9,15 @@
 
 namespace chain
 {
-	using namespace pro;
-
 	class block_header
 	{
 		RF_BODY(
-			(RF_SFIELD(CSHA256, previous_))
-			(RF_SFIELD(CSHA256, trxs_mroot_))
-			(RF_SFIELD(ShortName, builder_))
+			(RF_SFIELD(BlockID, previous_))
+			(RF_SFIELD(HashDigest, trxs_mroot_))
+			(RF_SFIELD(Name, builder_))
 			(RF_SFIELD(std::optional<builder_rule>, next_builders_))
 		)
 	public:
-
-		//REFLECT_MEMBER_SERIALIZATION((previous_)(trxs_mroot_)(builder_)(next_builders_));
-
-		CSHA256							Digest() const;
-		uint32_t						Block_num() const;
 		
 	};
 
@@ -34,13 +27,6 @@ namespace chain
 			(RF_SFIELD(Signature, builder_signature_))
 		)
 	public:
-
-		CSHA256			Id() const;
-		PublicKey		Get_signer_key() const;
-		void			Sign(const PrivateKey& signer);
-		bool			Is_signer_valid(const PublicKey& signer_key) const;
-
-
 		
 	};
 
@@ -61,7 +47,7 @@ namespace chain
 	{
 	public:
 
-		CSHA256		Cal_Digest() const;
+		HashDigest		Cal_Digest() const;
 	};
 
 	class signed_block : public signed_block_header
@@ -82,21 +68,15 @@ namespace chain
 	{
 	public:
 
-		CSHA256				block_id_;
-		ShortName			verifier_;
+		BlockID			block_id_;
+		Name			verifier_;
 
-		CSHA256				Digest() const;
 	};
 
 	class block_confirmation : public block_confirmation_header
 	{
 	public:
 
-		std::array<unsigned char, 65>		builder_signature_;
-		PublicKey							Get_Signer_Key() const;
-		void								Sign(const PrivateKey& signer);
-		bool								Is_Signer_Valid(const PublicKey &signer_key) const;
-
-		static block_confirmation Make_Conf(const CSHA256& id, const ShortName& account, const PrivateKey& validate_private_key);
+		Signature		builder_signature_;
 	};
 }
