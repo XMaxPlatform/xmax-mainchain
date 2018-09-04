@@ -18,7 +18,7 @@ namespace chain
 			(RF_SFIELD(std::optional<builder_rule>, next_builders_))
 		)
 	public:
-		
+		HashDigest Digest() const;
 	};
 
 	class signed_block_header : public block_header

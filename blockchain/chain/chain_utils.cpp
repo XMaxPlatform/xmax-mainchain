@@ -3,7 +3,7 @@
 
 namespace chain
 {
-	uint32_t num_from_id(const CSHA256& id)
+	uint32_t num_from_id(const BlockID& id)
 	{
 		uint64_t ut;
 		memcpy(&ut, id.Data(), 64);

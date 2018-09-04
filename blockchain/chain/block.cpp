@@ -2,9 +2,9 @@
 
 namespace chain
 {
-	CSHA256 block_header::Digest() const
+	HashDigest block_header::Digest() const
 	{
-		CSHA256 sha;
+		HashDigest sha;
 		sha.Hash(*this);
 		return sha;
 	}

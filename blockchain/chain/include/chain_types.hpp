@@ -5,6 +5,10 @@
 #include <boost/interprocess/managed_mapped_file.hpp>
 #include <array>
 
+#include <pro/protypes.hpp>
+#include <pro/crypto/privatekey.hpp>
+#include <pro/crypto/publickey.hpp>
+
 namespace chain
 {
 	namespace bip = boost::interprocess;

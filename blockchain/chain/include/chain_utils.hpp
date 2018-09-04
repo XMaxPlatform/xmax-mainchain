@@ -5,5 +5,5 @@
 
 namespace chain
 {
-	uint32_t num_from_id(const CSHA256& id);
+	uint32_t num_from_id(const BlockID& id);
 }
