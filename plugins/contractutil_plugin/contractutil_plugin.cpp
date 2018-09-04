@@ -31,7 +31,7 @@ namespace xmax {
 	}
 
 	/*
-	*  desconstract 
+	*  desconstract util plugin
 	*/
 	//--------------------------------------------------
 	ContractUtilPlugin::~ContractUtilPlugin() {
