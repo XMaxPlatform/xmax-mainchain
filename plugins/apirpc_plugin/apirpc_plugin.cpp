@@ -440,6 +440,7 @@ namespace xmax {
 		*/
 		void Start();
 
+	private:
 		//Http handler callback
 		std::optional<http::response<http::string_body>> HttpHandler(http::request<http::string_body>& req);
 
