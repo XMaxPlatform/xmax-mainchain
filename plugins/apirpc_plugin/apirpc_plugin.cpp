@@ -440,6 +440,11 @@ namespace xmax {
 		*/
 		void Start();
 
+
+		void AddUrlHandler(std::string_view url, UrlHandler handler) {
+			url_handlers_[std::string{ url }] = handler;
+		}
+
 	private:
 		//Http handler callback
 		std::optional<http::response<http::string_body>> HttpHandler(http::request<http::string_body>& req);
