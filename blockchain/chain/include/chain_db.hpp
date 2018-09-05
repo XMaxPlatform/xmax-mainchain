@@ -19,8 +19,8 @@ namespace chain
 	using MString = db::MString;
 
 	template<typename T>
-	using DBAlloc = db::DBAlloc<T>;
+	using Alloc = db::DBAlloc<T>;
 
-	using db::DefAlloc;
+	using DefAlloc = db::DefAlloc;
 
 }
