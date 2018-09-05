@@ -64,7 +64,7 @@ namespace xmax {
 	}
 
 	/*
-	*	
+	*	shutdown the contract
 	*/
 	//--------------------------------------------------
 	void ContractUtilPlugin::Shutdown() {
