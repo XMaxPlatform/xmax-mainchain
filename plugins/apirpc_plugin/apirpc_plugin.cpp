@@ -186,6 +186,8 @@ namespace xmax {
 	//--------------------------------------------------
 	void HttpSession::DoRead()
 	{
+		request_ = {};
+
 		http::async_read(socket_, buffer_, request_,
 			bio::bind_executor(strand_,
 				std::bind(&HttpSession::OnRead, shared_from_this(),
@@ -475,6 +477,7 @@ namespace xmax {
 	//--------------------------------------------------
 	ApiRpcPluginImpl::~ApiRpcPluginImpl()
 	{
+
 		listener.reset();
 	}
 
