@@ -14,4 +14,11 @@ namespace chain
 	{
 		return utils::num_from_id(previous_) + 1;
 	}
+
+	BlockID signed_block_header::Id() const
+	{
+		return utils::block_id(Digest(), Block_Num());
+	}
+
+	
 }
