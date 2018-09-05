@@ -63,6 +63,9 @@ namespace xmax {
 		//  : setup all 
 	}
 
+	/*
+	*	
+	*/
 	//--------------------------------------------------
 	void ContractUtilPlugin::Shutdown() {
 		impl_.reset();
