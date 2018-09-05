@@ -53,10 +53,10 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize_string1)
 	// serialize to string
 	std::string serialize_str;
 	person_msg.SerializeToString(&serialize_str);
-
+	// deserialize from former string
 	Person ser_person_msg;
 	ser_person_msg.ParseFromString(serialize_str);
-
+	// compare deserialized object with origin data object
 	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
 }
 
