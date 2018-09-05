@@ -12,7 +12,7 @@ using namespace boost::beast;
 
 namespace bio = boost::asio;
 using tcp = bio::ip::tcp;
-using HttpHandlerFunc = std::function<std::optional<http::response<http::string_body>>(http::request<http::string_body>& req)>;
+using HttpHandlerFunc = std::function<std::optional<http::response<http::string_body>>(std::string_view url, http::request<http::string_body>& req)>;
 
 namespace xmax {
 
@@ -451,7 +451,7 @@ namespace xmax {
 
 	private:
 		//Http handler callback
-		std::optional<http::response<http::string_body>> HttpHandler(http::request<http::string_body>& req);
+		std::optional<http::response<http::string_body>> HttpHandler(std::string_view url, http::request<http::string_body>& req);
 
 	public:
 		//Configurations
@@ -507,7 +507,7 @@ namespace xmax {
 
 
 	//--------------------------------------------------
-	std::optional<http::response<http::string_body>> ApiRpcPluginImpl::HttpHandler(http::request<http::string_body>& req)
+	std::optional<http::response<http::string_body>> ApiRpcPluginImpl::HttpHandler(std::string_view url, http::request<http::string_body>& req)
 	{
 	
 		return {};
