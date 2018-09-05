@@ -19,6 +19,7 @@ namespace chain
 		)
 	public:
 		HashDigest Digest() const;
+		uint32_t   Block_Num() const;
 	};
 
 	class signed_block_header : public block_header
