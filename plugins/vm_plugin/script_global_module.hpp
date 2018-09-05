@@ -8,7 +8,6 @@
 #include <string>
 #include <list>
 #include "script_util.hpp"
-//globale module
 namespace xmax {
 
 	namespace scriptv8 {

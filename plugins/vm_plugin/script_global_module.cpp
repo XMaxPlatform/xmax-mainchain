@@ -4,7 +4,6 @@
 namespace xmax {
 
 	namespace scriptv8 {
-		//globale module
 		ScriptGlobalMoudle::ScriptGlobalMoudle()
 		{
 
