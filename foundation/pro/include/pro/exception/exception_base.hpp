@@ -94,8 +94,7 @@ namespace pro
 
 		Exception(int _type, const string& _description, const string& _source, const char* _tile, const char* _file, long _line);
 		Exception(int _type, const string& _description, const char* _tile, const char* _file, long _line);
-
-		string title_;
+		
 		string description_;
 		string source_;
 		string file_;

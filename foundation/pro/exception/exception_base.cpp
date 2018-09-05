@@ -83,12 +83,12 @@ namespace pro
 		impl_->file = _file;
 		impl_->line = _line;
 	}
-	Exception::Exception(int type_, const string& _description, const string& _source, const char* tile_, const char* _file, long _line)
+	Exception::Exception(int type_, const string& _description, const string& _source, const char* _title, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }	
 	{
 		impl_->line = _line;
 		impl_->type = static_cast<ExceptionType>(type_);
-		impl_->title = title_;
+		impl_->title = _title;
 		impl_->description = _description;
 		impl_->source = _source;
 		impl_->file = _file;		
