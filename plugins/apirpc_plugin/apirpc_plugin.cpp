@@ -12,7 +12,7 @@ using namespace boost::beast;
 
 namespace bio = boost::asio;
 using tcp = bio::ip::tcp;
-using HttpHandlerFunc = std::function<std::optional<http::response<http::string_body>>(std::string_view url, http::request<http::string_body>& req)>;
+using HttpHandlerFunc = std::function<std::optional<http::response<http::string_body>>(boost::beast::string_view url, http::request<http::string_body>& req)>;
 
 namespace xmax {
 
@@ -260,7 +260,7 @@ namespace xmax {
 
 		if (http_handler_)
 		{
-			auto res = http_handler_(req);
+			auto res = http_handler_(req.target(), req);
 			if (res) {
 				return send(std::move(*res));
 			}
@@ -451,7 +451,7 @@ namespace xmax {
 
 	private:
 		//Http handler callback
-		std::optional<http::response<http::string_body>> HttpHandler(std::string_view url, http::request<http::string_body>& req);
+		std::optional<http::response<http::string_body>> HttpHandler(boost::beast::string_view url, http::request<http::string_body>& req);
 
 	public:
 		//Configurations
@@ -501,13 +501,13 @@ namespace xmax {
 		using namespace std::placeholders;
 		LogSprintf("Start API RPC service.");
 	
-		listener = std::make_shared<HttpListener>(ioc, tcp::endpoint{ http_address, http_port}, std::bind(&ApiRpcPluginImpl::HttpHandler, this, _1));
+		listener = std::make_shared<HttpListener>(ioc, tcp::endpoint{ http_address, http_port}, std::bind(&ApiRpcPluginImpl::HttpHandler, this, _1, _2));
 		//listener->Run();
 	}
 
 
 	//--------------------------------------------------
-	std::optional<http::response<http::string_body>> ApiRpcPluginImpl::HttpHandler(std::string_view url, http::request<http::string_body>& req)
+	std::optional<http::response<http::string_body>> ApiRpcPluginImpl::HttpHandler(boost::beast::string_view url, http::request<http::string_body>& req)
 	{
 	
 		return {};
