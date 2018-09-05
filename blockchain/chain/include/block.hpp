@@ -29,6 +29,10 @@ namespace chain
 		)
 	public:
 		
+		BlockID				Id() const;
+		PublicKey			Get_Signer_Key() const;
+		void				Sign(const PrivateKey& signer);
+		bool                Is_Signer_Valid(const PublicKey& signer_key) const;
 	};
 
 	class transaction_receipt_header
