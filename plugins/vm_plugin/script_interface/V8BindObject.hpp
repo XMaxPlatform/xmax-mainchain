@@ -10,7 +10,6 @@ namespace xmax {
 		template <typename ObjType>
 		class V8BindObject {
 		public:
-			//V8 bind
 			
 			static ObjType* Unwrap(v8::Handle<v8::Object> jsObj) {
 				v8::Handle<External> ptr = Handle<External>::Cast(jsObj->GetInternalField(0));
