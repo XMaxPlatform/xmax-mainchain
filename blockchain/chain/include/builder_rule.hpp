@@ -2,6 +2,7 @@
 #include "pro/scode/shortname.hpp"
 #include "pro/crypto/publickey.hpp"
 #include "pro/utils/reflect.hpp"
+#include <chain_db.hpp>
 #include <chain_types.hpp>
 
 namespace chain
@@ -101,7 +102,7 @@ namespace chain
 
 	struct  mapped_builder_rule
 	{
-		mapped_builder_rule(const chain::allocator<char>& alloc)
+		mapped_builder_rule(const DefAlloc& alloc)
 			: builders_(alloc) {}
 
 		mapped_builder_rule& operator=(const builder_rule& a) {
@@ -128,7 +129,7 @@ namespace chain
 			builders_.assign(list.begin(), list.end());
 			version_ = vers;
 		}
-		void set_builders(const mapped_vector<builder_info>& list, uint32_t vers)
+		void set_builders(const MVector<builder_info>& list, uint32_t vers)
 		{
 			builders_ = list;
 			version_ = vers;
@@ -148,6 +149,6 @@ namespace chain
 		}
 
 		uint32_t                                        version_ = 0; ///< sequentially incrementing version number
-		chain::mapped_vector<builder_info>				builders_;
+		MVector<builder_info>				builders_;
 	};
 }
