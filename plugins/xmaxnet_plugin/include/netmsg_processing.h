@@ -23,7 +23,9 @@ namespace xmax
 		void _OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const VersionMsg& msg);
 		// version ack msg
 		void _OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const VerAckMsg& msg);
+		//send addr to peer msg
 		void _OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const AddrMsg& msg);
+		// request addr from peer msg
 		void _OnHandleMsg(std::shared_ptr<XMX_Connection> pConnect, const GetAddrMsg& msg);
 
 	private:
