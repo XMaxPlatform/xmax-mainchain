@@ -74,7 +74,7 @@ namespace xmax {
 	}
 
 	/*
-	* 
+	*  test for contract
 	*/
 	//--------------------------------------------------
 	void ContractUtilPlugin::Test(const char* log) {
