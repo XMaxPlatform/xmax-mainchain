@@ -25,6 +25,7 @@ target_link_libraries( ${current_lib_name}
 	${xmax_core_lib_name}
 	${xmax_app_lib_name}
 	${xmax_db_name}
+	${xmax_bcp_lib_name}
 )
 
 target_include_directories( ${current_lib_name} PUBLIC "include"  "${Boost_INCLUDE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" )

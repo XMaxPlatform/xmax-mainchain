@@ -4,7 +4,7 @@
 */
 #pragma once
 #include <pluginface.hpp>
-
+#include <blockchain_plugin.hpp>
 
 namespace xmax
 {
@@ -21,6 +21,7 @@ namespace xmax
 	class BlockBuilderPlugin : public xmaxapp::PluginFace
 	{
 		GENERATED_PLUGIN(BlockBuilderPlugin, xmaxapp::PluginFace, &InitOptions)
+		PLUGIN_DEPENDS(BlockChainPlugin)
 	public:
 		BlockBuilderPlugin();
 		// xmaxapp::PluginFace interface ----------------------------------

@@ -22,6 +22,8 @@ namespace chain
 	public:
 		virtual ~IChainContext() {};
 
+		virtual void BuildBlock() = 0;
+
 		static IChainContext* InitContext(ChainConfig& config);
 		static void DestroyContext(IChainContext* ptr);
 

@@ -19,6 +19,8 @@ namespace chain
 		ChainContext(const ChainConfig& config);
 		ChainContext(ChainConfig&& config);
 
+		virtual void BuildBlock();
+
 	protected:
 		void init();
 

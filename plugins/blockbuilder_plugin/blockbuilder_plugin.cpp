@@ -6,7 +6,8 @@
 #include <pro/types/time.hpp>
 
 #include <boost/asio/io_service.hpp>
-#include "blockbuilder_plugin.hpp"
+
+#include <blockbuilder_plugin.hpp>
 
 namespace xmax
 {
@@ -18,9 +19,11 @@ namespace xmax
 	{
 	public:
 		boost::asio::deadline_timer timer_;
+		BlockBuilderPlugin* parent_ = nullptr;
 
-		BlockBuilderImpl(boost::asio::io_service& io)
+		BlockBuilderImpl(boost::asio::io_service& io, BlockBuilderPlugin* p)
 			: timer_(io)
+			, parent_(p)
 		{
 
 		}
@@ -46,7 +49,10 @@ namespace xmax
 		*/
 		void BuildBlock()
 		{
-			Logf("building block.");
+			chain::IChainContext* chain_context = parent_->GetApp()->GetPlugin<BlockChainPlugin>().GetChain();
+
+			chain_context->BuildBlock();
+
 			NextBlock();
 		}
 
@@ -60,7 +66,7 @@ namespace xmax
 	void BlockBuilderPlugin::OnCreated()
 	{
 		Super::OnCreated();
-		impl_ = std::make_unique<BlockBuilderImpl>(*GetApp()->GetService());
+		impl_ = std::make_unique<BlockBuilderImpl>(*GetApp()->GetService(), this);
 	}
 
 	void BlockBuilderPlugin::Initialize(const VarsMap& options)

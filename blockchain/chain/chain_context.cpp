@@ -19,6 +19,11 @@ namespace chain
 		init();
 	}
 
+	void ChainContext::BuildBlock()
+	{
+		Logf("building block.");
+	}
+
 	void ChainContext::init()
 	{
 		db_.reset(ChainDB::InitDB(config_.DBDir, config_.DBFileSize));
