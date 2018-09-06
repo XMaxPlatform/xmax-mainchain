@@ -33,6 +33,23 @@ namespace xmaxapp
 		return data_dir_;
 	}
 
+	Plugin* Application::FindPlugin(const string& name) const
+	{
+		auto itr = pluginmap_.find(name);
+		if (itr != pluginmap_.end())
+		{
+			return itr->second.get();
+		}
+	}
+
+	Plugin& Application::GetPlugin(const string& name) const
+	{
+		auto ptr = FindPlugin(name);
+		if (!ptr)
+			BOOST_THROW_EXCEPTION(std::runtime_error("unable to find plugin: " + name));
+		return *ptr;
+	}
+
 	void Application::PluginToInit(const string& plugin_name)
 	{
 		if (pluginmap_.find(plugin_name) == pluginmap_.end())

@@ -51,12 +51,36 @@ namespace xmaxapp
 	public:
 		virtual ~ApplicationBase() {}
 		/**
-		* return AppService
+		* @return AppService
 		*/
 		virtual AppService* GetService() const = 0;
 		/**
-		* return data dir
+		* @return data dir
 		*/
 		virtual fs::path GetDataDir() const = 0;
+
+		/**
+		* find plugin by name
+		* @return plugin
+		*/
+		virtual Plugin* FindPlugin(const string& name) const = 0;
+		/**
+		* get plugin by name
+		* @return plugin
+		*/
+		virtual Plugin& GetPlugin(const string& name) const = 0;
+
+
+		template<typename PluginType>
+		PluginType* FindPlugin() const
+		{
+			return dynamic_cast<PluginType*>(FindPlugin(PluginType::PluginName()));
+		}
+		template<typename PluginType>
+		PluginType& GetPlugin() const
+		{
+			auto ptr = FindPlugin<PluginType>();
+			return *ptr;
+		}
 	};
 }

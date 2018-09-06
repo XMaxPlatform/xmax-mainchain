@@ -37,6 +37,17 @@ namespace xmaxapp
 		virtual fs::path GetDataDir() const override;
 
 		/**
+		* find plugin by name
+		* @return plugin
+		*/
+		virtual Plugin* FindPlugin(const string& name) const override;
+		/**
+		* get plugin by name
+		* @return plugin
+		*/
+		virtual Plugin& GetPlugin(const string& name) const override;
+
+		/**
 		* Register plugin to the application
 		* @template param: plugin class
 		*/
