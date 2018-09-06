@@ -3,8 +3,7 @@
 #include <memory>
 #include <optional>
 
-#include "builder_rule.hpp"
-#include "pro/crypto/privatekey.hpp"
+#include <pro/crypto/privatekey.hpp>
 #include <chain_types.hpp>
 
 namespace chain
@@ -15,7 +14,6 @@ namespace chain
 			(RF_SFIELD(BlockID, previous_))
 			(RF_SFIELD(HashDigest, trxs_mroot_))
 			(RF_SFIELD(Name, builder_))
-			(RF_SFIELD(std::optional<builder_rule>, next_builders_))
 		)
 	public:
 		HashDigest Digest() const;
