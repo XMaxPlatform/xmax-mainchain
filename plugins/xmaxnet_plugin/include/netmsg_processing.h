@@ -13,7 +13,7 @@ namespace xmax
 	class NetMsgProcessing : public pro::Singleton<NetMsgProcessing>
 {
 	public:
-
+		//parse msg
 		void	ParseMsg(const char* pMsg, const MsgHeader& header, std::shared_ptr<XMX_Connection> pConnect);
 		void    SetNetImpl(const std::shared_ptr<XmaxNetPluginImpl>& impl);
 	protected:
