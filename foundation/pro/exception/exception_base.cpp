@@ -157,7 +157,7 @@ namespace pro
 		{	
 			if( impl_->line > 0 )
 			{
-				if (source_.size())
+				if (impl_->source.size())
 				{
 					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\" in %s at '%s(line, %d)'",
 						impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->source.c_str(), impl_->file.c_str(), impl_->line);
@@ -171,7 +171,7 @@ namespace pro
 			}
 			else
 			{
-				if (source_.size())
+				if (impl_->source.size())
 				{
 					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\" in %s", impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->source.c_str());
 				}
