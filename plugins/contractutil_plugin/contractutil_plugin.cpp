@@ -73,6 +73,9 @@ namespace xmax {
 		PluginFace::Shutdown();
 	}
 
+	/*
+	*
+	*/
 	//--------------------------------------------------
 	void ContractUtilPlugin::Test(const char* log) {
 		printf("test a log");
