@@ -431,7 +431,7 @@ namespace xmax {
 	 */
 	class ApiRpcPluginImpl {
 	public:
-		using UrlHandlers = std::unordered_map<std::string_view, UrlHandler>;
+		using UrlHandlers = std::unordered_map<std::string, UrlHandler>;
 	public:
 
 		ApiRpcPluginImpl();
@@ -510,6 +510,13 @@ namespace xmax {
 	std::optional<http::response<http::string_body>> ApiRpcPluginImpl::HttpHandler(boost::beast::string_view url, http::request<http::string_body>& req)
 	{
 		
+		for (auto& pair : url_handlers_) {
+			if (pair.first.find(url.to_string()) != std::string::npos) {
+				auto result = pair.second(url.to_string(), req.body());
+			}
+		}
+	
+
 		return {};
 	}
 
