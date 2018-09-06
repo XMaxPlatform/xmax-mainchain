@@ -60,20 +60,6 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize_string1)
 	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
 }
 
-BOOST_AUTO_TEST_CASE(proto_simple_serialize_string2)
-{
-	// prepare data object
-	Person person_msg;
-	FillTestDataSimple(person_msg);
-	// serialize to string
-	std::string serialize_str = person_msg.SerializeAsString();
-	// deserialize from former string
-	Person ser_person_msg;
-	ser_person_msg.ParseFromString(serialize_str);
-	// compare deserialized object with origin data object
-	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
-}
-
 BOOST_AUTO_TEST_CASE(proto_simple_serialize_array)
 {
 	Person person_msg;
