@@ -153,18 +153,20 @@ namespace pro
 
     const string& Exception::GetFullDescription() const
 	{
-		if (0 == full_desc_.size())
+		std::string full_desc;
+
+		if (0 == full_desc.size())
 		{	
 			if( impl_->line > 0 )
 			{
 				if (impl_->source.size())
 				{
-					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\" in %s at '%s(line, %d)'",
+					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\" in %s at '%s(line, %d)'",
 						impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->source.c_str(), impl_->file.c_str(), impl_->line);
 				}
 				else
 				{
-					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\" at '%s(line, %d)'",
+					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\" at '%s(line, %d)'",
 						impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->file.c_str(), impl_->line);
 				}
 			
@@ -173,17 +175,17 @@ namespace pro
 			{
 				if (impl_->source.size())
 				{
-					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\" in %s", impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->source.c_str());
+					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\" in %s", impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->source.c_str());
 				}
 				else
 				{
-					utils::Sprintf(full_desc_, "EXCEPTION(%d:%s): \"%s\".", impl_->type, impl_->title.c_str(), impl_->description.c_str());
+					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\".", impl_->type, impl_->title.c_str(), impl_->description.c_str());
 				}
 
 			}
 		}
 
-		return full_desc_;
+		return full_desc;
 	}
 
     int Exception::GetType(void) const throw()
