@@ -13,7 +13,18 @@ namespace pro
 		string source;
 		string file;
 		string full_desc;
+
+	public:
+		std::string FullDescription() const;
 	};
+
+	//--------------------------------------------------
+	std::string ExceptionImpl::FullDescription() const
+	{
+		std::string desc;
+
+		return desc;
+	}
 
 	Exception::~Exception() throw()
 	{
