@@ -82,6 +82,7 @@ namespace xmax {
 	}
 
 	/*
+	* clean contract
 	*/
 	//--------------------------------------------------
 	void ContractUtilPlugin::Clean()
