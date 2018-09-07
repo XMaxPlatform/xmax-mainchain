@@ -40,6 +40,7 @@ namespace xmax
 		{
 
 			TimeMicroseconds time(1000000);
+
 			timer_.expires_from_now(boost::posix_time::microseconds(time.GetValue()));
 			timer_.async_wait(std::bind(&BlockBuilderImpl::BuildBlock, this));
 
