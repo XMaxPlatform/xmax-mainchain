@@ -61,6 +61,7 @@ namespace xmax {
 		PluginFace::Startup();
 		
 		//  : setup all 
+		CreateContract();
 	}
 
 	/*
