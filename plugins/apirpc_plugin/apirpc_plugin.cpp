@@ -511,19 +511,18 @@ namespace xmax {
 	{
 		std::optional<http::response<http::string_body>> res;
 
-
-		for (auto& pair : url_handlers_) {
-			if (pair.first.find(url.to_string()) != std::string::npos) {
-				auto result = pair.second(url.to_string(), req.body());
-				if (result)
-				{
-					auto [status, body] = result.value();
-					http::response<http::string_body> response{ (boost::beast::http::status)status, req.version() };
-					res.emplace(response);
-				}				
+		std::string url_str{ url };
+		auto itr = url_handlers_.find(url_str);
+		if (itr != url_handlers_.end())
+		{
+			auto result = itr->second(url.to_string(), req.body());
+			if (result)
+			{
+				auto[status, body] = result.value();
+				http::response<http::string_body> response{ (boost::beast::http::status)status, req.version() };
+				res.emplace(response);
 			}
 		}
-			
 
 		return res;
 	}
