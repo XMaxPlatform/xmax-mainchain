@@ -1,5 +1,4 @@
 #include "int64_bind.hpp"
-//i64
 namespace xmax {
 
 	namespace scriptv8 {
