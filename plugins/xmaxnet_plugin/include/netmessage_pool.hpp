@@ -32,6 +32,7 @@ public:
 	std::vector<boost::asio::mutable_buffer> GetAvailableBufferFromPool();
 	//get available bytes from mutable_buffer
 	uint32_t	AvailableBytes() const;
+	// get readable bytes from read buffer;
 	uint32_t	CanReadBytes() const;
 	void		IncrementWriteIndex(uint32_t bytes);
 	void		IncrementReadIndex(uint32_t bytes);
