@@ -62,6 +62,7 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize_string1)
 
 BOOST_AUTO_TEST_CASE(proto_simple_serialize_array)
 {
+	// prepare data object
 	Person person_msg;
 	FillTestDataSimple(person_msg);
 
