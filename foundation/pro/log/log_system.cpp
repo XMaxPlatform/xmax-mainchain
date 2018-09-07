@@ -5,7 +5,9 @@
 
 #include <vector>
 #include <memory>
+#include <iostream>
 
+#include <pro/utils/time_utils.hpp>
 #include <pro/log/console_logger.hpp>
 #include <pro/log/log_system.hpp>
 
@@ -14,9 +16,9 @@ namespace pro
 	static const string LineCode = "\r\n";
 
 	static string LogFileName;// = "home:game.log";
-	static const string string_log = "log: ";
-	static const string string_warning = "warning: ";
-	static const string string_error = "error: ";
+	static const string string_log =		"log    ";
+	static const string string_warning =	"warn   ";
+	static const string string_error =		"error  ";
 
 
 	class LogSystemImpl
@@ -59,22 +61,22 @@ namespace pro
 
 		void LogMessage(LogLevel level, const string& msg)
 		{
-			string u8;
+			std::stringstream strbuff;
 			switch (level)
 			{
 			case LogLevel::Info:
 			{
-				u8 += string_log;
+				strbuff << string_log;
 				break;
 			}
 			case LogLevel::Warnning:
 			{
-				u8 += string_warning;
+				strbuff << string_warning;
 				break;
 			}
 			case LogLevel::Error:
 			{
-				u8 += string_error;
+				strbuff << string_error;
 				break;
 			}
 			default:
@@ -82,13 +84,14 @@ namespace pro
 				break;
 			}
 			}
+			strbuff << utils::TimeNowString()<<" ]";
 
-			u8 += msg;
-			u8 += LineCode;
+			strbuff << msg;
+			strbuff << LineCode;
 			
 			for ( auto& logger : loggers_)
 			{
-				logger->LogMessage(level, u8);
+				logger->LogMessage(level, strbuff.str());
 			}
 		}
 
