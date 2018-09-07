@@ -518,9 +518,8 @@ namespace xmax {
 			auto result = itr->second(url.to_string(), req.body());
 			if (result)
 			{
-				auto[status, body] = result.value();
-				http::response<http::string_body> response{ (boost::beast::http::status)status, req.version() };
-				res.emplace(response);
+				auto[status, body] = result.value();				
+				res.emplace((boost::beast::http::status)status, req.version());
 			}
 		}
 
