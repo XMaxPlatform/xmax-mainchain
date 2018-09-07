@@ -21,9 +21,39 @@ namespace pro
 	//--------------------------------------------------
 	std::string ExceptionImpl::FullDescription() const
 	{
-		std::string desc;
+		std::string full_desc;
 
-		return desc;
+		if (0 == full_desc.size())
+		{
+			if (line > 0)
+			{
+				if (source.size())
+				{
+					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\" in %s at '%s(line, %d)'",
+						type, title.c_str(), description.c_str(), source.c_str(), file.c_str(), line);
+				}
+				else
+				{
+					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\" at '%s(line, %d)'",
+						type, title.c_str(), description.c_str(), file.c_str(), line);
+				}
+
+			}
+			else
+			{
+				if (source.size())
+				{
+					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\" in %s", type, title.c_str(), description.c_str(), source.c_str());
+				}
+				else
+				{
+					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\".", type, title.c_str(), description.c_str());
+				}
+
+			}
+		}
+
+		return full_desc;
 	}
 
 	Exception::~Exception() throw()
@@ -164,39 +194,7 @@ namespace pro
 
     string Exception::GetFullDescription() const
 	{
-		std::string full_desc;
-
-		if (0 == full_desc.size())
-		{	
-			if( impl_->line > 0 )
-			{
-				if (impl_->source.size())
-				{
-					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\" in %s at '%s(line, %d)'",
-						impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->source.c_str(), impl_->file.c_str(), impl_->line);
-				}
-				else
-				{
-					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\" at '%s(line, %d)'",
-						impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->file.c_str(), impl_->line);
-				}
-			
-			}
-			else
-			{
-				if (impl_->source.size())
-				{
-					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\" in %s", impl_->type, impl_->title.c_str(), impl_->description.c_str(), impl_->source.c_str());
-				}
-				else
-				{
-					utils::Sprintf(full_desc, "EXCEPTION(%d:%s): \"%s\".", impl_->type, impl_->title.c_str(), impl_->description.c_str());
-				}
-
-			}
-		}
-
-		return full_desc;
+		return impl_->FullDescription();
 	}
 
     int Exception::GetType(void) const throw()
