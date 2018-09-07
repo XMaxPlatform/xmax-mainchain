@@ -1,3 +1,5 @@
+//@file
+//@copyright defined in xmax/LICENSE
 #include "int64_bind.hpp"
 namespace xmax {
 
