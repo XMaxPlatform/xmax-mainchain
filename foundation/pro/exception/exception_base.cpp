@@ -151,7 +151,7 @@ namespace pro
 		return *this;
 	}
 
-    const string Exception::GetFullDescription() const
+    string Exception::GetFullDescription() const
 	{
 		std::string full_desc;
 

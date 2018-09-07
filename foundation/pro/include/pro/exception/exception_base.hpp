@@ -58,7 +58,7 @@ namespace pro
 		Exception& operator = (const Exception& rhs);
 		Exception& operator = (Exception&& rhs);
 
-        virtual const string GetFullDescription() const;
+        string GetFullDescription() const;
 
         /** Gets the error code.
         */
