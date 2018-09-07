@@ -28,6 +28,7 @@ public:
 
 public:
 
+	//allocate buffer;
 	std::vector<boost::asio::mutable_buffer> GetAvailableBufferFromPool();
 
 	uint32_t	AvailableBytes() const;
