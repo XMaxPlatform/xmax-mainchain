@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <memory>
+
 #include <pro/log/console_logger.hpp>
 #include <pro/log/log_system.hpp>
 
@@ -63,17 +64,17 @@ namespace pro
 			{
 			case LogLevel::Info:
 			{
-				u8 = string_log;
+				u8 += string_log;
 				break;
 			}
 			case LogLevel::Warnning:
 			{
-				u8 = string_warning;
+				u8 += string_warning;
 				break;
 			}
 			case LogLevel::Error:
 			{
-				u8 = string_error;
+				u8 += string_error;
 				break;
 			}
 			default:
