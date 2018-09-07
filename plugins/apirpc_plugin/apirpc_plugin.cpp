@@ -515,10 +515,10 @@ namespace xmax {
 		auto itr = url_handlers_.find(url_str);
 		if (itr != url_handlers_.end())
 		{
-			auto result = itr->second(url.to_string(), req.body());
-			if (result)
+			auto handler_res = itr->second(url.to_string(), req.body());
+			if (handler_res)
 			{
-				auto[status, body] = result.value();				
+				auto[status, body] = handler_res.value();
 				res.emplace((boost::beast::http::status)status, req.version());
 			}
 		}
