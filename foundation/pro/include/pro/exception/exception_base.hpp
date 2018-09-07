@@ -94,9 +94,7 @@ namespace pro
 
 		Exception(int _type, const string& _description, const string& _source, const char* _tile, const char* _file, long _line);
 		Exception(int _type, const string& _description, const char* _tile, const char* _file, long _line);
-				
-		mutable string full_desc_;
-
+						
 		//Shared implementation ptr
 		std::shared_ptr<ExceptionImpl> impl_;
 	};
