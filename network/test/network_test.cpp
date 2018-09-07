@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize_array)
 	// prepare data object
 	Person person_msg;
 	FillTestDataSimple(person_msg);
-
+	// serialize to binary
 	size_t data_size = person_msg.ByteSize();
 	std::vector<char> data;
 	data.resize(data_size);
