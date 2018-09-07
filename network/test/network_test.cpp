@@ -70,10 +70,10 @@ BOOST_AUTO_TEST_CASE(proto_simple_serialize_array)
 	std::vector<char> data;
 	data.resize(data_size);
 	person_msg.SerializeToArray(static_cast<void*>(data.data()), data_size);
-
+	// deserialize from former binary
 	Person ser_person_msg;
 	ser_person_msg.ParseFromArray(static_cast<const void*>(data.data()), data_size);
-
+	// compare deserialized object with origin data object
 	BOOST_CHECK(CompareSimpleTestData(person_msg, ser_person_msg));
 }
 
