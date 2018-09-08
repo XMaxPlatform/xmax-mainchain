@@ -92,7 +92,7 @@ namespace xmax {
 	}
 
 	/*
-	* 
+	*	create contract 
 	*/
 	//-------------------------------------------------
 	void ContractUtilPlugin::CreateContract()
