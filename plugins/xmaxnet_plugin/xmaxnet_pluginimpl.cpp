@@ -18,6 +18,8 @@
 #include "miniupnpcstrings.h"
 #endif
 
+#include <boost/bind.hpp>
+
 namespace xmax
 {
 	using namespace pro;
@@ -131,7 +133,10 @@ void XmaxNetPluginImpl::StartupImpl()
 
 void XmaxNetPluginImpl::Startup()
 {
+	int64_t start_delay = 1000000;
 
+	delayNetStartTimer_.expires_from_now(boost::posix_time::microseconds(start_delay));
+	delayNetStartTimer_.async_wait(boost::bind(&XmaxNetPluginImpl::StartupImpl, this));
 }
 
 void XmaxNetPluginImpl::StartListen()
