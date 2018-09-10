@@ -1,6 +1,7 @@
 ﻿
 #include <pro/utils/string_utils.hpp>
 #include <pro/exception/exception_base.hpp>
+#include <pro/log/log_message.hpp>
 
 namespace pro
 {
@@ -13,6 +14,7 @@ namespace pro
 		string source;
 		string file;
 		string full_desc;
+		LogMessage log_message_;
 
 	public:
 		std::string FullDescription() const;
