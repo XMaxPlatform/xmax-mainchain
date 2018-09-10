@@ -14,10 +14,10 @@ namespace pro
 {
 	namespace utils
 	{
+		namespace chrono = std::chrono;
 
 		string TimeNowString()
 		{
-			namespace chrono = std::chrono;
 
 			// Because c-style date&time utilities don't support microsecond precison,
 			// we have to handle it on our own.
@@ -35,6 +35,11 @@ namespace pro
 				<< std::setfill('0') << std::setw(3) << ms_part.count();
 
 			return stream.str();
+		}
+
+		TimePoint TimeNow()
+		{
+			return chrono::system_clock::now();
 		}
 	}
 }

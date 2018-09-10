@@ -12,6 +12,8 @@ namespace pro
 	namespace utils
 	{
 		string TimeNowString();
+
+		TimePoint TimeNow();
 	}
 }
 
