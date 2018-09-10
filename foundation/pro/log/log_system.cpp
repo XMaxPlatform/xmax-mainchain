@@ -84,7 +84,7 @@ namespace pro
 				break;
 			}
 			}
-			strbuff << utils::TimeNowString()<<"] ";
+			strbuff << utils::TimeNowDateMSString()<<"] ";
 
 			strbuff << msg;
 			strbuff << LineCode;

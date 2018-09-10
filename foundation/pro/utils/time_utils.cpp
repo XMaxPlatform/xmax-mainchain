@@ -16,9 +16,8 @@ namespace pro
 	{
 		namespace chrono = std::chrono;
 
-		string TimeNowString()
+		string TimeNowDateMSString()
 		{
-
 			// Because c-style date&time utilities don't support microsecond precison,
 			// we have to handle it on our own.
 			auto time_now = chrono::system_clock::now();
