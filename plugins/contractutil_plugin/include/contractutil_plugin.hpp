@@ -32,7 +32,7 @@ namespace xmax
 	private:
 		// output logs
 		void Test(const char* strlog);
-		// TODO : clean 
+		//  clean 
 		void Clean();
 		// create contract
 		void CreateContract();
