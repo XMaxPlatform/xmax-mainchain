@@ -37,7 +37,7 @@ namespace xmax {
 	void XmaxNetPlugin::Startup() 
 	{	
 		PluginFace::Startup();
-		impl_->StartupImpl();
+		impl_->Startup();
 	}
 
 
