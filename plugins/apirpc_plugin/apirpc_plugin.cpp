@@ -139,7 +139,7 @@ namespace xmax {
 		//Events
 		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);	
 		void OnWrite(boost::system::error_code ec, bool close);
-		void OnTimer(boost::system::error_code ec)£»
+		void OnTimer(boost::system::error_code ec);
 
 	private:
 		bool IsValidRequestVerb(const http::verb& req_method) const {
@@ -321,6 +321,16 @@ namespace xmax {
 		}
 	}
 
+
+	//--------------------------------------------------
+	void HttpSession::OnTimer(boost::system::error_code ec)
+	{
+		if (ec && ec != boost::asio::error::operation_aborted) {
+			ErrorSprintf("Http session on timer failed with error message:%s", ec.message().c_str());
+			return;
+		}
+			
+	}
 
 	//--------------------------------------------------
 	void HttpSession::DoClose()
