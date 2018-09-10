@@ -583,7 +583,7 @@ namespace xmax {
 	//--------------------------------------------------
 	void ApiRpcPlugin::AddUrlHandler(std::string_view url, UrlHandler handler)
 	{
-
+		impl_->AddUrlHandler(url, handler);
 	}
 
 	//--------------------------------------------------
