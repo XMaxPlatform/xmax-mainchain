@@ -17,8 +17,21 @@ namespace pro
 		LogMessage log_message_;
 
 	public:
+		//Constructors
+		ExceptionImpl() {}
+		ExceptionImpl(const LogMessage& message);
+
+
 		std::string FullDescription() const;
 	};
+
+
+	//--------------------------------------------------
+	ExceptionImpl::ExceptionImpl(const LogMessage& message):
+		log_message_(message)
+	{
+
+	}
 
 	//--------------------------------------------------
 	std::string ExceptionImpl::FullDescription() const
@@ -70,11 +83,11 @@ namespace pro
 		impl_->type = EXT_UNDEF_TYPE;
 		impl_->title = "Exception";
 		impl_->description = _description;
-		impl_->source = _source;
+		impl_->source = _source;		
 	}
 
 	Exception::Exception(string&& _description, string&& _source)
-		: impl_{ new ExceptionImpl() }		
+		: impl_{ new ExceptionImpl() }
 	{
 		impl_->line = 0;
 		impl_->type = EXT_UNDEF_TYPE;
