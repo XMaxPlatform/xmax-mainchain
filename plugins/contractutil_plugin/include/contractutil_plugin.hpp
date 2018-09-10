@@ -36,7 +36,7 @@ namespace xmax
 		void Clean();
 		// create contract
 		void CreateContract();
-		// free the contract 
+		// free the all contracts
 
 	private:
 		// contract code implement
