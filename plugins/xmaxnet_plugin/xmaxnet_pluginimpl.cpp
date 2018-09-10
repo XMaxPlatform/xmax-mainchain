@@ -360,7 +360,7 @@ bool XmaxNetPluginImpl::_IsConnectd(const std::string& host)
 void XmaxNetPluginImpl::_ConnectionTimer()
 {
 	TimeMicroseconds time(2000000);
-	connectionTimer_.expires_from_now(boost::posix_time::microseconds(time.GetValue()));
+	connectionTimer_.expires_from_now(boost::posix_time::microseconds(time.count()));
 	connectionTimer_.async_wait(std::bind(&XmaxNetPluginImpl::_CheckConnection, this));
 }
 
@@ -385,7 +385,7 @@ void XmaxNetPluginImpl::_CheckConnection()
 void XmaxNetPluginImpl::_SendAddrsTimer()
 {
 	TimeMicroseconds time(30000000);
-	sendAddrsTimer_.expires_from_now(boost::posix_time::microseconds(time.GetValue()));
+	sendAddrsTimer_.expires_from_now(boost::posix_time::microseconds(time.count()));
 	sendAddrsTimer_.async_wait(std::bind(&XmaxNetPluginImpl::_SendAddrs, this));
 }
 
