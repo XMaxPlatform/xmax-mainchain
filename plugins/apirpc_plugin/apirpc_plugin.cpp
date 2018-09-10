@@ -139,6 +139,7 @@ namespace xmax {
 		//Events
 		void OnRead(boost::system::error_code ec, std::size_t bytes_transferred);	
 		void OnWrite(boost::system::error_code ec, bool close);
+		void OnTimer(boost::system::error_code ec)£»
 
 	private:
 		bool IsValidRequestVerb(const http::verb& req_method) const {
