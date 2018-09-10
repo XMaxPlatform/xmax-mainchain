@@ -38,6 +38,7 @@ XmaxNetPluginImpl::XmaxNetPluginImpl(const boost::asio::io_service& io)
 		connectionTimer_(const_cast<boost::asio::io_service&>(io)),
 		sendAddrsTimer_(const_cast<boost::asio::io_service&>(io)),
 		ioService_(io),
+		delayNetStartTimer_(const_cast<boost::asio::io_service&>(io)),
 		bUpnp_(false)
 {
 
@@ -126,6 +127,11 @@ void XmaxNetPluginImpl::StartupImpl()
 	}
 
 	_SendAddrsTimer();
+}
+
+void XmaxNetPluginImpl::Startup()
+{
+
 }
 
 void XmaxNetPluginImpl::StartListen()

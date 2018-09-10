@@ -30,6 +30,8 @@ public:
 
 	void StartupImpl();
 
+	void Startup();
+
 	void ConnectImpl(const std::string& host);
 
 	void StartResolve(std::shared_ptr<XMX_Connection> pConnect);
@@ -94,6 +96,7 @@ private:
 	const boost::asio::io_service&							ioService_;
 	boost::asio::deadline_timer								connectionTimer_;
 	boost::asio::deadline_timer								sendAddrsTimer_;
+	boost::asio::deadline_timer								delayNetStartTimer_;
 };
 
 
