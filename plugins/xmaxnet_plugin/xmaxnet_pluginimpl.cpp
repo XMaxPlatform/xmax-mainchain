@@ -534,7 +534,24 @@ void XmaxNetPluginImpl::BroadCastAddr(const std::string& addr)
 
 void XmaxNetPluginImpl::StartPendingTimer()
 {
-
+	pending_blocks_timer_->expires_from_now(send_pengding_blocks_period_);
+	pending_blocks_timer_->async_wait([&, this](boost::system::error_code ec)
+	{
+		StartPendingTimer();
+		if (!ec)
+		{
+			for (auto c : connections_)
+			{
+				if (c->GetConStatus() == CS_CONNECTED)
+				{
+				}
+			}
+		}
+		else
+		{
+			LogSprintf("Error from start_pending_blocks_timer: ${m}", ("m", ec.message()));
+		}
+	});
 }
 
 }
