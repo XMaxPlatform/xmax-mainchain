@@ -532,5 +532,9 @@ void XmaxNetPluginImpl::BroadCastAddr(const std::string& addr)
 	}
 }
 
+void XmaxNetPluginImpl::StartPendingTimer()
+{
+
+}
 
 }

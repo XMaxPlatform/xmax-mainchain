@@ -55,6 +55,8 @@ public:
 	//send addr to peers
 	void BroadCastAddr(const std::string& addr);
 
+	void StartPendingTimer();
+
 public:
 
 	static const char* s_ServerAddress;
