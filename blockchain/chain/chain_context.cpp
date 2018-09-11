@@ -21,7 +21,7 @@ namespace chain
 
 	void ChainContext::BuildBlock()
 	{
-		Logf("building block.");
+
 	}
 
 	void ChainContext::init()
