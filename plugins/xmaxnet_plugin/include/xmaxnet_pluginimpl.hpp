@@ -2,6 +2,7 @@
 
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/host_name.hpp>
+#include <boost/asio/steady_timer.hpp>
 
 #include "app_types.hpp"
 #include "pro/types/generictypes.hpp"
@@ -97,6 +98,7 @@ private:
 	boost::asio::deadline_timer								connectionTimer_;
 	boost::asio::deadline_timer								sendAddrsTimer_;
 	boost::asio::deadline_timer								delayNetStartTimer_;
+	boost::asio::steady_timer::duration						send_pengding_blocks_period_;
 };
 
 
