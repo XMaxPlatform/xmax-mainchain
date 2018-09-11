@@ -331,6 +331,13 @@ namespace xmax {
 			ErrorSprintf("Http session on timer failed with error message:%s", ec.message().c_str());
 			return;
 		}
+
+		if (timer_.expiry() <= std::chrono::steady_clock::now())
+		{
+			socket_.shutdown(tcp::socket::shutdown_both, ec);
+			socket_.close(ec);
+			return;
+		}
 			
 	}
 
