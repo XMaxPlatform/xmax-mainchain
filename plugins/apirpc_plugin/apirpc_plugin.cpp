@@ -171,7 +171,8 @@ namespace xmax {
 		socket_(std::move(socket)),
 		strand_(socket.get_executor()),
 		queue_(*this),
-		http_handler_(http_handler)
+		http_handler_(http_handler),
+		timer_(socket.get_executor().context(), (std::chrono::steady_clock::time_point::max)())
 	{
 
 	}
