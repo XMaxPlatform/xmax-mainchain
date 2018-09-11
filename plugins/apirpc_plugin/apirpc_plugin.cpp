@@ -162,6 +162,7 @@ namespace xmax {
 		boost::asio::strand<boost::asio::io_context::executor_type> strand_;
 		Queue queue_;
 		HttpHandlerFunc http_handler_;
+		boost::asio::steady_timer timer_;
 	};
 
 
