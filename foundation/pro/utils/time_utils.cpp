@@ -38,7 +38,9 @@ namespace pro
 
 		TimePoint TimeNow()
 		{
-			return chrono::system_clock::now();
+			auto time_now = chrono::system_clock::now();
+			auto duration_in_us = chrono::duration_cast<TimeMicroseconds>(time_now.time_since_epoch());
+			return TimePoint(duration_in_us);
 		}
 	}
 }

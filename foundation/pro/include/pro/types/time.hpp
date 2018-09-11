@@ -7,23 +7,24 @@
 #include <chrono>
 namespace pro
 {
+	namespace tch = std::chrono;
 	/**
 	*   Implementation of Seconds class
 	*/
-	using TimeSeconds = std::chrono::seconds;
+	using TimeSeconds = tch::seconds;
 
 	/**
 	*  Implementation of Millisecond class
 	*/
-	using TimeMilliseconds = std::chrono::milliseconds;
+	using TimeMilliseconds = tch::milliseconds;
 
 	/**
 	*  Implementation of Microsecond class
 	*/
-	using TimeMicroseconds = std::chrono::microseconds;
+	using TimeMicroseconds = tch::microseconds;
 
 
-	using TimePoint = std::chrono::system_clock::time_point;
+	using TimePoint = tch::time_point<tch::system_clock, TimeMicroseconds>;
 
 }
 
