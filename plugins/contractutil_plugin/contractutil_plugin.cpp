@@ -100,4 +100,9 @@ namespace xmax {
 		// create contract
 		printf("create contract {}");
 	}
+
+	void FreeAllContracts()
+	{
+
+	}
 }
