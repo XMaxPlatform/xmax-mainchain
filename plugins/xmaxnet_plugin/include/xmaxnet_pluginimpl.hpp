@@ -101,7 +101,7 @@ private:
 	boost::asio::deadline_timer								connectionTimer_;
 	boost::asio::deadline_timer								sendAddrsTimer_;
 	boost::asio::deadline_timer								delayNetStartTimer_;
-	std::unique_ptr<boost::asio::steady_timer>				pending_blocks_timer_;
+	std::unique_ptr<boost::asio::steady_timer>				pendingBlocksTimer_;
 	boost::asio::steady_timer::duration						send_pengding_blocks_period_;
 };
 
