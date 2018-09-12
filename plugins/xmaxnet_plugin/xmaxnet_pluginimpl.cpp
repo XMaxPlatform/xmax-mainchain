@@ -102,6 +102,8 @@ void XmaxNetPluginImpl::Init(const VarsMap& options)
 	{
 		peerAddressList_ = options.at(s_PeerAddress).as<std::vector<std::string>>();
 	}
+
+	sendPengdingBlocksPeriod_ = std::chrono::seconds(1);
 }
 
 void XmaxNetPluginImpl::StartupImpl()
