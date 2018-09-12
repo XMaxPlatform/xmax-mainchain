@@ -534,7 +534,7 @@ void XmaxNetPluginImpl::BroadCastAddr(const std::string& addr)
 
 void XmaxNetPluginImpl::StartPendingTimer()
 {
-	pendingBlocksTimer_->expires_from_now(send_pengding_blocks_period_);
+	pendingBlocksTimer_->expires_from_now(sendPengdingBlocksPeriod_);
 	pendingBlocksTimer_->async_wait([&, this](boost::system::error_code ec)
 	{
 		StartPendingTimer();
