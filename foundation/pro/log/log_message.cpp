@@ -84,6 +84,13 @@ namespace pro {
 
 	}
 
+
+	//--------------------------------------------------
+	LogMessage::~LogMessage()
+	{
+		impl_.reset();
+	}
+
 	//--------------------------------------------------
 	std::string LogMessage::GetMessage() const
 	{
