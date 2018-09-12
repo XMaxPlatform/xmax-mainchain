@@ -28,7 +28,7 @@ namespace chain
 
 	void ChainContext::init()
 	{
-		db_.reset(ChainDB::InitDB(config_.DBDir, config_.DBFileSize));
+		db_.reset(ChainDB::InitDB(config_.DBDir, config_.DBFileSize * MB_SIZE));
 
 		InitSystemTables(getDB());
 	}

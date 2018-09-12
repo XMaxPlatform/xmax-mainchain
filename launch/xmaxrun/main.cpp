@@ -11,6 +11,11 @@
 #include <apirpc_plugin.hpp>
 #include <pro/protypes.hpp>
 
+#ifdef NO_CATCH
+#define SAVE_EXIT 0
+#else
+#define SAVE_EXIT 1
+#endif 
 
 namespace xmax
 {	
@@ -33,7 +38,10 @@ namespace xmax
 		// TODO : Add ContractUtilPlugin
 		//ContractUtilPlugin::RegistSelf();
 
-		try {
+#if SAVE_EXIT
+		try
+#endif
+		{
 			//PRO_ASSERT(false, "test ${name}", ("name", "xxt"));
 			Application app;
 			app.SetDefaultConfigFilePath(fs::current_path() / "config" / "config.ini");
@@ -50,14 +58,16 @@ namespace xmax
 			Logf("Xmax app start.");
 			app.Loop();
 		}
+#if SAVE_EXIT
 		catch (bpo::error& e) {
 			WarnSprintf("Found boost program_option error:%s", e.what());
 		}
 		catch (std::exception& e) {
 			WarnSprintf("Catch exception:%s", e.what());
 		}		
-		
+#endif	
 	}
+
 }
 
 // entry function

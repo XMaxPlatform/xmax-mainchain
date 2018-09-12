@@ -243,7 +243,7 @@ BOOST_AUTO_TEST_CASE(db_undo_test)
 
 
 	// check undo_c
-	undo_c.Cancel();
+	undo_c.Push();
 
 	// cancel do nothing, so check again.
 	BOOST_CHECK(tbl->FindObject<ByObjectID>(id1).Valid());

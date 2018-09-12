@@ -110,7 +110,7 @@ namespace unitedb
 			: owner_(owner)
 			, Super(p)
 		{
-			std::string type_name = boost::core::demangle(typeid(SelfType).name()) + "UndoCache";
+			std::string type_name = TableName() + "UndoCache";
 
 			stack_ = owner_->GetMappdFile()->find_or_construct< UndoStackType >(type_name.c_str()) (DefAlloc(owner_->GetSegmentManager()));
 		}
@@ -146,7 +146,7 @@ namespace unitedb
 
 		virtual void StartUndo(DBRevision revision) override
 		{
-			stack_->infos_.emplace_back( TableUndoInfo(stack_->cache_.Size(), revision) );
+			stack_->infos_.push_back( TableUndoInfo(stack_->cache_.Size(), revision) );
 			no_undo_ = false;
 		}
 
