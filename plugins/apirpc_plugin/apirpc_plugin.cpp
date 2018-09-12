@@ -332,6 +332,7 @@ namespace xmax {
 			return;
 		}
 
+		// Verify that the timer really expired since the deadline may have moved.
 		if (timer_.expiry() <= std::chrono::steady_clock::now())
 		{
 			socket_.shutdown(tcp::socket::shutdown_both, ec);
