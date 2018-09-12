@@ -18,29 +18,28 @@ namespace unitedb
 		virtual DBRevision GetRevision() const = 0;
 	};
 
-	class DBUndoPatch
+	class DBPatch
 	{
 	public:
 
 		void Undo();
-		void Cancel();
+		void Push();
 		void Combine();
 		bool Valid() const;
 		DBRevision GetRevision() const;
-		~DBUndoPatch();
+		~DBPatch();
 		
-
-		DBUndoPatch(DBUndoPatch&& s);
+		DBPatch(DBPatch&& s);
 
 		friend class FDatabase;
 	protected:
 
-		DBUndoPatch(IGenericUndo* ptr);
+		DBPatch(IGenericUndo* ptr);
 
 		std::unique_ptr<IGenericUndo> undo_;
 	};
 
-	inline bool DBUndoPatch::Valid() const
+	inline bool DBPatch::Valid() const
 	{
 		return bool(undo_) && undo_->Valid();
 	}

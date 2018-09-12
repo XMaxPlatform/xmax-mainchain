@@ -8,7 +8,7 @@ namespace unitedb
 {
 
 
-	void DBUndoPatch::Undo()
+	void DBPatch::Undo()
 	{
 		if (undo_)
 		{
@@ -17,7 +17,7 @@ namespace unitedb
 
 	}
 
-	void DBUndoPatch::Cancel()
+	void DBPatch::Push()
 	{
 		if (undo_)
 		{
@@ -25,7 +25,7 @@ namespace unitedb
 		}
 	}
 
-	void DBUndoPatch::Combine()
+	void DBPatch::Combine()
 	{
 		if (undo_)
 		{
@@ -33,7 +33,7 @@ namespace unitedb
 		}
 	}
 
-	DBRevision DBUndoPatch::GetRevision() const
+	DBRevision DBPatch::GetRevision() const
 	{
 		if (undo_)
 		{
@@ -41,17 +41,17 @@ namespace unitedb
 		}
 		return InvalidRevision;
 	}
-	DBUndoPatch::~DBUndoPatch()
+	DBPatch::~DBPatch()
 	{
 		Undo();
 	}
 
-	DBUndoPatch::DBUndoPatch(DBUndoPatch&& s)
+	DBPatch::DBPatch(DBPatch&& s)
 	{
 		undo_.swap(s.undo_);
 	}
 
-	DBUndoPatch::DBUndoPatch(IGenericUndo* ptr)
+	DBPatch::DBPatch(IGenericUndo* ptr)
 		: undo_(ptr)
 	{
 
