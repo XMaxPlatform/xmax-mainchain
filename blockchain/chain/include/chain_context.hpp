@@ -28,7 +28,7 @@ namespace chain
 
 		ChainConfig config_;
 		std::unique_ptr<ChainDB> db_;
-		std::optional<PendingBlock> pending_;
+		std::unique_ptr<PendingBlock> pending_;
 	};
 
 

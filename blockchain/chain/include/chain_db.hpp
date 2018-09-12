@@ -24,6 +24,6 @@ namespace chain
 
 	using DefAlloc = db::DefAlloc;
 
-	using UndoPatch = db::DBUndoPatch;
+	using DataPatch = db::DBPatch;
 
 }

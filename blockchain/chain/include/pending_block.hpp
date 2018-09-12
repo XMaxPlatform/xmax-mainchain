@@ -12,12 +12,16 @@ namespace chain
 {
 	struct PendingBlock
 	{
-		UndoPatch undopatch;
+		DataPatch undopatch;
 		BlockContentPtr content;
 
-		PendingBlock(UndoPatch&& p)
-			: undopatch(std::forward<UndoPatch>(p))
+		PendingBlock(DataPatch&& p)
+			: undopatch(std::forward<DataPatch>(p))
 		{
+		}
+		void PushDB()
+		{
+			undopatch.Push();
 		}
 	};
 }
