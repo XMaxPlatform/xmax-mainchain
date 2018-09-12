@@ -338,6 +338,14 @@ namespace xmax {
 			socket_.close(ec);
 			return;
 		}
+
+		timer_.async_wait(
+			boost::asio::bind_executor(
+				strand_,
+				std::bind(
+					&HttpSession::OnTimer,
+					shared_from_this(),
+					std::placeholders::_1)));
 			
 	}
 
