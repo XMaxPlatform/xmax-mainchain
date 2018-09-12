@@ -14,12 +14,13 @@ namespace pro
 		string source;
 		string file;
 		string full_desc;
-		LogMessage log_message_;
+		LogMessage log_message;
 
 	public:
 		//Constructors
 		ExceptionImpl() {}
 		ExceptionImpl(const LogMessage& message);
+		ExceptionImpl(LogMessage&& message);
 
 
 		std::string FullDescription() const;
@@ -28,7 +29,15 @@ namespace pro
 
 	//--------------------------------------------------
 	ExceptionImpl::ExceptionImpl(const LogMessage& message):
-		log_message_(message)
+		log_message(message)
+	{
+
+	}
+
+
+	//--------------------------------------------------
+	ExceptionImpl::ExceptionImpl(LogMessage&& message):
+		log_message(std::move(message))
 	{
 
 	}
