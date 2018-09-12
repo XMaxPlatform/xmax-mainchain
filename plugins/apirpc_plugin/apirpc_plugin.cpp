@@ -335,6 +335,8 @@ namespace xmax {
 		// Verify that the timer really expired since the deadline may have moved.
 		if (timer_.expiry() <= std::chrono::steady_clock::now())
 		{
+			// Closing the socket cancels all outstanding operations. They
+			// will complete with boost::asio::error::operation_aborted
 			socket_.shutdown(tcp::socket::shutdown_both, ec);
 			socket_.close(ec);
 			return;
