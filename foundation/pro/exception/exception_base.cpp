@@ -14,7 +14,7 @@ namespace pro
 		string source;
 		string file;
 		string full_desc;
-		LogMessage log_message_;
+		LogMessage log_message;
 
 	public:
 		//Constructors
@@ -29,7 +29,7 @@ namespace pro
 
 	//--------------------------------------------------
 	ExceptionImpl::ExceptionImpl(const LogMessage& message):
-		log_message_(message)
+		log_message(message)
 	{
 
 	}
@@ -37,7 +37,7 @@ namespace pro
 
 	//--------------------------------------------------
 	ExceptionImpl::ExceptionImpl(LogMessage&& message):
-		log_message_(std::move(message))
+		log_message(std::move(message))
 	{
 
 	}
