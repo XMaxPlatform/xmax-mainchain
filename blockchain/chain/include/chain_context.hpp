@@ -6,8 +6,7 @@
 
 #include <chaintypes.hpp>
 #include <chain.hpp>
-#include <chain_db.hpp>
-#include <unitedb/database.hpp>
+#include <pending_block.hpp>
 
 namespace chain
 {
@@ -29,6 +28,7 @@ namespace chain
 
 		ChainConfig config_;
 		std::unique_ptr<ChainDB> db_;
+		std::optional<PendingBlock> pending_;
 	};
 
 

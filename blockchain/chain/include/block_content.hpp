@@ -5,14 +5,12 @@
 #pragma once
 
 #include <chaintypes.hpp>
-#include <chain.hpp>
-#include <chain_db.hpp>
-#include <unitedb/database.hpp>
 
 namespace chain
 {
 	struct BlockContent
 	{
-
 	};
+
+	using BlockContentPtr = std::shared_ptr<BlockContent>;
 }

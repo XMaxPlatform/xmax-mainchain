@@ -5,6 +5,7 @@
 #pragma once
 #include <unitedb/dbtypes.hpp>
 #include <unitedb/dbindexed.hpp>
+#include <unitedb/database.hpp>
 #include <chaintypes.hpp>
 
 namespace chain
@@ -22,5 +23,7 @@ namespace chain
 	using Alloc = db::DBAlloc<T>;
 
 	using DefAlloc = db::DefAlloc;
+
+	using UndoPatch = db::DBUndoPatch;
 
 }
