@@ -1,7 +1,6 @@
 #define BOOST_TEST_MODULE pro_test
 
 #include <boost/test/included/unit_test.hpp>
-
 #include <unitedb/unitedb.hpp>
 
 using namespace unitedb;
@@ -32,11 +31,36 @@ typedef DBTable<TestAIdx> TestATable;
 
 DBOBJ_CLASS(DBTestB, OBJ_TestB)
 {
-	DBOBJ_BODY(DBTestB,
-		(DB_FIELD(int, xx, 5))
-		(DB_MFIELD(MVector<int>, arr))
-	)
+	//DBOBJ_BODY(DBTestB,
+	//	(DB_FIELD(int, xx, 5))
+	//	(DB_MFIELD(MVector<int>, arr))
+	//)
 
+public:
+	template<typename T> 
+	DBTestB(unitedb::DBAlloc<T> al)
+		: DBTestB_Super()
+		, arr(al)
+	{
+
+	}
+	template<typename C, typename T>
+	DBTestB(C&& c, unitedb::DBAlloc<T> al)
+		: DBTestB_Super()
+		, arr(al)
+	{
+		c(*this);
+	}
+	//template<typename C, typename T>
+	//DBTestB(C&& c, unitedb::DBAlloc<T> al)
+	//	: DBTestB_Super()
+	//	, arr(al)
+	//{
+	//	c(*this);
+	//}
+
+	int xx = 5;
+	MVector<int> arr;
 };
 
 
@@ -319,15 +343,15 @@ BOOST_AUTO_TEST_CASE(db_commit_test)
 }
 BOOST_AUTO_TEST_CASE(db_reload_test)
 {
-	TestBTable::ObjectID id;
-
+	TestBTable::ObjectID id = 1;
+	fs::path testpath = fs::current_path() / "reload";//"c:\\reload";// 
 	const int cval = 12;
-	const std::vector<int> arr = { 1, 2, 3 };
+	std::vector<int> arr = { 1, 2, 3 };
 	{
-		std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::Discard));//);//
+		std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(testpath, 1024 * 1024, unitedb::Database::Discard));//);//
 
 		db->InitTable<TestBTable>();
-
+		
 		auto tbl = db->GetTable<TestBTable>();
 
 		auto val = tbl->NewObject([&](DBTestB& b)
@@ -336,29 +360,71 @@ BOOST_AUTO_TEST_CASE(db_reload_test)
 			b.arr.assign(arr.begin(), arr.end());
 		});
 
-		id = val->GetID();
+		//{		
+		//	auto undo = db->StartUndo();
+		//	auto undo1 = db->StartUndo();
+		//	auto undo2 = db->StartUndo();
+		//}
 
+		//undo.Push();
+		id = val->GetID();
+		db->Flush();
 		db->Close();
+		db.reset();
 	}
 
 	{
 
-		std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(fs::current_path(), 1024 * 1024, unitedb::Database::NoFlag));//);//
+		std::unique_ptr<unitedb::Database> db(unitedb::Database::InitDB(testpath, 1024 * 1024, unitedb::Database::NoFlag));//);//
 
 		db->InitTable<TestBTable>();
-
+		//auto undo = db->StartUndo();
 		auto tbl = db->GetTable<TestBTable>();
 
 		auto val = tbl->FindObject(id);
 
-		std::vector<int> oldarr;
-		oldarr.assign(val->arr.begin(), val->arr.end());
+		tbl->UpdateObject(val, [&](DBTestB& b)
+		{
+			b.arr.push_back(5);
+		});
+		arr.push_back(5);
 
-		BOOST_CHECK(val->xx == cval);
+		auto valx = tbl->FindObject(id);
+		std::vector<int> oldarr;
+		oldarr.assign(valx->arr.begin(), valx->arr.end());
+
+		BOOST_CHECK(valx->xx == cval);
 
 		BOOST_CHECK(oldarr == arr);
 	}
 
 }
+
+static mapped_file* _OpenMappedFile(const fs::path filepath, uint64_t mapped_file_size)
+{
+	if (fs::exists(filepath))
+	{
+		auto file_size = fs::file_size(filepath);
+		if (mapped_file_size > file_size)
+		{
+			if (!mapped_file::grow(filepath.generic_string().c_str(), mapped_file_size - file_size))
+				DB_THROW(std::runtime_error("could not grow mapped file to requested size."));
+		}
+
+		return new mapped_file(inpr::open_only, filepath.generic_string().c_str());
+	}
+	else
+	{
+		return (new mapped_file(inpr::create_only,
+			filepath.generic_string().c_str(), mapped_file_size,
+#ifdef WIN32
+			0, NULL
+#else
+			0, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH
+#endif
+		));
+	}
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
