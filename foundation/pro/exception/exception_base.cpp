@@ -93,6 +93,7 @@ namespace pro
 		impl_->title = "Exception";
 		impl_->description = _description;
 		impl_->source = _source;		
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error));
 	}
 
 	Exception::Exception(string&& _description, string&& _source)
