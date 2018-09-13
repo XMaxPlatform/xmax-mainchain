@@ -35,10 +35,10 @@ namespace chain
 
 	void ChainContext::BuildBlock()
 	{
-		pending_ = std::make_unique<PendingBlock>(db_->StartUndo());
+		//pending_ = std::make_unique<PendingBlock>(db_->StartUndo());
 
-		pending_->PushDB();
-		pending_.reset();
+		//pending_->PushDB();
+		//pending_.reset();
 	}
 
 
