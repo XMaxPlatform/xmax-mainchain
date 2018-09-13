@@ -30,10 +30,12 @@ public:
 	*/
 	void Init(const VarsMap& options);
 	/**
-	* start p2p network params
+	* start p2p network
 	*/
 	void StartupImpl();
-
+	/**
+	* delay start
+	*/
 	void Startup();
 
 	void ConnectImpl(const std::string& host);
