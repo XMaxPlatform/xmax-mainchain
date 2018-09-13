@@ -553,9 +553,9 @@ namespace xmax {
 				res.emplace((boost::beast::http::status)status, req.version());
 				res->set(http::field::server, BOOST_BEAST_VERSION_STRING);
 				res->set(http::field::access_control_allow_origin, "true");
+				res->set(http::field::content_type, "application/json");
 			}
-		}
-
+		}	
 
 	
 		return res;
