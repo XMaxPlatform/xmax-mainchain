@@ -5,6 +5,8 @@
 #pragma once
 #include <unitedb/unitedef.hpp>
 #include <boost/interprocess/managed_mapped_file.hpp>
+#include <boost/interprocess/containers/vector.hpp>
+#include <boost/interprocess/containers/string.hpp>
 #include <filesystem>
 
 namespace unitedb
@@ -22,10 +24,10 @@ namespace unitedb
 
 	using DefAlloc = DBAlloc<char>;
 
-	using MString = std::basic_string< char, std::char_traits< char >, DBAlloc< char > >; // mapped string.
+	using MString = boost::interprocess::basic_string< char, std::char_traits< char >, DBAlloc< char > >; // mapped string.
 
 	template<typename T>
-	using MVector = std::vector<T, DBAlloc<T> >; // mapped vector.
+	using MVector = boost::interprocess::vector<T, DBAlloc<T> >; // mapped vector.
 
 	constexpr DBRevision InvalidRevision = -1;
 

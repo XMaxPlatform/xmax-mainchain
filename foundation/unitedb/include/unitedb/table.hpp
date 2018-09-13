@@ -73,9 +73,11 @@ namespace unitedb
 		typedef T UndoObjectType;
 		typedef MappedUndo<UndoObjectType> UndoCacheType;
 
-		TableUndoStack(DefAlloc al)
-			: cache_(al)
-			, infos_(al)
+		TableUndoStack() = delete;
+		template<typename T>
+		TableUndoStack(DBAlloc<T> al)
+			: cache_(UndoCacheType::AllocType(al.get_segment_manager()))
+			, infos_(DBAlloc<TableUndoInfo>(al.get_segment_manager()))
 		{
 
 		}
@@ -146,6 +148,12 @@ namespace unitedb
 
 		virtual void StartUndo(DBRevision revision) override
 		{
+			//for (int i = 0; i < stack_->infos_.size(); ++i)
+			//{
+			//	TableUndoInfo& iof = stack_->infos_[i];
+			//	int xxx = 0;
+			//}
+
 			stack_->infos_.push_back( TableUndoInfo(stack_->cache_.Size(), revision) );
 			no_undo_ = false;
 		}
@@ -281,7 +289,7 @@ namespace unitedb
 		}
 
 		bool no_undo_ = true;
-		UndoStackType* stack_;
+		UndoStackType* stack_ = nullptr;
 		IDatabase * owner_ = nullptr;
 	};
 }
