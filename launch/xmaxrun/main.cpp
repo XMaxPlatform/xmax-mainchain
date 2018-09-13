@@ -37,13 +37,13 @@ namespace xmax
 		
 		// TODO : Add ContractUtilPlugin
 		//ContractUtilPlugin::RegistSelf();
-
+		Application app;
 #if SAVE_EXIT
 		try
 #endif
 		{
 			//PRO_ASSERT(false, "test ${name}", ("name", "xxt"));
-			Application app;
+	
 			app.SetDefaultConfigFilePath(fs::current_path() / "config" / "config.ini");
 
 			RegisterPlugins(app);
@@ -66,6 +66,7 @@ namespace xmax
 			WarnSprintf("Catch exception:%s", e.what());
 		}		
 #endif	
+		app.Quit();
 	}
 
 }

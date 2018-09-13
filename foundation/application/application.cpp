@@ -206,12 +206,21 @@ namespace xmaxapp
 
 				item->Shutdown();
 			}
-		}
+		}	
+		initialized_plugins_.clear();
+		startup_plugins_.clear();
+		pluginmap_.clear();
+
+		service_face_.reset();
 	}
 
 	void Application::Quit()
 	{
-		service_face_->stop();
+		if (service_face_)
+		{
+			service_face_->stop();
+
+		}
 	}
 
 
