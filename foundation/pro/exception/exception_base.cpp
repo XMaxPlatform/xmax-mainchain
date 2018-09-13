@@ -104,6 +104,7 @@ namespace pro
 		impl_->title = "Exception";
 		impl_->description = _description;
 		impl_->source = _source;
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error));
 	}
 
 	Exception::Exception(const string& _description, const char* _file, long _line)
