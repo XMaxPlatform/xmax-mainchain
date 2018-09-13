@@ -29,7 +29,9 @@ public:
 	* Init p2p newwork params
 	*/
 	void Init(const VarsMap& options);
-
+	/**
+	* start p2p newwork params
+	*/
 	void StartupImpl();
 
 	void Startup();
