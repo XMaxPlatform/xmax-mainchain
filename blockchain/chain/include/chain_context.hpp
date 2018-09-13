@@ -17,8 +17,11 @@ namespace chain
 	public:
 		ChainContext(const ChainConfig& config);
 		ChainContext(ChainConfig&& config);
+		~ChainContext();
 
 		virtual void BuildBlock();
+
+		virtual void Flush();
 
 	protected:
 		void init();
