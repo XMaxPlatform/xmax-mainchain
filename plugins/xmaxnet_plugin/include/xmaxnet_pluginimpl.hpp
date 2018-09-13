@@ -26,11 +26,11 @@ public:
 	~XmaxNetPluginImpl();
 public:
 	/**
-	* Init p2p newwork params
+	* Init p2p network params
 	*/
 	void Init(const VarsMap& options);
 	/**
-	* start p2p newwork params
+	* start p2p network params
 	*/
 	void StartupImpl();
 
