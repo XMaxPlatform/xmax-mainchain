@@ -444,7 +444,7 @@ namespace xmax {
 	{
 		if (ec) {
 			ErrorSprintf("HttpListener OnAccpet occurs a error message:%s", ec.message().c_str());
-			return;
+			return;	
 		}
 		else {
 			//TODO: Run sesson
@@ -551,6 +551,7 @@ namespace xmax {
 			{
 				auto[status, body] = handler_res.value();
 				res.emplace((boost::beast::http::status)status, req.version());
+				res->set(http::field::server, BOOST_BEAST_VERSION_STRING);								
 			}
 		}
 
