@@ -102,8 +102,8 @@ namespace xmax {
 	}
 
 	/*
-*
-*/
+	*
+	*/
 	//--------------------------------------------------
 	void ContractUtilPlugin::FreeAllContracts()
 	{
