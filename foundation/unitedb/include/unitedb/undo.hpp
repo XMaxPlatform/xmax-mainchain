@@ -12,7 +12,7 @@ namespace unitedb
 	{
 	public:
 		typedef T ObjectType;
-		typedef std::deque< ObjectType, DBAlloc<ObjectType> > ArrayType;
+		typedef MDeque< ObjectType > ArrayType;
 
 		typedef DefAlloc AllocType;
 		MappedUndo() = delete;

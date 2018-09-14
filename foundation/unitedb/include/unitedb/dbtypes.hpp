@@ -6,6 +6,7 @@
 #include <unitedb/unitedef.hpp>
 #include <boost/interprocess/managed_mapped_file.hpp>
 #include <boost/interprocess/containers/vector.hpp>
+#include <boost/interprocess/containers/deque.hpp>
 #include <boost/interprocess/containers/string.hpp>
 #include <filesystem>
 
@@ -28,6 +29,9 @@ namespace unitedb
 
 	template<typename T>
 	using MVector = boost::interprocess::vector<T, DBAlloc<T> >; // mapped vector.
+
+	template<typename T>
+	using MDeque = boost::interprocess::deque<T, DBAlloc<T> >; // mapped deque.
 
 	constexpr DBRevision InvalidRevision = -1;
 
