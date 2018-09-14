@@ -101,7 +101,9 @@ namespace xmax {
 		printf("create contract {}");
 	}
 
-	/**/
+	/*
+*
+*/
 	//--------------------------------------------------
 	void ContractUtilPlugin::FreeAllContracts()
 	{
