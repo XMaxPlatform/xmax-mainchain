@@ -140,6 +140,7 @@ namespace pro
 		impl_->source = _source;
 		impl_->file = _file;
 		impl_->line = _line;
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error, _file, _line, ""));
 	}
 	Exception::Exception(string&& _description, string&& _source, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }		
