@@ -156,6 +156,8 @@ namespace unitedb
 
 			stack_->infos_.push_back( TableUndoInfo(stack_->cache_.Size(), revision) );
 			no_undo_ = false;
+
+			onDBStartUndo();
 		}
 
 		virtual void Combine(DBRevision revision) override
@@ -206,12 +208,13 @@ namespace unitedb
 			{
 				itr.begin_ -= fixcount;
 			}
-
+			onDBCommit();
 		}
 
 		virtual void Undo(const UndoOp& op) override
 		{
 			undoImpl(op);
+			onDBUndo();
 		}
 
 	protected:

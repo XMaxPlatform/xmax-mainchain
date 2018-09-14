@@ -39,6 +39,9 @@ namespace unitedb
 	{
 	public:
 		virtual ~IDBTable() {}
+
+	protected:
+
 	};
 
 
