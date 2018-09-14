@@ -552,7 +552,11 @@ namespace xmax {
 				auto[status, body] = handler_res.value();
 				res.emplace((boost::beast::http::status)status, req.version());
 				res->set(http::field::server, BOOST_BEAST_VERSION_STRING);
-				res->set(http::field::access_control_allow_origin, "true");
+				if (!allow_cross_origin.empty())
+				{
+					res->set(http::field::access_control_allow_origin, allow_cross_origin);
+				}			
+
 				res->set(http::field::access_control_allow_credentials, "true");
 				res->set(http::field::content_type, "application/json");
 				res->body() = body;
