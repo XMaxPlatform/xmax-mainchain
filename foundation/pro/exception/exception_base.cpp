@@ -128,6 +128,7 @@ namespace pro
 		impl_->description = std::forward<string>(_description);
 		impl_->file = _file;
 		impl_->line = _line;
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error, _file, _line, ""));
 	}
 	Exception::Exception(const string& _description, const string& _source, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }		
