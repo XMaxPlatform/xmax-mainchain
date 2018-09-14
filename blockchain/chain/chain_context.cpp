@@ -38,6 +38,8 @@ namespace chain
 		pending_ = std::make_unique<PendingBlock>(db_->StartUndo());
 
 		pending_->PushDB();
+
+		db_->Commit(pending_->undopatch.GetRevision());
 		pending_.reset();
 	}
 
