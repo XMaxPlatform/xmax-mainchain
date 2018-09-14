@@ -50,9 +50,25 @@ namespace unitedb
 			return indices_;
 		}
 
+		inline ObjIDCode GetIDCounter() const
+		{
+			return id_counter_;
+		}
+
+		inline void MarkIDCounter()
+		{
+			old_id_counter = id_counter_;
+		}
+
+		inline void RestoreIDCounter()
+		{
+			id_counter_ = old_id_counter;
+		}
+
 	private:
 		ContainerType indices_;
 		ObjIDCode id_counter_ = 0;
+		ObjIDCode old_id_counter = 0;
 		const uint64_t this_size = 0;
 		const uint64_t idxs_size = 0;
 	};
@@ -162,7 +178,6 @@ namespace unitedb
 			return FindObjectImpl<OrderedTag>(c);
 		}
 
-
 		DBTable( MappedPtr ptr)
 			: ptr_(ptr)
 		{
@@ -186,6 +201,26 @@ namespace unitedb
 		}
 
 		virtual void LastUpdateFailure(ObjIDCode id)
+		{
+
+		}
+
+		void onDBStartUndo()
+		{
+			ptr_->MarkIDCounter();
+		}
+
+		void onDBUndo()
+		{
+			ptr_->RestoreIDCounter();
+		}
+
+		void onDBCancel()
+		{
+
+		}
+
+		void onDBCommit()
 		{
 
 		}

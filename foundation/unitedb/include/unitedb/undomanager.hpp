@@ -65,7 +65,7 @@ namespace unitedb
 		typedef MappedUndo<UndoOp> StackType;
 		UndoOpStack(DefAlloc alloc)
 			: cache_(alloc)
-			, records_(alloc)
+			, records_(DBAlloc<UndoRecord>(alloc.get_segment_manager()))
 		{
 
 		}

@@ -14,7 +14,7 @@ namespace unitedb
 			auto file_size = fs::file_size(filepath);
 			if (mapped_file_size > file_size)
 			{
-				if (!mapped_file::grow(filepath.generic_string().c_str(), mapped_file_size - mapped_file_size))
+				if (!mapped_file::grow(filepath.generic_string().c_str(), mapped_file_size - file_size))
 					DB_THROW(std::runtime_error("could not grow mapped file to requested size."));
 			}
 
@@ -49,7 +49,7 @@ namespace unitedb
 		}
 		~FDatabase()
 		{
-			Flush();
+			db_file_.reset();
 		}
 
 		void Init(const fs::path& dir, uint64_t managed_file_size)

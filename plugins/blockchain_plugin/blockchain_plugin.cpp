@@ -31,6 +31,14 @@ namespace xmax
 
 	void BlockChainPlugin::Startup()
 	{
+		Super::Startup();
+	}
+
+	void BlockChainPlugin::Shutdown()
+	{
+		context_->Flush();
+		context_.reset();
+		Super::Shutdown();
 
 	}
 

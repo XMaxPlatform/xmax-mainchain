@@ -20,6 +20,7 @@ namespace xmax
 		// xmaxapp::PluginFace interface ----------------------------------
 		virtual void Initialize(const VarsMap& options) override;
 		virtual void Startup() override;
+		virtual void Shutdown() override;
 
 		// ----------------------------------------------------------------
 

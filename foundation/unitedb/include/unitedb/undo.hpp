@@ -12,10 +12,13 @@ namespace unitedb
 	{
 	public:
 		typedef T ObjectType;
-		typedef DBAlloc< MappedUndo<T> > AllocType;
-		typedef std::deque< ObjectType, DBAlloc<ObjectType> > ArrayType;
-		MappedUndo(const AllocType& cc)
-			: data_(cc)
+		typedef MDeque< ObjectType > ArrayType;
+
+		typedef DefAlloc AllocType;
+		MappedUndo() = delete;
+		template<typename T>
+		MappedUndo(DBAlloc<T> cc)
+			: data_(ArrayType::allocator_type(cc.get_segment_manager()))
 		{
 
 		}

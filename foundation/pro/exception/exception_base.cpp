@@ -93,6 +93,7 @@ namespace pro
 		impl_->title = "Exception";
 		impl_->description = _description;
 		impl_->source = _source;		
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error));
 	}
 
 	Exception::Exception(string&& _description, string&& _source)
@@ -103,6 +104,7 @@ namespace pro
 		impl_->title = "Exception";
 		impl_->description = _description;
 		impl_->source = _source;
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error));
 	}
 
 	Exception::Exception(const string& _description, const char* _file, long _line)
@@ -114,6 +116,7 @@ namespace pro
 		impl_->description = _description;
 		impl_->file = _file;
 		impl_->line = _line;
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error, _file, _line, ""));
 	}
 
 	Exception::Exception(string&& _description, const char* _file, long _line)
@@ -125,6 +128,7 @@ namespace pro
 		impl_->description = std::forward<string>(_description);
 		impl_->file = _file;
 		impl_->line = _line;
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error, _file, _line, ""));
 	}
 	Exception::Exception(const string& _description, const string& _source, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }		
@@ -136,6 +140,7 @@ namespace pro
 		impl_->source = _source;
 		impl_->file = _file;
 		impl_->line = _line;
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error, _file, _line, ""));
 	}
 	Exception::Exception(string&& _description, string&& _source, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }		
@@ -147,6 +152,7 @@ namespace pro
 		impl_->source = std::forward<string>(_source);
 		impl_->file = _file;
 		impl_->line = _line;
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error, _file, _line, ""));
 	}
 	Exception::Exception(int type_, const string& _description, const string& _source, const char* _title, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }	

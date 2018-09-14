@@ -16,7 +16,7 @@ namespace chain
 		BlockContentPtr content;
 
 		PendingBlock(DataPatch&& p)
-			: undopatch(std::forward<DataPatch>(p))
+			: undopatch(std::move(p))
 		{
 		}
 		void PushDB()
