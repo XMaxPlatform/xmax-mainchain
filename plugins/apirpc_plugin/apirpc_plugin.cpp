@@ -18,6 +18,7 @@ namespace xmax {
 
 	static const char* const kHttpApiAddressOp = "http-api-address";
 	static const char* const kAllowCrossOriginOp = "api-allow-cross-origin";
+	static const char* const kAllowCendentialOp = "access_control_allow_credentials";
 	
 	namespace {
 		/*
