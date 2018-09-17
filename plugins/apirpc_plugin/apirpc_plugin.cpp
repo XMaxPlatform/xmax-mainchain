@@ -489,6 +489,7 @@ namespace xmax {
 		//Configurations
 		string allow_cross_origin;
 		string http_api_address;
+		string allow_credentials;
 
 		//IO
 		boost::asio::io_context ioc;
@@ -557,7 +558,7 @@ namespace xmax {
 				{
 					res->set(http::field::access_control_allow_origin, allow_cross_origin);
 				}			
-
+				
 				res->set(http::field::access_control_allow_credentials, "true");
 				res->set(http::field::content_type, "application/json");
 				res->body() = body;
