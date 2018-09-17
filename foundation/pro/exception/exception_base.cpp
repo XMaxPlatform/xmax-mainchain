@@ -175,6 +175,7 @@ namespace pro
 		impl_->description = std::forward<string>(_description);
 		impl_->source = _source;
 		impl_->file = _file;
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error, _file, _line, ""));
 	}
 	Exception::Exception(int type_, const string& _description, const char* tile_, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }	
