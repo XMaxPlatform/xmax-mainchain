@@ -584,6 +584,8 @@ namespace xmax {
 			(kAllowCrossOriginOp, xpo::value<std::string>()->default_value("*"), "default api rpc http address(ip:port)");
 
 
+		cfg.add_options()
+			(kAllowCendentialOp, xpo::value<std::string>()->default_value("true"), "allow credentials access control.");
 	}
 
 
