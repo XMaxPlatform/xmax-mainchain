@@ -195,6 +195,7 @@ namespace pro
 		impl_->title = tile_;
 		impl_->description = std::forward<string>(_description);
 		impl_->file = _file;
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error, _file, _line, ""));
 	}
 
 
