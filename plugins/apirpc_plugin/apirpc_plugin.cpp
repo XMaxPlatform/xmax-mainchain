@@ -559,7 +559,11 @@ namespace xmax {
 					res->set(http::field::access_control_allow_origin, allow_cross_origin);
 				}			
 				
-				res->set(http::field::access_control_allow_credentials, "true");
+				if (!allow_credentials.empty())
+				{
+					res->set(http::field::access_control_allow_credentials, allow_credentials);
+				}
+				
 				res->set(http::field::content_type, "application/json");
 				res->body() = body;
 			}
