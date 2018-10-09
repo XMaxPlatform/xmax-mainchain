@@ -85,6 +85,18 @@ namespace pro
 
 	}
 
+	Exception::Exception(std::string _description, const string _source):
+		impl_(std::make_shared<ExceptionImpl>())
+
+	{
+		impl_->line = 0;
+		impl_->type = EXT_UNDEF_TYPE;
+		impl_->title = "Exception";
+		impl_->description = std::move(_description);
+		impl_->source = std::move(_source);
+		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error));
+	}
+
 	Exception::Exception(const string& _description, const string& _source)
 		: impl_{new ExceptionImpl()}		
 	{

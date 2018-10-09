@@ -45,6 +45,8 @@ namespace pro
 		Exception(string&& _description, string&& _source, const char* _file, long _line);
 		Exception(string&& _description, const char* _file, long _line);
 
+		Exception(std::string _description, const string _source);
+
         /** Copy constructor.
         */
         Exception(const Exception& rhs);
