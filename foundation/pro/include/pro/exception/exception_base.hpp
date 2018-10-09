@@ -36,12 +36,10 @@ namespace pro
 		/** Default constructor.
         */
 
-        Exception(const string& _description, const string& _source);
 		Exception(const string& _description, const string& _source, const char* _file, long _line);
 		Exception(const string& _description, const char* _file, long _line);
 
 
-		Exception(string&& _description, string&& _source);
 		Exception(string&& _description, string&& _source, const char* _file, long _line);
 		Exception(string&& _description, const char* _file, long _line);
 

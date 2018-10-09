@@ -97,27 +97,6 @@ namespace pro
 		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error));
 	}
 
-	Exception::Exception(const string& _description, const string& _source)
-		: impl_{new ExceptionImpl()}		
-	{
-		impl_->line = 0;
-		impl_->type = EXT_UNDEF_TYPE;
-		impl_->title = "Exception";
-		impl_->description = _description;
-		impl_->source = _source;		
-		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error));
-	}
-
-	Exception::Exception(string&& _description, string&& _source)
-		: impl_{ new ExceptionImpl() }
-	{
-		impl_->line = 0;
-		impl_->type = EXT_UNDEF_TYPE;
-		impl_->title = "Exception";
-		impl_->description = _description;
-		impl_->source = _source;
-		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error));
-	}
 
 	Exception::Exception(const string& _description, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }		
