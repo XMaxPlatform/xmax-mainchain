@@ -97,30 +97,17 @@ namespace pro
 		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error));
 	}
 
-
-	Exception::Exception(const string& _description, const char* _file, long _line)
-		:impl_{ new ExceptionImpl() }		
+	Exception::Exception(string _description, const char* _file, long _line):
+		impl_(std::make_shared<ExceptionImpl>())
 	{
-		
 		impl_->type = EXT_UNDEF_TYPE;
 		impl_->title = "Exception";
-		impl_->description = _description;
+		impl_->description = std::move(_description);
 		impl_->file = _file;
 		impl_->line = _line;
 		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error, _file, _line, ""));
 	}
-
-	Exception::Exception(string&& _description, const char* _file, long _line)
-		:impl_{ new ExceptionImpl() }		
-
-	{
-		impl_->type = EXT_UNDEF_TYPE;
-		impl_->title = "Exception";
-		impl_->description = std::forward<string>(_description);
-		impl_->file = _file;
-		impl_->line = _line;
-		impl_->log_message = LogMessage(_description, LogContext(LogLevel::Error, _file, _line, ""));
-	}
+	
 	Exception::Exception(const string& _description, const string& _source, const char* _file, long _line)
 		:impl_{ new ExceptionImpl() }		
 		
@@ -201,6 +188,7 @@ namespace pro
 	{
 		impl_ = std::move(rhs.impl_);
 	}
+
 
 	Exception& Exception::operator = (const Exception& rhs)
 	{
